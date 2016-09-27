@@ -4,6 +4,6 @@
 
 export interface IObserver {
   next(val: any): void
-  error(val: Error): void
+  error(err: Error): void
   complete(val: any): void
 }

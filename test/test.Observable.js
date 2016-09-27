@@ -6,22 +6,7 @@
 
 import test from 'ava'
 import {Observable} from '../.dist/Observable'
-
-const logger = () => ({
-  next: x => console.log(x),
-  error: x => console.log('ERROR', x),
-  complete: x => console.log('COMPLETE', x)
-})
-
-const testOb = (func) => {
-  const results = []
-  const subscription = func().subscribe({
-    next: value => results.push({type: 'value', value}),
-    error: value => results.push({type: 'error', value}),
-    complete: value => results.push({type: 'complete', value})
-  })
-  return {subscription, results}
-}
+import U from '../lib/test-util'
 
 test(t => {
   t.true(Observable.of(null) instanceof Observable)
@@ -31,7 +16,7 @@ test('subscribe()', t => {
     [1, 2, 3].forEach(x => observer.next(x))
     observer.complete(1000)
   })
-  t.deepEqual(testOb(() => ob).results, [
+  t.deepEqual(U.testOB(() => ob).results, [
     {type: 'value', value: 1},
     {type: 'value', value: 2},
     {type: 'value', value: 3},
@@ -43,5 +28,5 @@ test('subscribe():multiple', t => {
     [1, 2, 3].forEach(x => observer.next(x))
     observer.complete(1000)
   })
-  t.deepEqual(testOb(() => ob).results, testOb(() => ob).results)
+  t.deepEqual(U.testOB(() => ob).results, U.testOB(() => ob).results)
 })
