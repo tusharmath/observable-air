@@ -13,10 +13,6 @@ export class IntervalObservable implements IObservable {
     this.interval = interval
   }
 
-  static of (interval: number) {
-    return new IntervalObservable(interval)
-  }
-
   subscribe (observer: IObserver): ISubscription {
     let i = 0
     let closed = false

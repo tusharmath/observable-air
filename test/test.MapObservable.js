@@ -15,7 +15,7 @@ const createArr$ = () => Observable.of(function (ob) {
 
 test('MapObservable.subscribe()', t => {
   const arr$ = createArr$()
-  const {results} = U.testOB(() => MapObservable.of((x) => x * 10, arr$))
+  const {results} = U.testOB(() => new MapObservable((x) => x * 10, arr$))
   t.deepEqual(results, [
     {type: 'value', value: 10},
     {type: 'value', value: 20},

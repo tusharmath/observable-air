@@ -16,10 +16,6 @@ export class MapObservable implements IObservable {
     this.__mapFunction = mapFunction
   }
 
-  static of (mapFunction: Function, source: IObservable) {
-    return new MapObservable(mapFunction, source)
-  }
-
   subscribe (observer: IObserver): ISubscription {
     return this.__source.subscribe(Observer.of({
       next: (val) => observer.next(this.__mapFunction(val)),

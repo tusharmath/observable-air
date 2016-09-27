@@ -10,7 +10,7 @@ import U from '../lib/test-util'
 import {MapObservable} from '../.dist/MapObservable'
 
 test.cb('subscribe()', t => {
-  const {subscription, results} = U.testOB(() => IntervalObservable.of(100))
+  const {subscription, results} = U.testOB(() => new IntervalObservable(100))
   setTimeout(() => {
     subscription.unsubscribe()
     t.deepEqual(results, [
@@ -29,9 +29,9 @@ test.cb('subscribe()', t => {
 })
 
 test.cb('interval+map', t => {
-  const ob = MapObservable.of(
+  const ob = new MapObservable(
     x => x * 10,
-    IntervalObservable.of(100)
+    new IntervalObservable(100)
   )
   const {subscription, results} = U.testOB(() => ob)
   setTimeout(() => {
