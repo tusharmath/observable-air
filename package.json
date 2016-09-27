@@ -1,10 +1,9 @@
 {
   "name": "observable-air",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Observables for the calorie conscious",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "ava"
   },
   "author": "",
   "license": "ISC",
