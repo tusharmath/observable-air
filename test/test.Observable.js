@@ -14,13 +14,13 @@ test(t => {
 test('subscribe()', t => {
   const ob = Observable.of(function (observer) {
     [1, 2, 3].forEach(x => observer.next(x))
-    observer.complete(1000)
+    observer.complete()
   })
   t.deepEqual(U.testOB(() => ob).results, [
     {type: 'value', value: 1},
     {type: 'value', value: 2},
     {type: 'value', value: 3},
-    {type: 'complete', value: 1000}
+    {type: 'complete'}
   ])
 })
 test('subscribe():multiple', t => {
