@@ -20,13 +20,10 @@ export class Observable implements IObservable {
     return new Observable(subscriberFunction)
   }
 
-  private __subscriberFunction: ISubscriberFunction
-
-  constructor (subscriberFunction: ISubscriberFunction) {
-    this.__subscriberFunction = subscriberFunction
+  constructor (private subscriberFunction: ISubscriberFunction) {
   }
 
   subscribe (observer: ISubscriptionObserver): ISubscription {
-    return this.__subscriberFunction(observer)
+    return this.subscriberFunction(observer)
   }
 }

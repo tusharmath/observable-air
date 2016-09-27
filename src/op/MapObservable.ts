@@ -8,17 +8,13 @@ import {ISubscription} from '../types/ISubscription';
 import {Observer} from '../Observer';
 
 export class MapObservable implements IObservable {
-  private __source: IObservable
-  private __mapFunction: Function
+  constructor (private mapFunction: Function, private source: IObservable) {
 
-  constructor (mapFunction: Function, source: IObservable) {
-    this.__source = source
-    this.__mapFunction = mapFunction
   }
 
   subscribe (observer: IObserver): ISubscription {
-    return this.__source.subscribe(Observer.of({
-      next: (val) => observer.next(this.__mapFunction(val)),
+    return this.source.subscribe(Observer.of({
+      next: (val) => observer.next(this.mapFunction(val)),
       error: (err) => observer.error(err),
       complete: () => observer.complete()
     }))

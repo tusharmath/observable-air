@@ -9,24 +9,20 @@ import {ISubscription} from '../types/ISubscription';
 import {Observer} from '../Observer';
 
 export class ReduceObservable implements IObservable {
-  private __source: IObservable
-  private __reducer: Function
-  private __value: any;
+  constructor (private reducer: Function,
+               private value: any,
+               private source: IObservable) {
 
-  constructor (reducer: Function, value: any, source: IObservable) {
-    this.__source = source
-    this.__reducer = reducer
-    this.__value = value
   }
 
   subscribe (observer: IObserver): ISubscription {
-    return this.__source.subscribe(Observer.of({
+    return this.source.subscribe(Observer.of({
       next: (val) => {
-        this.__value = this.__reducer(this.__value, val)
+        this.value = this.reducer(this.value, val)
       },
       error: (err) => observer.error(err),
       complete: () => {
-        observer.next(this.__value)
+        observer.next(this.value)
         observer.complete()
       }
     }))

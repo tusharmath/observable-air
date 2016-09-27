@@ -8,21 +8,16 @@ import {ISubscription} from '../types/ISubscription';
 import {Observer} from '../Observer';
 
 export class TakeNObservable implements IObservable {
-  private __count: number;
-  private __source: IObservable;
-
-  constructor (count: number, source: IObservable) {
-    this.__count = count
-    this.__source = source
+  constructor (private count: number, private source: IObservable) {
   }
 
   subscribe (observer: IObserver): ISubscription {
     let received = 0
-    const subscription = this.__source.subscribe(Observer.of({
+    const subscription = this.source.subscribe(Observer.of({
       next: (val) => {
         observer.next(val)
         received++
-        if (received === this.__count) {
+        if (received === this.count) {
           observer.complete()
           subscription.unsubscribe()
         }
