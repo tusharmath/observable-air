@@ -3,10 +3,10 @@
  */
 
 
-import {IObservable} from './types/IObservable';
-import {IObserver} from './types/IObserver';
-import {ISubscription} from './types/ISubscription';
-import {Observer} from './Observer';
+import {IObservable} from '../types/IObservable';
+import {IObserver} from '../types/IObserver';
+import {ISubscription} from '../types/ISubscription';
+import {Observer} from '../Observer';
 
 export class FilterObservable implements IObservable {
   private __source: IObservable

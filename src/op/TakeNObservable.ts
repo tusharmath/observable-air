@@ -2,10 +2,10 @@
  * Created by tushar.mathur on 27/09/16.
  */
 
-import {IObservable} from './types/IObservable';
-import {IObserver} from './types/IObserver';
-import {ISubscription} from './types/ISubscription';
-import {Observer} from './Observer';
+import {IObservable} from '../types/IObservable';
+import {IObserver} from '../types/IObserver';
+import {ISubscription} from '../types/ISubscription';
+import {Observer} from '../Observer';
 
 export class TakeNObservable implements IObservable {
   private __count: number;
