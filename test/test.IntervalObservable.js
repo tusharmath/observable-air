@@ -7,9 +7,10 @@
 import test from 'ava'
 import {IntervalObservable} from '../.dist/IntervalObservable'
 import U from '../lib/test-util'
+import {MapObservable} from '../.dist/MapObservable'
 
 test.cb('subscribe()', t => {
-  const {subscription, results} = U.testOB(() => IntervalObservable.of(10))
+  const {subscription, results} = U.testOB(() => IntervalObservable.of(100))
   setTimeout(() => {
     subscription.unsubscribe()
     t.deepEqual(results, [
@@ -20,8 +21,32 @@ test.cb('subscribe()', t => {
       {type: 'value', value: 4},
       {type: 'value', value: 5},
       {type: 'value', value: 6},
-      {type: 'value', value: 7}
+      {type: 'value', value: 7},
+      {type: 'value', value: 8}
     ])
     t.end()
-  }, 100)
+  }, 1000)
+})
+
+test.cb('interval+map', t => {
+  const ob = MapObservable.of(
+    x => x * 10,
+    IntervalObservable.of(100)
+  )
+  const {subscription, results} = U.testOB(() => ob)
+  setTimeout(() => {
+    subscription.unsubscribe()
+    t.deepEqual(results, [
+      {type: 'value', value: 0},
+      {type: 'value', value: 10},
+      {type: 'value', value: 20},
+      {type: 'value', value: 30},
+      {type: 'value', value: 40},
+      {type: 'value', value: 50},
+      {type: 'value', value: 60},
+      {type: 'value', value: 70},
+      {type: 'value', value: 80}
+    ])
+    t.end()
+  }, 1000)
 })
