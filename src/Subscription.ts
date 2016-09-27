@@ -5,15 +5,8 @@
 import {ISubscription} from './types/ISubscription';
 
 export class Subscription implements ISubscription {
-  next (val: any): void {
-  }
+  closed: Boolean;
 
-  error (val: Error): void {
-  }
-
-  complete (val: any): void {
-  }
-  constructor () {
-
+  unsubscribe (): void {
   }
 }

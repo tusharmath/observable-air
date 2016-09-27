@@ -3,7 +3,8 @@
  */
 
 export interface ISubscription {
-  next(val: any): void
-  error(val: Error): void
-  complete (val: any): void
+  unsubscribe(): void;
+
+  // A boolean value indicating whether the subscription is closed
+  closed: Boolean;
 }

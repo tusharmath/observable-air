@@ -5,7 +5,7 @@
 'use strict'
 
 import test from 'ava'
-import {Observable} from '../src/Observable'
+import {Observable} from '../.dist/Observable'
 
 test(t => {
   t.true(Observable.of() instanceof Observable)
