@@ -13,10 +13,7 @@ const createArr$ = () => Observable.of(function (ob) {
   [1, 2, 3].forEach(x => ob.next(x))
 })
 
-test(t => {
-  t.true(Observable.of(null) instanceof Observable)
-})
-test('subscribe()', t => {
+test('MapObservable.subscribe()', t => {
   const arr$ = createArr$()
   const {results} = U.testOB(() => MapObservable.of((x) => x * 10, arr$))
   t.deepEqual(results, [

@@ -3,6 +3,8 @@
  */
 
 import {IObserver} from './types/IObserver';
+
+
 export class Observer implements IObserver {
 
   private __next: (val: any) => void
