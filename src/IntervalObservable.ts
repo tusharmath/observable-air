@@ -8,7 +8,6 @@ import {IObserver} from './types/IObserver';
 
 export class IntervalObservable implements IObservable {
   constructor (private interval: number) {
-
   }
 
   subscribe (observer: IObserver): ISubscription {

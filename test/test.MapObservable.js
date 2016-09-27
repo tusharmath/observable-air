@@ -5,8 +5,8 @@
 'use strict'
 
 import test from 'ava'
-import {Observable} from '../.dist/Observable'
-import {MapObservable} from '../.dist/MapObservable'
+import {Observable} from '../src/Observable'
+import {MapObservable} from '../src/op/Map'
 import U from '../lib/test-util'
 
 const createArr$ = () => Observable.of(function (ob) {

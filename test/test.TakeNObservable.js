@@ -5,9 +5,9 @@
 'use strict'
 
 import test from 'ava'
-import {IntervalObservable} from '../.dist/IntervalObservable'
+import {IntervalObservable} from '../src/IntervalObservable'
 import U from '../lib/test-util'
-import {TakeNObservable} from '../.dist/TakeNObservable'
+import {TakeNObservable} from '../src/op/TakeN'
 
 test.cb('interval+map', t => {
   const ob = new TakeNObservable(10, new IntervalObservable(10))

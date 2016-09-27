@@ -5,7 +5,7 @@
 'use strict'
 
 import test from 'ava'
-import {Observable} from '../.dist/Observable'
+import {Observable} from '../src/Observable'
 import U from '../lib/test-util'
 
 test(t => {
