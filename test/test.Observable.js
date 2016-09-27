@@ -8,5 +8,5 @@ import test from 'ava'
 import {Observable} from '../.dist/Observable'
 
 test(t => {
-  t.true(Observable.of() instanceof Observable)
+  t.true(Observable.of(null) instanceof Observable)
 })

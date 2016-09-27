@@ -7,8 +7,12 @@ import {IObserver} from './types/IObserver';
 import {ISubscription} from './types/ISubscription';
 import {Subscription} from './Subscription';
 
+export interface ISubscriptionObserver extends IObserver {
+  closed: Boolean
+}
+
 export interface ISubscriberFunction {
-  (observer: IObserver): ISubscription | (() => void)
+  (observer: ISubscriptionObserver): ISubscription | (() => void)
 }
 
 
@@ -23,7 +27,7 @@ export class Observable implements IObservable {
     this.__subscriberFunction = subscriberFunction
   }
 
-  subscribe (observer: IObserver): ISubscription {
+  subscribe (observer: ISubscriptionObserver): ISubscription {
     const subscription = new Subscription()
     this.__subscriberFunction(observer)
     return subscription
