@@ -9,7 +9,7 @@ export class Observer implements IObserver {
 
   private __next: (val: any) => void
   private __error: (err: Error) => void
-  private __complete: (val: any) => void
+  private __complete: () => void
 
   constructor (params: IObserver) {
     this.__next = params.next
@@ -29,8 +29,8 @@ export class Observer implements IObserver {
     return this.__error(err)
   }
 
-  complete (val: any): void {
-    return this.__complete(val)
+  complete (): void {
+    return this.__complete()
   }
 
 }

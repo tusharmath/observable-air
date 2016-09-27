@@ -20,7 +20,7 @@ export class MapObservable implements IObservable {
     return this.__source.subscribe(Observer.of({
       next: (val) => observer.next(this.__mapFunction(val)),
       error: (err) => observer.error(err),
-      complete: (val) => observer.complete(val)
+      complete: () => observer.complete()
     }))
   }
 

@@ -5,5 +5,5 @@
 export interface IObserver {
   next(val: any): void
   error(err: Error): void
-  complete(val: any): void
+  complete(): void
 }
