@@ -15,13 +15,13 @@ export class FilterObservable implements IObservable {
   }
 
   subscribe (observer: IObserver): ISubscription {
-    return this.source.subscribe(Observer.of({
-      next: (val) => {
-        if (this.predicate(val)) observer.next(val)
+    return this.source.subscribe(Observer.of(
+      (val) => {
+        if (this.predicate(val) === true) observer.next(val)
       },
-      error: (err) => observer.error(err),
-      complete: () => observer.complete()
-    }))
+      (err) => observer.error(err),
+      () => observer.complete()
+    ))
   }
 }
 

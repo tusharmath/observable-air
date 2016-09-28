@@ -6,31 +6,27 @@ import {IObserver} from './types/IObserver';
 
 
 export class Observer implements IObserver {
-
-  private __next: (val: any) => void
-  private __error: (err: Error) => void
-  private __complete: () => void
-
-  constructor (params: IObserver) {
-    this.__next = params.next
-    this.__error = params.error
-    this.__complete = params.complete
+  constructor (private _next: (a: any) => void,
+               private _error: (a: Error) => void,
+               private _complete: () => void) {
   }
 
-  static of (params: IObserver) {
-    return new Observer(params)
+  static of (next: (a: any) => void,
+             error: (a: Error) => void,
+             complete: () => void) {
+    return new Observer(next, error, complete)
   }
 
   next (val: any): void {
-    return this.__next(val)
+    return this._next(val)
   }
 
   error (err: Error): void {
-    return this.__error(err)
+    return this._error(err)
   }
 
   complete (): void {
-    return this.__complete()
+    return this._complete()
   }
 
 }

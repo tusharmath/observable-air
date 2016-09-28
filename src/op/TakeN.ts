@@ -13,8 +13,8 @@ export class TakeNObservable implements IObservable {
 
   subscribe (observer: IObserver): ISubscription {
     let received = 0
-    const subscription = this.source.subscribe(Observer.of({
-      next: (val) => {
+    const subscription = this.source.subscribe(Observer.of(
+      (val) => {
         observer.next(val)
         received++
         if (received === this.count) {
@@ -22,9 +22,9 @@ export class TakeNObservable implements IObservable {
           subscription.unsubscribe()
         }
       },
-      error: err => observer.error(err),
-      complete: () => observer.complete()
-    }))
+      err => observer.error(err),
+      () => observer.complete()
+    ))
     return subscription
   }
 

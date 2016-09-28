@@ -13,11 +13,11 @@ export class MapObservable <T> implements IObservable {
   }
 
   subscribe (observer: IObserver): ISubscription {
-    return this.source.subscribe(Observer.of({
-      next: (val) => observer.next(this.mapFunction(val)),
-      error: (err) => observer.error(err),
-      complete: () => observer.complete()
-    }))
+    return this.source.subscribe(Observer.of(
+      (val) => observer.next(this.mapFunction(val)),
+      (err) => observer.error(err),
+      () => observer.complete()
+    ))
   }
 }
 
