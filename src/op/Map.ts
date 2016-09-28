@@ -21,6 +21,6 @@ export class MapObservable <T> implements IObservable {
   }
 }
 
-export function map <T> (mapFunction: (a: T) => T, source: IObservable) {
+export function map <T> (mapFunction: (a: T) => T, source: IObservable): IObservable {
   return new MapObservable(mapFunction, source)
 }

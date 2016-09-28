@@ -30,6 +30,6 @@ export class TakeNObservable implements IObservable {
 
 }
 
-export function takeN (count: number, source: IObservable) {
+export function takeN (count: number, source: IObservable): IObservable {
   return new TakeNObservable(count, source)
 }

@@ -25,5 +25,6 @@ export class FilterObservable implements IObservable {
   }
 }
 
-export const filter = (predicate: IPredicate, source: IObservable) =>
-  new FilterObservable(predicate, source)
+export function filter (predicate: IPredicate, source: IObservable): IObservable {
+  return new FilterObservable(predicate, source)
+}

@@ -30,6 +30,6 @@ export class ReduceObservable <T> implements IObservable {
   }
 }
 
-export function reduce <T> (reducer: IReducer<T>, value: T, source: IObservable) {
+export function reduce <T> (reducer: IReducer<T>, value: T, source: IObservable) :IObservable {
   return new ReduceObservable(reducer, value, source)
 }

@@ -27,6 +27,6 @@ export class IntervalObservable implements IObservable {
 }
 
 
-export function interval (interval: number) {
+export function interval (interval: number): IObservable {
   return new IntervalObservable(interval)
 }

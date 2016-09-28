@@ -23,6 +23,6 @@ export class FromObservable<T> implements IObservable {
   }
 }
 
-export function from<T> (list: Array<T>) {
+export function from<T> (list: Array<T>): IObservable {
   return new FromObservable(list)
 }
