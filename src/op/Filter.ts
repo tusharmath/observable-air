@@ -7,9 +7,10 @@ import {IObservable} from '../types/IObservable';
 import {IObserver} from '../types/IObserver';
 import {ISubscription} from '../types/ISubscription';
 import {Observer} from '../Observer';
+import {IPredicate} from '../types/IPredicate';
 
 export class FilterObservable implements IObservable {
-  constructor (private predicate: (a: any) => Boolean,
+  constructor (private predicate: IPredicate,
                private source: IObservable) {
   }
 
@@ -23,3 +24,6 @@ export class FilterObservable implements IObservable {
     }))
   }
 }
+
+export const filter = (predicate: IPredicate, source: IObservable) =>
+  new FilterObservable(predicate, source)

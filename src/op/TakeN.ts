@@ -29,3 +29,7 @@ export class TakeNObservable implements IObservable {
   }
 
 }
+
+export function takeN (count: number, source: IObservable) {
+  return new TakeNObservable(count, source)
+}

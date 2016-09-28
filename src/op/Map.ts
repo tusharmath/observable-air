@@ -7,8 +7,8 @@ import {IObserver} from '../types/IObserver';
 import {ISubscription} from '../types/ISubscription';
 import {Observer} from '../Observer';
 
-export class MapObservable implements IObservable {
-  constructor (private mapFunction: Function, private source: IObservable) {
+export class MapObservable <T> implements IObservable {
+  constructor (private mapFunction: (a: T) =>  T, private source: IObservable) {
 
   }
 
@@ -19,5 +19,8 @@ export class MapObservable implements IObservable {
       complete: () => observer.complete()
     }))
   }
+}
 
+export function map <T> (mapFunction: (a: T) => T, source: IObservable) {
+  return new MapObservable(mapFunction, source)
 }

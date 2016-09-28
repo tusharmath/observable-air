@@ -2,9 +2,9 @@
  * Created by tushar.mathur on 27/09/16.
  */
 
-import {IObservable} from './types/IObservable';
-import {ISubscription} from './types/ISubscription';
-import {IObserver} from './types/IObserver';
+import {IObservable} from '../types/IObservable';
+import {ISubscription} from '../types/ISubscription';
+import {IObserver} from '../types/IObserver';
 
 export class IntervalObservable implements IObservable {
   constructor (private interval: number) {
@@ -24,4 +24,9 @@ export class IntervalObservable implements IObservable {
       }
     }
   }
+}
+
+
+export function interval (interval: number) {
+  return new IntervalObservable(interval)
 }

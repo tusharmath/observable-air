@@ -5,7 +5,7 @@
 'use strict'
 
 import test from 'ava'
-import {IntervalObservable} from '../src/IntervalObservable'
+import {IntervalObservable} from '../src/gen/Interval'
 import U from '../lib/test-util'
 import {TakeNObservable} from '../src/op/TakeN'
 

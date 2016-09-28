@@ -7,10 +7,11 @@ import {IObservable} from '../types/IObservable';
 import {IObserver} from '../types/IObserver';
 import {ISubscription} from '../types/ISubscription';
 import {Observer} from '../Observer';
+import {IReducer} from '../types/IReducer';
 
-export class ReduceObservable implements IObservable {
-  constructor (private reducer: Function,
-               private value: any,
+export class ReduceObservable <T> implements IObservable {
+  constructor (private reducer: IReducer<T>,
+               private value: T,
                private source: IObservable) {
 
   }
@@ -27,4 +28,8 @@ export class ReduceObservable implements IObservable {
       }
     }))
   }
+}
+
+export function reduce <T> (reducer: IReducer<T>, value: T, source: IObservable) {
+  return new ReduceObservable(reducer, value, source)
 }
