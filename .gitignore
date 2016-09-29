@@ -40,5 +40,6 @@ jspm_packages
 
 .idea
 src/**/*.js
+src/**/*.d.ts
 *.map
 .dist
