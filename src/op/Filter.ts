@@ -10,30 +10,31 @@ import {IPredicate} from '../types/IPredicate';
 
 
 class FilterObserver <T> implements IObserver<T> {
-  constructor (private predicate: IPredicate<T>, private observer: IObserver<T>) {
+  constructor (private p: IPredicate<T>, private obr: IObserver<T>) {
   }
 
   next (val: T) {
-    if (this.predicate(val) === true) this.observer.next(val)
+    var p = this.p;
+    p(val) && this.obr.next(val)
   }
 
   error (err: Error) {
-    this.observer.error(err)
+    this.obr.error(err)
   }
 
   complete (): void {
-    this.observer.complete()
+    this.obr.complete()
   }
 }
 
 
 export class FilterObservable <T> implements IObservable<T> {
-  constructor (private predicate: IPredicate<T>,
-               private source: IObservable<T>) {
+  constructor (private p: IPredicate<T>,
+               private src: IObservable<T>) {
   }
 
   subscribe (observer: IObserver<T>): ISubscription {
-    return this.source.subscribe(new FilterObserver(this.predicate, observer))
+    return this.src.subscribe(new FilterObserver(this.p, observer))
   }
 }
 

@@ -10,18 +10,18 @@ function noop () {
 }
 const unsubscribe = noop
 const subscription = {unsubscribe, closed: true};
-function transmitAll<T> (observer: IObserver<T>, list: Array<T>) {
+function transmitAll<T> (obr: IObserver<T>, list: Array<T>) {
   for (var i = 0; i < list.length - 1; i++) {
-    observer.next(list[i])
+    obr.next(list[i])
   }
 }
 export class FromObservable<T> implements IObservable<T> {
-  constructor (private list: Array<T>) {
+  constructor (private l: Array<T>) {
   }
 
-  subscribe (observer: IObserver<T>): ISubscription {
-    transmitAll<T>(observer, this.list)
-    observer.complete()
+  subscribe (obr: IObserver<T>): ISubscription {
+    transmitAll<T>(obr, this.l)
+    obr.complete()
     return subscription
   }
 }

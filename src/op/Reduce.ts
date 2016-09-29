@@ -9,35 +9,35 @@ import {ISubscription} from '../types/ISubscription';
 import {IReducer} from '../types/IReducer';
 
 class ReduceObserver<T> implements IObserver<T> {
-  constructor (private reducer: IReducer<T>,
-               private value: T,
-               private observer: IObserver<T>) {
+  constructor (private r: IReducer<T>,
+               private v: T,
+               private obr: IObserver<T>) {
   }
 
   next (val: T): void {
-    this.value = this.reducer(this.value, val)
+    var r = this.r;
+    this.v = r(this.v, val)
   }
 
   error (err: Error): void {
-    this.observer.error(err)
+    this.obr.error(err)
   }
 
   complete (): void {
-    this.observer.next(this.value)
-    this.observer.complete()
+    this.obr.next(this.v)
+    this.obr.complete()
   }
 
 }
 
 export class ReduceObservable <T> implements IObservable<T> {
-  constructor (private reducer: IReducer<T>,
-               private value: T,
-               private source: IObservable<T>) {
-
+  constructor (private r: IReducer<T>,
+               private v: T,
+               private src: IObservable<T>) {
   }
 
   subscribe (observer: IObserver<T>): ISubscription {
-    return this.source.subscribe(new ReduceObserver(this.reducer, this.value, observer))
+    return this.src.subscribe(new ReduceObserver(this.r, this.v, observer))
   }
 }
 

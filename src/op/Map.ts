@@ -7,28 +7,29 @@ import {IObserver} from '../types/IObserver';
 import {ISubscription} from '../types/ISubscription';
 
 class MapObserver<T> implements IObserver<T> {
-  constructor (private mapFunction: (a: T) =>  T, private observer: IObserver<T>) {
+  constructor (private f: (a: T) =>  T, private obr: IObserver<T>) {
   }
 
   next (val: T): void {
-    this.observer.next(this.mapFunction(val))
+    var f = this.f
+    this.obr.next(f(val))
   }
 
   error (err: Error): void {
-    this.observer.error(err)
+    this.obr.error(err)
   }
 
   complete (): void {
-    this.observer.complete()
+    this.obr.complete()
   }
 }
 
 export class MapObservable <T> implements IObservable<T> {
-  constructor (private mapFunction: (a: T) =>  T, private source: IObservable<T>) {
+  constructor (private f: (a: T) =>  T, private src: IObservable<T>) {
   }
 
   subscribe (observer: IObserver<T>): ISubscription {
-    return this.source.subscribe(new MapObserver(this.mapFunction, observer))
+    return this.src.subscribe(new MapObserver(this.f, observer))
   }
 }
 
