@@ -6,25 +6,37 @@
 import {IObservable} from '../types/IObservable';
 import {IObserver} from '../types/IObserver';
 import {ISubscription} from '../types/ISubscription';
-import {Observer} from '../Observer';
 import {IPredicate} from '../types/IPredicate';
 
-export class FilterObservable implements IObservable {
-  constructor (private predicate: IPredicate,
-               private source: IObservable) {
+
+class FilterObserver <T> implements IObserver<T> {
+  constructor (private predicate: IPredicate<T>, private observer: IObserver<T>) {
   }
 
-  subscribe (observer: IObserver): ISubscription {
-    return this.source.subscribe(Observer.of(
-      (val) => {
-        if (this.predicate(val) === true) observer.next(val)
-      },
-      (err) => observer.error(err),
-      () => observer.complete()
-    ))
+  next (val: T) {
+    if (this.predicate(val) === true) this.observer.next(val)
+  }
+
+  error (err: Error) {
+    this.observer.error(err)
+  }
+
+  complete (): void {
+    this.observer.complete()
   }
 }
 
-export function filter (predicate: IPredicate, source: IObservable): IObservable {
+
+export class FilterObservable <T> implements IObservable<T> {
+  constructor (private predicate: IPredicate<T>,
+               private source: IObservable<T>) {
+  }
+
+  subscribe (observer: IObserver<T>): ISubscription {
+    return this.source.subscribe(new FilterObserver(this.predicate, observer))
+  }
+}
+
+export function filter<T> (predicate: IPredicate<T>, source: IObservable<T>): IObservable<T> {
   return new FilterObservable(predicate, source)
 }

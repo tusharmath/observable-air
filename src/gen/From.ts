@@ -10,19 +10,22 @@ function noop () {
 }
 const unsubscribe = noop
 const subscription = {unsubscribe, closed: true};
-export class FromObservable<T> implements IObservable {
+function transmitAll<T> (observer: IObserver<T>, list: Array<T>) {
+  for (var i = 0; i < list.length - 1; i++) {
+    observer.next(list[i])
+  }
+}
+export class FromObservable<T> implements IObservable<T> {
   constructor (private list: Array<T>) {
   }
 
-  subscribe (observer: IObserver): ISubscription {
-    for (var i = 0; i < this.list.length; i++) {
-      observer.next(this.list[i])
-    }
+  subscribe (observer: IObserver<T>): ISubscription {
+    transmitAll<T>(observer, this.list)
     observer.complete()
     return subscription
   }
 }
 
-export function from<T> (list: Array<T>): IObservable {
+export function from<T> (list: Array<T>): IObservable<T> {
   return new FromObservable(list)
 }

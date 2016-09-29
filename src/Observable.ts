@@ -6,24 +6,24 @@ import {IObservable} from './types/IObservable';
 import {IObserver} from './types/IObserver';
 import {ISubscription} from './types/ISubscription';
 
-export interface ISubscriptionObserver extends IObserver {
+export interface ISubscriptionObserver<T> extends IObserver<T> {
   closed: Boolean
 }
 
-export interface ISubscriberFunction {
-  (observer: ISubscriptionObserver): ISubscription
+export interface ISubscriberFunction<T> {
+  (observer: ISubscriptionObserver<T>): ISubscription
 }
 
 
-export class Observable implements IObservable {
-  static of (subscriberFunction: ISubscriberFunction) {
+export class Observable<T> implements IObservable<T> {
+  static of<U> (subscriberFunction: ISubscriberFunction<U>) {
     return new Observable(subscriberFunction)
   }
 
-  constructor (private subscriberFunction: ISubscriberFunction) {
+  constructor (private subscriberFunction: ISubscriberFunction<T>) {
   }
 
-  subscribe (observer: ISubscriptionObserver): ISubscription {
+  subscribe (observer: ISubscriptionObserver<T>): ISubscription {
     return this.subscriberFunction(observer)
   }
 }

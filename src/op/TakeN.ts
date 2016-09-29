@@ -7,14 +7,14 @@ import {IObserver} from '../types/IObserver';
 import {ISubscription} from '../types/ISubscription';
 import {Observer} from '../Observer';
 
-export class TakeNObservable implements IObservable {
-  constructor (private count: number, private source: IObservable) {
+export class TakeNObservable<T> implements IObservable<T> {
+  constructor (private count: number, private source: IObservable<T>) {
   }
 
-  subscribe (observer: IObserver): ISubscription {
+  subscribe (observer: IObserver<T>): ISubscription {
     let received = 0
     const subscription = this.source.subscribe(Observer.of(
-      (val) => {
+      (val: T) => {
         observer.next(val)
         received++
         if (received === this.count) {
@@ -30,6 +30,6 @@ export class TakeNObservable implements IObservable {
 
 }
 
-export function takeN (count: number, source: IObservable): IObservable {
+export function takeN<T> (count: number, source: IObservable<T>): IObservable<T> {
   return new TakeNObservable(count, source)
 }

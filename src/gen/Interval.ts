@@ -6,11 +6,11 @@ import {IObservable} from '../types/IObservable';
 import {ISubscription} from '../types/ISubscription';
 import {IObserver} from '../types/IObserver';
 
-export class IntervalObservable implements IObservable {
+export class IntervalObservable<Number> implements IObservable<number> {
   constructor (private interval: number) {
   }
 
-  subscribe (observer: IObserver): ISubscription {
+  subscribe (observer: IObserver<number>): ISubscription {
     let i = 0
     let closed = false
     let timer = setInterval(() => observer.next(i++), this.interval)
@@ -27,6 +27,6 @@ export class IntervalObservable implements IObservable {
 }
 
 
-export function interval (interval: number): IObservable {
+export function interval (interval: number): IObservable<number> {
   return new IntervalObservable(interval)
 }
