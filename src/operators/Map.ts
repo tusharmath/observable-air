@@ -7,20 +7,20 @@ import {IObserver} from '../types/IObserver';
 import {ISubscription} from '../types/ISubscription';
 
 class MapObserver<T> implements IObserver<T> {
-  constructor (private mapper: (a: T) =>  T, private observer: IObserver<T>) {
+  constructor (private mapper: (a: T) =>  T, private sink: IObserver<T>) {
   }
 
   next (val: T): void {
     var f = this.mapper
-    this.observer.next(f(val))
+    this.sink.next(f(val))
   }
 
   error (err: Error): void {
-    this.observer.error(err)
+    this.sink.error(err)
   }
 
   complete (): void {
-    this.observer.complete()
+    this.sink.complete()
   }
 }
 

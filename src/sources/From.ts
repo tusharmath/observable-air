@@ -19,13 +19,11 @@ class FromArrayTask<T> implements ITask {
   }
 
   run (): void {
-    var list = this.array
-    var l = list.length;
-    var obr = this.observer;
-    for (var i = 0; i < l; ++i) {
-      obr.next(list[i])
+    var len = this.array.length;
+    for (var i = 0; i < len; ++i) {
+      this.observer.next(this.array[i])
     }
-    obr.complete()
+    this.observer.complete()
   }
 }
 

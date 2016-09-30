@@ -10,20 +10,20 @@ import {IPredicate} from '../types/IPredicate';
 
 
 class FilterObserver <T> implements IObserver<T> {
-  constructor (private predicate: IPredicate<T>, private observer: IObserver<T>) {
+  constructor (private predicate: IPredicate<T>, private sink: IObserver<T>) {
   }
 
   next (val: T) {
     var p = this.predicate;
-    p(val) && this.observer.next(val)
+    p(val) && this.sink.next(val)
   }
 
   error (err: Error) {
-    this.observer.error(err)
+    this.sink.error(err)
   }
 
   complete (): void {
-    this.observer.complete()
+    this.sink.complete()
   }
 }
 
