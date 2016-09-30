@@ -7,7 +7,6 @@ import {ISubscription} from '../types/ISubscription';
 import {IObserver} from '../types/IObserver';
 import {ITask} from '../types/ITask';
 import {IScheduler} from '../types/IScheduler';
-import {ImmediateScheduler} from '../schedulers/ImmediateScheduler';
 import {NowScheduler} from '../schedulers/NowScheduler';
 
 const unsubscribe = function () {
