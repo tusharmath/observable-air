@@ -11,7 +11,7 @@ function noop () {
 const unsubscribe = noop
 const subscription = {unsubscribe, closed: true};
 function transmitAll<T> (obr: IObserver<T>, list: Array<T>) {
-  for (var i = 0; i < list.length - 1; i++) {
+  for (var i = 0, l = list.length - 1; i < l; i++) {
     obr.next(list[i])
   }
 }
