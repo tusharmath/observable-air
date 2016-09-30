@@ -43,3 +43,5 @@ src/**/*.js
 src/**/*.d.ts
 *.map
 .dist
+*.cfg
+*.asm
