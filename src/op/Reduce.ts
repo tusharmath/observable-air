@@ -36,8 +36,8 @@ export class ReduceObservable <T> implements IObservable<T> {
                private src: IObservable<T>) {
   }
 
-  subscribe (observer: IObserver<T>): ISubscription {
-    return this.src.subscribe(new ReduceObserver(this.r, this.v, observer))
+  subscribe (obr: IObserver<T>): ISubscription {
+    return this.src.subscribe(new ReduceObserver(this.r, this.v, obr))
   }
 }
 
