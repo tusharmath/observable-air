@@ -3,6 +3,7 @@
  */
 
 import {ITask} from './ITask';
-export interface IScheduler {
-  run(task: ITask): void
+export interface IScheduler<T> {
+  run(task: ITask): T
+  cancel(id: T): void
 }

@@ -5,8 +5,12 @@
 import {ITask} from '../types/ITask';
 import {IScheduler} from '../types/IScheduler';
 
-export class ImmediateScheduler implements IScheduler {
+export class ImmediateScheduler implements IScheduler<number> {
+  cancel (id: number): void {
+    clearImmediate(id)
+  }
+
   run (task: ITask) {
-    setImmediate(() => task.run())
+    return setImmediate(() => task.run())
   }
 }

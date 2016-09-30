@@ -8,6 +8,7 @@ import {IObserver} from '../types/IObserver';
 import {ITask} from '../types/ITask';
 import {IScheduler} from '../types/IScheduler';
 import {ImmediateScheduler} from '../schedulers/ImmediateScheduler';
+import {NowScheduler} from '../schedulers/NowScheduler';
 
 const unsubscribe = function () {
 }
@@ -30,7 +31,7 @@ class FromArrayTask<T> implements ITask {
 
 export class FromObservable<T> implements IObservable<T> {
   constructor (private array: Array<T>,
-               private scheduler: IScheduler = new ImmediateScheduler()) {
+               private scheduler: IScheduler<void> = new NowScheduler()) {
   }
 
   subscribe (obr: IObserver<T>): ISubscription {
