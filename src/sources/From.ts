@@ -7,21 +7,21 @@ import {ISubscription} from '../types/ISubscription';
 import {IObserver} from '../types/IObserver';
 import {ITask} from '../types/ITask';
 import {IScheduler} from '../types/IScheduler';
+import {ImmediateScheduler} from '../schedulers/ImmediateScheduler';
 
-function noop () {
+const unsubscribe = function () {
 }
-const unsubscribe = noop
 const subscription = {unsubscribe, closed: true};
 
 
 class FromArrayTask<T> implements ITask {
-  constructor (private obr: IObserver<T>, private list: Array<T>) {
+  constructor (private observer: IObserver<T>, private array: Array<T>) {
   }
 
   run (): void {
-    var list = this.list
+    var list = this.array
     var l = list.length;
-    var obr = this.obr;
+    var obr = this.observer;
     for (var i = 0; i < l; ++i) {
       obr.next(list[i])
     }
@@ -30,21 +30,13 @@ class FromArrayTask<T> implements ITask {
 }
 
 
-class ImmediateScheduler implements IScheduler {
-  run (task: ITask) {
-    setImmediate(() => task.run())
-  }
-}
-
 export class FromObservable<T> implements IObservable<T> {
-  private sh: IScheduler;
-
-  constructor (private l: Array<T>) {
-    this.sh = new ImmediateScheduler()
+  constructor (private array: Array<T>,
+               private scheduler: IScheduler = new ImmediateScheduler()) {
   }
 
   subscribe (obr: IObserver<T>): ISubscription {
-    this.sh.run(new FromArrayTask(obr, this.l))
+    this.scheduler.run(new FromArrayTask(obr, this.array))
     return subscription
   }
 }

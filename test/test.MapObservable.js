@@ -6,7 +6,7 @@
 
 import test from 'ava'
 import {Observable} from '../src/Observable'
-import {MapObservable} from '../src/op/Map'
+import {MapObservable} from '../src/operators/Map'
 import U from '../lib/test-util'
 
 const createArr$ = () => Observable.of(function (ob) {

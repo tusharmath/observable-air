@@ -5,9 +5,9 @@
 'use strict'
 
 import test from 'ava'
-import {IntervalObservable} from '../src/gen/Interval'
+import {IntervalObservable} from '../src/sources/Interval'
 import U from '../lib/test-util'
-import {MapObservable} from '../src/op/Map'
+import {MapObservable} from '../src/operators/Map'
 
 test.cb('subscribe()', t => {
   const {subscription, results} = U.testOB(() => new IntervalObservable(100))
