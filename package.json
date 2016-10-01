@@ -6,12 +6,14 @@
   "scripts": {
     "test": "ava",
     "hydra": "node --trace-hydrogen --trace-phase=Z --trace-deopt --code-comments --hydrogen-track-positions --redirect-code-traces --redirect-code-traces-to=code.asm lib/profile.js",
-    "benchmark": "node lib/benchmark"
+    "benchmark": "node lib/benchmark",
+    "postinstall": "tsc"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "ava": "^0.16.0",
-    "benchmark": "^2.1.1"
+    "benchmark": "^2.1.1",
+    "typescript": "^2.0.3"
   }
 }
