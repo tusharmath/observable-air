@@ -15,8 +15,7 @@ class ReduceObserver<T> implements IObserver<T> {
   }
 
   next (val: T): void {
-    var r = this.reducer;
-    this.value = r(this.value, val)
+    this.value = this.reducer(this.value, val)
   }
 
   error (err: Error): void {

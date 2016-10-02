@@ -11,8 +11,7 @@ class MapObserver<T> implements IObserver<T> {
   }
 
   next (val: T): void {
-    var f = this.mapper
-    this.sink.next(f(val))
+    this.sink.next(this.mapper(val))
   }
 
   error (err: Error): void {

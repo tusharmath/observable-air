@@ -14,8 +14,7 @@ class FilterObserver <T> implements IObserver<T> {
   }
 
   next (val: T) {
-    var p = this.predicate;
-    p(val) && this.sink.next(val)
+    if (this.predicate(val)) this.sink.next(val)
   }
 
   error (err: Error) {
