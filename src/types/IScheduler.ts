@@ -3,7 +3,16 @@
  */
 
 import {ITask} from './ITask';
-export interface IScheduler<T> {
-  run(task: ITask): T
-  cancel(id: T): void
+import {ISchedule} from './ISchedule';
+export interface IScheduler extends ITask {
+  advanceTo(time: number): void
+  advanceBy(time: number): void
+  scheduleRelative(task: ITask, time: number): ISchedule
+  scheduleAbsolute(task: ITask, time: number): ISchedule
+  removeSchedule(schedule: ISchedule): void
+  start(): void
+  stop(): void
+  readonly clock: number
+  readonly schedules: Array<ISchedule>
+  readonly paused: Boolean
 }
