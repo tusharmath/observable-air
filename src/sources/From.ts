@@ -15,11 +15,10 @@ export class FromObservable<T> implements IObservable<T> {
   }
 
   subscribe (observer: IObserver<T>): ISubscription {
-    const end = () => observer.complete()
     for (var i = 0; i < this.array.length; ++i) {
       observer.next(this.array[i])
     }
-    end()
+    observer.complete()
     return subscription
   }
 }
