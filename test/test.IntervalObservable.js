@@ -6,49 +6,22 @@
 
 import test from 'ava'
 import {interval} from '../src/sources/Interval'
-import U from '../lib/test-util'
-import {MapObservable} from '../src/operators/Map'
+import {VirtualTimeScheduler} from '../src/schedulers/VirtualTimeScheduler'
+import {ReactiveTest} from '../src/lib/ReactiveTest'
+const {next} = ReactiveTest
 
-test.cb('subscribe()', t => {
-  const {subscription, results} = U.testOB(() => interval(100))
-  setTimeout(() => {
-    subscription.unsubscribe()
-    t.deepEqual(results, [
-      {type: 'value', value: 0},
-      {type: 'value', value: 1},
-      {type: 'value', value: 2},
-      {type: 'value', value: 3},
-      {type: 'value', value: 4},
-      {type: 'value', value: 5},
-      {type: 'value', value: 6},
-      {type: 'value', value: 7},
-      {type: 'value', value: 8},
-      {type: 'value', value: 9}
-    ])
-    t.end()
-  }, 1000)
-})
-
-test.cb('interval+map', t => {
-  const ob = new MapObservable(
-    x => x * 10,
-    interval(100)
-  )
-  const {subscription, results} = U.testOB(() => ob)
-  setTimeout(() => {
-    subscription.unsubscribe()
-    t.deepEqual(results, [
-      {type: 'value', value: 0},
-      {type: 'value', value: 10},
-      {type: 'value', value: 20},
-      {type: 'value', value: 30},
-      {type: 'value', value: 40},
-      {type: 'value', value: 50},
-      {type: 'value', value: 60},
-      {type: 'value', value: 70},
-      {type: 'value', value: 80},
-      {type: 'value', value: 90}
-    ])
-    t.end()
-  }, 1000)
+test('subscribe()', t => {
+  const sh = VirtualTimeScheduler.of()
+  const {results} = sh.startScheduler(() => interval(100, sh))
+  t.deepEqual(results, [
+    next(200, 0),
+    next(300, 1),
+    next(400, 2),
+    next(500, 3),
+    next(600, 4),
+    next(700, 5),
+    next(800, 6),
+    next(900, 7),
+    next(1000, 8)
+  ])
 })
