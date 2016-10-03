@@ -5,13 +5,30 @@
 
 import {IScheduler} from '../types/IScheduler';
 import {IDisposable} from '../types/IDisposable';
-import {ScheduledTask} from '../lib/ScheduledTask';
 import {ITask} from '../types/ITask';
 
 
-export class TimeoutScheduler implements IScheduler {
+export class TimeoutDisposable implements IDisposable {
+  disposed: boolean;
+  private timer: number;
+
+  constructor (private task: ITask, private timeout: number) {
+    this.disposed = false
+  }
+
+  run () {
+    this.timer = setTimeout(() => this.task(), this.timeout)
+  }
+
+  dispose (): void {
+    clearTimeout(this.timer)
+    this.disposed = true
+  }
+}
+
+export class DefaultScheduler implements IScheduler {
   schedule (task: ITask, relativeTime: number): IDisposable {
-    var scheduledTask = new ScheduledTask(task, relativeTime);
+    var scheduledTask = new TimeoutDisposable(task, relativeTime);
     scheduledTask.run()
     return scheduledTask
   }
@@ -21,6 +38,6 @@ export class TimeoutScheduler implements IScheduler {
   }
 
   static of () {
-    return new TimeoutScheduler()
+    return new DefaultScheduler()
   }
 }

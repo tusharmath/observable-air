@@ -6,7 +6,7 @@ import {IObservable} from '../types/IObservable';
 import {ISubscription} from '../types/ISubscription';
 import {IObserver} from '../types/IObserver';
 import {IScheduler} from '../types/IScheduler';
-import {TimeoutScheduler} from '../schedulers/DefaultScheduler';
+import {DefaultScheduler} from '../schedulers/DefaultScheduler';
 import {RepeatedTask} from '../lib/RepeatedTask';
 
 
@@ -37,6 +37,6 @@ export class IntervalObservable<Number> implements IObservable<number> {
 }
 
 
-export function interval (interval: number, scheduler: IScheduler = TimeoutScheduler.of()): IObservable<number> {
+export function interval (interval: number, scheduler: IScheduler = DefaultScheduler.of()): IObservable<number> {
   return new IntervalObservable(interval, scheduler)
 }
