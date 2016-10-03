@@ -72,7 +72,7 @@ export class VirtualTimeScheduler implements IScheduler {
 
   startScheduler<T> (
     f: () => IObservable<T>,
-    timing: {start: number, stop: number} = {start: 200, stop: 1000}
+    timing: {start: number, stop: number} = {start: 200, stop: 2000}
   ) {
     var results: Array<any> = []
     var subscription: ISubscription

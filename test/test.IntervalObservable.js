@@ -12,16 +12,17 @@ const {next} = ReactiveTest
 
 test('subscribe()', t => {
   const sh = VirtualTimeScheduler.of()
-  const {results} = sh.startScheduler(() => interval(100, sh))
+  const {results} = sh.startScheduler(() => interval(200, sh))
   t.deepEqual(results, [
     next(200, 0),
-    next(300, 1),
-    next(400, 2),
-    next(500, 3),
-    next(600, 4),
-    next(700, 5),
-    next(800, 6),
-    next(900, 7),
-    next(1000, 8)
+    next(400, 1),
+    next(600, 2),
+    next(800, 3),
+    next(1000, 4),
+    next(1200, 5),
+    next(1400, 6),
+    next(1600, 7),
+    next(1800, 8),
+    next(2000, 9)
   ])
 })
