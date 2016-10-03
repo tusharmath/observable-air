@@ -13,16 +13,18 @@ import {RepeatedTask} from '../lib/RepeatedTask';
 export class IntervalObservable<Number> implements IObservable<number> {
   private __closed: boolean
 
-  constructor (
-    private interval: number,
-    private scheduler: IScheduler
-  ) {
+  constructor (private interval: number,
+               private scheduler: IScheduler) {
     this.__closed = false
   }
 
   subscribe (observer: IObserver<number>): ISubscription {
     let i = 0
-    const repeatedTask = new RepeatedTask(() => observer.next(i++), this.interval, this.scheduler);
+    const repeatedTask = new RepeatedTask(
+      () => observer.next(i++),
+      this.interval,
+      this.scheduler
+    )
     repeatedTask.run()
     return {
       unsubscribe () {
@@ -37,6 +39,7 @@ export class IntervalObservable<Number> implements IObservable<number> {
 }
 
 
-export function interval (interval: number, scheduler: IScheduler = DefaultScheduler.of()): IObservable<number> {
+export function interval (interval: number,
+                          scheduler: IScheduler = DefaultScheduler.of()): IObservable<number> {
   return new IntervalObservable(interval, scheduler)
 }

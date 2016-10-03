@@ -8,9 +8,10 @@ import {IScheduler} from '../types/IScheduler';
 import {IObservable} from '../types/IObservable';
 import {IObserver} from '../types/IObserver';
 import {ISubscription} from '../types/ISubscription';
-import {ReactiveTest, EventNext} from '../testing/ReactiveTest';
+import {EventNext} from '../testing/ReactiveTest';
 import {Observable} from '../Observable';
 import {IEvent} from '../types/IEvent';
+import {ResultsObserver} from '../lib/RecordObserver';
 
 class TaskSchedule {
   constructor (public task: ITask, public time: number) {
@@ -18,13 +19,9 @@ class TaskSchedule {
 }
 const MockDisposable = {dispose: (): void => void 0, disposed: false}
 
-
-function createSubscription (results: Array<any>, scheduler: IScheduler): IObserver<any> {
-  return {
-    next: (value: any) => results.push(ReactiveTest.next(scheduler.now(), value)),
-    error: (value: Error) => results.push(ReactiveTest.error(scheduler.now(), value)),
-    complete: () => results.push(ReactiveTest.complete(scheduler.now()))
-  };
+export const DEFAULT_TIMING = {
+  start: 200,
+  stop: 2000
 }
 
 export class VirtualTimeScheduler implements IScheduler {
@@ -74,14 +71,13 @@ export class VirtualTimeScheduler implements IScheduler {
 
   startScheduler<T> (
     f: () => IObservable<T>,
-    timing: {start: number, stop: number} = {start: 200, stop: 2000}
-  ) {
-    var results: Array<any> = []
+    timing: {start: number, stop: number} = DEFAULT_TIMING): IObserver<T> {
     var subscription: ISubscription
-    this.scheduleAbsolute(() => subscription = f().subscribe(createSubscription(results, this)), timing.start)
+    var resultsObserver = new ResultsObserver(this);
+    this.scheduleAbsolute(() => subscription = f().subscribe(resultsObserver), timing.start)
     this.scheduleAbsolute(() => subscription.unsubscribe(), timing.stop)
     this.advanceBy(timing.stop)
-    return {results}
+    return resultsObserver
   }
 
   createColdObservable <T> (events: Array<IEvent>): IObservable<IEvent> {
