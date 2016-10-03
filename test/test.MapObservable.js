@@ -7,7 +7,7 @@
 import test from 'ava'
 import {map} from '../src/operators/Map'
 import {VirtualTimeScheduler} from '../src/schedulers/VirtualTimeScheduler'
-import {ReactiveTest} from '../src/lib/ReactiveTest'
+import {ReactiveTest} from '../src/testing/ReactiveTest'
 
 const {next, complete} = ReactiveTest
 

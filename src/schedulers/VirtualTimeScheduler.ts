@@ -8,7 +8,7 @@ import {IScheduler} from '../types/IScheduler';
 import {IObservable} from '../types/IObservable';
 import {IObserver} from '../types/IObserver';
 import {ISubscription} from '../types/ISubscription';
-import {ReactiveTest, EventNext} from '../lib/ReactiveTest';
+import {ReactiveTest, EventNext} from '../testing/ReactiveTest';
 import {Observable} from '../Observable';
 import {IEvent} from '../types/IEvent';
 

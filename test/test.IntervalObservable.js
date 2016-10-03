@@ -7,7 +7,7 @@
 import test from 'ava'
 import {interval} from '../src/sources/Interval'
 import {VirtualTimeScheduler} from '../src/schedulers/VirtualTimeScheduler'
-import {ReactiveTest} from '../src/lib/ReactiveTest'
+import {ReactiveTest} from '../src/testing/ReactiveTest'
 const {next} = ReactiveTest
 
 test('subscribe()', t => {
