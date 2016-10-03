@@ -7,12 +7,7 @@ import {IScheduler} from '../types/IScheduler';
 import {IScheduled} from '../types/IScheduled';
 import {TaskSchedule} from './TaskSchedule';
 import {IDisposable} from '../types/IDisposable';
-
-
-function disposableTimeout (func: () => void, time: number): IDisposable {
-  const timeout = setTimeout(func, time)
-  return {dispose: () => clearTimeout(timeout)}
-}
+import {DisposableTimeout} from '../lib/DisposableTimeout';
 
 
 export class DefaultScheduler implements IScheduler {
@@ -31,7 +26,9 @@ export class DefaultScheduler implements IScheduler {
 
   schedule (task: IScheduled, relativeTime: number): IDisposable {
     this.addToQueue(task, relativeTime)
-    return disposableTimeout(() => this.run(), relativeTime)
+    const timeout = new DisposableTimeout(() => this.run(), relativeTime)
+    timeout.run()
+    return timeout
   }
 
   now (): number {
@@ -49,5 +46,9 @@ export class DefaultScheduler implements IScheduler {
       }
     }
     this.queue = residue
+  }
+
+  static of () {
+    return new DefaultScheduler()
   }
 }

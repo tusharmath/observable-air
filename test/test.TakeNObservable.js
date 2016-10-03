@@ -5,12 +5,12 @@
 'use strict'
 
 import test from 'ava'
-import {IntervalObservable} from '../src/sources/Interval'
+import {interval} from '../src/sources/Interval'
 import U from '../lib/test-util'
 import {TakeNObservable} from '../src/operators/TakeN'
 
 test.cb('interval+map', t => {
-  const ob = new TakeNObservable(10, new IntervalObservable(10))
+  const ob = new TakeNObservable(10, interval(10))
   const {results} = U.testOB(() => ob)
   setTimeout(() => {
     t.deepEqual(results, [

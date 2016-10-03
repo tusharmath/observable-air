@@ -5,12 +5,12 @@
 'use strict'
 
 import test from 'ava'
-import {IntervalObservable} from '../src/sources/Interval'
+import {interval} from '../src/sources/Interval'
 import U from '../lib/test-util'
 import {MapObservable} from '../src/operators/Map'
 
 test.cb('subscribe()', t => {
-  const {subscription, results} = U.testOB(() => new IntervalObservable(100))
+  const {subscription, results} = U.testOB(() => interval(100))
   setTimeout(() => {
     subscription.unsubscribe()
     t.deepEqual(results, [
@@ -22,7 +22,8 @@ test.cb('subscribe()', t => {
       {type: 'value', value: 5},
       {type: 'value', value: 6},
       {type: 'value', value: 7},
-      {type: 'value', value: 8}
+      {type: 'value', value: 8},
+      {type: 'value', value: 9}
     ])
     t.end()
   }, 1000)
@@ -31,7 +32,7 @@ test.cb('subscribe()', t => {
 test.cb('interval+map', t => {
   const ob = new MapObservable(
     x => x * 10,
-    new IntervalObservable(100)
+    interval(100)
   )
   const {subscription, results} = U.testOB(() => ob)
   setTimeout(() => {
@@ -45,7 +46,8 @@ test.cb('interval+map', t => {
       {type: 'value', value: 50},
       {type: 'value', value: 60},
       {type: 'value', value: 70},
-      {type: 'value', value: 80}
+      {type: 'value', value: 80},
+      {type: 'value', value: 90}
     ])
     t.end()
   }, 1000)

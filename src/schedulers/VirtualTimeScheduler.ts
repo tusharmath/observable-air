@@ -6,7 +6,7 @@ import {DefaultScheduler} from './DefaultScheduler';
 import {IDisposable} from '../types/IDisposable';
 import {IScheduled} from '../types/IScheduled';
 
-const MockDisposable = {dispose: (): void => void 0}
+const MockDisposable = {dispose: (): void => void 0, disposed: false}
 export class VirtualTimeScheduler extends DefaultScheduler {
   private clock: number;
 
