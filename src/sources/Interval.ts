@@ -6,7 +6,7 @@ import {IObservable} from '../types/IObservable';
 import {ISubscription} from '../types/ISubscription';
 import {IObserver} from '../types/IObserver';
 import {IScheduler} from '../types/IScheduler';
-import {TimeoutScheduler} from '../schedulers/TimeoutScheduler';
+import {TimeoutScheduler} from '../schedulers/DefaultScheduler';
 import {RepeatedTask} from '../lib/RepeatedTask';
 
 
