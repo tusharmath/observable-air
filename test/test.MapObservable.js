@@ -5,20 +5,25 @@
 'use strict'
 
 import test from 'ava'
-import {Observable} from '../src/Observable'
-import {MapObservable} from '../src/operators/Map'
-import U from '../lib/test-util'
+import {map} from '../src/operators/Map'
+import {VirtualTimeScheduler} from '../src/schedulers/VirtualTimeScheduler'
+import {ReactiveTest} from '../src/lib/ReactiveTest'
 
-const createArr$ = () => Observable.of(function (ob) {
-  [1, 2, 3].forEach(x => ob.next(x))
-})
+const {next, complete} = ReactiveTest
 
 test('MapObservable.subscribe()', t => {
-  const arr$ = createArr$()
-  const {results} = U.testOB(() => new MapObservable((x) => x * 10, arr$))
+  const sh = VirtualTimeScheduler.of()
+  const $ = sh.createColdObservable([
+    next(210, 0),
+    next(220, 10),
+    next(230, 20),
+    complete(250)
+  ])
+  const {results} = sh.startScheduler(() => map(x => x + 1, $))
   t.deepEqual(results, [
-    {type: 'value', value: 10},
-    {type: 'value', value: 20},
-    {type: 'value', value: 30}
+    next(410, 1),
+    next(420, 11),
+    next(430, 21),
+    complete(450)
   ])
 })

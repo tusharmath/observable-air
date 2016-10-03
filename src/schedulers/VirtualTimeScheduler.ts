@@ -8,7 +8,9 @@ import {IScheduler} from '../types/IScheduler';
 import {IObservable} from '../types/IObservable';
 import {IObserver} from '../types/IObserver';
 import {ISubscription} from '../types/ISubscription';
-import {ReactiveTest} from '../lib/ReactiveTest';
+import {ReactiveTest, EventNext} from '../lib/ReactiveTest';
+import {Observable} from '../Observable';
+import {IEvent} from '../types/IEvent';
 
 class TaskSchedule {
   constructor (public task: ITask, public time: number) {
@@ -80,6 +82,26 @@ export class VirtualTimeScheduler implements IScheduler {
     this.scheduleAbsolute(() => subscription.unsubscribe(), timing.stop)
     this.advanceBy(timing.stop)
     return {results}
+  }
+
+  createColdObservable <T> (events: Array<IEvent>): IObservable<IEvent> {
+    return Observable.of((observer: IObserver<any>) => {
+      for (var i = 0; i < events.length; i++) {
+        const event = events[i]
+        if (event.type === 'next') {
+          this.schedule(() => observer.next((<EventNext<any>> event).value), event.time)
+        }
+        else if (event.type === 'complete') {
+          this.schedule(() => observer.complete(), event.time)
+        }
+      }
+      return {
+        unsubscribe () {
+
+        },
+        closed: false
+      }
+    })
   }
 
   static of () {
