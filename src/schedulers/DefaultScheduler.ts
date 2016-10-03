@@ -11,7 +11,9 @@ import {ITask} from '../types/ITask';
 
 export class TimeoutScheduler implements IScheduler {
   schedule (task: ITask, relativeTime: number): IDisposable {
-    return new ScheduledTask(task, relativeTime).run()
+    var scheduledTask = new ScheduledTask(task, relativeTime);
+    scheduledTask.run()
+    return scheduledTask
   }
 
   now (): number {

@@ -16,7 +16,6 @@ export class ScheduledTask implements IDisposable {
 
   run () {
     this.timer = setTimeout(() => this.task(), this.timeout)
-    return this
   }
 
   dispose (): void {
