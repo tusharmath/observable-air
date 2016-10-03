@@ -7,20 +7,8 @@ import {ISubscription} from '../types/ISubscription';
 import {IObserver} from '../types/IObserver';
 import {IScheduler} from '../types/IScheduler';
 import {TimeoutScheduler} from '../schedulers/TimeoutScheduler';
-import {ITask} from '../types/ITask';
 import {RepeatedTask} from '../lib/RepeatedTask';
 
-class CounterTask implements ITask {
-  private count: number;
-
-  constructor (private observer: IObserver<number>) {
-    this.count = 0
-  }
-
-  run (): void {
-    this.observer.next(this.count++)
-  }
-}
 
 export class IntervalObservable<Number> implements IObservable<number> {
   private __closed: boolean
@@ -33,7 +21,8 @@ export class IntervalObservable<Number> implements IObservable<number> {
   }
 
   subscribe (observer: IObserver<number>): ISubscription {
-    const repeatedTask = new RepeatedTask(new CounterTask(observer), this.interval, this.scheduler);
+    let i = 0
+    const repeatedTask = new RepeatedTask(() => observer.next(i++), this.interval, this.scheduler);
     repeatedTask.run()
     return {
       unsubscribe () {

@@ -62,7 +62,7 @@ export class VirtualTimeScheduler implements IScheduler {
     for (var i = 0; i < this.queue.length; ++i) {
       var qItem = this.queue[i]
       if (qItem.time <= this.clock) {
-        qItem.task.run()
+        qItem.task()
       } else {
         residual.push(qItem)
       }
@@ -76,8 +76,8 @@ export class VirtualTimeScheduler implements IScheduler {
   ) {
     var results: Array<any> = []
     var subscription: ISubscription
-    this.scheduleAbsolute({run: () => subscription = f().subscribe(createSubscription(results, this))}, timing.start)
-    this.scheduleAbsolute({run: () => subscription.unsubscribe()}, timing.stop)
+    this.scheduleAbsolute(() => subscription = f().subscribe(createSubscription(results, this)), timing.start)
+    this.scheduleAbsolute(() => subscription.unsubscribe(), timing.stop)
     this.advanceBy(timing.stop)
     return {results}
   }

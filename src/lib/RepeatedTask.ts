@@ -7,7 +7,7 @@ import {IScheduler} from '../types/IScheduler';
 import {ITask} from '../types/ITask';
 import {IDisposable} from '../types/IDisposable';
 
-export class RepeatedTask implements ITask, IDisposable {
+export class RepeatedTask implements IDisposable {
   disposed: boolean;
 
   constructor (
@@ -18,8 +18,8 @@ export class RepeatedTask implements ITask, IDisposable {
   }
 
   run (): void {
-    this.task.run()
-    if (!this.disposed) this.scheduler.schedule(this, this.interval)
+    this.task()
+    if (!this.disposed) this.scheduler.schedule(() => this.run(), this.interval)
   }
 
   dispose (): void {

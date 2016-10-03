@@ -6,7 +6,7 @@
 import {IDisposable} from '../types/IDisposable';
 import {ITask} from '../types/ITask';
 
-export class ScheduledTask implements IDisposable, ITask {
+export class ScheduledTask implements IDisposable {
   disposed: boolean;
   private timer: number;
 
@@ -15,7 +15,7 @@ export class ScheduledTask implements IDisposable, ITask {
   }
 
   run () {
-    this.timer = setTimeout(() => this.task.run(), this.timeout)
+    this.timer = setTimeout(() => this.task(), this.timeout)
     return this
   }
 
