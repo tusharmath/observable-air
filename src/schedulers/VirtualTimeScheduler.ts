@@ -33,4 +33,8 @@ export class VirtualTimeScheduler extends DefaultScheduler {
     this.addToQueue(task, relativeTime)
     return MockDisposable
   }
+
+  static of () {
+    return new VirtualTimeScheduler()
+  }
 }
