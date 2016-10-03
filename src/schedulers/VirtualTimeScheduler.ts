@@ -2,12 +2,12 @@
  * Created by tushar.mathur on 02/10/16.
  */
 
-import {DefaultScheduler} from './DefaultScheduler';
+import {TimeoutScheduler} from './TimeoutScheduler';
 import {IDisposable} from '../types/IDisposable';
-import {IScheduled} from '../types/IScheduled';
+import {ITask} from '../types/ITask';
 
 const MockDisposable = {dispose: (): void => void 0, disposed: false}
-export class VirtualTimeScheduler extends DefaultScheduler {
+export class VirtualTimeScheduler extends TimeoutScheduler {
   private clock: number;
 
   constructor () {
@@ -29,12 +29,21 @@ export class VirtualTimeScheduler extends DefaultScheduler {
     return this.clock
   }
 
-  schedule (task: IScheduled, relativeTime: number): IDisposable {
+  schedule (task: ITask, relativeTime: number): IDisposable {
     this.addToQueue(task, relativeTime)
     return MockDisposable
   }
 
+  private run () {
+
+  }
+
+
   static of () {
     return new VirtualTimeScheduler()
+  }
+
+  private addToQueue (task: ITask, relativeTime: number) {
+
   }
 }

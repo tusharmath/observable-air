@@ -6,30 +6,19 @@ import {IObservable} from '../types/IObservable';
 import {ISubscription} from '../types/ISubscription';
 import {IObserver} from '../types/IObserver';
 import {IScheduler} from '../types/IScheduler';
-import {DefaultScheduler} from '../schedulers/DefaultScheduler';
-import {IScheduled} from '../types/IScheduled';
-import {IDisposable} from '../types/IDisposable';
+import {TimeoutScheduler} from '../schedulers/TimeoutScheduler';
+import {ITask} from '../types/ITask';
+import {RepeatedTask} from '../lib/RepeatedTask';
 
-class CounterTask implements IScheduled, IDisposable {
-  disposed: boolean;
+class CounterTask implements ITask {
   private count: number;
 
-  constructor (
-    private observer: IObserver<number>,
-    private scheduler: IScheduler,
-    private  interval: number
-  ) {
+  constructor (private observer: IObserver<number>) {
     this.count = 0
-    this.disposed = false
   }
 
   run (): void {
     this.observer.next(this.count++)
-    if (!this.disposed) this.scheduler.schedule(this, this.interval);
-  }
-
-  dispose (): void {
-    this.disposed = true
   }
 }
 
@@ -44,11 +33,11 @@ export class IntervalObservable<Number> implements IObservable<number> {
   }
 
   subscribe (observer: IObserver<number>): ISubscription {
-    const task = new CounterTask(observer, this.scheduler, this.interval);
-    task.run()
+    const repeatedTask = new RepeatedTask(new CounterTask(observer), this.interval, this.scheduler);
+    repeatedTask.run()
     return {
       unsubscribe () {
-        task.dispose()
+        repeatedTask.dispose()
         this.__closed = true
       },
       get closed () {
@@ -59,6 +48,6 @@ export class IntervalObservable<Number> implements IObservable<number> {
 }
 
 
-export function interval (interval: number, scheduler: IScheduler = DefaultScheduler.of()): IObservable<number> {
+export function interval (interval: number, scheduler: IScheduler = TimeoutScheduler.of()): IObservable<number> {
   return new IntervalObservable(interval, scheduler)
 }
