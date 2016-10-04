@@ -5,32 +5,28 @@
 import {IObservable} from '../types/IObservable';
 import {IObserver} from '../types/IObserver';
 import {ISubscription} from '../types/ISubscription';
+import {Observer} from '../lib/Observer';
 
-
-class TakeNObserver<T> implements IObserver<T> {
+// TODO: Support slicing
+class TakeNObserver<T> extends Observer<T> {
   private count: number;
-  private completed: boolean;
 
   constructor (private total: number, private sink: IObserver<T>) {
+    super()
     this.count = 0
-    this.completed = false
   }
 
-
-  next (value: T): void {
-    if (this.completed) return
+  onNext (value: T): void {
     this.sink.next(value)
     ++this.count === this.total && this.complete()
   }
 
-  error (err: Error): void {
-    this.sink.error(err)
+  onComplete (): void {
+    this.sink.complete()
   }
 
-  complete (): void {
-    if (this.completed) return
-    this.sink.complete()
-    this.completed = true
+  onError (error: Error): void {
+    this.sink.error(error)
   }
 }
 
