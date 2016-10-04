@@ -16,13 +16,11 @@ class TakeNObserver<T> implements IObserver<T> {
     this.completed = false
   }
 
-  next (val: T): void {
-    if (++this.count <= this.total && this.completed === false) {
-      this.sink.next(val)
-    }
-    if (this.count === this.total) {
-      this.complete()
-    }
+
+  next (value: T): void {
+    if (this.completed) return
+    this.sink.next(value)
+    ++this.count === this.total && this.complete()
   }
 
   error (err: Error): void {
@@ -30,10 +28,9 @@ class TakeNObserver<T> implements IObserver<T> {
   }
 
   complete (): void {
-    if (this.completed === false) {
-      this.sink.complete()
-      this.completed = true
-    }
+    if (this.completed) return
+    this.sink.complete()
+    this.completed = true
   }
 }
 
