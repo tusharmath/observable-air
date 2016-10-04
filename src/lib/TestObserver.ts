@@ -7,7 +7,7 @@ import {IScheduler} from '../types/IScheduler';
 import {IEvent} from '../types/IEvent';
 import {IObserver} from '../types/IObserver';
 
-export class ResultsObserver<T> implements IObserver<T> {
+export class TestObserver<T> implements IObserver<T> {
   results: Array<IEvent>;
 
   constructor (private scheduler: IScheduler) {
@@ -19,7 +19,6 @@ export class ResultsObserver<T> implements IObserver<T> {
   }
 
   error (err: Error): void {
-
     this.results.push(ReactiveTest.error(this.scheduler.now(), err))
   }
 

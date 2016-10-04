@@ -11,7 +11,7 @@ import {ISubscription} from '../types/ISubscription';
 import {EventNext} from '../testing/ReactiveTest';
 import {Observable} from '../Observable';
 import {IEvent} from '../types/IEvent';
-import {ResultsObserver} from '../lib/RecordObserver';
+import {TestObserver} from '../lib/TestObserver';
 
 class TaskSchedule {
   constructor (public task: ITask, public time: number) {
@@ -77,7 +77,7 @@ export class VirtualTimeScheduler implements IScheduler {
   startScheduler<T> (f: () => IObservable<T>,
                      timing: {start: number, stop: number} = DEFAULT_TIMING): IObserver<T> {
     var subscription: ISubscription
-    var resultsObserver = new ResultsObserver(this);
+    var resultsObserver = new TestObserver(this);
     this.scheduleAbsolute(() => subscription = f().subscribe(resultsObserver), timing.start)
     this.scheduleAbsolute(() => subscription.unsubscribe(), timing.stop)
     this.advanceBy(timing.stop)
