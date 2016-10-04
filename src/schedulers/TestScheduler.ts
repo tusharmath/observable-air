@@ -10,7 +10,7 @@ import {IObserver} from '../types/IObserver';
 import {ISubscription} from '../types/ISubscription';
 import {EventNext} from '../testing/ReactiveTest';
 import {Observable} from '../Observable';
-import {IEvent} from '../types/IEvent';
+import {IEvent, EventType} from '../types/IEvent';
 import {TestObserver} from '../lib/TestObserver';
 
 class TaskSchedule {
@@ -88,10 +88,10 @@ export class TestScheduler implements IScheduler {
     return Observable.of((observer: IObserver<any>) => {
       for (var i = 0; i < events.length; i++) {
         const event = events[i]
-        if (event.type === 'next') {
+        if (event.type === EventType.next) {
           this.schedule(() => observer.next((<EventNext<any>> event).value), event.time)
         }
-        else if (event.type === 'complete') {
+        else if (event.type === EventType.complete) {
           this.schedule(() => observer.complete(), event.time)
         }
       }

@@ -2,30 +2,30 @@
  * Created by tushar.mathur on 03/10/16.
  */
 
-import {IEvent} from '../types/IEvent';
+import {IEvent, EventType} from '../types/IEvent';
 
 
 export class EventNext<T> implements IEvent {
-  type: string;
+  type: EventType;
 
   constructor (public time: number, public value: T) {
-    this.type = 'next'
+    this.type = EventType.next
   }
 }
 
 export class EventError implements IEvent {
-  type: string;
+  type: EventType;
 
   constructor (public time: number, public value: Error) {
-    this.type = 'error'
+    this.type = EventType.error
   }
 }
 
 export class EventComplete implements IEvent {
-  type: string;
+  type: EventType;
 
   constructor (public time: number) {
-    this.type = 'complete'
+    this.type = EventType.complete
   }
 }
 

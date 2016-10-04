@@ -3,6 +3,10 @@
  */
 
 export interface IEvent {
-  readonly type: string
+  readonly type: EventType
   readonly time: number
+}
+
+export enum EventType {
+  next, error, complete
 }
