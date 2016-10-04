@@ -9,6 +9,8 @@ import {IScheduler} from '../types/IScheduler';
 import {DefaultScheduler} from '../schedulers/DefaultScheduler';
 import {IDisposable} from '../types/IDisposable';
 import {IDisposableRunner} from '../types/IDisposableRunner';
+import {SafeExecutor} from '../lib/SafeExecutor';
+import {Safety} from '../types/ISafeValue';
 
 const unsubscribe = function () {
 }
@@ -23,8 +25,13 @@ class FromRunner <T> implements IDisposableRunner {
   }
 
   run () {
-    this.schedule = this.scheduler.scheduleASAP(() => this.execute())
+    this.schedule = this.scheduler.scheduleASAP(() => this.executeSafely())
     return this
+  }
+
+  executeSafely () {
+    const r = SafeExecutor(() => this.execute())
+    if (r.type === Safety.error) this.sink.error(r.value as Error)
   }
 
   execute () {
