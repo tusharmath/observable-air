@@ -5,13 +5,13 @@
 'use strict'
 
 import test from 'ava'
-import {VirtualTimeScheduler} from '../src/schedulers/VirtualTimeScheduler'
+import {TestScheduler} from '../src/schedulers/TestScheduler'
 import {takeN} from '../src/operators/TakeN'
 import {ReactiveTest} from '../src/testing/ReactiveTest'
 
 const {next, complete} = ReactiveTest
 test('takeN(3)', t => {
-  const sh = VirtualTimeScheduler.of()
+  const sh = TestScheduler.of()
   const ob$ = sh.createColdObservable([
     next(0, 1),
     next(10, 2),
@@ -30,7 +30,7 @@ test('takeN(3)', t => {
 })
 
 test('takeN(Infinity)', t => {
-  const sh = VirtualTimeScheduler.of()
+  const sh = TestScheduler.of()
   const ob$ = sh.createColdObservable([
     next(0, 1),
     next(10, 2),

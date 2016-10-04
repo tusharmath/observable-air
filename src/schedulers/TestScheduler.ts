@@ -24,7 +24,7 @@ export const DEFAULT_TIMING = {
   stop: 2000
 }
 
-export class VirtualTimeScheduler implements IScheduler {
+export class TestScheduler implements IScheduler {
   private clock: number;
   private queue: Array<TaskSchedule>;
 
@@ -105,6 +105,6 @@ export class VirtualTimeScheduler implements IScheduler {
   }
 
   static of () {
-    return new VirtualTimeScheduler()
+    return new TestScheduler()
   }
 }

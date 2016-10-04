@@ -6,13 +6,13 @@
 
 import test from 'ava'
 import {map} from '../src/operators/Map'
-import {VirtualTimeScheduler} from '../src/schedulers/VirtualTimeScheduler'
+import {TestScheduler} from '../src/schedulers/TestScheduler'
 import {ReactiveTest} from '../src/testing/ReactiveTest'
 
 const {next, complete} = ReactiveTest
 
 test('MapObservable.subscribe()', t => {
-  const sh = VirtualTimeScheduler.of()
+  const sh = TestScheduler.of()
   const $ = sh.createColdObservable([
     next(210, 0),
     next(220, 10),

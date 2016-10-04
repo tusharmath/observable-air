@@ -6,12 +6,12 @@
 
 import test from 'ava'
 import {interval} from '../src/sources/Interval'
-import {VirtualTimeScheduler} from '../src/schedulers/VirtualTimeScheduler'
+import {TestScheduler} from '../src/schedulers/TestScheduler'
 import {ReactiveTest} from '../src/testing/ReactiveTest'
 const {next} = ReactiveTest
 
 test('subscribe()', t => {
-  const sh = VirtualTimeScheduler.of()
+  const sh = TestScheduler.of()
   const {results} = sh.startScheduler(() => interval(200, sh))
   t.deepEqual(results, [
     next(200, 0),
