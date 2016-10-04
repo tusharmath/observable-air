@@ -6,14 +6,19 @@
 import {IScheduler} from '../types/IScheduler';
 import {IDisposable} from '../types/IDisposable';
 import {ITask} from '../types/ITask';
-import {DisposableTimeout} from '../lib/DisposableTimeout';
+import {ScheduleInFuture} from '../scheduling-strategies/ScheduleInFuture';
+import {ScheduleASAP} from '../scheduling-strategies/ScheduleASAP';
 
 
 export class DefaultScheduler implements IScheduler {
+  scheduleASAP (task: ITask): IDisposable {
+    var scheduledTask = new ScheduleASAP(task);
+    return scheduledTask.run()
+  }
+
   schedule (task: ITask, relativeTime: number): IDisposable {
-    var scheduledTask = new DisposableTimeout(task, relativeTime);
-    scheduledTask.run()
-    return scheduledTask
+    var scheduledTask = new ScheduleInFuture(task, relativeTime);
+    return scheduledTask.run()
   }
 
   now (): number {

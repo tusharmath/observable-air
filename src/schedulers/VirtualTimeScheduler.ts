@@ -56,6 +56,11 @@ export class VirtualTimeScheduler implements IScheduler {
     return MockDisposable
   }
 
+  scheduleASAP (task: ITask): IDisposable {
+    return this.scheduleAbsolute(task, this.now() + 1)
+  }
+
+
   private run () {
     var residual: Array<TaskSchedule> = []
     for (var i = 0; i < this.queue.length; ++i) {
@@ -69,9 +74,8 @@ export class VirtualTimeScheduler implements IScheduler {
     this.queue = residual
   }
 
-  startScheduler<T> (
-    f: () => IObservable<T>,
-    timing: {start: number, stop: number} = DEFAULT_TIMING): IObserver<T> {
+  startScheduler<T> (f: () => IObservable<T>,
+                     timing: {start: number, stop: number} = DEFAULT_TIMING): IObserver<T> {
     var subscription: ISubscription
     var resultsObserver = new ResultsObserver(this);
     this.scheduleAbsolute(() => subscription = f().subscribe(resultsObserver), timing.start)
