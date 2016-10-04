@@ -17,7 +17,7 @@ export class EventError implements IEvent {
   type: string;
 
   constructor (public time: number, public value: Error) {
-    this.type = 'next'
+    this.type = 'error'
   }
 }
 
