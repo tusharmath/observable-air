@@ -3,10 +3,10 @@
  */
 
 
-import {IDisposable} from '../types/IDisposable';
 import {ITask} from '../types/ITask';
+import {ISchedulingStrategy} from '../types/ISchedulingStrategy';
 
-export class DisposableTimeout implements IDisposable {
+export class ScheduleInFuture implements ISchedulingStrategy {
   disposed: boolean;
   private timer: number;
 
@@ -16,6 +16,7 @@ export class DisposableTimeout implements IDisposable {
 
   run () {
     this.timer = setTimeout(() => this.task(), this.timeout)
+    return this
   }
 
   dispose (): void {
