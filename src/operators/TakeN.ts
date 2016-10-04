@@ -5,27 +5,44 @@
 import {IObservable} from '../types/IObservable';
 import {IObserver} from '../types/IObserver';
 import {ISubscription} from '../types/ISubscription';
-import {Observer} from '../Observer';
+
+
+class TakeNObserver<T> implements IObserver<T> {
+  private count: number;
+  private completed: boolean;
+
+  constructor (private total: number, private sink: IObserver<T>) {
+    this.count = 0
+    this.completed = false
+  }
+
+  next (val: T): void {
+    if (++this.count <= this.total && this.completed === false) {
+      this.sink.next(val)
+    }
+    if (this.count === this.total) {
+      this.complete()
+    }
+  }
+
+  error (err: Error): void {
+    this.sink.error(err)
+  }
+
+  complete (): void {
+    if (this.completed === false) {
+      this.sink.complete()
+      this.completed = true
+    }
+  }
+}
 
 export class TakeNObservable<T> implements IObservable<T> {
-  constructor (private count: number, private source: IObservable<T>) {
+  constructor (private total: number, private source: IObservable<T>) {
   }
 
   subscribe (observer: IObserver<T>): ISubscription {
-    let received = 0
-    const subscription = this.source.subscribe(Observer.of(
-      (val: T) => {
-        observer.next(val)
-        received++
-        if (received === this.count) {
-          observer.complete()
-          subscription.unsubscribe()
-        }
-      },
-      err => observer.error(err),
-      () => observer.complete()
-    ))
-    return subscription
+    return this.source.subscribe(new TakeNObserver(this.total, observer))
   }
 
 }
