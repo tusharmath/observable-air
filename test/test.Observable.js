@@ -6,7 +6,7 @@
 
 import test from 'ava'
 import {Observable} from '../src/Observable'
-import U from '../lib/test-util'
+import U from '../chore/test-util'
 
 test(t => {
   t.true(Observable.of(null) instanceof Observable)
