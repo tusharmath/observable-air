@@ -2,9 +2,8 @@
  * Created by tushar.mathur on 05/10/16.
  */
 
-export interface ISubscriptionObserver<T> {
-  next(value: T): void
-  error(error: Error): void
-  complete(value: T): void
+import {IObserver} from './IObserver';
+
+export interface ISubscriptionObserver<T> extends IObserver<T> {
   readonly closed: boolean
 }

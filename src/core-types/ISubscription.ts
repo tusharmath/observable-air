@@ -4,7 +4,5 @@
 
 export interface ISubscription {
   unsubscribe(): void;
-
-  // A boolean value indicating whether the subscription is closed
   closed: Boolean;
 }
