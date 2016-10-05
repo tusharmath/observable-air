@@ -1,2 +1,2 @@
-file -> map -> reduce x 592 ops/sec ±1.50% (74 runs sampled)
-file -> takeN x 259 ops/sec ±1.34% (77 runs sampled)
+file -> map -> reduce x 31.81 ops/sec ±1.00% (72 runs sampled)
+file -> takeN x 258 ops/sec ±0.87% (64 runs sampled)

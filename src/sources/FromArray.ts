@@ -2,9 +2,9 @@
  * Created by tushar.mathur on 28/09/16.
  */
 
-import {IObservable} from '../types/IObservable';
-import {ISubscription} from '../types/ISubscription';
-import {IObserver} from '../types/IObserver';
+import {IObservable} from '../core-types/IObservable';
+import {ISubscription} from '../core-types/ISubscription';
+import {IObserver} from '../core-types/IObserver';
 import {IScheduler} from '../types/IScheduler';
 import {DefaultScheduler} from '../schedulers/DefaultScheduler';
 import {IDisposable} from '../types/IDisposable';

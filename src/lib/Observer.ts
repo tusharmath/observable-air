@@ -2,7 +2,7 @@
  * Created by tushar.mathur on 04/10/16.
  */
 
-import {IObserver} from '../types/IObserver';
+import {IObserver} from '../core-types/IObserver';
 
 export abstract class Observer <T> implements IObserver<T> {
   private completed: boolean;
