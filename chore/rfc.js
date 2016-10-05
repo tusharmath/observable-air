@@ -5,6 +5,6 @@
 'use strict'
 
 const ObservableTests = require('es-observable-tests')
-const Observable = require('../src/Observable')
+const {Observable} = require('../src/Observable')
 
 ObservableTests.runTests(Observable)

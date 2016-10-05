@@ -5,7 +5,7 @@
 'use strict'
 
 import ObservableTests from 'es-observable-tests'
-import Observable from '../src/Observable'
+import {Observable} from '../src/Observable'
 import test from 'ava'
 
 test.failing(t => {
