@@ -11,7 +11,7 @@ import {ISubscription} from '../core-types/ISubscription';
 import {EventNext} from '../testing/ReactiveTest';
 import {Observable} from '../Observable';
 import {IEvent, EventType} from '../types/IEvent';
-import {TestObserver} from '../lib/TestObserver';
+import {TestObserver} from '../testing/TestObserver';
 import {TestObservable} from '../testing/TestObservable';
 
 class TaskSchedule {

@@ -2,7 +2,7 @@
  * Created by tushar.mathur on 03/10/16.
  */
 
-import {ReactiveTest} from '../testing/ReactiveTest';
+import {ReactiveTest} from './ReactiveTest';
 import {IScheduler} from '../types/IScheduler';
 import {IEvent} from '../types/IEvent';
 import {IObserver} from '../core-types/IObserver';
