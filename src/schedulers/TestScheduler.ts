@@ -12,6 +12,7 @@ import {EventNext} from '../testing/ReactiveTest';
 import {Observable} from '../Observable';
 import {IEvent, EventType} from '../types/IEvent';
 import {TestObserver} from '../lib/TestObserver';
+import {TestObservable} from '../testing/TestObservable';
 
 class TaskSchedule {
   constructor (public task: ITask, public time: number) {
@@ -85,7 +86,7 @@ export class TestScheduler implements IScheduler {
   }
 
   createColdObservable <T> (events: Array<IEvent>): IObservable<IEvent> {
-    return new Observable((observer: IObserver<any>) => {
+    return new TestObservable((observer: IObserver<any>) => {
       for (var i = 0; i < events.length; i++) {
         const event = events[i]
         if (event.type === EventType.next) {
