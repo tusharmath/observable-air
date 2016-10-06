@@ -85,7 +85,7 @@ export class TestScheduler implements IScheduler {
   }
 
   createColdObservable <T> (events: Array<IEvent>): IObservable<IEvent> {
-    return Observable.of((observer: IObserver<any>) => {
+    return new Observable((observer: IObserver<any>) => {
       for (var i = 0; i < events.length; i++) {
         const event = events[i]
         if (event.type === EventType.next) {
