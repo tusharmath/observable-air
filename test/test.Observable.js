@@ -6,27 +6,25 @@
 
 import test from 'ava'
 import {Observable} from '../src/Observable'
-import U from '../chore/test-util'
+import {TestScheduler} from '../src/schedulers/TestScheduler'
+import {ReactiveTest} from '../src/testing/ReactiveTest'
 
-test(t => {
-  t.true(Observable.of(null) instanceof Observable)
-})
+const {next, complete} = ReactiveTest
+
+function noop () {}
+test(t => t.true(Observable.of(null) instanceof Observable))
 test('subscribe()', t => {
-  const ob = Observable.of(function (observer) {
+  const sh = new TestScheduler()
+  const {results} = sh.startScheduler(() => new Observable(function (observer) {
     [1, 2, 3].forEach(x => observer.next(x))
     observer.complete()
-  })
-  t.deepEqual(U.testOB(() => ob).results, [
-    {type: 'value', value: 1},
-    {type: 'value', value: 2},
-    {type: 'value', value: 3},
-    {type: 'complete'}
+    return {unsubscribe: noop, closed: false}
+  }))
+
+  t.deepEqual(results, [
+    next(201, 1),
+    next(201, 2),
+    next(201, 3),
+    complete(201, 4)
   ])
-})
-test('subscribe():multiple', t => {
-  const ob = Observable.of(function (observer) {
-    [1, 2, 3].forEach(x => observer.next(x))
-    observer.complete(1000)
-  })
-  t.deepEqual(U.testOB(() => ob).results, U.testOB(() => ob).results)
 })

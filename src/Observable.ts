@@ -8,8 +8,7 @@ import {ISubscriberFunction} from './core-types/ISubscriberFunction';
 import {IObserver} from './core-types/IObserver';
 import {IScheduler} from './types/IScheduler';
 import {DefaultScheduler} from './schedulers/DefaultScheduler';
-import {ISubscriptionObserver} from './core-types/ISubscriptionObserver';
-
+import {Subscription} from './Subscription';
 
 export class Observable<T> implements IObservable<T> {
   constructor (private func: ISubscriberFunction<T>) {
@@ -20,6 +19,6 @@ export class Observable<T> implements IObservable<T> {
   }
 
   subscribe (observer: IObserver<T>, scheduler: IScheduler = new DefaultScheduler()): ISubscription {
-    return this.func(observer as ISubscriptionObserver<T>)
+    return new Subscription(this.func, observer, scheduler).run()
   }
 }
