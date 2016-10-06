@@ -4,6 +4,8 @@
 
 import {ISubscription} from './ISubscription';
 import {IObserver} from './IObserver';
+import {IScheduler} from '../types/IScheduler';
+
 export interface IObservable<T> {
-  subscribe(observer: IObserver<T>): ISubscription
+  subscribe(observer: IObserver<T>, scheduler: IScheduler): ISubscription
 }

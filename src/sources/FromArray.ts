@@ -49,16 +49,18 @@ class FromRunner <T> implements IDisposableRunner {
 }
 
 export class FromObservable<T> implements IObservable<T> {
-  constructor (private array: Array<T>, private scheduler: IScheduler) {
+  constructor (private array: Array<T>) {
   }
 
-  subscribe (observer: IObserver<T>): ISubscription {
-    const runner = new FromRunner<T>(this.array, observer, this.scheduler)
+  subscribe (observer: IObserver<T>,
+             scheduler: IScheduler = new DefaultScheduler()): ISubscription {
+
+    const runner = new FromRunner<T>(this.array, observer, scheduler)
     runner.run()
     return subscription
   }
 }
 
-export function fromArray<T> (list: Array<T>, scheduler: IScheduler = new DefaultScheduler()): IObservable<T> {
-  return new FromObservable(list, scheduler)
+export function fromArray<T> (list: Array<T>): IObservable<T> {
+  return new FromObservable(list)
 }

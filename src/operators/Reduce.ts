@@ -7,6 +7,7 @@ import {IObservable} from '../core-types/IObservable';
 import {IObserver} from '../core-types/IObserver';
 import {ISubscription} from '../core-types/ISubscription';
 import {IReducer} from '../types/IReducer';
+import {IScheduler} from '../types/IScheduler';
 
 class ReduceObserver<T> implements IObserver<T> {
   constructor (private reducer: IReducer<T>,
@@ -35,8 +36,8 @@ export class ReduceObservable <T> implements IObservable<T> {
                private source: IObservable<T>) {
   }
 
-  subscribe (obr: IObserver<T>): ISubscription {
-    return this.source.subscribe(new ReduceObserver(this.reducer, this.value, obr))
+  subscribe (obr: IObserver<T>, scheduler: IScheduler): ISubscription {
+    return this.source.subscribe(new ReduceObserver(this.reducer, this.value, obr), scheduler)
   }
 }
 

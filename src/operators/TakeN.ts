@@ -5,6 +5,7 @@
 import {IObservable} from '../core-types/IObservable';
 import {IObserver} from '../core-types/IObserver';
 import {ISubscription} from '../core-types/ISubscription';
+import {IScheduler} from '../types/IScheduler';
 
 // TODO: Support slicing
 class TakeNObserver<T> implements IObserver<T> {
@@ -38,8 +39,8 @@ export class TakeNObservable<T> implements IObservable<T> {
   constructor (private total: number, private source: IObservable<T>) {
   }
 
-  subscribe (observer: IObserver<T>): ISubscription {
-    return this.source.subscribe(new TakeNObserver(this.total, observer))
+  subscribe (observer: IObserver<T>, scheduler: IScheduler): ISubscription {
+    return this.source.subscribe(new TakeNObserver(this.total, observer), scheduler)
   }
 
 }
