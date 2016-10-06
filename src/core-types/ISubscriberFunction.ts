@@ -6,5 +6,5 @@ import {ISubscription} from './ISubscription';
 import {ISubscriptionObserver} from './ISubscriptionObserver';
 
 export interface ISubscriberFunction<T> {
-  (observer: ISubscriptionObserver<T>): ISubscription | (() => void)
+  (observer: ISubscriptionObserver<T>): ISubscription
 }

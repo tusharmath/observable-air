@@ -5,30 +5,21 @@
 import {IObservable} from './core-types/IObservable';
 import {ISubscription} from './core-types/ISubscription';
 import {ISubscriberFunction} from './core-types/ISubscriberFunction';
-import {
-  IObserver,
-  INextFunction,
-  IErrorFunction,
-  ICompleteFunction
-} from './core-types/IObserver';
-import {SubscriptionObserver} from './SubscriptionObserver';
-import {Subscription} from './Subscription';
+import {IObserver} from './core-types/IObserver';
+import {IScheduler} from './types/IScheduler';
+import {DefaultScheduler} from './schedulers/DefaultScheduler';
+import {ISubscriptionObserver} from './core-types/ISubscriptionObserver';
 
 
 export class Observable<T> implements IObservable<T> {
   constructor (private func: ISubscriberFunction<T>) {
   }
 
-  static of<U> (subscriberFunction: ISubscriberFunction<U>) {
-    return new Observable(subscriberFunction)
+  static of<U> (func: ISubscriberFunction<U>) {
+    return new Observable(func)
   }
 
-  subscribe (onNext: IObserver<T> | INextFunction<T>,
-             onError?: IErrorFunction,
-             onComplete?: ICompleteFunction): ISubscription {
-
-    return Subscription.from(this.func(
-      SubscriptionObserver.from(onNext, onError, onComplete)
-    ))
+  subscribe (observer: IObserver<T>, scheduler: IScheduler = new DefaultScheduler()): ISubscription {
+    return this.func(observer as ISubscriptionObserver<T>)
   }
 }
