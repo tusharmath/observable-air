@@ -4,7 +4,8 @@
 
 import {ISubscription} from './ISubscription';
 import {IObserver} from './IObserver';
+import {ITask} from './ITask';
 
 export interface ISubscriberFunction<T> {
-  (observer: IObserver<T>): void | (() => void) | ISubscription
+  (observer: IObserver<T>): void | ITask | ISubscription
 }

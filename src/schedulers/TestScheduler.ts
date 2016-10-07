@@ -4,9 +4,9 @@
 
 import {ITask} from '../types/ITask';
 import {IScheduler} from '../types/IScheduler';
-import {IObservable} from '../core-types/IObservable';
-import {IObserver} from '../core-types/IObserver';
-import {ISubscription} from '../core-types/ISubscription';
+import {IObservable} from '../types/IObservable';
+import {IObserver} from '../types/IObserver';
+import {ISubscription} from '../types/ISubscription';
 import {EventNext} from '../testing/ReactiveTest';
 import {IEvent, EventType} from '../types/IEvent';
 import {TestObserver} from '../testing/TestObserver';

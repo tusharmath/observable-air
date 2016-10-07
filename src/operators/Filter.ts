@@ -3,9 +3,9 @@
  */
 
 
-import {IObservable} from '../core-types/IObservable';
-import {IObserver} from '../core-types/IObserver';
-import {ISubscription} from '../core-types/ISubscription';
+import {IObservable} from '../types/IObservable';
+import {IObserver} from '../types/IObserver';
+import {ISubscription} from '../types/ISubscription';
 import {IPredicate} from '../types/IPredicate';
 import {IScheduler} from '../types/IScheduler';
 

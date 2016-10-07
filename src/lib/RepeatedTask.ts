@@ -5,7 +5,7 @@
 
 import {IScheduler} from '../types/IScheduler';
 import {ITask} from '../types/ITask';
-import {ISubscription} from '../core-types/ISubscription';
+import {ISubscription} from '../types/ISubscription';
 
 export class RepeatedTask implements ISubscription {
   closed: boolean;

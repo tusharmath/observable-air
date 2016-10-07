@@ -2,10 +2,10 @@
  * Created by tushar.mathur on 27/09/16.
  */
 
-import {IObservable} from './core-types/IObservable';
-import {ISubscription} from './core-types/ISubscription';
-import {ISubscriberFunction} from './core-types/ISubscriberFunction';
-import {IObserver} from './core-types/IObserver';
+import {IObservable} from './types/IObservable';
+import {ISubscription} from './types/ISubscription';
+import {ISubscriberFunction} from './types/ISubscriberFunction';
+import {IObserver} from './types/IObserver';
 import {IScheduler} from './types/IScheduler';
 import {DefaultScheduler} from './schedulers/DefaultScheduler';
 import {Subscription, CompositeSubscription} from './Subscription';

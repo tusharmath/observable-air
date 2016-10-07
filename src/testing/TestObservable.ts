@@ -2,11 +2,11 @@
  * Created by tushar.mathur on 06/10/16.
  */
 
-import {IObservable} from '../core-types/IObservable';
-import {IObserver} from '../core-types/IObserver';
+import {IObservable} from '../types/IObservable';
+import {IObserver} from '../types/IObserver';
 import {IScheduler} from '../types/IScheduler';
-import {ISubscription} from '../core-types/ISubscription';
-import {ISubscriberFunction} from '../core-types/ISubscriberFunction';
+import {ISubscription} from '../types/ISubscription';
+import {ISubscriberFunction} from '../types/ISubscriberFunction';
 import {Subscription} from '../Subscription';
 
 

@@ -52,3 +52,15 @@ test.cb('unsubscribe()', t => {
     }
   })
 })
+
+test('void subscription', t => {
+  const sh = new TestScheduler()
+  const {results} = sh.startScheduler(() => new Observable(noop))
+  t.deepEqual(results, [])
+})
+
+test('subscription () => void', t => {
+  const sh = new TestScheduler()
+  const {results} = sh.startScheduler(() => new Observable(() => () => null))
+  t.deepEqual(results, [])
+})

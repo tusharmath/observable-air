@@ -2,7 +2,8 @@
  * Created by tushar.mathur on 07/10/16.
  */
 
-import {ISubscription} from './core-types/ISubscription';
+import {ISubscription} from './types/ISubscription';
+import {ITask} from './types/ITask';
 
 export class SubscriptionStub implements ISubscription {
   closed: boolean;
@@ -49,12 +50,12 @@ export class CompositeSubscription implements ISubscription {
 }
 
 export const Subscription = {
-  from (target: void | (() => void) | ISubscription | ISubscription[]): ISubscription {
+  from (target: void | ITask | ISubscription | ISubscription[]): ISubscription {
     if (!target)
       return new SubscriptionStub()
 
     if (typeof target === 'function')
-      return new SubscriptionFunc(target as (() => void))
+      return new SubscriptionFunc(target as ITask)
 
     if (typeof (target as ISubscription).unsubscribe === 'function')
       return target as ISubscription
