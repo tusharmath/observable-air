@@ -8,9 +8,14 @@ import {ISubscription} from '../types/core/ISubscription';
 import {ITask} from '../types/ITask';
 import {ScheduleInFuture} from '../scheduling-strategies/ScheduleInFuture';
 import {ScheduleASAP} from '../scheduling-strategies/ScheduleASAP';
+import {ScheduleNow} from '../scheduling-strategies/ScheduleNow';
 
 
 export class DefaultScheduler implements IScheduler {
+  scheduleNow (task: ITask): ISubscription {
+    return new ScheduleNow(task).run()
+  }
+
   scheduleASAP (task: ITask): ISubscription {
     var scheduledTask = new ScheduleASAP(task);
     return scheduledTask.run()

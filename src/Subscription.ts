@@ -16,6 +16,7 @@ export class SubscriptionStub implements ISubscription {
   }
 
   unsubscribe (): void {
+    this.closed = true
   }
 }
 
@@ -34,7 +35,7 @@ export class SubscriptionFunc implements ISubscription {
 }
 
 export class CompositeSubscription implements ISubscription {
-  constructor (private subscriptions: ISubscription[]) {
+  constructor (private subscriptions: ISubscription[] = []) {
   }
 
   add (d: ISubscription) {

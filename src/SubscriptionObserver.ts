@@ -18,10 +18,12 @@ export class SubscriptionObserver<T> implements ISubscriptionObserver<T> {
 
   error (err: Error): void {
     this.sink.error(err)
+
   }
 
   complete (): void {
     if (this.sink.complete) this.sink.complete()
+    this.closed = true
   }
 
   static of<T> (observer: IObserver<T>) {

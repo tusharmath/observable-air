@@ -21,10 +21,10 @@ test('subscribe()', t => {
   }))
 
   t.deepEqual(results, [
-    next(201, 1),
-    next(201, 2),
-    next(201, 3),
-    complete(201, 4)
+    next(200, 1),
+    next(200, 2),
+    next(200, 3),
+    complete(200, 4)
   ])
 })
 
@@ -69,10 +69,10 @@ test('static of', t => {
   const sh = new TestScheduler()
   const {results} = sh.startScheduler(() => Observable.of(100, 200, 300))
   t.deepEqual(results, [
-    next(201, 100),
-    next(201, 200),
-    next(201, 300),
-    complete(201)
+    next(200, 100),
+    next(200, 200),
+    next(200, 300),
+    complete(200)
   ])
 })
 
@@ -82,7 +82,7 @@ test('error()', t => {
     throw Error('Yo')
   }))
   t.deepEqual(results, [
-    error(201, new Error())
+    error(200, new Error())
   ])
   t.is(results[0].value.message, 'Yo')
 })

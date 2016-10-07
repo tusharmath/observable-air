@@ -8,5 +8,6 @@ import {ITask} from './ITask';
 export interface IScheduler {
   schedule(task: ITask, time: number): ISubscription
   scheduleASAP(task: ITask): ISubscription
+  scheduleNow(task: ITask): ISubscription
   now(): number
 }

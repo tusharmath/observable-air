@@ -27,9 +27,9 @@ export class Observable<T> implements IObservable<T> {
     })
   }
 
-  safelyExecuteFunc (observer: IObserver<T>, subscription: CompositeSubscription) {
+  safelyExecuteFunc (observer: IObserver<T>, cSub: CompositeSubscription) {
     const r = SafeExecutor(() => {
-      subscription.add(Subscription.from(this.func(SubscriptionObserver.of(observer))))
+      cSub.add(Subscription.from(this.func(SubscriptionObserver.of(observer))))
     })
     if (r.type === Safety.error && observer.error) {
       observer.error(r.value as Error)
@@ -37,13 +37,10 @@ export class Observable<T> implements IObservable<T> {
   }
 
   subscribe (observer: IObserver<T>, scheduler: IScheduler = new DefaultScheduler()): ISubscription {
-
-    const subscription: CompositeSubscription = Subscription.from([
-      scheduler.scheduleASAP(() => this.safelyExecuteFunc(observer, subscription))
-    ]) as CompositeSubscription
-
+    const subscription = new CompositeSubscription()
+    const task = () => this.safelyExecuteFunc(observer, subscription);
+    subscription.add(scheduler.scheduleNow(task))
     if (observer.start) observer.start(subscription)
-
     return subscription
   }
 }

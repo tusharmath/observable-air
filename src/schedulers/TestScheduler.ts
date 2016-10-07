@@ -60,6 +60,9 @@ export class TestScheduler implements IScheduler {
     return this.scheduleAbsolute(task, this.now() + 1)
   }
 
+  scheduleNow (task: ITask): ISubscription {
+    return this.scheduleAbsolute(task, this.now())
+  }
 
   private run () {
     var residual: Array<TaskSchedule> = []
@@ -80,6 +83,8 @@ export class TestScheduler implements IScheduler {
     var resultsObserver = new TestObserver(this);
     this.scheduleAbsolute(() => subscription = f().subscribe(resultsObserver, this), timing.start)
     this.scheduleAbsolute(() => subscription.unsubscribe(), timing.stop)
+
+    this.run()
     this.advanceBy(timing.stop)
     return resultsObserver
   }
