@@ -6,11 +6,11 @@ import {ITask} from '../types/ITask';
 import {ISchedulingStrategy} from '../types/ISchedulingStrategy';
 
 export class ScheduleASAP implements ISchedulingStrategy {
-  disposed: boolean;
+  closed: boolean;
   private id: number;
 
   constructor (private task: ITask) {
-    this.disposed = false
+    this.closed = false
   }
 
   run () {
@@ -18,8 +18,8 @@ export class ScheduleASAP implements ISchedulingStrategy {
     return this
   }
 
-  dispose (): void {
+  unsubscribe (): void {
     clearImmediate(this.id)
-    this.disposed = true
+    this.closed = true
   }
 }

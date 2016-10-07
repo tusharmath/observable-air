@@ -7,11 +7,11 @@ import {ITask} from '../types/ITask';
 import {ISchedulingStrategy} from '../types/ISchedulingStrategy';
 
 export class ScheduleInFuture implements ISchedulingStrategy {
-  disposed: boolean;
+  closed: boolean;
   private timer: number;
 
   constructor (private task: ITask, private timeout: number) {
-    this.disposed = false
+    this.closed = false
   }
 
   run () {
@@ -19,8 +19,8 @@ export class ScheduleInFuture implements ISchedulingStrategy {
     return this
   }
 
-  dispose (): void {
+  unsubscribe (): void {
     clearTimeout(this.timer)
-    this.disposed = true
+    this.closed = true
   }
 }

@@ -2,11 +2,11 @@
  * Created by tushar.mathur on 30/09/16.
  */
 
-import {IDisposable} from './IDisposable';
+import {ISubscription} from '../core-types/ISubscription';
 import {ITask} from './ITask';
 
 export interface IScheduler {
-  schedule(task: ITask, time: number): IDisposable
-  scheduleASAP(task: ITask): IDisposable
+  schedule(task: ITask, time: number): ISubscription
+  scheduleASAP(task: ITask): ISubscription
   now(): number
 }

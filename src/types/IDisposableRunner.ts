@@ -2,8 +2,8 @@
  * Created by tushar.mathur on 04/10/16.
  */
 
-import {IDisposable} from './IDisposable';
+import {ISubscription} from '../core-types/ISubscription';
 
-export interface IDisposableRunner extends IDisposable {
+export interface IDisposableRunner extends ISubscription {
   run (): IDisposableRunner
 }

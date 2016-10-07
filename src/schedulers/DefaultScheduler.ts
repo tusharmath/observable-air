@@ -4,19 +4,19 @@
 
 
 import {IScheduler} from '../types/IScheduler';
-import {IDisposable} from '../types/IDisposable';
+import {ISubscription} from '../core-types/ISubscription';
 import {ITask} from '../types/ITask';
 import {ScheduleInFuture} from '../scheduling-strategies/ScheduleInFuture';
 import {ScheduleASAP} from '../scheduling-strategies/ScheduleASAP';
 
 
 export class DefaultScheduler implements IScheduler {
-  scheduleASAP (task: ITask): IDisposable {
+  scheduleASAP (task: ITask): ISubscription {
     var scheduledTask = new ScheduleASAP(task);
     return scheduledTask.run()
   }
 
-  schedule (task: ITask, relativeTime: number): IDisposable {
+  schedule (task: ITask, relativeTime: number): ISubscription {
     var scheduledTask = new ScheduleInFuture(task, relativeTime);
     return scheduledTask.run()
   }

@@ -2,14 +2,12 @@
  * Created by tushar.mathur on 02/10/16.
  */
 
-import {IDisposable} from '../types/IDisposable';
 import {ITask} from '../types/ITask';
 import {IScheduler} from '../types/IScheduler';
 import {IObservable} from '../core-types/IObservable';
 import {IObserver} from '../core-types/IObserver';
 import {ISubscription} from '../core-types/ISubscription';
 import {EventNext} from '../testing/ReactiveTest';
-import {Observable} from '../Observable';
 import {IEvent, EventType} from '../types/IEvent';
 import {TestObserver} from '../testing/TestObserver';
 import {TestObservable} from '../testing/TestObservable';
@@ -18,7 +16,7 @@ class TaskSchedule {
   constructor (public task: ITask, public time: number) {
   }
 }
-const MockDisposable = {dispose: (): void => void 0, disposed: false}
+const MockDisposable = {unsubscribe: (): void => void 0, closed: false}
 
 export const DEFAULT_TIMING = {
   start: 200,
@@ -47,17 +45,17 @@ export class TestScheduler implements IScheduler {
     return this.clock
   }
 
-  schedule (task: ITask, relativeTime: number): IDisposable {
+  schedule (task: ITask, relativeTime: number): ISubscription {
     this.queue.push(new TaskSchedule(task, relativeTime + this.now()))
     return MockDisposable
   }
 
-  scheduleAbsolute (task: ITask, absoluteTime: number): IDisposable {
+  scheduleAbsolute (task: ITask, absoluteTime: number): ISubscription {
     this.queue.push(new TaskSchedule(task, absoluteTime))
     return MockDisposable
   }
 
-  scheduleASAP (task: ITask): IDisposable {
+  scheduleASAP (task: ITask): ISubscription {
     return this.scheduleAbsolute(task, this.now() + 1)
   }
 

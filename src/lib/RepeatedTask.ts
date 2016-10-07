@@ -5,10 +5,10 @@
 
 import {IScheduler} from '../types/IScheduler';
 import {ITask} from '../types/ITask';
-import {IDisposable} from '../types/IDisposable';
+import {ISubscription} from '../core-types/ISubscription';
 
-export class RepeatedTask implements IDisposable {
-  disposed: boolean;
+export class RepeatedTask implements ISubscription {
+  closed: boolean;
 
   constructor (
     private task: ITask,
@@ -19,10 +19,10 @@ export class RepeatedTask implements IDisposable {
 
   run (): void {
     this.task()
-    if (!this.disposed) this.scheduler.schedule(() => this.run(), this.interval)
+    if (!this.closed) this.scheduler.schedule(() => this.run(), this.interval)
   }
 
-  dispose (): void {
-    this.disposed = true
+  unsubscribe (): void {
+    this.closed = true
   }
 }

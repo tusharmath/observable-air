@@ -7,21 +7,21 @@ import {ISubscription} from '../core-types/ISubscription';
 import {IObserver} from '../core-types/IObserver';
 import {IScheduler} from '../types/IScheduler';
 import {DefaultScheduler} from '../schedulers/DefaultScheduler';
-import {IDisposable} from '../types/IDisposable';
 import {IDisposableRunner} from '../types/IDisposableRunner';
 import {SafeExecutor} from '../lib/SafeExecutor';
 import {Safety} from '../types/ISafeValue';
+;
 
 const unsubscribe = function () {
 }
 const subscription = {unsubscribe, closed: true};
 
 class FromRunner <T> implements IDisposableRunner {
-  disposed: boolean;
-  private schedule: IDisposable;
+  closed: boolean;
+  private schedule: ISubscription;
 
   constructor (private array: Array<T>, private sink: IObserver<T>, private scheduler: IScheduler) {
-    this.disposed = false
+    this.closed = false
   }
 
   run () {
@@ -35,16 +35,16 @@ class FromRunner <T> implements IDisposableRunner {
   }
 
   execute () {
-    if (this.disposed) return
+    if (this.closed) return
     for (var i = 0; i < this.array.length; ++i) {
       this.sink.next(this.array[i])
     }
     this.sink.complete()
   }
 
-  dispose (): void {
-    this.schedule.dispose()
-    this.disposed = true
+  unsubscribe (): void {
+    this.schedule.unsubscribe()
+    this.closed = true
   }
 }
 

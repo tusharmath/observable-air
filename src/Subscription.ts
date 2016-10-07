@@ -7,12 +7,11 @@ import {ISubscription} from './core-types/ISubscription';
 import {ISubscriberFunction} from './core-types/ISubscriberFunction';
 import {IObserver} from './core-types/IObserver';
 import {IScheduler} from './types/IScheduler';
-import {IDisposable} from './types/IDisposable';
 import {ISubscriptionObserver} from './core-types/ISubscriptionObserver';
 
 export class Subscription<T> implements ISubscription {
-  closed: Boolean;
-  private disposable: IDisposable;
+  closed: boolean;
+  private disposable: ISubscription;
   private hostSubscription: ISubscription;
 
   constructor (private func: ISubscriberFunction<T>,
@@ -22,7 +21,7 @@ export class Subscription<T> implements ISubscription {
   }
 
   unsubscribe (): void {
-    this.disposable.dispose()
+    this.disposable.unsubscribe()
     this.hostSubscription.unsubscribe()
     this.closed = true
   }

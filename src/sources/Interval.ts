@@ -28,7 +28,7 @@ export class IntervalObservable<Number> implements IObservable<number> {
     repeatedTask.run()
     return {
       unsubscribe () {
-        repeatedTask.dispose()
+        repeatedTask.unsubscribe()
         this.__closed = true
       },
       get closed () {
