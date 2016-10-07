@@ -4,5 +4,5 @@
 
 export interface ISubscription {
   unsubscribe(): void;
-  closed: boolean;
+  readonly closed: boolean;
 }
