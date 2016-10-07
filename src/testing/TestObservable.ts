@@ -7,7 +7,7 @@ import {IObserver} from '../core-types/IObserver';
 import {IScheduler} from '../types/IScheduler';
 import {ISubscription} from '../core-types/ISubscription';
 import {ISubscriberFunction} from '../core-types/ISubscriberFunction';
-import {ISubscriptionObserver} from '../core-types/ISubscriptionObserver';
+import {Subscription} from '../Subscription';
 
 
 export class TestObservable<T> implements IObservable<T> {
@@ -15,6 +15,6 @@ export class TestObservable<T> implements IObservable<T> {
   }
 
   subscribe (observer: IObserver<T>, scheduler: IScheduler): ISubscription {
-    return this.func(observer as ISubscriptionObserver<T>)
+    return Subscription.from(this.func(observer))
   }
 }

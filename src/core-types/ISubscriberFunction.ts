@@ -3,8 +3,8 @@
  */
 
 import {ISubscription} from './ISubscription';
-import {ISubscriptionObserver} from './ISubscriptionObserver';
+import {IObserver} from './IObserver';
 
 export interface ISubscriberFunction<T> {
-  (observer: ISubscriptionObserver<T>): ISubscription
+  (observer: IObserver<T>): void | (() => void) | ISubscription
 }

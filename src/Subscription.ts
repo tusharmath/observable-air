@@ -1,37 +1,67 @@
 /**
- * Created by tushar.mathur on 06/10/16.
+ * Created by tushar.mathur on 07/10/16.
  */
 
-
 import {ISubscription} from './core-types/ISubscription';
-import {ISubscriberFunction} from './core-types/ISubscriberFunction';
-import {IObserver} from './core-types/IObserver';
-import {IScheduler} from './types/IScheduler';
-import {ISubscriptionObserver} from './core-types/ISubscriptionObserver';
 
-export class Subscription<T> implements ISubscription {
+export class SubscriptionStub implements ISubscription {
   closed: boolean;
-  private disposable: ISubscription;
-  private hostSubscription: ISubscription;
 
-  constructor (private func: ISubscriberFunction<T>,
-               private observer: IObserver<T>,
-               private scheduler: IScheduler) {
+  constructor () {
     this.closed = true
   }
 
   unsubscribe (): void {
-    this.disposable.unsubscribe()
-    this.hostSubscription.unsubscribe()
+  }
+}
+
+export class SubscriptionFunc implements ISubscription {
+  closed: boolean;
+
+  constructor (private func: (() => void)) {
+    this.closed = false
+  }
+
+  unsubscribe (): void {
+    this.func()
     this.closed = true
   }
+}
 
-  run (): ISubscription {
-    this.disposable = this.scheduler.scheduleASAP(() => this.execute())
-    return this
+const propClosed = (x: ISubscription) => x.closed;
+export class CompositeSubscription implements ISubscription {
+  constructor (private subscriptions: ISubscription[]) {
   }
 
-  execute () {
-    this.hostSubscription = this.func(this.observer as ISubscriptionObserver<T>)
+  add (d: ISubscription) {
+    this.subscriptions.push(d)
+  }
+
+  unsubscribe (): void {
+    for (var i = 0; i < this.subscriptions.length; i++) {
+      this.subscriptions[i].unsubscribe()
+    }
+  }
+
+  get closed (): boolean {
+    return this.subscriptions.map(propClosed).every(Boolean)
+  }
+}
+
+export const Subscription = {
+  from (target: void | (() => void) | ISubscription | ISubscription[]): ISubscription {
+    if (!target)
+      return new SubscriptionStub()
+
+    if (typeof target === 'function')
+      return new SubscriptionFunc(target as (() => void))
+
+    if (typeof (target as ISubscription).unsubscribe === 'function')
+      return target as ISubscription
+
+    if (target instanceof Array)
+      return new CompositeSubscription(target as ISubscription[])
+
+    return new SubscriptionStub()
   }
 }
