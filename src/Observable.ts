@@ -31,7 +31,7 @@ export class Observable<T> implements IObservable<T> {
     const r = SafeExecutor(() => {
       subscription.add(Subscription.from(this.func(SubscriptionObserver.of(observer))))
     })
-    if (r.type === Safety.error) {
+    if (r.type === Safety.error && observer.error) {
       observer.error(r.value as Error)
     }
   }

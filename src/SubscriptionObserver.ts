@@ -21,7 +21,7 @@ export class SubscriptionObserver<T> implements ISubscriptionObserver<T> {
   }
 
   complete (): void {
-    this.sink.complete()
+    if (this.sink.complete) this.sink.complete()
   }
 
   static of<T> (observer: IObserver<T>) {
