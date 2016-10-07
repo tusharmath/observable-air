@@ -9,7 +9,7 @@ const {map} = require('../src/operators/Map')
 const {filter} = require('../src/operators/Filter')
 const {fromArray} = require('../src/sources/FromArray')
 const {reduce} = require('../src/operators/Reduce')
-const {takeN} = require('../src/operators/TakeN')
+const {takeN} = require('../src/operators/Slice')
 
 function noop () {
 }
