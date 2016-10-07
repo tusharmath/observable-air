@@ -2,7 +2,7 @@
  * Created by tushar.mathur on 04/10/16.
  */
 
-import {IDisposableRunner} from './IDisposableRunner';
+import {ILazySubscription} from './ILazySubscription';
 
-export interface ISchedulingStrategy extends IDisposableRunner {
+export interface ISchedulingStrategy extends ILazySubscription {
 }

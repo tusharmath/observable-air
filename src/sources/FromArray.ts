@@ -7,7 +7,7 @@ import {ISubscription} from '../core-types/ISubscription';
 import {IObserver} from '../core-types/IObserver';
 import {IScheduler} from '../types/IScheduler';
 import {DefaultScheduler} from '../schedulers/DefaultScheduler';
-import {IDisposableRunner} from '../types/IDisposableRunner';
+import {ILazySubscription} from '../types/ILazySubscription';
 import {SafeExecutor} from '../lib/SafeExecutor';
 import {Safety} from '../types/ISafeValue';
 ;
@@ -16,7 +16,7 @@ const unsubscribe = function () {
 }
 const subscription = {unsubscribe, closed: true};
 
-class FromRunner <T> implements IDisposableRunner {
+class FromRunner <T> implements ILazySubscription {
   closed: boolean;
   private schedule: ISubscription;
 

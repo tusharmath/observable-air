@@ -4,6 +4,6 @@
 
 import {ISubscription} from '../core-types/ISubscription';
 
-export interface IDisposableRunner extends ISubscription {
-  run (): IDisposableRunner
+export interface ILazySubscription extends ISubscription {
+  run (): ILazySubscription
 }
