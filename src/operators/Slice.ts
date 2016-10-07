@@ -11,7 +11,7 @@ class SliceObserver<T> implements IObserver<T> {
   closed: boolean;
   private index: number;
 
-  constructor (private start: number,
+  constructor (private from: number,
                private total: number,
                private sink: IObserver<T>) {
     this.closed = false
@@ -20,8 +20,8 @@ class SliceObserver<T> implements IObserver<T> {
 
   next (value: T): void {
     if (this.closed) return
-    if (this.index++ >= this.start) this.sink.next(value)
-    if (this.index - this.start === this.total) this.complete()
+    if (this.index++ >= this.from) this.sink.next(value)
+    if (this.index - this.from === this.total) this.complete()
   }
 
   complete (): void {
@@ -33,6 +33,10 @@ class SliceObserver<T> implements IObserver<T> {
   error (error: Error): void {
     if (this.closed) return
     this.sink.error(error)
+  }
+
+  start (subscription: ISubscription): void {
+    this.sink.start(subscription)
   }
 }
 

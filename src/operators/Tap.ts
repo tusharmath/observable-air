@@ -16,6 +16,10 @@ export class TapObserver<T> implements IObserver<T> {
 
   }
 
+  start (subscription: ISubscription): void {
+    this.observer.start(subscription)
+  }
+  
   next (val: T): void {
     this.tapper(val)
     this.observer.next(val)

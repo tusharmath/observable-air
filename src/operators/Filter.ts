@@ -25,6 +25,10 @@ class FilterObserver <T> implements IObserver<T> {
   complete (): void {
     this.sink.complete()
   }
+
+  start (subscription: ISubscription): void {
+    this.sink.start(subscription)
+  }
 }
 
 

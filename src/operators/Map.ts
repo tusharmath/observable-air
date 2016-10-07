@@ -9,6 +9,11 @@ import {IScheduler} from '../types/IScheduler';
 
 class MapObserver<T> implements IObserver<T> {
   constructor (private mapper: (a: T) =>  T, private sink: IObserver<T>) {
+
+  }
+
+  start (subscription: ISubscription): void {
+    this.sink.start(subscription)
   }
 
   next (val: T): void {

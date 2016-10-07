@@ -9,6 +9,8 @@ import {IObserver} from './types/IObserver';
 import {IScheduler} from './types/IScheduler';
 import {DefaultScheduler} from './schedulers/DefaultScheduler';
 import {Subscription, CompositeSubscription} from './Subscription';
+import {SubscriptionObserver} from './SubscriptionObserver';
+
 
 export class Observable<T> implements IObservable<T> {
   constructor (private func: ISubscriberFunction<T>) {
@@ -24,11 +26,15 @@ export class Observable<T> implements IObservable<T> {
   }
 
   subscribe (observer: IObserver<T>, scheduler: IScheduler = new DefaultScheduler()): ISubscription {
+
     const subscription: CompositeSubscription = Subscription.from([
       scheduler.scheduleASAP(() => subscription.add(
-        Subscription.from(this.func(observer))
+        Subscription.from(this.func(new SubscriptionObserver(observer)))
       ))
     ]) as CompositeSubscription
+
+    if (observer.start) observer.start(subscription)
+
     return subscription
   }
 }

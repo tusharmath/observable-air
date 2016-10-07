@@ -8,6 +8,7 @@ import {IScheduler} from '../types/IScheduler';
 import {ISubscription} from '../types/ISubscription';
 import {ISubscriberFunction} from '../types/ISubscriberFunction';
 import {Subscription} from '../Subscription';
+import {SubscriptionObserver} from '../SubscriptionObserver';
 
 
 export class TestObservable<T> implements IObservable<T> {
@@ -15,6 +16,6 @@ export class TestObservable<T> implements IObservable<T> {
   }
 
   subscribe (observer: IObserver<T>, scheduler: IScheduler): ISubscription {
-    return Subscription.from(this.func(observer))
+    return Subscription.from(this.func(new SubscriptionObserver(observer)))
   }
 }

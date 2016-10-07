@@ -5,7 +5,10 @@
 import {ISubscription} from './types/ISubscription';
 import {ITask} from './types/ITask';
 
+const propClosed = (x: ISubscription) => x.closed;
+
 export class SubscriptionStub implements ISubscription {
+
   closed: boolean;
 
   constructor () {
@@ -17,6 +20,7 @@ export class SubscriptionStub implements ISubscription {
 }
 
 export class SubscriptionFunc implements ISubscription {
+
   closed: boolean;
 
   constructor (private func: (() => void)) {
@@ -29,7 +33,6 @@ export class SubscriptionFunc implements ISubscription {
   }
 }
 
-const propClosed = (x: ISubscription) => x.closed;
 export class CompositeSubscription implements ISubscription {
   constructor (private subscriptions: ISubscription[]) {
   }
