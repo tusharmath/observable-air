@@ -64,3 +64,14 @@ test('subscription () => void', t => {
   const {results} = sh.startScheduler(() => new Observable(() => () => null))
   t.deepEqual(results, [])
 })
+
+test('static of', t => {
+  const sh = new TestScheduler()
+  const {results} = sh.startScheduler(() => Observable.of(100, 200, 300))
+  t.deepEqual(results, [
+    next(201, 100),
+    next(201, 200),
+    next(201, 300),
+    complete(201)
+  ])
+})
