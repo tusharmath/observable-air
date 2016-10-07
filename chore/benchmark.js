@@ -22,7 +22,7 @@ function even (e) {
 function sum (a, b) {
   return a + b
 }
-const n = 1000000
+const n = 1e6
 const a = new Array(n)
 for (var i = 0; i < a.length; ++i) {
   a[i] = i
@@ -40,8 +40,8 @@ suite.add('file -> map -> reduce',
   d =>
     run(reduce(sum, 0, map(add1, filter(even, fromArray(a)))), d),
   options
-).add('file -> takeN',
+).add('file -> takeN(0, n/10)',
   d =>
-    run(takeN(n / 10, fromArray(a)), d),
+    run(takeN(0, n / 10, fromArray(a)), d),
   options
 ).on('cycle', event => console.log(String(event.target))).run()
