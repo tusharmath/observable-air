@@ -9,7 +9,7 @@ import {Observable} from '../src/Observable'
 import {TestScheduler} from '../src/schedulers/TestScheduler'
 import {ReactiveTest} from '../src/testing/ReactiveTest'
 
-const {next, complete} = ReactiveTest
+const {next, complete, error} = ReactiveTest
 
 function noop () {}
 test('subscribe()', t => {
@@ -74,4 +74,15 @@ test('static of', t => {
     next(201, 300),
     complete(201)
   ])
+})
+
+test('error()', t => {
+  const sh = new TestScheduler()
+  const {results} = sh.startScheduler(() => new Observable(() => {
+    throw Error('Yo')
+  }))
+  t.deepEqual(results, [
+    error(201, new Error())
+  ])
+  t.is(results[0].value.message, 'Yo')
 })

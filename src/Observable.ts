@@ -10,6 +10,8 @@ import {IScheduler} from './types/IScheduler';
 import {DefaultScheduler} from './schedulers/DefaultScheduler';
 import {Subscription, CompositeSubscription} from './Subscription';
 import {SubscriptionObserver} from './SubscriptionObserver';
+import {SafeExecutor} from './lib/SafeExecutor';
+import {Safety} from './types/ISafeValue';
 
 
 export class Observable<T> implements IObservable<T> {
@@ -25,12 +27,19 @@ export class Observable<T> implements IObservable<T> {
     })
   }
 
+  safelyExecuteFunc (observer: IObserver<T>, subscription: CompositeSubscription) {
+    const r = SafeExecutor(() => {
+      subscription.add(Subscription.from(this.func(SubscriptionObserver.of(observer))))
+    })
+    if (r.type === Safety.error) {
+      observer.error(r.value as Error)
+    }
+  }
+
   subscribe (observer: IObserver<T>, scheduler: IScheduler = new DefaultScheduler()): ISubscription {
 
     const subscription: CompositeSubscription = Subscription.from([
-      scheduler.scheduleASAP(() => subscription.add(
-        Subscription.from(this.func(new SubscriptionObserver(observer)))
-      ))
+      scheduler.scheduleASAP(() => this.safelyExecuteFunc(observer, subscription))
     ]) as CompositeSubscription
 
     if (observer.start) observer.start(subscription)
