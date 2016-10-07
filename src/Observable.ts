@@ -14,10 +14,6 @@ export class Observable<T> implements IObservable<T> {
   constructor (private func: ISubscriberFunction<T>) {
   }
 
-  static of<U> (func: ISubscriberFunction<U>) {
-    return new Observable(func)
-  }
-
   subscribe (observer: IObserver<T>, scheduler: IScheduler = new DefaultScheduler()): ISubscription {
     return new Subscription(this.func, observer, scheduler).run()
   }

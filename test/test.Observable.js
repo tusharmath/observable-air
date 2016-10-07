@@ -12,7 +12,6 @@ import {ReactiveTest} from '../src/testing/ReactiveTest'
 const {next, complete} = ReactiveTest
 
 function noop () {}
-test(t => t.true(Observable.of(null) instanceof Observable))
 test('subscribe()', t => {
   const sh = new TestScheduler()
   const {results} = sh.startScheduler(() => new Observable(function (observer) {
