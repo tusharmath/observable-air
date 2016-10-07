@@ -2,8 +2,8 @@
  * Created by tushar.mathur on 07/10/16.
  */
 
-import {ISubscriptionObserver} from './types/ISubscriptionObserver';
-import {IObserver} from './types/IObserver';
+import {ISubscriptionObserver} from './types/core/ISubscriptionObserver';
+import {IObserver} from './types/core/IObserver';
 
 export class SubscriptionObserver<T> implements ISubscriptionObserver<T> {
   closed: boolean;

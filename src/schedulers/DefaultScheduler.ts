@@ -4,7 +4,7 @@
 
 
 import {IScheduler} from '../types/IScheduler';
-import {ISubscription} from '../types/ISubscription';
+import {ISubscription} from '../types/core/ISubscription';
 import {ITask} from '../types/ITask';
 import {ScheduleInFuture} from '../scheduling-strategies/ScheduleInFuture';
 import {ScheduleASAP} from '../scheduling-strategies/ScheduleASAP';

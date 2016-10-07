@@ -4,14 +4,14 @@
 
 import {ITask} from '../types/ITask';
 import {IScheduler} from '../types/IScheduler';
-import {IObservable} from '../types/IObservable';
-import {IObserver} from '../types/IObserver';
-import {ISubscription} from '../types/ISubscription';
+import {IObservable} from '../types/core/IObservable';
+import {IObserver} from '../types/core/IObserver';
+import {ISubscription} from '../types/core/ISubscription';
 import {EventNext} from '../testing/ReactiveTest';
 import {IEvent, EventType} from '../types/IEvent';
 import {TestObserver} from '../testing/TestObserver';
 import {TestObservable} from '../testing/TestObservable';
-import {ISubscriptionObserver} from '../types/ISubscriptionObserver';
+import {ISubscriptionObserver} from '../types/core/ISubscriptionObserver';
 
 class TaskSchedule {
   constructor (public task: ITask, public time: number) {

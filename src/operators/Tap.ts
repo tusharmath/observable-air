@@ -2,9 +2,9 @@
  * Created by tushar.mathur on 02/10/16.
  */
 
-import {IObservable} from '../types/IObservable';
-import {IObserver} from '../types/IObserver';
-import {ISubscription} from '../types/ISubscription';
+import {IObservable} from '../types/core/IObservable';
+import {IObserver} from '../types/core/IObserver';
+import {ISubscription} from '../types/core/ISubscription';
 import {IScheduler} from '../types/IScheduler';
 
 interface ITapper<T> {
@@ -19,7 +19,7 @@ export class TapObserver<T> implements IObserver<T> {
   start (subscription: ISubscription): void {
     this.observer.start(subscription)
   }
-  
+
   next (val: T): void {
     this.tapper(val)
     this.observer.next(val)

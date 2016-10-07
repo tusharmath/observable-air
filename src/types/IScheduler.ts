@@ -2,7 +2,7 @@
  * Created by tushar.mathur on 30/09/16.
  */
 
-import {ISubscription} from './ISubscription';
+import {ISubscription} from './core/ISubscription';
 import {ITask} from './ITask';
 
 export interface IScheduler {

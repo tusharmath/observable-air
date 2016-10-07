@@ -2,9 +2,9 @@
  * Created by tushar.mathur on 27/09/16.
  */
 
-import {IObservable} from '../types/IObservable';
-import {IObserver} from '../types/IObserver';
-import {ISubscription} from '../types/ISubscription';
+import {IObservable} from '../types/core/IObservable';
+import {IObserver} from '../types/core/IObserver';
+import {ISubscription} from '../types/core/ISubscription';
 import {IScheduler} from '../types/IScheduler';
 
 class SliceObserver<T> implements IObserver<T> {

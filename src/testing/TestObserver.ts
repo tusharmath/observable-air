@@ -5,8 +5,8 @@
 import {ReactiveTest} from './ReactiveTest';
 import {IScheduler} from '../types/IScheduler';
 import {IEvent} from '../types/IEvent';
-import {IObserver} from '../types/IObserver';
-import {ISubscription} from '../types/ISubscription';
+import {IObserver} from '../types/core/IObserver';
+import {ISubscription} from '../types/core/ISubscription';
 
 export class TestObserver<T> implements IObserver<T> {
   results: Array<IEvent>;
