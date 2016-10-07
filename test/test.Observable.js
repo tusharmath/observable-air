@@ -28,3 +28,28 @@ test('subscribe()', t => {
     complete(201, 4)
   ])
 })
+
+test.cb('unsubscribe()', t => {
+  t.plan(1)
+  const results = []
+  var i = 0
+  const ob = new Observable(function (o) {
+    const timer = setInterval(() => o.next(i++))
+    return {
+      unsubscribe () {
+        clearInterval(timer)
+        o.complete()
+      }
+    }
+  })
+  const sub = ob.subscribe({
+    next: x => {
+      results.push(x)
+      if (x === 5) sub.unsubscribe()
+    },
+    complete: () => {
+      t.deepEqual(results, [0, 1, 2, 3, 4, 5])
+      t.end()
+    }
+  })
+})
