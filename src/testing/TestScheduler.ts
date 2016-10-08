@@ -92,7 +92,7 @@ export class TestScheduler implements IScheduler {
   }
 
   startScheduler<T> (f: () => IObservable<T>,
-                     timing: {start: number, stop: number} = DEFAULT_TIMING): IObserver<T> {
+                     timing: {start: number, stop: number} = DEFAULT_TIMING): TestObserver<T> {
     var subscription: ISubscription
     var resultsObserver = new TestObserver(this);
     this.scheduleAbsolute(() => subscription = f().subscribe(resultsObserver, this), timing.start)
