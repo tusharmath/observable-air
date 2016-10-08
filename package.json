@@ -4,6 +4,7 @@
   "main": "src/Observable",
   "scripts": {
     "test": "ava",
+    "cleanup": "rm -rf ./src/**/*.js && rm -rf ./src/**/*.map",
     "lint": "tslint ./src/**.ts",
     "hydra": "node --trace-hydrogen --trace-phase=Z --trace-deopt --code-comments --hydrogen-track-positions --redirect-code-traces --redirect-code-traces-to=code.asm chore/benchmark.js",
     "rfc": "node chore/rfc",
