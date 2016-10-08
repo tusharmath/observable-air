@@ -16,6 +16,6 @@ export class TestObservable<T> implements IObservable<T> {
   }
 
   subscribe (observer: IObserver<T>, scheduler: IScheduler): ISubscription {
-    return Subscription.from(this.func(new SubscriptionObserver(observer)))
+    return Subscription.from(this.func(SubscriptionObserver.from(observer)))
   }
 }

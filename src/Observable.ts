@@ -12,7 +12,14 @@ import {Subscription, CompositeSubscription} from './Subscription';
 import {SubscriptionObserver} from './SubscriptionObserver';
 import {SafeExecutor} from './lib/SafeExecutor';
 import {Safety} from './types/ISafeValue';
+import {ISubscriptionObserver} from './types/core/ISubscriptionObserver';
 
+
+function startObserver <T> (observer: IObserver<T>,
+                            subscription: CompositeSubscription) {
+  if (observer.start)
+    observer.start(subscription)
+}
 
 export class Observable<T> implements IObservable<T> {
   constructor (private func: ISubscriberFunction<T>) {
@@ -27,21 +34,18 @@ export class Observable<T> implements IObservable<T> {
     })
   }
 
-  safelyExecuteFunc (observer: IObserver<T>, cSub: CompositeSubscription) {
-    const r = SafeExecutor(() => {
-      cSub.add(Subscription.from(this.func(SubscriptionObserver.from(observer))))
-    })
-    if (r.type === Safety.error && observer.error) {
-      observer.error(r.value as Error)
-    }
+  private safelyExecuteFunc (observer: ISubscriptionObserver<T>, cSub: CompositeSubscription) {
+    const r = SafeExecutor(() => cSub.add(Subscription.from(this.func(observer))))
+    if (r.type === Safety.error) observer.error(r.value as Error)
   }
 
-  subscribe (observer: IObserver<T>, scheduler: IScheduler = new DefaultScheduler()): ISubscription {
-    if (typeof observer !== 'object') throw new TypeError('Observer should be of object type')
+  subscribe (observer: IObserver<T> | ((t: T) => void), scheduler: IScheduler = new DefaultScheduler()): ISubscription {
+    const subObserver = SubscriptionObserver.from(observer)
     const subscription = new CompositeSubscription()
-    const task = () => this.safelyExecuteFunc(observer, subscription);
+    const task = () => this.safelyExecuteFunc(subObserver, subscription);
     subscription.add(scheduler.scheduleNow(task))
-    if (observer.start) observer.start(subscription)
+    startObserver(observer as IObserver<T>, subscription);
     return subscription
   }
+
 }
