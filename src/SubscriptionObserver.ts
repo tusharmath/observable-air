@@ -13,7 +13,7 @@ export class SubscriptionObserver<T> implements ISubscriptionObserver<T> {
   }
 
   next (val: T): void {
-    this.sink.next(val)
+    if (this.sink.next) this.sink.next(val)
   }
 
   error (err: Error): void {
