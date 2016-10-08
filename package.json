@@ -7,7 +7,7 @@
     "cleanup": "find ./src -type f -name '*.js' -delete && find ./src -type f -name '*.map' -delete",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "hydra": "node --trace-hydrogen --trace-phase=Z --trace-deopt --code-comments --hydrogen-track-positions --redirect-code-traces --redirect-code-traces-to=code.asm chore/benchmark.js",
-    "lint": "tslint ./src/**.ts",
+    "lint": "tslint ./src/**.ts ./src/**/*.ts ./test/*.ts",
     "prepublish": "tsc",
     "rfc": "node chore/rfc",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
