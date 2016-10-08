@@ -4,14 +4,16 @@
 
 'use strict'
 
-import test from 'ava'
-import {Observable} from '../src/Observable'
-import {TestScheduler} from '../src/testing/TestScheduler'
-import {ReactiveTest} from '../src/testing/ReactiveTest'
+import test from 'ava';
+import {Observable} from '../src/Observable';
+import {TestScheduler} from '../src/testing/TestScheduler';
+import {ReactiveTest, EventError} from '../src/testing/ReactiveTest';
+import {ISubscription} from '../src/types/core/ISubscription';
 
 const {next, complete, error} = ReactiveTest
 
-function noop () {}
+function noop () {
+}
 test('subscribe()', t => {
   const sh = new TestScheduler()
   const {results} = sh.startScheduler(() => new Observable(function (observer) {
@@ -24,17 +26,18 @@ test('subscribe()', t => {
     next(200, 1),
     next(200, 2),
     next(200, 3),
-    complete(200, 4)
+    complete(200)
   ])
 })
 
 test.cb('unsubscribe()', t => {
   t.plan(1)
-  const results = []
+  const results: number[] = []
   var i = 0
   const ob = new Observable(function (o) {
     const timer = setInterval(() => o.next(i++))
     return {
+      closed: false,
       unsubscribe () {
         clearInterval(timer)
         o.complete()
@@ -42,14 +45,16 @@ test.cb('unsubscribe()', t => {
     }
   })
   const sub = ob.subscribe({
-    next: x => {
+    next: (x: number) => {
       results.push(x)
       if (x === 5) sub.unsubscribe()
     },
     complete: () => {
       t.deepEqual(results, [0, 1, 2, 3, 4, 5])
       t.end()
-    }
+    },
+    start: (s: ISubscription) => void 0,
+    error: (s: Error) => void 0
   })
 })
 
@@ -84,5 +89,5 @@ test('error()', t => {
   t.deepEqual(results, [
     error(200, new Error())
   ])
-  t.is(results[0].value.message, 'Yo')
+  t.is((results[0] as EventError).value.message, 'Yo')
 })

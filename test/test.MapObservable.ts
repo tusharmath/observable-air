@@ -4,22 +4,22 @@
 
 'use strict'
 
-import test from 'ava'
-import {map} from '../src/operators/Map'
-import {TestScheduler} from '../src/testing/TestScheduler'
-import {ReactiveTest} from '../src/testing/ReactiveTest'
+import test from 'ava';
+import {map} from '../src/operators/Map';
+import {TestScheduler} from '../src/testing/TestScheduler';
+import {ReactiveTest} from '../src/testing/ReactiveTest';
 
 const {next, complete} = ReactiveTest
 
 test('MapObservable.subscribe()', t => {
   const sh = TestScheduler.of()
-  const $ = sh.createColdObservable([
+  const $ = sh.createColdObservable<number>([
     next(210, 0),
     next(220, 10),
     next(230, 20),
     complete(250)
   ])
-  const {results} = sh.startScheduler(() => map(x => x + 1, $))
+  const {results} = sh.startScheduler(() => map<number>((x: number) => x + 1, $))
   t.deepEqual(results, [
     next(410, 1),
     next(420, 11),
