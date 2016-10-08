@@ -5,11 +5,24 @@
 import {ISubscriptionObserver} from './types/core/ISubscriptionObserver';
 import {IObserver} from './types/core/IObserver';
 
+export class SubscriptionObserverStub <T> implements ISubscriptionObserver<T> {
+  closed: boolean;
+
+  next (val: T): void {
+  }
+
+  error (err: Error): void {
+  }
+
+  complete (): void {
+  }
+}
+
 export class SubscriptionObserver<T> implements ISubscriptionObserver<T> {
   closed: boolean;
 
   constructor (private sink: IObserver<T>) {
-    this.closed = !this.sink.next
+    this.closed = false
   }
 
   next (val: T): void {
@@ -18,15 +31,16 @@ export class SubscriptionObserver<T> implements ISubscriptionObserver<T> {
 
   error (err: Error): void {
     this.sink.error(err)
-
   }
 
   complete (): void {
-    if (this.sink.complete) this.sink.complete()
+    this.sink.complete()
     this.closed = true
   }
 
-  static of<T> (observer: IObserver<T>) {
+  static from<T> (observer: IObserver<T>) {
+    if (!observer.next || !observer.complete || !observer.error)
+      return new SubscriptionObserverStub()
     return new SubscriptionObserver(observer)
   }
 }

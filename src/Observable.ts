@@ -29,7 +29,7 @@ export class Observable<T> implements IObservable<T> {
 
   safelyExecuteFunc (observer: IObserver<T>, cSub: CompositeSubscription) {
     const r = SafeExecutor(() => {
-      cSub.add(Subscription.from(this.func(SubscriptionObserver.of(observer))))
+      cSub.add(Subscription.from(this.func(SubscriptionObserver.from(observer))))
     })
     if (r.type === Safety.error && observer.error) {
       observer.error(r.value as Error)
