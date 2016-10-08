@@ -4,10 +4,13 @@
 
 import {ISubscription} from './core/ISubscription';
 import {ITask} from './ITask';
+import {ISchedulingStrategy} from './ISchedulingStrategy';
 
 export interface IScheduler {
   schedule(task: ITask, time: number): ISubscription
   scheduleASAP(task: ITask): ISubscription
   scheduleNow(task: ITask): ISubscription
+  scheduleRepeatedly(task: ITask, interval: number): ISubscription
+  scheduleUsing(strategy: ISchedulingStrategy, task: ITask): ISubscription
   now(): number
 }

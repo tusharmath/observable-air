@@ -12,6 +12,7 @@ import {IEvent, EventType} from '../types/IEvent';
 import {TestObserver} from '../testing/TestObserver';
 import {TestObservable} from '../testing/TestObservable';
 import {ISubscriptionObserver} from '../types/core/ISubscriptionObserver';
+import {ISchedulingStrategy} from '../types/ISchedulingStrategy';
 
 class TaskSchedule {
   constructor (public task: ITask, public time: number) {
@@ -62,6 +63,19 @@ export class TestScheduler implements IScheduler {
 
   scheduleNow (task: ITask): ISubscription {
     return this.scheduleAbsolute(task, this.now())
+  }
+
+  scheduleUsing (strategy: ISchedulingStrategy, task: ITask) {
+    return strategy.run(task)
+  }
+
+  scheduleRepeatedly (task: ITask, interval: number): ISubscription {
+    const repeatedTask = () => {
+      task()
+      this.schedule(repeatedTask, interval)
+    }
+    this.schedule(repeatedTask, interval)
+    return MockDisposable;
   }
 
   private run () {

@@ -9,12 +9,12 @@ import {ISchedulingStrategy} from '../types/ISchedulingStrategy';
 export class ScheduleNow implements ISchedulingStrategy {
   closed: boolean;
 
-  constructor (private task: ITask) {
+  constructor () {
     this.closed = false
   }
 
-  run () {
-    this.task()
+  run (task: ITask) {
+    !this.closed && task()
     return this
   }
 

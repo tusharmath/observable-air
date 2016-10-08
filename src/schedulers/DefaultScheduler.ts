@@ -9,22 +9,30 @@ import {ITask} from '../types/ITask';
 import {ScheduleInFuture} from '../scheduling-strategies/ScheduleInFuture';
 import {ScheduleASAP} from '../scheduling-strategies/ScheduleASAP';
 import {ScheduleNow} from '../scheduling-strategies/ScheduleNow';
-
+import {ISchedulingStrategy} from '../types/ISchedulingStrategy';
+import {ScheduleRepeatedly} from '../scheduling-strategies/ScheduleRepeatedly';
 
 export class DefaultScheduler implements IScheduler {
+  scheduleUsing (strategy: ISchedulingStrategy, task: ITask): ISubscription {
+    return strategy.run(task);
+  }
+
   scheduleNow (task: ITask): ISubscription {
-    return new ScheduleNow(task).run()
+    return this.scheduleUsing(new ScheduleNow(), task)
   }
 
   scheduleASAP (task: ITask): ISubscription {
-    var scheduledTask = new ScheduleASAP(task);
-    return scheduledTask.run()
+    return this.scheduleUsing(new ScheduleASAP(), task)
+  }
+
+  scheduleRepeatedly (task: ITask, interval: number): ISubscription {
+    return this.scheduleUsing(new ScheduleRepeatedly(interval, this), task)
   }
 
   schedule (task: ITask, relativeTime: number): ISubscription {
-    var scheduledTask = new ScheduleInFuture(task, relativeTime);
-    return scheduledTask.run()
+    return this.scheduleUsing(new ScheduleInFuture(relativeTime), task)
   }
+
 
   now (): number {
     return Date.now()

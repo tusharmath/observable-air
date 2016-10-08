@@ -9,12 +9,12 @@ export class ScheduleASAP implements ISchedulingStrategy {
   closed: boolean;
   private id: number;
 
-  constructor (private task: ITask) {
+  constructor () {
     this.closed = false
   }
 
-  run () {
-    this.id = setImmediate(() => this.task())
+  run (task: ITask) {
+    this.id = setImmediate(() => task())
     return this
   }
 

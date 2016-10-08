@@ -2,7 +2,10 @@
  * Created by tushar.mathur on 04/10/16.
  */
 
-import {ILazySubscription} from './ILazySubscription';
+import {ITask} from './ITask';
+import {ISubscription} from './core/ISubscription';
 
-export interface ISchedulingStrategy extends ILazySubscription {
+// TODO Rename to TaskSchedule
+export interface ISchedulingStrategy extends ISubscription {
+  run (task: ITask): ISubscription
 }
