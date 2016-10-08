@@ -1,21 +1,34 @@
 {
   "name": "observable-air",
-  "version": "1.0.0",
   "description": "Observables for the calorie conscious",
   "main": "src/Observable",
   "scripts": {
     "test": "ava",
+    "lint": "tslint ./src/**.ts",
     "hydra": "node --trace-hydrogen --trace-phase=Z --trace-deopt --code-comments --hydrogen-track-positions --redirect-code-traces --redirect-code-traces-to=code.asm chore/benchmark.js",
     "rfc": "node chore/rfc",
     "benchmark": "date >> benchmark.md && node chore/benchmark >> benchmark.md",
-    "postinstall": "tsc"
+    "postinstall": "tsc",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "ava": "^0.16.0",
     "benchmark": "^2.1.1",
+    "cz-conventional-changelog": "^1.2.0",
     "es-observable-tests": "^0.3.0",
+    "semantic-release": "^4.3.5",
+    "tslint-microsoft-contrib": "^2.0.12",
     "typescript": "^2.0.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tusharmath/observable-air.git"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
