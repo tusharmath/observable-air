@@ -45,3 +45,5 @@ src/**/*.d.ts
 .dist
 *.cfg
 *.asm
+test/**/*.js
+test/**/*.d.ts
