@@ -7,7 +7,7 @@
 import test from 'ava'
 import {fromArray} from '../src/sources/FromArray'
 import {map} from '../src/operators/Map'
-import {TestScheduler} from '../src/schedulers/TestScheduler'
+import {TestScheduler} from '../src/testing/TestScheduler'
 import {ReactiveTest} from '../src/testing/ReactiveTest'
 
 const {next, error} = ReactiveTest

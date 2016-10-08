@@ -7,7 +7,7 @@ import {ISubscription} from './types/core/ISubscription';
 import {ISubscriberFunction} from './types/core/ISubscriberFunction';
 import {IObserver} from './types/core/IObserver';
 import {IScheduler} from './types/IScheduler';
-import {DefaultScheduler} from './schedulers/DefaultScheduler';
+import {DefaultScheduler} from './scheduling/DefaultScheduler';
 import {Subscription, CompositeSubscription} from './Subscription';
 import {SubscriptionObserver} from './SubscriptionObserver';
 import {SafeExecutor} from './lib/SafeExecutor';

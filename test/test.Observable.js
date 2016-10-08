@@ -6,7 +6,7 @@
 
 import test from 'ava'
 import {Observable} from '../src/Observable'
-import {TestScheduler} from '../src/schedulers/TestScheduler'
+import {TestScheduler} from '../src/testing/TestScheduler'
 import {ReactiveTest} from '../src/testing/ReactiveTest'
 
 const {next, complete, error} = ReactiveTest

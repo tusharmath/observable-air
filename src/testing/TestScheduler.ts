@@ -7,10 +7,10 @@ import {IScheduler} from '../types/IScheduler';
 import {IObservable} from '../types/core/IObservable';
 import {IObserver} from '../types/core/IObserver';
 import {ISubscription} from '../types/core/ISubscription';
-import {EventNext} from '../testing/ReactiveTest';
+import {EventNext} from './ReactiveTest';
 import {IEvent, EventType} from '../types/IEvent';
-import {TestObserver} from '../testing/TestObserver';
-import {TestObservable} from '../testing/TestObservable';
+import {TestObserver} from './TestObserver';
+import {TestObservable} from './TestObservable';
 import {ISubscriptionObserver} from '../types/core/ISubscriptionObserver';
 import {ISchedulingStrategy} from '../types/ISchedulingStrategy';
 

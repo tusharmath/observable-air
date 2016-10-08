@@ -5,7 +5,7 @@
 'use strict'
 
 import test from 'ava'
-import {TestScheduler} from '../src/schedulers/TestScheduler'
+import {TestScheduler} from '../src/testing/TestScheduler'
 import {takeN} from '../src/operators/Slice'
 import {ReactiveTest} from '../src/testing/ReactiveTest'
 

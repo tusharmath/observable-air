@@ -6,7 +6,7 @@ import {IObservable} from '../types/core/IObservable';
 import {ISubscription} from '../types/core/ISubscription';
 import {IObserver} from '../types/core/IObserver';
 import {IScheduler} from '../types/IScheduler';
-import {DefaultScheduler} from '../schedulers/DefaultScheduler';
+import {DefaultScheduler} from '../scheduling/DefaultScheduler';
 import {ILazySubscription} from '../types/ILazySubscription';
 import {SafeExecutor} from '../lib/SafeExecutor';
 import {Safety} from '../types/ISafeValue';

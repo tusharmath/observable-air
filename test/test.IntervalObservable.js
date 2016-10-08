@@ -6,7 +6,7 @@
 
 import test from 'ava'
 import {interval} from '../src/sources/Interval'
-import {TestScheduler} from '../src/schedulers/TestScheduler'
+import {TestScheduler} from '../src/testing/TestScheduler'
 import {ReactiveTest} from '../src/testing/ReactiveTest'
 const {next} = ReactiveTest
 

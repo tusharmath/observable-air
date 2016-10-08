@@ -6,11 +6,11 @@
 import {IScheduler} from '../types/IScheduler';
 import {ISubscription} from '../types/core/ISubscription';
 import {ITask} from '../types/ITask';
-import {ScheduleInFuture} from '../scheduling-strategies/ScheduleInFuture';
-import {ScheduleASAP} from '../scheduling-strategies/ScheduleASAP';
-import {ScheduleNow} from '../scheduling-strategies/ScheduleNow';
+import {ScheduleInFuture} from './ScheduleInFuture';
+import {ScheduleASAP} from './ScheduleASAP';
+import {ScheduleNow} from './ScheduleNow';
 import {ISchedulingStrategy} from '../types/ISchedulingStrategy';
-import {ScheduleRepeatedly} from '../scheduling-strategies/ScheduleRepeatedly';
+import {ScheduleRepeatedly} from './ScheduleRepeatedly';
 
 export class DefaultScheduler implements IScheduler {
   scheduleUsing (strategy: ISchedulingStrategy, task: ITask): ISubscription {
