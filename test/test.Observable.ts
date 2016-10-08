@@ -4,10 +4,11 @@
 
 'use strict'
 
-import test from 'ava'
-import {Observable} from '../src/Observable'
-import {TestScheduler} from '../src/testing/TestScheduler'
-import {ReactiveTest} from '../src/testing/ReactiveTest'
+import test from 'ava';
+import {Observable} from '../src/Observable';
+import {TestScheduler} from '../src/testing/TestScheduler';
+import {ReactiveTest, EventError} from '../src/testing/ReactiveTest';
+import {ISubscription} from '../src/types/core/ISubscription';
 
 const {next, complete, error} = ReactiveTest
 
