@@ -37,6 +37,7 @@ export class Observable<T> implements IObservable<T> {
   }
 
   subscribe (observer: IObserver<T>, scheduler: IScheduler = new DefaultScheduler()): ISubscription {
+    if (typeof observer !== 'object') throw new TypeError('Observer should be of object type')
     const subscription = new CompositeSubscription()
     const task = () => this.safelyExecuteFunc(observer, subscription);
     subscription.add(scheduler.scheduleNow(task))
