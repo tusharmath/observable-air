@@ -103,7 +103,7 @@ export class TestScheduler implements IScheduler {
     return resultsObserver
   }
 
-  createColdObservable <T> (events: Array<IEvent>): IObservable<IEvent> {
+  createColdObservable <T> (events: Array<IEvent>): IObservable<T> {
     return new TestObservable((observer: ISubscriptionObserver<any>) => {
       for (var i = 0; i < events.length; i++) {
         const event = events[i]
