@@ -9,11 +9,11 @@ export class SubscriptionObserver<T> implements ISubscriptionObserver<T> {
   closed: boolean;
 
   constructor (private sink: IObserver<T>) {
-    this.closed = false
+    this.closed = !this.sink.next
   }
 
   next (val: T): void {
-    if (this.sink.next) this.sink.next(val)
+    this.sink.next(val)
   }
 
   error (err: Error): void {
