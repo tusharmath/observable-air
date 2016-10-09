@@ -12,10 +12,6 @@ class MapObserver<T> implements IObserver<T> {
 
   }
 
-  start (subscription: ISubscription): void {
-    this.sink.start(subscription)
-  }
-
   next (val: T): void {
     this.sink.next(this.mapper(val))
   }

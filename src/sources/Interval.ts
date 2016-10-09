@@ -18,9 +18,7 @@ export class IntervalObservable<Number> implements IObservable<number> {
 
     let i = 0
     var task = () => observer.next(i++)
-    const subscription = scheduler.scheduleRepeatedly(task, this.interval)
-    observer.start(subscription)
-    return subscription
+    return scheduler.scheduleRepeatedly(task, this.interval)
   }
 }
 
