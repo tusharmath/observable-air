@@ -2,8 +2,8 @@
  * Created by tushar.mathur on 07/10/16.
  */
 
-import {ISubscriptionObserver} from './types/core/ISubscriptionObserver';
-import {IObserver} from './types/core/IObserver';
+import {ISubscriptionObserver} from '../types/core/ISubscriptionObserver';
+import {IObserver} from '../types/core/IObserver';
 
 export function noop () {
 }
