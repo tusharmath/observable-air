@@ -2,8 +2,8 @@
  * Created by tushar.mathur on 07/10/16.
  */
 
-import {ISubscription} from './types/core/ISubscription';
-import {ITask} from './types/ITask';
+import {ISubscription} from '../types/core/ISubscription';
+import {ITask} from '../types/ITask';
 
 const propClosed = (x: ISubscription) => x.closed;
 

@@ -7,8 +7,8 @@ import {IObserver} from '../types/core/IObserver';
 import {IScheduler} from '../types/IScheduler';
 import {ISubscription} from '../types/core/ISubscription';
 import {ISubscriberFunction} from '../types/core/ISubscriberFunction';
-import {Subscription} from '../Subscription';
-import {SubscriptionObserver} from '../SubscriptionObserver';
+import {Subscription} from './Subscription';
+import {SubscriptionObserver} from './SubscriptionObserver';
 
 
 export class TestObservable<T> implements IObservable<T> {
