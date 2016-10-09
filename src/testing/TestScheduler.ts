@@ -5,7 +5,6 @@
 import {ITask} from '../types/ITask';
 import {IScheduler} from '../types/IScheduler';
 import {IObservable} from '../types/core/IObservable';
-import {IObserver} from '../types/core/IObserver';
 import {ISubscription} from '../types/core/ISubscription';
 import {EventNext} from './ReactiveTest';
 import {IEvent, EventType} from '../types/IEvent';
@@ -105,7 +104,8 @@ export class TestScheduler implements IScheduler {
 
   createColdObservable <T> (events: Array<IEvent>): IObservable<T> {
     return new TestObservable((observer: ISubscriptionObserver<any>) => {
-      for (var i = 0; i < events.length; i++) {
+      let closed = false
+      for (var i = 0; i < events.length && !closed; i++) {
         const event = events[i]
         if (event.type === EventType.next) {
           this.schedule(() => observer.next((<EventNext<any>> event).value), event.time)
@@ -116,9 +116,9 @@ export class TestScheduler implements IScheduler {
       }
       return {
         unsubscribe () {
-
+          closed = true
         },
-        closed: false
+        closed
       }
     })
   }
