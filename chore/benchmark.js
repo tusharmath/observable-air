@@ -10,7 +10,7 @@ const {scan} = require('../src/operators/Scan')
 const {filter} = require('../src/operators/Filter')
 const {fromArray} = require('../src/sources/FromArray')
 const {reduce} = require('../src/operators/Reduce')
-const {takeN} = require('../src/operators/Slice')
+const {slice} = require('../src/operators/Slice')
 
 function noop () {
 }
@@ -48,7 +48,7 @@ suite
   )
   .add('file -> takeN(0, n/10)',
     d =>
-      run(takeN(0, n / 10, fromArray(a)), d),
+      run(slice(0, n / 10, fromArray(a)), d),
     options
   )
   .add('file -> scan -> reduce',
