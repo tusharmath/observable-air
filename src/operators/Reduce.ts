@@ -27,10 +27,6 @@ class ReduceObserver<T> implements IObserver<T> {
     this.sink.next(this.value)
     this.sink.complete()
   }
-
-  start (subscription: ISubscription): void {
-    this.sink.start(subscription)
-  }
 }
 
 export class ReduceObservable <T> implements IObservable<T> {

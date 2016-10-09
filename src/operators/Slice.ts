@@ -34,10 +34,6 @@ class SliceObserver<T> implements IObserver<T> {
     if (this.closed) return
     this.sink.error(error)
   }
-
-  start (subscription: ISubscription): void {
-    this.sink.start(subscription)
-  }
 }
 
 export class SliceObservable<T> implements IObservable<T> {
