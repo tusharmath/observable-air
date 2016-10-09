@@ -33,11 +33,12 @@ class FromRunner <T> implements ILazySubscription {
   }
 
   execute () {
-    if (this.closed) return
-    for (var i = 0; i < this.array.length; ++i) {
-      this.sink.next(this.array[i])
+    var l = this.array.length;
+    var sink = this.sink;
+    for (var i = 0; i < l && !this.closed; ++i) {
+      sink.next(this.array[i])
     }
-    this.sink.complete()
+    sink.complete()
   }
 
   unsubscribe (): void {
@@ -53,9 +54,7 @@ export class FromObservable<T> implements IObservable<T> {
   subscribe (observer: IObserver<T>,
              scheduler: IScheduler = new DefaultScheduler()): ISubscription {
 
-    const runner = new FromRunner<T>(this.array, observer, scheduler)
-    runner.run()
-    return subscription
+    return new FromRunner<T>(this.array, observer, scheduler).run()
   }
 }
 

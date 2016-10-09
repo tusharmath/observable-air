@@ -6,6 +6,7 @@
 
 const {Suite} = require('benchmark')
 const {map} = require('../src/operators/Map')
+const {scan} = require('../src/operators/Scan')
 const {filter} = require('../src/operators/Filter')
 const {fromArray} = require('../src/sources/FromArray')
 const {reduce} = require('../src/operators/Reduce')
@@ -21,6 +22,9 @@ function even (e) {
 }
 function sum (a, b) {
   return a + b
+}
+function passthrough (z, x) {
+  return x
 }
 const n = 1e6
 const a = new Array(n)
@@ -45,6 +49,11 @@ suite
   .add('file -> takeN(0, n/10)',
     d =>
       run(slice(0, n / 10, fromArray(a)), d),
+    options
+  )
+  .add('file -> scan -> reduce',
+    d =>
+      run(reduce(passthrough, 0, scan(sum, 0, fromArray(a))), d),
     options
   )
   .on('cycle', event => console.log(String(event.target))).run()
