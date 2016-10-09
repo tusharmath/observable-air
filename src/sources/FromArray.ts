@@ -9,8 +9,6 @@ import {IScheduler} from '../types/IScheduler';
 import {DefaultScheduler} from '../scheduling/DefaultScheduler';
 import {ILazySubscription} from '../types/ILazySubscription';
 import {SafeExecutor} from '../lib/SafeExecutor';
-import {Safety} from '../types/ISafeValue';
-;
 
 const unsubscribe = function () {
 }
@@ -31,7 +29,7 @@ class FromRunner <T> implements ILazySubscription {
 
   executeSafely () {
     const r = SafeExecutor(() => this.execute())
-    if (r.type === Safety.error) this.sink.error(r.value as Error)
+    if (r.hasError()) this.sink.error(r.error)
   }
 
   execute () {
