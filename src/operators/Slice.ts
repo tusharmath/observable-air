@@ -46,6 +46,6 @@ export class SliceObservable<T> implements IObservable<T> {
 
 }
 
-export function takeN<T> (start: number, count: number, source: IObservable<T>): IObservable<T> {
+export function slice<T> (start: number, count: number, source: IObservable<T>): IObservable<T> {
   return new SliceObservable(start, count, source)
 }
