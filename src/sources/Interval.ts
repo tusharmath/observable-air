@@ -7,6 +7,8 @@ import {ISubscription} from '../types/core/ISubscription';
 import {IObserver} from '../types/core/IObserver';
 import {IScheduler} from '../types/IScheduler';
 import {DefaultScheduler} from '../scheduling/DefaultScheduler';
+import {SafeExecutor} from '../lib/SafeExecutor';
+import {PassOnError} from '../lib/PassOnError';
 
 
 export class IntervalObservable<Number> implements IObservable<number> {
@@ -17,7 +19,8 @@ export class IntervalObservable<Number> implements IObservable<number> {
              scheduler: IScheduler = DefaultScheduler.of()): ISubscription {
 
     let i = 0
-    var task = () => observer.next(i++)
+    var f = () => observer.next(i++);
+    var task = () => PassOnError<void, number>(SafeExecutor(f), observer)
     return scheduler.scheduleRepeatedly(task, this.interval)
   }
 }

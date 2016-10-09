@@ -7,8 +7,9 @@
 import test from 'ava';
 import {interval} from '../src/sources/Interval';
 import {TestScheduler} from '../src/testing/TestScheduler';
-import {ReactiveTest} from '../src/testing/ReactiveTest';
-const {next} = ReactiveTest
+import {ReactiveTest, EventError} from '../src/testing/ReactiveTest';
+import {IEvent} from '../src/types/IEvent';
+const {next, error} = ReactiveTest
 
 test('subscribe()', t => {
   const sh = TestScheduler.of()
@@ -24,4 +25,23 @@ test('subscribe()', t => {
     next(1800, 7),
     next(2000, 8)
   ])
+})
+
+
+test('subscribe()', t => {
+  const results: IEvent[] = []
+  const sh = TestScheduler.of()
+  var observer = {
+    next: (t: number) => {
+      throw Error('Yo')
+    },
+    complete: () => null,
+    error: (err: Error) => results.push(error(sh.now(), err))
+  };
+  interval(100).subscribe(observer, sh)
+  sh.advanceBy(100)
+  t.deepEqual(results, [
+    error(100, Error())
+  ])
+  t.is((results[0] as EventError).value.message, 'Yo')
 })
