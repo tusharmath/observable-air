@@ -6,11 +6,9 @@ import {ITask} from '../types/ITask';
 import {IScheduler} from '../types/IScheduler';
 import {IObservable} from '../types/core/IObservable';
 import {ISubscription} from '../types/core/ISubscription';
-import {EventNext} from './ReactiveTest';
-import {IEvent, EventType} from '../types/IEvent';
+import {IEvent} from '../types/IEvent';
 import {TestObserver} from './TestObserver';
-import {TestObservable} from './TestObservable';
-import {ISubscriptionObserver} from '../types/core/ISubscriptionObserver';
+import {TestColdObservable} from './TestColdObservable';
 import {ISchedulingStrategy} from '../types/ISchedulingStrategy';
 
 class TaskSchedule {
@@ -102,25 +100,8 @@ export class TestScheduler implements IScheduler {
     return resultsObserver
   }
 
-  createColdObservable <T> (events: Array<IEvent>): IObservable<T> {
-    return new TestObservable((observer: ISubscriptionObserver<any>) => {
-      let closed = false
-      for (var i = 0; i < events.length && !closed; i++) {
-        const event = events[i]
-        if (event.type === EventType.next) {
-          this.schedule(() => observer.next((<EventNext<any>> event).value), event.time)
-        }
-        else if (event.type === EventType.complete) {
-          this.schedule(() => observer.complete(), event.time)
-        }
-      }
-      return {
-        unsubscribe () {
-          closed = true
-        },
-        closed
-      }
-    })
+  createColdObservable <T> (events: Array<IEvent>) {
+    return TestColdObservable(this, events)
   }
 
   static of () {
