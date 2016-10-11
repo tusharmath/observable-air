@@ -8,9 +8,9 @@ import {IObservable} from '../types/core/IObservable';
 import {ISubscription} from '../types/core/ISubscription';
 import {IEvent} from '../types/IEvent';
 import {TestObserver} from './TestObserver';
-import {TestColdObservable} from './TestColdObservable';
+import {ColdTestObservable} from './ColdTestObservable';
 import {ISchedulingStrategy} from '../types/ISchedulingStrategy';
-import {TestHotObservable} from './TestHotObservable';
+import {HotTestObservable} from './HotTestObservable';
 
 class TaskSchedule {
   constructor (public task: ITask, public time: number) {
@@ -102,11 +102,11 @@ export class TestScheduler implements IScheduler {
   }
 
   createColdObservable <T> (events: Array<IEvent>) {
-    return TestColdObservable(this, events)
+    return ColdTestObservable(this, events)
   }
 
   createHotObservable <T> (events: Array<IEvent>) {
-    return TestHotObservable(this, events)
+    return HotTestObservable(this, events)
   }
 
   static of () {

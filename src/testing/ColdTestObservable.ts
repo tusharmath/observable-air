@@ -8,7 +8,7 @@ import {ISubscriptionObserver} from '../types/core/ISubscriptionObserver';
 import {EventNext} from './ReactiveTest';
 import {IScheduler} from '../types/IScheduler';
 
-export function TestColdObservable<T> (scheduler: IScheduler, events: Array<IEvent>) {
+export function ColdTestObservable<T> (scheduler: IScheduler, events: Array<IEvent>) {
   return new TestObservable((observer: ISubscriptionObserver<any>) => {
     let closed = false
     for (var i = 0; i < events.length && !closed; i++) {

@@ -19,7 +19,7 @@ export function dispatchEvents<T> (event: IEvent, observers: Array<IObserver<T>>
     })
 }
 
-export function TestHotObservable<T> (scheduler: TestScheduler, events: Array<IEvent>) {
+export function HotTestObservable<T> (scheduler: TestScheduler, events: Array<IEvent>) {
   const observers: Array<IObserver<T>> = []
   const closed: Array<boolean> = []
   events.forEach(ev => {
