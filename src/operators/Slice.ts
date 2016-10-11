@@ -7,21 +7,25 @@ import {IObserver} from '../types/core/IObserver';
 import {ISubscription} from '../types/core/ISubscription';
 import {IScheduler} from '../types/IScheduler';
 
+function isRange (current: number, start: number, total: number) {
+  return current >= start && current - start < total
+}
+
 class SliceObserver<T> implements IObserver<T> {
   closed: boolean;
-  private index: number;
+  private current: number;
 
-  constructor (private from: number,
+  constructor (private start: number,
                private total: number,
                private sink: IObserver<T>) {
     this.closed = false
-    this.index = 0
+    this.current = 0
   }
 
   next (value: T): void {
-    if (this.closed) return
-    if (this.index++ >= this.from) this.sink.next(value)
-    if (this.index - this.from === this.total) this.complete()
+    const diff = this.current++ - this.start
+    if (diff >= 0 && diff < this.total) this.sink.next(value)
+    if (diff + 1 === this.total) this.complete()
   }
 
   complete (): void {
@@ -31,7 +35,6 @@ class SliceObserver<T> implements IObserver<T> {
   }
 
   error (error: Error): void {
-    if (this.closed) return
     this.sink.error(error)
   }
 }
