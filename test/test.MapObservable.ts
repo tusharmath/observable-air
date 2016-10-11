@@ -7,9 +7,9 @@
 import test from 'ava';
 import {map} from '../src/operators/Map';
 import {TestScheduler} from '../src/testing/TestScheduler';
-import {ReactiveTest} from '../src/testing/ReactiveTest';
+import {ReactiveEvents} from '../src/testing/ReactiveEvents';
 
-const {next, complete} = ReactiveTest
+const {next, complete} = ReactiveEvents
 
 test('MapObservable.subscribe()', t => {
   const sh = TestScheduler.of()
