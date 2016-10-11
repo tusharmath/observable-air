@@ -10,6 +10,7 @@ import {IEvent} from '../types/IEvent';
 import {TestObserver} from './TestObserver';
 import {TestColdObservable} from './TestColdObservable';
 import {ISchedulingStrategy} from '../types/ISchedulingStrategy';
+import {TestHotObservable} from './TestHotObservable';
 
 class TaskSchedule {
   constructor (public task: ITask, public time: number) {
@@ -102,6 +103,10 @@ export class TestScheduler implements IScheduler {
 
   createColdObservable <T> (events: Array<IEvent>) {
     return TestColdObservable(this, events)
+  }
+
+  createHotObservable <T> (events: Array<IEvent>) {
+    return TestHotObservable(this, events)
   }
 
   static of () {

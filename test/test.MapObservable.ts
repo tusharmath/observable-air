@@ -27,3 +27,21 @@ test('MapObservable.subscribe()', t => {
     complete(450)
   ])
 })
+
+test('MapObservable.subscribe():HOT', t => {
+  const sh = TestScheduler.of()
+  const $ = sh.createHotObservable<number>([
+    next(100, -10),
+    next(210, 0),
+    next(220, 10),
+    next(230, 20),
+    complete(250)
+  ])
+  const {results} = sh.startScheduler(() => map<number>((x: number) => x + 1, $))
+  t.deepEqual(results, [
+    next(210, 1),
+    next(220, 11),
+    next(230, 21),
+    complete(250)
+  ])
+})
