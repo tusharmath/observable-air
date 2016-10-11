@@ -38,7 +38,7 @@ export class EventStart implements IEvent {
   }
 }
 
-export const ReactiveTest = {
+export const ReactiveEvents = {
   next <T> (time: number, value: T): EventNext<T> {
     return new EventNext(time, value)
   },

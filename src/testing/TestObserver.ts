@@ -2,7 +2,7 @@
  * Created by tushar.mathur on 03/10/16.
  */
 
-import {ReactiveTest} from './ReactiveTest';
+import {ReactiveEvents} from './ReactiveEvents';
 import {IScheduler} from '../types/IScheduler';
 import {IEvent} from '../types/IEvent';
 import {IObserver} from '../types/core/IObserver';
@@ -20,14 +20,14 @@ export class TestObserver<T> implements IObserver<T> {
   }
 
   next (val: T): void {
-    this.results.push(ReactiveTest.next(this.scheduler.now(), val))
+    this.results.push(ReactiveEvents.next(this.scheduler.now(), val))
   }
 
   error (err: Error): void {
-    this.results.push(ReactiveTest.error(this.scheduler.now(), err))
+    this.results.push(ReactiveEvents.error(this.scheduler.now(), err))
   }
 
   complete (): void {
-    this.results.push(ReactiveTest.complete(this.scheduler.now()))
+    this.results.push(ReactiveEvents.complete(this.scheduler.now()))
   }
 }
