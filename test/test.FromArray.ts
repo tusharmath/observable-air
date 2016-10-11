@@ -7,9 +7,9 @@
 import test from 'ava';
 import {fromArray, map} from '../src/main';
 import {TestScheduler} from '../src/testing/TestScheduler';
-import {ReactiveTest} from '../src/testing/ReactiveTest';
+import {ReactiveEvents} from '../src/testing/ReactiveEvents';
 
-const {next, error} = ReactiveTest
+const {next, error} = ReactiveEvents
 test(t => {
   const sh = TestScheduler.of()
   const testFunction = (x: any) => x === 2 ? x.do() : x * 100

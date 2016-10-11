@@ -7,9 +7,9 @@
 import test from 'ava';
 import {TestScheduler} from '../src/testing/TestScheduler';
 import {slice} from '../src/main';
-import {ReactiveTest} from '../src/testing/ReactiveTest';
+import {ReactiveEvents} from '../src/testing/ReactiveEvents';
 
-const {next, complete} = ReactiveTest
+const {next, complete} = ReactiveEvents
 test('takeN(0, 3)', t => {
   const sh = TestScheduler.of()
   const ob$ = sh.Cold([

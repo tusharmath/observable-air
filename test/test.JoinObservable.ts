@@ -5,8 +5,8 @@
 import test from 'ava';
 import {join} from '../src/main';
 import {TestScheduler} from '../src/testing/TestScheduler';
-import {ReactiveTest} from '../src/testing/ReactiveTest';
-const {next, complete} = ReactiveTest
+import {ReactiveEvents} from '../src/testing/ReactiveEvents';
+const {next, complete} = ReactiveEvents
 
 test('subscribe()', t => {
   const sh = TestScheduler.of()

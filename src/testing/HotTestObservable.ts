@@ -5,7 +5,7 @@
 import {EventType, IEvent} from '../types/IEvent';
 import {TestObservable} from './TestObservable';
 import {ISubscriptionObserver} from '../types/core/ISubscriptionObserver';
-import {EventNext, EventError} from './ReactiveTest';
+import {EventNext, EventError} from './ReactiveEvents';
 import {IObserver} from '../types/core/IObserver';
 import {TestScheduler} from './TestScheduler';
 

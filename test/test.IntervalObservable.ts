@@ -7,9 +7,9 @@
 import test from 'ava';
 import {interval} from '../src/main';
 import {TestScheduler} from '../src/testing/TestScheduler';
-import {ReactiveTest, EventError} from '../src/testing/ReactiveTest';
+import {ReactiveEvents, EventError} from '../src/testing/ReactiveEvents';
 import {IEvent} from '../src/types/IEvent';
-const {next, error} = ReactiveTest
+const {next, error} = ReactiveEvents
 
 test('subscribe()', t => {
   const sh = TestScheduler.of()
