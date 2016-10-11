@@ -6,33 +6,31 @@
 import {IScheduler} from '../types/IScheduler';
 import {ISubscription} from '../types/core/ISubscription';
 import {ITask} from '../types/ITask';
-import {ScheduleInFuture} from './ScheduleInFuture';
-import {ScheduleASAP} from './ScheduleASAP';
-import {ScheduleNow} from './ScheduleNow';
-import {ISchedulingStrategy} from '../types/ISchedulingStrategy';
-import {ScheduleRepeatedly} from './ScheduleRepeatedly';
+import {ScheduleTimeout} from './ScheduleTimeout';
+import {ScheduleImmediately} from './ScheduleImmediately';
+import {IScheduledTask} from '../types/IScheduledTask';
+import {ScheduleInterval} from './ScheduleInterval';
+import {ScheduleRequestAnimationFrame} from './ScheduleRequestAnimationFrame';
 
+function run (task: IScheduledTask) {
+  return task.run()
+}
 export class DefaultScheduler implements IScheduler {
-  scheduleUsing (strategy: ISchedulingStrategy, task: ITask): ISubscription {
-    return strategy.run(task);
+  setImmediate (task: ITask): ISubscription {
+    return run(new ScheduleImmediately(task))
   }
 
-  scheduleNow (task: ITask): ISubscription {
-    return this.scheduleUsing(new ScheduleNow(), task)
+  setInterval (task: ITask, interval: number): ISubscription {
+    return run(new ScheduleInterval(task, interval))
   }
 
-  scheduleASAP (task: ITask): ISubscription {
-    return this.scheduleUsing(new ScheduleASAP(), task)
+  setTimeout (task: ITask, relativeTime: number): ISubscription {
+    return run(new ScheduleTimeout(task, relativeTime))
   }
 
-  scheduleRepeatedly (task: ITask, interval: number): ISubscription {
-    return this.scheduleUsing(new ScheduleRepeatedly(interval, this), task)
+  requestAnimationFrame (task: ITask) {
+    return run(new ScheduleRequestAnimationFrame(task))
   }
-
-  schedule (task: ITask, relativeTime: number): ISubscription {
-    return this.scheduleUsing(new ScheduleInFuture(relativeTime), task)
-  }
-
 
   now (): number {
     return Date.now()

@@ -1,13 +1,13 @@
+/**
+ * Created by tushar.mathur on 10/10/16.
+ */
+
 import {EventType, IEvent} from '../types/IEvent';
 import {TestObservable} from './TestObservable';
 import {ISubscriptionObserver} from '../types/core/ISubscriptionObserver';
 import {EventNext, EventError} from './ReactiveTest';
 import {IObserver} from '../types/core/IObserver';
 import {TestScheduler} from './TestScheduler';
-/**
- * Created by tushar.mathur on 10/10/16.
- */
-
 
 export function dispatchEvents<T> (event: IEvent, observers: Array<IObserver<T>>, closed: Array<boolean>) {
   observers
@@ -23,9 +23,10 @@ export function HotTestObservable<T> (scheduler: TestScheduler, events: Array<IE
   const observers: Array<IObserver<T>> = []
   const closed: Array<boolean> = []
   events.forEach(ev => {
-      scheduler.scheduleAbsolute(
+      scheduler.setTimeout(
         () => dispatchEvents(ev, observers, closed),
-        ev.time)
+        ev.time,
+        0)
     }
   )
   return new TestObservable((ob: ISubscriptionObserver<T>) => {

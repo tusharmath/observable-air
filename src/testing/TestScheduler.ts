@@ -9,7 +9,6 @@ import {ISubscription} from '../types/core/ISubscription';
 import {IEvent} from '../types/IEvent';
 import {TestObserver} from './TestObserver';
 import {ColdTestObservable} from './ColdTestObservable';
-import {ISchedulingStrategy} from '../types/ISchedulingStrategy';
 import {HotTestObservable} from './HotTestObservable';
 
 class TaskSchedule {
@@ -40,34 +39,25 @@ export class TestScheduler implements IScheduler {
     return this.clock
   }
 
-  schedule (task: ITask, relativeTime: number): ISubscription {
-    this.queue.push(new TaskSchedule(task, relativeTime + this.now()))
+  setTimeout (task: ITask, time: number, now: number = this.now()): ISubscription {
+    this.queue.push(new TaskSchedule(task, time + now))
     return MockDisposable
   }
 
-  scheduleAbsolute (task: ITask, absoluteTime: number): ISubscription {
-    this.queue.push(new TaskSchedule(task, absoluteTime))
-    return MockDisposable
+  setImmediate (task: ITask): ISubscription {
+    return this.setTimeout(task, this.now() + 1, 0)
   }
 
-  scheduleASAP (task: ITask): ISubscription {
-    return this.scheduleAbsolute(task, this.now() + 1)
+  requestAnimationFrame (task: ITask): ISubscription {
+    return this.setTimeout(task, this.now() + 16, 0)
   }
 
-  scheduleNow (task: ITask): ISubscription {
-    return this.scheduleAbsolute(task, this.now())
-  }
-
-  scheduleUsing (strategy: ISchedulingStrategy, task: ITask) {
-    return strategy.run(task)
-  }
-
-  scheduleRepeatedly (task: ITask, interval: number): ISubscription {
+  setInterval (task: ITask, interval: number): ISubscription {
     const repeatedTask = () => {
       task()
-      this.schedule(repeatedTask, interval)
+      this.setTimeout(repeatedTask, interval)
     }
-    this.schedule(repeatedTask, interval)
+    this.setTimeout(repeatedTask, interval)
     return MockDisposable;
   }
 
@@ -87,8 +77,8 @@ export class TestScheduler implements IScheduler {
   start<T> (f: () => IObservable<T>, start = 200, stop = 2000): TestObserver<T> {
     var subscription: ISubscription
     var resultsObserver = new TestObserver(this);
-    this.scheduleAbsolute(() => subscription = f().subscribe(resultsObserver, this), start)
-    this.scheduleAbsolute(() => subscription.unsubscribe(), stop)
+    this.setTimeout(() => subscription = f().subscribe(resultsObserver, this), start, 0)
+    this.setTimeout(() => subscription.unsubscribe(), stop, 0)
 
     this.run()
     this.advanceBy(stop)
