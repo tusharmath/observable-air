@@ -15,15 +15,15 @@ function run (task: IScheduledTask) {
   return task.run()
 }
 export class DefaultScheduler implements IScheduler {
-  scheduleImmediately (task: ITask): ISubscription {
+  setImmediate (task: ITask): ISubscription {
     return run(new ScheduleImmediately(task))
   }
 
-  scheduleInterval (task: ITask, interval: number): ISubscription {
-    return run(new ScheduleInterval(task, interval, this))
+  setInterval (task: ITask, interval: number): ISubscription {
+    return run(new ScheduleInterval(task, interval))
   }
 
-  scheduleTimeout (task: ITask, relativeTime: number): ISubscription {
+  setTimeout (task: ITask, relativeTime: number): ISubscription {
     return run(new ScheduleTimeout(task, relativeTime))
   }
 

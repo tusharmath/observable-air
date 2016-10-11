@@ -40,26 +40,26 @@ export class TestScheduler implements IScheduler {
     return this.clock
   }
 
-  scheduleTimeout (task: ITask, relativeTime: number): ISubscription {
+  setTimeout (task: ITask, relativeTime: number): ISubscription {
     this.queue.push(new TaskSchedule(task, relativeTime + this.now()))
     return MockDisposable
   }
 
-  scheduleAbsolute (task: ITask, absoluteTime: number): ISubscription {
+  setAt (task: ITask, absoluteTime: number): ISubscription {
     this.queue.push(new TaskSchedule(task, absoluteTime))
     return MockDisposable
   }
 
-  scheduleImmediately (task: ITask): ISubscription {
-    return this.scheduleAbsolute(task, this.now() + 1)
+  setImmediate (task: ITask): ISubscription {
+    return this.setAt(task, this.now() + 1)
   }
 
-  scheduleInterval (task: ITask, interval: number): ISubscription {
+  setInterval (task: ITask, interval: number): ISubscription {
     const repeatedTask = () => {
       task()
-      this.scheduleTimeout(repeatedTask, interval)
+      this.setTimeout(repeatedTask, interval)
     }
-    this.scheduleTimeout(repeatedTask, interval)
+    this.setTimeout(repeatedTask, interval)
     return MockDisposable;
   }
 
@@ -79,8 +79,8 @@ export class TestScheduler implements IScheduler {
   start<T> (f: () => IObservable<T>, start = 200, stop = 2000): TestObserver<T> {
     var subscription: ISubscription
     var resultsObserver = new TestObserver(this);
-    this.scheduleAbsolute(() => subscription = f().subscribe(resultsObserver, this), start)
-    this.scheduleAbsolute(() => subscription.unsubscribe(), stop)
+    this.setAt(() => subscription = f().subscribe(resultsObserver, this), start)
+    this.setAt(() => subscription.unsubscribe(), stop)
 
     this.run()
     this.advanceBy(stop)

@@ -23,7 +23,7 @@ class FromRunner <T> implements ILazySubscription {
   }
 
   run () {
-    this.schedule = this.scheduler.scheduleImmediately(() => this.executeSafely())
+    this.schedule = this.scheduler.setImmediate(() => this.executeSafely())
     return this
   }
 
