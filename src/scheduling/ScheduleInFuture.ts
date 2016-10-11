@@ -10,12 +10,12 @@ export class ScheduleInFuture implements ISchedulingStrategy {
   closed: boolean;
   private timer: number;
 
-  constructor (private timeout: number) {
+  constructor (private task: ITask, private timeout: number) {
     this.closed = false
   }
 
-  run (task: ITask) {
-    this.timer = setTimeout(() => !this.closed && task(), this.timeout)
+  run () {
+    this.timer = setTimeout(() => this.task(), this.timeout)
     return this
   }
 

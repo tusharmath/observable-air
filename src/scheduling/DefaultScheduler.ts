@@ -13,24 +13,24 @@ import {ISchedulingStrategy} from '../types/ISchedulingStrategy';
 import {ScheduleRepeatedly} from './ScheduleRepeatedly';
 
 export class DefaultScheduler implements IScheduler {
-  scheduleUsing (strategy: ISchedulingStrategy, task: ITask): ISubscription {
-    return strategy.run(task);
+  scheduleUsing (strategy: ISchedulingStrategy): ISubscription {
+    return strategy.run();
   }
 
   scheduleNow (task: ITask): ISubscription {
-    return this.scheduleUsing(new ScheduleNow(), task)
+    return this.scheduleUsing(new ScheduleNow(task))
   }
 
   scheduleASAP (task: ITask): ISubscription {
-    return this.scheduleUsing(new ScheduleASAP(), task)
+    return this.scheduleUsing(new ScheduleASAP(task))
   }
 
   scheduleRepeatedly (task: ITask, interval: number): ISubscription {
-    return this.scheduleUsing(new ScheduleRepeatedly(interval, this), task)
+    return this.scheduleUsing(new ScheduleRepeatedly(task, interval, this))
   }
 
   schedule (task: ITask, relativeTime: number): ISubscription {
-    return this.scheduleUsing(new ScheduleInFuture(relativeTime), task)
+    return this.scheduleUsing(new ScheduleInFuture(task, relativeTime))
   }
 
 

@@ -11,19 +11,20 @@ export class ScheduleRepeatedly implements ISchedulingStrategy {
   closed: boolean;
   private subscription: ISubscription;
 
-  constructor (private interval: number,
+  constructor (private task: ITask,
+               private interval: number,
                private scheduler: IScheduler) {
   }
 
-  process (task: ITask) {
+  process () {
     if (this.closed) return
-    task()
-    this.run(task)
+    this.task()
+    this.run()
   }
 
-  run (task: ITask) {
+  run () {
     this.subscription = this.scheduler.schedule(
-      () => this.process(task), this.interval
+      () => this.process(), this.interval
     )
     return this
   }
