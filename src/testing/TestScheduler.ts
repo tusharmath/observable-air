@@ -39,22 +39,17 @@ export class TestScheduler implements IScheduler {
     return this.clock
   }
 
-  setTimeout (task: ITask, relativeTime: number): ISubscription {
-    this.queue.push(new TaskSchedule(task, relativeTime + this.now()))
-    return MockDisposable
-  }
-
-  setAt (task: ITask, absoluteTime: number): ISubscription {
-    this.queue.push(new TaskSchedule(task, absoluteTime))
+  setTimeout (task: ITask, time: number, now: number = this.now()): ISubscription {
+    this.queue.push(new TaskSchedule(task, time + now))
     return MockDisposable
   }
 
   setImmediate (task: ITask): ISubscription {
-    return this.setAt(task, this.now() + 1)
+    return this.setTimeout(task, this.now() + 1, 0)
   }
 
   requestAnimationFrame (task: ITask): ISubscription {
-    return this.setAt(task, this.now() + 16)
+    return this.setTimeout(task, this.now() + 16, 0)
   }
 
   setInterval (task: ITask, interval: number): ISubscription {
@@ -82,8 +77,8 @@ export class TestScheduler implements IScheduler {
   start<T> (f: () => IObservable<T>, start = 200, stop = 2000): TestObserver<T> {
     var subscription: ISubscription
     var resultsObserver = new TestObserver(this);
-    this.setAt(() => subscription = f().subscribe(resultsObserver, this), start)
-    this.setAt(() => subscription.unsubscribe(), stop)
+    this.setTimeout(() => subscription = f().subscribe(resultsObserver, this), start, 0)
+    this.setTimeout(() => subscription.unsubscribe(), stop, 0)
 
     this.run()
     this.advanceBy(stop)
