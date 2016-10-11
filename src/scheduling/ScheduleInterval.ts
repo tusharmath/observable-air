@@ -3,35 +3,23 @@
  */
 
 import {IScheduledTask} from '../types/IScheduledTask';
-import {IScheduler} from '../types/IScheduler';
 import {ITask} from '../types/ITask';
-import {ISubscription} from '../types/core/ISubscription';
 
 export class ScheduleInterval implements IScheduledTask {
   closed: boolean;
-  private subscription: ISubscription;
+  private id: number;
 
   constructor (private task: ITask,
-               private interval: number,
-               private scheduler: IScheduler) {
+               private interval: number) {
   }
 
-  process () {
-    if (this.closed) return
-    this.task()
-    this.run()
-  }
-
-  // TODO: Use setInterval() instead
   run () {
-    this.subscription = this.scheduler.scheduleTimeout(
-      () => this.process(), this.interval
-    )
+    this.id = setInterval(() => this.task(), this.interval)
     return this
   }
 
   unsubscribe (): void {
-    if (this.subscription) this.subscription.unsubscribe()
+    clearInterval(this.id)
     this.closed = true
   }
 }
