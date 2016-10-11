@@ -2,12 +2,12 @@
  * Created by tushar.mathur on 08/10/16.
  */
 
-import {ISchedulingStrategy} from '../types/ISchedulingStrategy';
+import {IScheduledTask} from '../types/IScheduledTask';
 import {IScheduler} from '../types/IScheduler';
 import {ITask} from '../types/ITask';
 import {ISubscription} from '../types/core/ISubscription';
 
-export class ScheduleRepeatedly implements ISchedulingStrategy {
+export class ScheduleRepeatedly implements IScheduledTask {
   closed: boolean;
   private subscription: ISubscription;
 

@@ -9,11 +9,11 @@ import {ITask} from '../types/ITask';
 import {ScheduleInFuture} from './ScheduleInFuture';
 import {ScheduleASAP} from './ScheduleASAP';
 import {ScheduleNow} from './ScheduleNow';
-import {ISchedulingStrategy} from '../types/ISchedulingStrategy';
+import {IScheduledTask} from '../types/IScheduledTask';
 import {ScheduleRepeatedly} from './ScheduleRepeatedly';
 
 export class DefaultScheduler implements IScheduler {
-  scheduleUsing (strategy: ISchedulingStrategy): ISubscription {
+  scheduleUsing (strategy: IScheduledTask): ISubscription {
     return strategy.run();
   }
 

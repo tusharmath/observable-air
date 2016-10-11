@@ -9,7 +9,7 @@ import {ISubscription} from '../types/core/ISubscription';
 import {IEvent} from '../types/IEvent';
 import {TestObserver} from './TestObserver';
 import {ColdTestObservable} from './ColdTestObservable';
-import {ISchedulingStrategy} from '../types/ISchedulingStrategy';
+import {IScheduledTask} from '../types/IScheduledTask';
 import {HotTestObservable} from './HotTestObservable';
 
 class TaskSchedule {
@@ -58,7 +58,7 @@ export class TestScheduler implements IScheduler {
     return this.scheduleAbsolute(task, this.now())
   }
 
-  scheduleUsing (strategy: ISchedulingStrategy, task: ITask) {
+  scheduleUsing (strategy: IScheduledTask, task: ITask) {
     return strategy.run(task)
   }
 

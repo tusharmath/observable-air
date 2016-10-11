@@ -4,9 +4,9 @@
 
 
 import {ITask} from '../types/ITask';
-import {ISchedulingStrategy} from '../types/ISchedulingStrategy';
+import {IScheduledTask} from '../types/IScheduledTask';
 
-export class ScheduleInFuture implements ISchedulingStrategy {
+export class ScheduleInFuture implements IScheduledTask {
   closed: boolean;
   private timer: number;
 

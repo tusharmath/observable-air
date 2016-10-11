@@ -4,9 +4,9 @@
 
 
 import {ITask} from '../types/ITask';
-import {ISchedulingStrategy} from '../types/ISchedulingStrategy';
+import {IScheduledTask} from '../types/IScheduledTask';
 
-export class ScheduleNow implements ISchedulingStrategy {
+export class ScheduleNow implements IScheduledTask {
   closed: boolean;
 
   constructor (private task: ITask) {

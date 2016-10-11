@@ -3,9 +3,9 @@
  */
 
 import {ITask} from '../types/ITask';
-import {ISchedulingStrategy} from '../types/ISchedulingStrategy';
+import {IScheduledTask} from '../types/IScheduledTask';
 
-export class ScheduleASAP implements ISchedulingStrategy {
+export class ScheduleASAP implements IScheduledTask {
   closed: boolean;
   private id: number;
 
