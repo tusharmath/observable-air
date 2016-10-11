@@ -101,11 +101,11 @@ export class TestScheduler implements IScheduler {
     return resultsObserver
   }
 
-  createColdObservable <T> (events: Array<IEvent>) {
+  cold <T> (events: Array<IEvent>) {
     return ColdTestObservable(this, events)
   }
 
-  createHotObservable <T> (events: Array<IEvent>) {
+  hot <T> (events: Array<IEvent>) {
     return HotTestObservable(this, events)
   }
 

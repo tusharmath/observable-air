@@ -10,19 +10,19 @@ const {next, complete} = ReactiveTest
 
 test('subscribe()', t => {
   const sh = TestScheduler.of()
-  const sa$$ = sh.createColdObservable([
+  const sa$$ = sh.cold([
     next(10, 'A0'),
     next(20, 'A1'),
     next(30, 'A2'),
     complete(40)
   ])
-  const sb$$ = sh.createColdObservable([
+  const sb$$ = sh.cold([
     next(10, 'B0'),
     next(20, 'B1'),
     next(30, 'B2'),
     complete(40)
   ])
-  const s$$ = sh.createColdObservable([
+  const s$$ = sh.cold([
     next(10, sa$$),
     next(20, sb$$),
     complete(100)
@@ -45,7 +45,7 @@ test('subscribe():hot', t => {
   const sh = TestScheduler.of()
 
   // start(210)
-  const sa$$ = sh.createHotObservable([
+  const sa$$ = sh.hot([
     next(211, 'A0'),
     next(220, 'A1'),
     next(230, 'A2'),
@@ -53,7 +53,7 @@ test('subscribe():hot', t => {
   ])
 
   // start(220)
-  const sb$$ = sh.createHotObservable([
+  const sb$$ = sh.hot([
     next(205, 'B0'),
     next(215, 'B1'),
     next(225, 'B2'),
@@ -61,7 +61,7 @@ test('subscribe():hot', t => {
   ])
 
   // start(210)
-  const s$$ = sh.createHotObservable([
+  const s$$ = sh.hot([
     next(210, sa$$),
     next(220, sb$$),
     complete(300)

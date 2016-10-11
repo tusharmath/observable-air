@@ -13,7 +13,7 @@ const {next, complete} = ReactiveTest
 
 test('MapObservable.subscribe()', t => {
   const sh = TestScheduler.of()
-  const $ = sh.createColdObservable<number>([
+  const $ = sh.cold<number>([
     next(210, 0),
     next(220, 10),
     next(230, 20),
@@ -30,7 +30,7 @@ test('MapObservable.subscribe()', t => {
 
 test('MapObservable.subscribe():HOT', t => {
   const sh = TestScheduler.of()
-  const $ = sh.createHotObservable<number>([
+  const $ = sh.hot<number>([
     next(100, -10),
     next(210, 0),
     next(220, 10),

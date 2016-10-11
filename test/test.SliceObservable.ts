@@ -12,7 +12,7 @@ import {ReactiveTest} from '../src/testing/ReactiveTest';
 const {next, complete} = ReactiveTest
 test('takeN(0, 3)', t => {
   const sh = TestScheduler.of()
-  const ob$ = sh.createColdObservable([
+  const ob$ = sh.cold([
     next(0, 1),
     next(10, 2),
     next(20, 3),
@@ -31,7 +31,7 @@ test('takeN(0, 3)', t => {
 
 test('takeN(0, Infinity)', t => {
   const sh = TestScheduler.of()
-  const ob$ = sh.createColdObservable([
+  const ob$ = sh.cold([
     next(0, 1),
     next(10, 2),
     next(20, 3),
@@ -53,7 +53,7 @@ test('takeN(0, Infinity)', t => {
 
 test('takeN(1, 3)', t => {
   const sh = TestScheduler.of()
-  const ob$ = sh.createColdObservable([
+  const ob$ = sh.cold([
     next(0, 1),
     next(10, 2),
     next(20, 3),

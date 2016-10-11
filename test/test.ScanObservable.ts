@@ -11,7 +11,7 @@ const {next, complete} = ReactiveTest
 
 test('ScanObservable.subscribe()', t => {
   const sh = TestScheduler.of()
-  const $ = sh.createColdObservable<number>([
+  const $ = sh.cold<number>([
     next(210, 0),
     next(220, 1),
     next(230, 2),
