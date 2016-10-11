@@ -6,7 +6,7 @@
 import {ITask} from '../types/ITask';
 import {IScheduledTask} from '../types/IScheduledTask';
 
-export class ScheduleInFuture implements IScheduledTask {
+export class ScheduleTimeout implements IScheduledTask {
   closed: boolean;
   private timer: number;
 

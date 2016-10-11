@@ -7,7 +7,7 @@ import {IScheduler} from '../types/IScheduler';
 import {ITask} from '../types/ITask';
 import {ISubscription} from '../types/core/ISubscription';
 
-export class ScheduleRepeatedly implements IScheduledTask {
+export class ScheduleInterval implements IScheduledTask {
   closed: boolean;
   private subscription: ISubscription;
 
@@ -22,8 +22,9 @@ export class ScheduleRepeatedly implements IScheduledTask {
     this.run()
   }
 
+  // TODO: Use setInterval() instead
   run () {
-    this.subscription = this.scheduler.schedule(
+    this.subscription = this.scheduler.scheduleTimeout(
       () => this.process(), this.interval
     )
     return this

@@ -5,7 +5,7 @@
 import {ITask} from '../types/ITask';
 import {IScheduledTask} from '../types/IScheduledTask';
 
-export class ScheduleASAP implements IScheduledTask {
+export class ScheduleImmediately implements IScheduledTask {
   closed: boolean;
   private id: number;
 

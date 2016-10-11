@@ -40,7 +40,7 @@ export class TestScheduler implements IScheduler {
     return this.clock
   }
 
-  schedule (task: ITask, relativeTime: number): ISubscription {
+  scheduleTimeout (task: ITask, relativeTime: number): ISubscription {
     this.queue.push(new TaskSchedule(task, relativeTime + this.now()))
     return MockDisposable
   }
@@ -50,24 +50,16 @@ export class TestScheduler implements IScheduler {
     return MockDisposable
   }
 
-  scheduleASAP (task: ITask): ISubscription {
+  scheduleImmediately (task: ITask): ISubscription {
     return this.scheduleAbsolute(task, this.now() + 1)
   }
 
-  scheduleNow (task: ITask): ISubscription {
-    return this.scheduleAbsolute(task, this.now())
-  }
-
-  scheduleUsing (strategy: IScheduledTask, task: ITask) {
-    return strategy.run(task)
-  }
-
-  scheduleRepeatedly (task: ITask, interval: number): ISubscription {
+  scheduleInterval (task: ITask, interval: number): ISubscription {
     const repeatedTask = () => {
       task()
-      this.schedule(repeatedTask, interval)
+      this.scheduleTimeout(repeatedTask, interval)
     }
-    this.schedule(repeatedTask, interval)
+    this.scheduleTimeout(repeatedTask, interval)
     return MockDisposable;
   }
 

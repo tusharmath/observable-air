@@ -21,7 +21,7 @@ export class IntervalObservable<Number> implements IObservable<number> {
     let i = 0
     var f = () => observer.next(i++);
     var task = () => PassOnError<void, number>(SafeExecutor(f), observer)
-    return scheduler.scheduleRepeatedly(task, this.interval)
+    return scheduler.scheduleInterval(task, this.interval)
   }
 }
 
