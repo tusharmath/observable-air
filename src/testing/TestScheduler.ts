@@ -18,11 +18,6 @@ class TaskSchedule {
 }
 const MockDisposable = {unsubscribe: (): void => void 0, closed: false}
 
-export const DEFAULT_TIMING = {
-  start: 200,
-  stop: 2000
-}
-
 export class TestScheduler implements IScheduler {
   private clock: number;
   private queue: Array<TaskSchedule>;
@@ -89,15 +84,14 @@ export class TestScheduler implements IScheduler {
     this.queue = residual
   }
 
-  start<T> (f: () => IObservable<T>,
-            timing: {start: number, stop: number} = DEFAULT_TIMING): TestObserver<T> {
+  start<T> (f: () => IObservable<T>, start = 200, stop = 2000): TestObserver<T> {
     var subscription: ISubscription
     var resultsObserver = new TestObserver(this);
-    this.scheduleAbsolute(() => subscription = f().subscribe(resultsObserver, this), timing.start)
-    this.scheduleAbsolute(() => subscription.unsubscribe(), timing.stop)
+    this.scheduleAbsolute(() => subscription = f().subscribe(resultsObserver, this), start)
+    this.scheduleAbsolute(() => subscription.unsubscribe(), stop)
 
     this.run()
-    this.advanceBy(timing.stop)
+    this.advanceBy(stop)
     return resultsObserver
   }
 
