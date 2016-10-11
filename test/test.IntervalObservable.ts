@@ -13,7 +13,7 @@ const {next, error} = ReactiveTest
 
 test('subscribe()', t => {
   const sh = TestScheduler.of()
-  const {results} = sh.startScheduler<number>(() => interval(200))
+  const {results} = sh.start<number>(() => interval(200))
   t.deepEqual(results, [
     next(400, 0),
     next(600, 1),

@@ -24,3 +24,7 @@ Sun Oct  9 19:01:52 IST 2016
 file -> map -> reduce x 545 ops/sec ±1.09% (80 runs sampled)
 file -> takeN(0, n/10) x 255 ops/sec ±0.65% (78 runs sampled)
 file -> scan -> reduce x 82.85 ops/sec ±2.59% (74 runs sampled)
+Tue Oct 11 11:37:52 IST 2016
+file -> map -> reduce x 522 ops/sec ±1.24% (78 runs sampled)
+file -> takeN(0, n/10) x 254 ops/sec ±0.86% (80 runs sampled)
+file -> scan -> reduce x 83.45 ops/sec ±1.08% (75 runs sampled)

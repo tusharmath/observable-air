@@ -14,7 +14,7 @@ const {next, error} = ReactiveTest
 test(t => {
   const sh = TestScheduler.of()
   const testFunction = (x: any) => x === 2 ? x.do() : x * 100
-  const {results} = sh.startScheduler(() => map(testFunction, fromArray([1, 2, 3])))
+  const {results} = sh.start(() => map(testFunction, fromArray([1, 2, 3])))
   t.deepEqual(results, [
     next(201, 100),
     error(201, new TypeError())

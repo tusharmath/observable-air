@@ -6,12 +6,11 @@ import {ITask} from '../types/ITask';
 import {IScheduler} from '../types/IScheduler';
 import {IObservable} from '../types/core/IObservable';
 import {ISubscription} from '../types/core/ISubscription';
-import {EventNext} from './ReactiveTest';
-import {IEvent, EventType} from '../types/IEvent';
+import {IEvent} from '../types/IEvent';
 import {TestObserver} from './TestObserver';
-import {TestObservable} from './TestObservable';
-import {ISubscriptionObserver} from '../types/core/ISubscriptionObserver';
+import {ColdTestObservable} from './ColdTestObservable';
 import {ISchedulingStrategy} from '../types/ISchedulingStrategy';
+import {HotTestObservable} from './HotTestObservable';
 
 class TaskSchedule {
   constructor (public task: ITask, public time: number) {
@@ -90,8 +89,8 @@ export class TestScheduler implements IScheduler {
     this.queue = residual
   }
 
-  startScheduler<T> (f: () => IObservable<T>,
-                     timing: {start: number, stop: number} = DEFAULT_TIMING): TestObserver<T> {
+  start<T> (f: () => IObservable<T>,
+            timing: {start: number, stop: number} = DEFAULT_TIMING): TestObserver<T> {
     var subscription: ISubscription
     var resultsObserver = new TestObserver(this);
     this.scheduleAbsolute(() => subscription = f().subscribe(resultsObserver, this), timing.start)
@@ -102,25 +101,12 @@ export class TestScheduler implements IScheduler {
     return resultsObserver
   }
 
-  createColdObservable <T> (events: Array<IEvent>): IObservable<T> {
-    return new TestObservable((observer: ISubscriptionObserver<any>) => {
-      let closed = false
-      for (var i = 0; i < events.length && !closed; i++) {
-        const event = events[i]
-        if (event.type === EventType.next) {
-          this.schedule(() => observer.next((<EventNext<any>> event).value), event.time)
-        }
-        else if (event.type === EventType.complete) {
-          this.schedule(() => observer.complete(), event.time)
-        }
-      }
-      return {
-        unsubscribe () {
-          closed = true
-        },
-        closed
-      }
-    })
+  Cold <T> (events: Array<IEvent>) {
+    return ColdTestObservable(this, events)
+  }
+
+  Hot <T> (events: Array<IEvent>) {
+    return HotTestObservable(this, events)
   }
 
   static of () {
