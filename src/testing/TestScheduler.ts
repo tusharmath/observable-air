@@ -89,8 +89,8 @@ export class TestScheduler implements IScheduler {
     this.queue = residual
   }
 
-  startScheduler<T> (f: () => IObservable<T>,
-                     timing: {start: number, stop: number} = DEFAULT_TIMING): TestObserver<T> {
+  start<T> (f: () => IObservable<T>,
+            timing: {start: number, stop: number} = DEFAULT_TIMING): TestObserver<T> {
     var subscription: ISubscription
     var resultsObserver = new TestObserver(this);
     this.scheduleAbsolute(() => subscription = f().subscribe(resultsObserver, this), timing.start)
@@ -101,11 +101,11 @@ export class TestScheduler implements IScheduler {
     return resultsObserver
   }
 
-  cold <T> (events: Array<IEvent>) {
+  Cold <T> (events: Array<IEvent>) {
     return ColdTestObservable(this, events)
   }
 
-  hot <T> (events: Array<IEvent>) {
+  Hot <T> (events: Array<IEvent>) {
     return HotTestObservable(this, events)
   }
 

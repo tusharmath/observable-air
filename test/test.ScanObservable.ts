@@ -11,7 +11,7 @@ const {next, complete} = ReactiveTest
 
 test('ScanObservable.subscribe()', t => {
   const sh = TestScheduler.of()
-  const $ = sh.cold<number>([
+  const $ = sh.Cold<number>([
     next(210, 0),
     next(220, 1),
     next(230, 2),
@@ -19,7 +19,7 @@ test('ScanObservable.subscribe()', t => {
     next(250, 4),
     complete(250)
   ])
-  const {results} = sh.startScheduler(() => scan((a, b) => a + b, 0, $))
+  const {results} = sh.start(() => scan((a, b) => a + b, 0, $))
   t.deepEqual(results, [
     next(410, 0),
     next(420, 1),
