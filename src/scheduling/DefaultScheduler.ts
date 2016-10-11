@@ -10,6 +10,7 @@ import {ScheduleTimeout} from './ScheduleTimeout';
 import {ScheduleImmediately} from './ScheduleImmediately';
 import {IScheduledTask} from '../types/IScheduledTask';
 import {ScheduleInterval} from './ScheduleInterval';
+import {ScheduleRequestAnimationFrame} from './ScheduleRequestAnimationFrame';
 
 function run (task: IScheduledTask) {
   return task.run()
@@ -27,6 +28,9 @@ export class DefaultScheduler implements IScheduler {
     return run(new ScheduleTimeout(task, relativeTime))
   }
 
+  requestAnimationFrame (task: ITask) {
+    return run(new ScheduleRequestAnimationFrame(task))
+  }
 
   now (): number {
     return Date.now()

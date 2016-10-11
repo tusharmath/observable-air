@@ -9,7 +9,6 @@ import {ISubscription} from '../types/core/ISubscription';
 import {IEvent} from '../types/IEvent';
 import {TestObserver} from './TestObserver';
 import {ColdTestObservable} from './ColdTestObservable';
-import {IScheduledTask} from '../types/IScheduledTask';
 import {HotTestObservable} from './HotTestObservable';
 
 class TaskSchedule {
@@ -52,6 +51,10 @@ export class TestScheduler implements IScheduler {
 
   setImmediate (task: ITask): ISubscription {
     return this.setAt(task, this.now() + 1)
+  }
+
+  requestAnimationFrame (task: ITask): ISubscription {
+    return this.setAt(task, this.now() + 16)
   }
 
   setInterval (task: ITask, interval: number): ISubscription {

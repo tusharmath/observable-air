@@ -9,5 +9,6 @@ export interface IScheduler {
   setTimeout(task: ITask, relativeTime: number): ISubscription
   setImmediate(task: ITask): ISubscription
   setInterval(task: ITask, interval: number): ISubscription
+  requestAnimationFrame(task: ITask): ISubscription
   now(): number
 }
