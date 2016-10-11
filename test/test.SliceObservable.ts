@@ -6,7 +6,7 @@
 
 import test from 'ava';
 import {TestScheduler} from '../src/testing/TestScheduler';
-import {slice} from '../src/operators/Slice';
+import {slice} from '../src/main';
 import {ReactiveTest} from '../src/testing/ReactiveTest';
 
 const {next, complete} = ReactiveTest

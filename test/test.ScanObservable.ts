@@ -3,7 +3,7 @@
  */
 
 import test from 'ava';
-import {scan} from '../src/operators/Scan';
+import {scan} from '../src/main';
 import {TestScheduler} from '../src/testing/TestScheduler';
 import {ReactiveTest} from '../src/testing/ReactiveTest';
 

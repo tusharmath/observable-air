@@ -3,7 +3,7 @@
  */
 
 import test from 'ava';
-import {join} from '../src/operators/Join';
+import {join} from '../src/main';
 import {TestScheduler} from '../src/testing/TestScheduler';
 import {ReactiveTest} from '../src/testing/ReactiveTest';
 const {next, complete} = ReactiveTest
