@@ -7,7 +7,7 @@ import {IObservable} from '../types/core/IObservable';
 import {IObserver} from '../types/core/IObserver';
 import {IScheduler} from '../types/IScheduler';
 import {ISubscription} from '../types/core/ISubscription';
-import {CompositeSubscription} from '../testing/Subscription';
+import {CompositeSubscription} from '../lib/CompositeSubscription';
 
 
 export class JoinValueObserver<T> implements IObserver<T> {
