@@ -3,11 +3,11 @@
  */
 
 
-import {IObservable} from '../types/core/IObservable';
-import {IObserver} from '../types/core/IObserver';
-import {IScheduler} from '../types/IScheduler';
-import {ISubscription} from '../types/core/ISubscription';
-import {CompositeSubscription} from '../testing/Subscription';
+import {IObservable} from '../types/core/IObservable'
+import {IObserver} from '../types/core/IObserver'
+import {IScheduler} from '../types/IScheduler'
+import {ISubscription} from '../types/core/ISubscription'
+import {CompositeSubscription} from '../lib/CompositeSubscription'
 
 
 export class JoinValueObserver<T> implements IObserver<T> {
@@ -29,8 +29,8 @@ export class JoinValueObserver<T> implements IObserver<T> {
 }
 
 export class JoinObserver<T> implements IObserver<IObservable<T>> {
-  private count: number;
-  private sourceCompleted: boolean;
+  private count: number
+  private sourceCompleted: boolean
 
   constructor (private sink: IObserver<T>, private scheduler: IScheduler, private subscriptions: CompositeSubscription) {
     this.sourceCompleted = false
@@ -50,7 +50,7 @@ export class JoinObserver<T> implements IObserver<IObservable<T>> {
 
 
   next (val: IObservable<T>): void {
-    const joinValueObserver = new JoinValueObserver(this.sink, this);
+    const joinValueObserver = new JoinValueObserver(this.sink, this)
     this.count++
     this.subscriptions.add(
       val.subscribe(joinValueObserver, this.scheduler)

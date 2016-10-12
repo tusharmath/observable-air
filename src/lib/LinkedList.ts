@@ -4,8 +4,8 @@
 
 
 export class Node<T> {
-  public left: Node<T> | null;
-  public right: Node<T> | null;
+  public left: Node<T> | null
+  public right: Node<T> | null
 
   constructor (public value: T) {
     this.right = null
@@ -19,7 +19,7 @@ export class Node<T> {
 
 export class LinkedList<T> {
   public length: number
-  private __head: Node<T> | null;
+  private __head: Node<T> | null
 
   constructor () {
     this.length = 0
