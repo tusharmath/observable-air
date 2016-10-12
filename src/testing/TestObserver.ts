@@ -15,10 +15,6 @@ export class TestObserver<T> implements IObserver<T> {
     this.results = []
   }
 
-  start (subscription: ISubscription): void {
-    // this.results.push(ReactiveTest.start(this.scheduler.now(), subscription))
-  }
-
   next (val: T): void {
     this.results.push(ReactiveEvents.next(this.scheduler.now(), val))
   }

@@ -24,7 +24,9 @@ export function ColdTestObservable<T> (scheduler: IScheduler, events: Array<IEve
       unsubscribe () {
         closed = true
       },
-      closed
+      get closed () {
+        return closed
+      }
     }
   })
 }
