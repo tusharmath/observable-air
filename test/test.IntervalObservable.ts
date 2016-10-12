@@ -7,13 +7,13 @@
 import test from 'ava';
 import {interval} from '../src/sources/Interval';
 import {TestScheduler} from '../src/testing/TestScheduler';
-import {ReactiveTest, EventError} from '../src/testing/ReactiveTest';
+import {ReactiveEvents, EventError} from '../src/testing/ReactiveEvents';
 import {IEvent} from '../src/types/IEvent';
-const {next, error} = ReactiveTest
+const {next, error} = ReactiveEvents
 
 test('subscribe()', t => {
   const sh = TestScheduler.of()
-  const {results} = sh.startScheduler<number>(() => interval(200))
+  const {results} = sh.start<number>(() => interval(200))
   t.deepEqual(results, [
     next(400, 0),
     next(600, 1),

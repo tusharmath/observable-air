@@ -6,23 +6,16 @@ import {ITask} from '../types/ITask';
 import {IScheduler} from '../types/IScheduler';
 import {IObservable} from '../types/core/IObservable';
 import {ISubscription} from '../types/core/ISubscription';
-import {EventNext} from './ReactiveTest';
-import {IEvent, EventType} from '../types/IEvent';
+import {IEvent} from '../types/IEvent';
 import {TestObserver} from './TestObserver';
-import {TestObservable} from './TestObservable';
-import {ISubscriptionObserver} from '../types/core/ISubscriptionObserver';
-import {ISchedulingStrategy} from '../types/ISchedulingStrategy';
+import {ColdTestObservable} from './ColdTestObservable';
+import {HotTestObservable} from './HotTestObservable';
 
 class TaskSchedule {
   constructor (public task: ITask, public time: number) {
   }
 }
 const MockDisposable = {unsubscribe: (): void => void 0, closed: false}
-
-export const DEFAULT_TIMING = {
-  start: 200,
-  stop: 2000
-}
 
 export class TestScheduler implements IScheduler {
   private clock: number;
@@ -46,34 +39,25 @@ export class TestScheduler implements IScheduler {
     return this.clock
   }
 
-  schedule (task: ITask, relativeTime: number): ISubscription {
-    this.queue.push(new TaskSchedule(task, relativeTime + this.now()))
+  setTimeout (task: ITask, time: number, now: number = this.now()): ISubscription {
+    this.queue.push(new TaskSchedule(task, time + now))
     return MockDisposable
   }
 
-  scheduleAbsolute (task: ITask, absoluteTime: number): ISubscription {
-    this.queue.push(new TaskSchedule(task, absoluteTime))
-    return MockDisposable
+  setImmediate (task: ITask): ISubscription {
+    return this.setTimeout(task, this.now() + 1, 0)
   }
 
-  scheduleASAP (task: ITask): ISubscription {
-    return this.scheduleAbsolute(task, this.now() + 1)
+  requestAnimationFrame (task: ITask): ISubscription {
+    return this.setTimeout(task, this.now() + 16, 0)
   }
 
-  scheduleNow (task: ITask): ISubscription {
-    return this.scheduleAbsolute(task, this.now())
-  }
-
-  scheduleUsing (strategy: ISchedulingStrategy, task: ITask) {
-    return strategy.run(task)
-  }
-
-  scheduleRepeatedly (task: ITask, interval: number): ISubscription {
+  setInterval (task: ITask, interval: number): ISubscription {
     const repeatedTask = () => {
       task()
-      this.schedule(repeatedTask, interval)
+      this.setTimeout(repeatedTask, interval)
     }
-    this.schedule(repeatedTask, interval)
+    this.setTimeout(repeatedTask, interval)
     return MockDisposable;
   }
 
@@ -90,37 +74,23 @@ export class TestScheduler implements IScheduler {
     this.queue = residual
   }
 
-  startScheduler<T> (f: () => IObservable<T>,
-                     timing: {start: number, stop: number} = DEFAULT_TIMING): TestObserver<T> {
+  start<T> (f: () => IObservable<T>, start = 200, stop = 2000): TestObserver<T> {
     var subscription: ISubscription
     var resultsObserver = new TestObserver(this);
-    this.scheduleAbsolute(() => subscription = f().subscribe(resultsObserver, this), timing.start)
-    this.scheduleAbsolute(() => subscription.unsubscribe(), timing.stop)
+    this.setTimeout(() => subscription = f().subscribe(resultsObserver, this), start, 0)
+    this.setTimeout(() => subscription.unsubscribe(), stop, 0)
 
     this.run()
-    this.advanceBy(timing.stop)
+    this.advanceBy(stop)
     return resultsObserver
   }
 
-  createColdObservable <T> (events: Array<IEvent>): IObservable<T> {
-    return new TestObservable((observer: ISubscriptionObserver<any>) => {
-      let closed = false
-      for (var i = 0; i < events.length && !closed; i++) {
-        const event = events[i]
-        if (event.type === EventType.next) {
-          this.schedule(() => observer.next((<EventNext<any>> event).value), event.time)
-        }
-        else if (event.type === EventType.complete) {
-          this.schedule(() => observer.complete(), event.time)
-        }
-      }
-      return {
-        unsubscribe () {
-          closed = true
-        },
-        closed
-      }
-    })
+  Cold <T> (events: Array<IEvent>) {
+    return ColdTestObservable(this, events)
+  }
+
+  Hot <T> (events: Array<IEvent>) {
+    return HotTestObservable(this, events)
   }
 
   static of () {

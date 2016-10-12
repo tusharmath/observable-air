@@ -7,12 +7,12 @@
 import test from 'ava';
 import {TestScheduler} from '../src/testing/TestScheduler';
 import {slice} from '../src/operators/Slice';
-import {ReactiveTest} from '../src/testing/ReactiveTest';
+import {ReactiveEvents} from '../src/testing/ReactiveEvents';
 
-const {next, complete} = ReactiveTest
+const {next, complete} = ReactiveEvents
 test('takeN(0, 3)', t => {
   const sh = TestScheduler.of()
-  const ob$ = sh.createColdObservable([
+  const ob$ = sh.Cold([
     next(0, 1),
     next(10, 2),
     next(20, 3),
@@ -20,7 +20,7 @@ test('takeN(0, 3)', t => {
     next(40, 5),
     complete(50)
   ])
-  const {results} = sh.startScheduler(() => slice(0, 3, ob$))
+  const {results} = sh.start(() => slice(0, 3, ob$))
   t.deepEqual(results, [
     next(200, 1),
     next(210, 2),
@@ -31,7 +31,7 @@ test('takeN(0, 3)', t => {
 
 test('takeN(0, Infinity)', t => {
   const sh = TestScheduler.of()
-  const ob$ = sh.createColdObservable([
+  const ob$ = sh.Cold([
     next(0, 1),
     next(10, 2),
     next(20, 3),
@@ -40,7 +40,7 @@ test('takeN(0, Infinity)', t => {
     complete(50),
     next(60, 6)
   ])
-  const {results} = sh.startScheduler(() => slice(0, Infinity, ob$))
+  const {results} = sh.start(() => slice(0, Infinity, ob$))
   t.deepEqual(results, [
     next(200, 1),
     next(210, 2),
@@ -53,7 +53,7 @@ test('takeN(0, Infinity)', t => {
 
 test('takeN(1, 3)', t => {
   const sh = TestScheduler.of()
-  const ob$ = sh.createColdObservable([
+  const ob$ = sh.Cold([
     next(0, 1),
     next(10, 2),
     next(20, 3),
@@ -61,7 +61,7 @@ test('takeN(1, 3)', t => {
     next(40, 5),
     complete(50)
   ])
-  const {results} = sh.startScheduler(() => slice(1, 3, ob$))
+  const {results} = sh.start(() => slice(1, 3, ob$))
   t.deepEqual(results, [
     next(210, 2),
     next(220, 3),

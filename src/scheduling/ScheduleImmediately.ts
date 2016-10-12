@@ -3,18 +3,18 @@
  */
 
 import {ITask} from '../types/ITask';
-import {ISchedulingStrategy} from '../types/ISchedulingStrategy';
+import {IScheduledTask} from '../types/IScheduledTask';
 
-export class ScheduleASAP implements ISchedulingStrategy {
+export class ScheduleImmediately implements IScheduledTask {
   closed: boolean;
   private id: number;
 
-  constructor () {
+  constructor (private task: ITask) {
     this.closed = false
   }
 
-  run (task: ITask) {
-    this.id = setImmediate(() => task())
+  run () {
+    this.id = setImmediate(() => this.task())
     return this
   }
 

@@ -5,13 +5,13 @@
 import test from 'ava';
 import {scan} from '../src/operators/Scan';
 import {TestScheduler} from '../src/testing/TestScheduler';
-import {ReactiveTest} from '../src/testing/ReactiveTest';
+import {ReactiveEvents} from '../src/testing/ReactiveEvents';
 
-const {next, complete} = ReactiveTest
+const {next, complete} = ReactiveEvents
 
 test('ScanObservable.subscribe()', t => {
   const sh = TestScheduler.of()
-  const $ = sh.createColdObservable<number>([
+  const $ = sh.Cold<number>([
     next(210, 0),
     next(220, 1),
     next(230, 2),
@@ -19,7 +19,7 @@ test('ScanObservable.subscribe()', t => {
     next(250, 4),
     complete(250)
   ])
-  const {results} = sh.startScheduler(() => scan((a, b) => a + b, 0, $))
+  const {results} = sh.start(() => scan((a, b) => a + b, 0, $))
   t.deepEqual(results, [
     next(410, 0),
     next(420, 1),
