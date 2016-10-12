@@ -10,10 +10,6 @@ import {DefaultScheduler} from '../scheduling/DefaultScheduler';
 import {ILazySubscription} from '../types/ILazySubscription';
 import {SafeExecutor} from '../lib/SafeExecutor';
 
-const unsubscribe = function () {
-}
-const subscription = {unsubscribe, closed: true};
-
 class FromRunner <T> implements ILazySubscription {
   closed: boolean;
   private schedule: ISubscription;
