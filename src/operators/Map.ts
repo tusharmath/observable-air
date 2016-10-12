@@ -2,10 +2,10 @@
  * Created by tushar.mathur on 27/09/16.
  */
 
-import {IObservable} from '../types/core/IObservable';
-import {IObserver} from '../types/core/IObserver';
-import {ISubscription} from '../types/core/ISubscription';
-import {IScheduler} from '../types/IScheduler';
+import {IObservable} from '../types/core/IObservable'
+import {IObserver} from '../types/core/IObserver'
+import {ISubscription} from '../types/core/ISubscription'
+import {IScheduler} from '../types/IScheduler'
 
 class MapObserver<T> implements IObserver<T> {
   constructor (private mapper: (a: T) =>  T, private sink: IObserver<T>) {

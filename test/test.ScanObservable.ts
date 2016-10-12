@@ -2,10 +2,10 @@
  * Created by tushar.mathur on 09/10/16.
  */
 
-import test from 'ava';
-import {scan} from '../src/operators/Scan';
-import {TestScheduler} from '../src/testing/TestScheduler';
-import {ReactiveEvents} from '../src/testing/ReactiveEvents';
+import test from 'ava'
+import {scan} from '../src/operators/Scan'
+import {TestScheduler} from '../src/testing/TestScheduler'
+import {ReactiveEvents} from '../src/testing/ReactiveEvents'
 
 const {next, complete} = ReactiveEvents
 

@@ -4,10 +4,10 @@
 
 'use strict'
 
-import test from 'ava';
-import {TestScheduler} from '../src/testing/TestScheduler';
-import {slice} from '../src/operators/Slice';
-import {ReactiveEvents} from '../src/testing/ReactiveEvents';
+import test from 'ava'
+import {TestScheduler} from '../src/testing/TestScheduler'
+import {slice} from '../src/operators/Slice'
+import {ReactiveEvents} from '../src/testing/ReactiveEvents'
 
 const {next, complete, start, end} = ReactiveEvents
 test('takeN(0, 3)', t => {

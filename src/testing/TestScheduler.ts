@@ -2,14 +2,14 @@
  * Created by tushar.mathur on 02/10/16.
  */
 
-import {ITask} from '../types/ITask';
-import {IScheduler} from '../types/IScheduler';
-import {IObservable} from '../types/core/IObservable';
-import {ISubscription} from '../types/core/ISubscription';
-import {IEvent} from '../types/IEvent';
-import {TestObserver} from './TestObserver';
-import {ColdTestObservable} from './ColdTestObservable';
-import {HotTestObservable} from './HotTestObservable';
+import {ITask} from '../types/ITask'
+import {IScheduler} from '../types/IScheduler'
+import {IObservable} from '../types/core/IObservable'
+import {ISubscription} from '../types/core/ISubscription'
+import {IEvent} from '../types/IEvent'
+import {TestObserver} from './TestObserver'
+import {ColdTestObservable} from './ColdTestObservable'
+import {HotTestObservable} from './HotTestObservable'
 
 class TaskSchedule {
   constructor (public task: ITask, public time: number) {
@@ -18,8 +18,8 @@ class TaskSchedule {
 const MockDisposable = {unsubscribe: (): void => void 0, closed: false}
 
 export class TestScheduler implements IScheduler {
-  private clock: number;
-  private queue: Array<TaskSchedule>;
+  private clock: number
+  private queue: Array<TaskSchedule>
 
   constructor () {
     this.clock = 0
@@ -58,13 +58,13 @@ export class TestScheduler implements IScheduler {
       this.setTimeout(repeatedTask, interval)
     }
     this.setTimeout(repeatedTask, interval)
-    return MockDisposable;
+    return MockDisposable
   }
 
   private run () {
-    var residual: Array<TaskSchedule> = []
+    const residual: Array<TaskSchedule> = []
     for (var i = 0; i < this.queue.length; ++i) {
-      var qItem = this.queue[i]
+      const qItem = this.queue[i]
       if (qItem.time <= this.clock) {
         qItem.task()
       } else {
@@ -76,7 +76,7 @@ export class TestScheduler implements IScheduler {
 
   start<T> (f: () => IObservable<T>, start = 200, stop = 2000): TestObserver<T> {
     var subscription: ISubscription
-    var resultsObserver = new TestObserver(this);
+    const resultsObserver = new TestObserver(this)
     this.setTimeout(() => subscription = f().subscribe(resultsObserver, this), start, 0)
     this.setTimeout(() => !subscription.closed && subscription.unsubscribe(), stop, 0)
 

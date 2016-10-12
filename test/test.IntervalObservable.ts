@@ -4,11 +4,11 @@
 
 'use strict'
 
-import test from 'ava';
-import {interval} from '../src/sources/Interval';
-import {TestScheduler} from '../src/testing/TestScheduler';
-import {ReactiveEvents, EventError} from '../src/testing/ReactiveEvents';
-import {IEvent} from '../src/types/IEvent';
+import test from 'ava'
+import {interval} from '../src/sources/Interval'
+import {TestScheduler} from '../src/testing/TestScheduler'
+import {ReactiveEvents, EventError} from '../src/testing/ReactiveEvents'
+import {IEvent} from '../src/types/IEvent'
 const {next, error} = ReactiveEvents
 
 test('subscribe()', t => {
@@ -31,13 +31,13 @@ test('subscribe()', t => {
 test('subscribe()', t => {
   const results: IEvent[] = []
   const sh = TestScheduler.of()
-  var observer = {
+  const observer = {
     next: (t: number) => {
       throw Error('Yo')
     },
     complete: () => null,
     error: (err: Error) => results.push(error(sh.now(), err))
-  };
+  }
   interval(100).subscribe(observer, sh)
   sh.advanceBy(100)
   t.deepEqual(results, [

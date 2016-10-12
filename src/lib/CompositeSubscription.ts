@@ -1,10 +1,10 @@
-import {ISubscription} from '../types/core/ISubscription';
+import {ISubscription} from '../types/core/ISubscription'
 /**
  * Created by tushar.mathur on 12/10/16.
  */
 
 
-const propClosed = (x: ISubscription) => x.closed;
+const propClosed = (x: ISubscription) => x.closed
 
 export class CompositeSubscription implements ISubscription {
   constructor (private subscriptions: ISubscription[] = []) {
