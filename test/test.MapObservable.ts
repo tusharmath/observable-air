@@ -5,7 +5,7 @@
 'use strict'
 
 import test from 'ava'
-import {map} from '../src/operators/Map'
+import {map} from '../src/main'
 import {TestScheduler} from '../src/testing/TestScheduler'
 import {ReactiveEvents} from '../src/testing/ReactiveEvents'
 

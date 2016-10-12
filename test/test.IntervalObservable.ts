@@ -5,7 +5,7 @@
 'use strict'
 
 import test from 'ava'
-import {interval} from '../src/sources/Interval'
+import {interval} from '../src/main'
 import {TestScheduler} from '../src/testing/TestScheduler'
 import {ReactiveEvents, EventError} from '../src/testing/ReactiveEvents'
 import {IEvent} from '../src/types/IEvent'
