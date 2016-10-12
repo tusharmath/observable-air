@@ -2,20 +2,19 @@
  * Created by niranjan on 12/10/16.
  */
 
-import {IObservable} from '../types/core/IObservable';
-import {IObserver} from '../types/core/IObserver';
-import {ISubscription} from '../types/core/ISubscription';
-import {IScheduler} from '../types/IScheduler';
-import {IHash} from '../types/IHash';
+import {IObservable} from '../types/core/IObservable'
+import {IObserver} from '../types/core/IObserver'
+import {ISubscription} from '../types/core/ISubscription'
+import {IScheduler} from '../types/IScheduler'
+import {IHash} from '../types/IHash'
 
-class SkipRepeatsObserver <T,H> implements IObserver<T> {
-    private hash:H;
-    
-    constructor(private hashFunction:IHash<T,H>, private sink:IObserver<T>) {}
+class SkipRepeatsObserver <T, H> implements IObserver<T> {
+    private hash: H
+    constructor(private hashFunction: IHash<T, H>, private sink: IObserver<T>) {}
 
-    next(val : T) {
+    next(val: T) {
         const hash = this.hashFunction(val)
-        if(this.hash !== hash) {
+        if (this.hash !== hash) {
             this.sink.next(val)
             this.hash = hash
         }
@@ -30,14 +29,14 @@ class SkipRepeatsObserver <T,H> implements IObserver<T> {
     }
 }
 
-export class SkipRepeatsObservable <T,H> implements IObservable <T> {
-    constructor(private hashFunction:IHash<T,H>, private source: IObservable<T>) {}
+export class SkipRepeatsObservable <T, H> implements IObservable <T> {
+    constructor(private hashFunction: IHash<T, H>, private source: IObservable<T>) {}
 
     subscribe(observer: IObserver<T>, scheduler: IScheduler): ISubscription {
         return this.source.subscribe(new SkipRepeatsObserver(this.hashFunction, observer), scheduler)
     }
 }
 
-export function skipRepeats<T,H> ( hashFunction:IHash<T,H>, source:IObservable<T>): IObservable<T> {
+export function skipRepeats<T, H> ( hashFunction: IHash<T, H>, source: IObservable<T>): IObservable<T> {
     return new SkipRepeatsObservable(hashFunction, source)
 }
