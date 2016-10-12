@@ -2,21 +2,17 @@
  * Created by tushar.mathur on 03/10/16.
  */
 
-import {ReactiveEvents} from './ReactiveEvents';
-import {IScheduler} from '../types/IScheduler';
-import {IEvent} from '../types/IEvent';
-import {IObserver} from '../types/core/IObserver';
-import {ISubscription} from '../types/core/ISubscription';
+import {ReactiveEvents} from './ReactiveEvents'
+import {IScheduler} from '../types/IScheduler'
+import {IEvent} from '../types/IEvent'
+import {IObserver} from '../types/core/IObserver'
+import {ISubscription} from '../types/core/ISubscription'
 
 export class TestObserver<T> implements IObserver<T> {
-  results: Array<IEvent>;
+  results: Array<IEvent>
 
   constructor (private scheduler: IScheduler) {
     this.results = []
-  }
-
-  start (subscription: ISubscription): void {
-    // this.results.push(ReactiveTest.start(this.scheduler.now(), subscription))
   }
 
   next (val: T): void {

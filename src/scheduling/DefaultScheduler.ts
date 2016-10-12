@@ -3,14 +3,14 @@
  */
 
 
-import {IScheduler} from '../types/IScheduler';
-import {ISubscription} from '../types/core/ISubscription';
-import {ITask} from '../types/ITask';
-import {ScheduleTimeout} from './ScheduleTimeout';
-import {ScheduleImmediately} from './ScheduleImmediately';
-import {IScheduledTask} from '../types/IScheduledTask';
-import {ScheduleInterval} from './ScheduleInterval';
-import {ScheduleRequestAnimationFrame} from './ScheduleRequestAnimationFrame';
+import {IScheduler} from '../types/IScheduler'
+import {ISubscription} from '../types/core/ISubscription'
+import {ITask} from '../types/ITask'
+import {ScheduleTimeout} from './ScheduleTimeout'
+import {ScheduleImmediately} from './ScheduleImmediately'
+import {IScheduledTask} from '../types/IScheduledTask'
+import {ScheduleInterval} from './ScheduleInterval'
+import {ScheduleRequestAnimationFrame} from './ScheduleRequestAnimationFrame'
 
 function run (task: IScheduledTask) {
   return task.run()

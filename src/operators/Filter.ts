@@ -3,11 +3,11 @@
  */
 
 
-import {IObservable} from '../types/core/IObservable';
-import {IObserver} from '../types/core/IObserver';
-import {ISubscription} from '../types/core/ISubscription';
-import {IPredicate} from '../types/IPredicate';
-import {IScheduler} from '../types/IScheduler';
+import {IObservable} from '../types/core/IObservable'
+import {IObserver} from '../types/core/IObserver'
+import {ISubscription} from '../types/core/ISubscription'
+import {IPredicate} from '../types/IPredicate'
+import {IScheduler} from '../types/IScheduler'
 
 
 class FilterObserver <T> implements IObserver<T> {

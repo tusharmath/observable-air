@@ -2,12 +2,11 @@
  * Created by tushar.mathur on 10/10/16.
  */
 
-import {EventType, IEvent} from '../types/IEvent';
-import {TestObservable} from './TestObservable';
-import {ISubscriptionObserver} from '../types/core/ISubscriptionObserver';
-import {EventNext, EventError} from './ReactiveEvents';
-import {IObserver} from '../types/core/IObserver';
-import {TestScheduler} from './TestScheduler';
+import {EventType, IEvent} from '../types/IEvent'
+import {TestObservable} from './TestObservable'
+import {EventNext, EventError} from './ReactiveEvents'
+import {IObserver} from '../types/core/IObserver'
+import {TestScheduler} from './TestScheduler'
 
 export function dispatchEvents<T> (event: IEvent, observers: Array<IObserver<T>>, closed: Array<boolean>) {
   observers
@@ -29,7 +28,7 @@ export function HotTestObservable<T> (scheduler: TestScheduler, events: Array<IE
         0)
     }
   )
-  return new TestObservable((ob: ISubscriptionObserver<T>) => {
+  return new TestObservable((ob: IObserver<T>) => {
     const i = observers.push(ob) - 1
     closed[i] = false
     return {
