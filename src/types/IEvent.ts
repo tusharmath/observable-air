@@ -7,7 +7,6 @@ export interface IEvent {
   readonly time: number
 }
 
-// TODO: Delete type , classes are enough
 export enum EventType {
   next, error, complete, start, end
 }
