@@ -2,10 +2,10 @@
  * Created by tushar.mathur on 10/10/16.
  */
 
-import test from 'ava';
-import {join} from '../src/operators/Join';
-import {TestScheduler} from '../src/testing/TestScheduler';
-import {ReactiveEvents} from '../src/testing/ReactiveEvents';
+import test from 'ava'
+import {join} from '../src/main'
+import {TestScheduler} from '../src/testing/TestScheduler'
+import {ReactiveEvents} from '../src/testing/ReactiveEvents'
 const {next, complete} = ReactiveEvents
 
 test('subscribe()', t => {

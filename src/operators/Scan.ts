@@ -3,11 +3,11 @@
  */
 
 
-import {IObservable} from '../types/core/IObservable';
-import {IObserver} from '../types/core/IObserver';
-import {IScheduler} from '../types/IScheduler';
-import {ISubscription} from '../types/core/ISubscription';
-import {IReducer} from '../types/IReducer';
+import {IObservable} from '../types/core/IObservable'
+import {IObserver} from '../types/core/IObserver'
+import {IScheduler} from '../types/IScheduler'
+import {ISubscription} from '../types/core/ISubscription'
+import {IReducer} from '../types/IReducer'
 
 export class ScanObserver<T> implements IObserver<T> {
 
@@ -17,7 +17,7 @@ export class ScanObserver<T> implements IObserver<T> {
   }
 
   next (val: T): void {
-    this.value = this.reducer(this.value, val);
+    this.value = this.reducer(this.value, val)
     this.sink.next(this.value)
   }
 
