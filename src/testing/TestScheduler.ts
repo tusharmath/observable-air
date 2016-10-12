@@ -78,7 +78,7 @@ export class TestScheduler implements IScheduler {
     var subscription: ISubscription
     var resultsObserver = new TestObserver(this);
     this.setTimeout(() => subscription = f().subscribe(resultsObserver, this), start, 0)
-    this.setTimeout(() => subscription.unsubscribe(), stop, 0)
+    this.setTimeout(() => !subscription.closed && subscription.unsubscribe(), stop, 0)
 
     this.run()
     this.advanceBy(stop)
