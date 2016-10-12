@@ -4,10 +4,10 @@
 
 'use strict'
 
-import test from 'ava';
-import {skipRepeats} from '../src/operators/SkipRepeats';
-import {TestScheduler} from '../src/testing/TestScheduler';
-import {ReactiveEvents} from '../src/testing/ReactiveEvents';
+import test from 'ava'
+import {skipRepeats} from '../src/operators/SkipRepeats'
+import {TestScheduler} from '../src/testing/TestScheduler'
+import {ReactiveEvents} from '../src/testing/ReactiveEvents'
 
 const {next, complete} = ReactiveEvents
 
@@ -21,7 +21,7 @@ test('SkipRepeatsObservable.subscribe()', t => {
     next(235, 20),
     complete(250)
   ])
-  const {results} = sh.start(() => skipRepeats<number,number>((x: number) => x, $))
+  const {results} = sh.start(() => skipRepeats<number, number>((x: number) => x, $))
   t.deepEqual(results, [
     next(410, 0),
     next(420, 10),
