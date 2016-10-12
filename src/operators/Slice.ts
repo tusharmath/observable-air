@@ -2,30 +2,38 @@
  * Created by tushar.mathur on 27/09/16.
  */
 
-import {IObservable} from '../types/core/IObservable';
-import {IObserver} from '../types/core/IObserver';
-import {ISubscription} from '../types/core/ISubscription';
-import {IScheduler} from '../types/IScheduler';
-
-function isRange (current: number, start: number, total: number) {
-  return current >= start && current - start < total
-}
+import {IObservable} from '../types/core/IObservable'
+import {IObserver} from '../types/core/IObserver'
+import {ISubscription} from '../types/core/ISubscription'
+import {IScheduler} from '../types/IScheduler'
 
 class SliceObserver<T> implements IObserver<T> {
-  closed: boolean;
-  private current: number;
+  closed: boolean
+  private index: number
+  private subscription: ISubscription
 
-  constructor (private start: number,
+  constructor (private from: number,
                private total: number,
                private sink: IObserver<T>) {
     this.closed = false
-    this.current = 0
+    this.index = 0
+  }
+
+  start (subscription: ISubscription) {
+    this.subscription = subscription
   }
 
   next (value: T): void {
-    const diff = this.current++ - this.start
-    if (diff >= 0 && diff < this.total) this.sink.next(value)
-    if (diff + 1 === this.total) this.complete()
+    const diff = this.index++ - this.from
+    if (diff >= 0 && diff < this.total) {
+      this.sink.next(value)
+    }
+    if (diff + 1 === this.total) this.end()
+  }
+
+  private end () {
+    this.subscription.unsubscribe()
+    this.complete()
   }
 
   complete (): void {
@@ -35,6 +43,7 @@ class SliceObserver<T> implements IObserver<T> {
   }
 
   error (error: Error): void {
+    if (this.closed) return
     this.sink.error(error)
   }
 }
@@ -44,7 +53,10 @@ export class SliceObservable<T> implements IObservable<T> {
   }
 
   subscribe (observer: IObserver<T>, scheduler: IScheduler): ISubscription {
-    return this.source.subscribe(new SliceObserver(this.start, this.total, observer), scheduler)
+    const sliceObserver = new SliceObserver(this.start, this.total, observer)
+    const subscription = this.source.subscribe(sliceObserver, scheduler)
+    sliceObserver.start(subscription)
+    return subscription
   }
 
 }

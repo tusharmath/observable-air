@@ -2,21 +2,17 @@
  * Created by tushar.mathur on 28/09/16.
  */
 
-import {IObservable} from '../types/core/IObservable';
-import {ISubscription} from '../types/core/ISubscription';
-import {IObserver} from '../types/core/IObserver';
-import {IScheduler} from '../types/IScheduler';
-import {DefaultScheduler} from '../scheduling/DefaultScheduler';
-import {ILazySubscription} from '../types/ILazySubscription';
-import {SafeExecutor} from '../lib/SafeExecutor';
-
-const unsubscribe = function () {
-}
-const subscription = {unsubscribe, closed: true};
+import {IObservable} from '../types/core/IObservable'
+import {ISubscription} from '../types/core/ISubscription'
+import {IObserver} from '../types/core/IObserver'
+import {IScheduler} from '../types/IScheduler'
+import {DefaultScheduler} from '../scheduling/DefaultScheduler'
+import {ILazySubscription} from '../types/ILazySubscription'
+import {SafeExecutor} from '../lib/SafeExecutor'
 
 class FromRunner <T> implements ILazySubscription {
-  closed: boolean;
-  private schedule: ISubscription;
+  closed: boolean
+  private schedule: ISubscription
 
   constructor (private array: Array<T>, private sink: IObserver<T>, private scheduler: IScheduler) {
     this.closed = false
@@ -33,8 +29,8 @@ class FromRunner <T> implements ILazySubscription {
   }
 
   execute () {
-    var l = this.array.length;
-    var sink = this.sink;
+    const l = this.array.length
+    const sink = this.sink
     for (var i = 0; i < l && !this.closed; ++i) {
       sink.next(this.array[i])
     }

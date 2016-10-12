@@ -3,6 +3,6 @@
  */
 
 export interface ISubscription {
-  unsubscribe(): void;
-  readonly closed: boolean;
+  unsubscribe(): void
+  readonly closed: boolean
 }

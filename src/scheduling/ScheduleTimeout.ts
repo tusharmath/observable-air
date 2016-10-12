@@ -3,12 +3,12 @@
  */
 
 
-import {ITask} from '../types/ITask';
-import {IScheduledTask} from '../types/IScheduledTask';
+import {ITask} from '../types/ITask'
+import {IScheduledTask} from '../types/IScheduledTask'
 
 export class ScheduleTimeout implements IScheduledTask {
-  closed: boolean;
-  private timer: number;
+  closed: boolean
+  private timer: number
 
   constructor (private task: ITask, private timeout: number) {
     this.closed = false

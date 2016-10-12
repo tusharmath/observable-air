@@ -3,11 +3,11 @@
  */
 
 
-import test from 'ava';
-import {LinkedList} from '../src/lib/LinkedList';
+import test from 'ava'
+import {LinkedList} from '../src/lib/LinkedList'
 
 function toArray<T> (q: LinkedList<T>) {
-  let n = q.element()
+  var n = q.element()
   if (!n) return []
   const arr = [n.value]
   while (n.left) {
