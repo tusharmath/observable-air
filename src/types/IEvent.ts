@@ -8,5 +8,5 @@ export interface IEvent {
 }
 
 export enum EventType {
-  next, error, complete, start
+  next, error, complete
 }
