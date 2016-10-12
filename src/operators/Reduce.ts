@@ -3,11 +3,11 @@
  */
 
 
-import {IObservable} from '../types/core/IObservable';
-import {IObserver} from '../types/core/IObserver';
-import {ISubscription} from '../types/core/ISubscription';
-import {IReducer} from '../types/IReducer';
-import {IScheduler} from '../types/IScheduler';
+import {IObservable} from '../types/core/IObservable'
+import {IObserver} from '../types/core/IObserver'
+import {ISubscription} from '../types/core/ISubscription'
+import {IReducer} from '../types/IReducer'
+import {IScheduler} from '../types/IScheduler'
 
 class ReduceObserver<T> implements IObserver<T> {
   constructor (private reducer: IReducer<T>,

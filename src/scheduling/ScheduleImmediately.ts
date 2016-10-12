@@ -2,12 +2,12 @@
  * Created by tushar.mathur on 04/10/16.
  */
 
-import {ITask} from '../types/ITask';
-import {IScheduledTask} from '../types/IScheduledTask';
+import {ITask} from '../types/ITask'
+import {IScheduledTask} from '../types/IScheduledTask'
 
 export class ScheduleImmediately implements IScheduledTask {
-  closed: boolean;
-  private id: number;
+  closed: boolean
+  private id: number
 
   constructor (private task: ITask) {
     this.closed = false
