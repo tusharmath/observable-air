@@ -12,8 +12,12 @@ const {fromArray} = require('../src/sources/FromArray')
 const {reduce} = require('../src/operators/Reduce')
 const {slice} = require('../src/operators/Slice')
 
-function noop () {
+function next () {
 }
+
+function complete () {
+}
+
 function add1 (x) {
   return x + 1
 }
@@ -34,26 +38,26 @@ for (var i = 0; i < a.length; ++i) {
 const suite = new Suite('filter -> map -> reduce ' + n + ' integers')
 function run (observable, deferred) {
   observable.subscribe({
-    next: noop,
-    error: noop,
+    next: next,
+    error: next,
     complete: () => deferred.resolve()
   })
 }
 const options = {defer: true}
 suite
-  .add('file -> map -> reduce',
-    d =>
-      run(reduce(sum, 0, map(add1, filter(even, fromArray(a)))), d),
-    options
-  )
+// .add('file -> map -> reduce',
+//   d =>
+//     run(reduce(sum, 0, map(add1, filter(even, fromArray(a)))), d),
+//   options
+// )
   .add('file -> takeN(0, n/10)',
     d =>
       run(slice(0, n / 10, fromArray(a)), d),
     options
   )
-  .add('file -> scan -> reduce',
-    d =>
-      run(reduce(passthrough, 0, scan(sum, 0, fromArray(a))), d),
-    options
-  )
+  // .add('file -> scan -> reduce',
+  //   d =>
+  //     run(reduce(passthrough, 0, scan(sum, 0, fromArray(a))), d),
+  //   options
+  // )
   .on('cycle', event => console.log(String(event.target))).run()
