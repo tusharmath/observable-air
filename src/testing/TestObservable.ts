@@ -8,7 +8,6 @@ import {IScheduler} from '../types/IScheduler';
 import {ISubscription} from '../types/core/ISubscription';
 import {ISubscriberFunction} from '../types/core/ISubscriberFunction';
 import {Subscription} from './Subscription';
-import {SubscriptionObserver} from './SubscriptionObserver';
 import {IEvent} from '../types/IEvent';
 import {ReactiveEvents} from './ReactiveEvents';
 
@@ -20,7 +19,7 @@ export class TestObservable<T> implements IObservable<T> {
   }
 
   subscribe (observer: IObserver<T>, scheduler: IScheduler): ISubscription {
-    const subscription = Subscription.from(this.func(SubscriptionObserver.from(observer)))
+    const subscription = Subscription.from(this.func(observer))
     const connections = this.subscriptions
     connections.push(ReactiveEvents.start(scheduler.now(), subscription))
     return {
