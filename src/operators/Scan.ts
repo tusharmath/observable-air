@@ -17,8 +17,9 @@ export class ScanObserver<T> implements IObserver<T> {
   }
 
   next (val: T): void {
-    this.value = this.reducer(this.value, val)
-    this.sink.next(this.value)
+    const value = this.reducer(this.value, val)
+    this.value = value
+    this.sink.next(value)
   }
 
   error (err: Error): void {
