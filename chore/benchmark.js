@@ -5,13 +5,15 @@
 'use strict'
 
 const {Suite} = require('benchmark')
-const {map} = require('../src/operators/Map')
-const {scan} = require('../src/operators/Scan')
-const {filter} = require('../src/operators/Filter')
-const {fromArray} = require('../src/sources/FromArray')
-const {reduce} = require('../src/operators/Reduce')
-const {slice} = require('../src/operators/Slice')
-const {Observer} = require('../src/main')
+const {
+  filter,
+  fromArray,
+  map,
+  Observer,
+  reduce,
+  scan,
+  slice
+} = require('../src/main')
 
 function add1 (x) {
   return x + 1

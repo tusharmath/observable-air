@@ -12,6 +12,7 @@ export {map} from './operators/Map'
 export {scan} from './operators/Scan'
 export {slice} from './operators/Slice'
 export {tap} from './operators/Tap'
+export {reduce} from './operators/Reduce'
 
 // Sources
 export {fromArray} from './sources/FromArray'
