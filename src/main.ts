@@ -2,6 +2,9 @@
  * Created by tushar.mathur on 11/10/16.
  */
 
+// Observer
+export {Observer} from './lib/Observer'
+
 // Operators
 export {filter} from './operators/Filter'
 export {join} from './operators/Join'

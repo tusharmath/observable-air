@@ -11,9 +11,8 @@ const {filter} = require('../src/operators/Filter')
 const {fromArray} = require('../src/sources/FromArray')
 const {reduce} = require('../src/operators/Reduce')
 const {slice} = require('../src/operators/Slice')
+const {Observer} = require('../src/main')
 
-function noop () {
-}
 function add1 (x) {
   return x + 1
 }
@@ -32,12 +31,9 @@ for (var i = 0; i < a.length; ++i) {
   a[i] = i
 }
 const suite = new Suite('filter -> map -> reduce ' + n + ' integers')
-function run (observable, deferred) {
-  observable.subscribe({
-    next: noop,
-    error: noop,
-    complete: () => deferred.resolve()
-  })
+
+function run (observable, d) {
+  observable.subscribe(Observer.of(undefined, undefined, () => d.resolve()))
 }
 const options = {defer: true}
 suite
