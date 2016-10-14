@@ -13,3 +13,4 @@ export {tap} from './operators/Tap'
 // Sources
 export {fromArray} from './sources/FromArray'
 export {interval} from './sources/Interval'
+export {fromDOM} from './sources/FromDOM'
