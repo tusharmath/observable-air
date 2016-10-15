@@ -5,10 +5,10 @@
 'use strict'
 
 import test from 'ava'
-import {interval} from '../src/main'
 import {TestScheduler} from '../src/testing/TestScheduler'
 import {ReactiveEvents, EventError} from '../src/testing/ReactiveEvents'
 import {IEvent} from '../src/types/IEvent'
+import {interval} from '../src/sources/Interval'
 const {next, error} = ReactiveEvents
 
 test('subscribe()', t => {

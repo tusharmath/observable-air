@@ -6,8 +6,8 @@
 
 import test from 'ava'
 import {TestScheduler} from '../src/testing/TestScheduler'
-import {slice} from '../src/main'
 import {ReactiveEvents} from '../src/testing/ReactiveEvents'
+import {slice} from '../src/operators/Slice'
 
 const {next, complete} = ReactiveEvents
 test('takeN(0, 3)', t => {
