@@ -1,8 +1,6 @@
 /**
  * Created by tushar.mathur on 14/10/16.
  */
-
-
 import {IObservable} from '../types/core/IObservable'
 import {IObserver} from '../types/core/IObserver'
 import {IScheduler} from '../types/IScheduler'
@@ -22,7 +20,7 @@ export class DOMSubscription implements ISubscription {
 }
 
 export class DOMObservable implements IObservable<Event> {
-  constructor (private element: HTMLElement, private name: string) {
+  constructor (private name: string, private element: HTMLElement) {
   }
 
   subscribe (observer: IObserver<Event>, scheduler: IScheduler): ISubscription {
@@ -33,6 +31,6 @@ export class DOMObservable implements IObservable<Event> {
 
 }
 
-export function fromDOM (element: HTMLElement, name: string) {
-  return new DOMObservable(element, name)
+export function fromDOM (name: string, element: HTMLElement) {
+  return new DOMObservable(name, element)
 }
