@@ -31,6 +31,6 @@ export class DOMObservable implements IObservable<Event> {
 
 }
 
-export function fromDOM (name: string, element: HTMLElement) {
+export function fromDOM (element: HTMLElement, name: string) {
   return new DOMObservable(name, element)
 }
