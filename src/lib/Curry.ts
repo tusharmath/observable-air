@@ -2,9 +2,8 @@
  * Created by tushar.mathur on 15/10/16.
  */
 
-export interface ICurryFunction<T> {
-  (...k: any[]): T | ICurryFunction<T>
-}
+
+import {ICurryFunction} from '../types/ICurryFunction'
 
 export function Curry <T, R> (f: ICurryFunction<T>): ICurryFunction<T> {
   return function curried (...t: any[]): T | ICurryFunction<T> {

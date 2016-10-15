@@ -3,7 +3,8 @@
  */
 
 import test from 'ava'
-import {Curry, ICurryFunction} from '../src/lib/Curry'
+import {Curry} from '../src/lib/Curry'
+import {ICurryFunction} from '../src/types/ICurryFunction'
 
 const func = Curry<number[], number>(
   (a: number, b: number, c: number) => [a, b, c]
