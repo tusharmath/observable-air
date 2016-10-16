@@ -9,7 +9,7 @@ import {IScheduler} from '../types/IScheduler'
 import {IHash} from '../types/IHash'
 
 class SkipRepeatsObserver <T, H> implements IObserver<T> {
-  private hash: H
+  private hash: H | void = undefined
   private init = true
 
   constructor (private hasher: IHash<T, H>, private sink: IObserver<T>) {
@@ -17,7 +17,12 @@ class SkipRepeatsObserver <T, H> implements IObserver<T> {
 
   next (val: T) {
     const hash = this.hasher(val)
-    if (this.hash !== hash) {
+    if (this.init) {
+      this.init = false
+      this.sink.next(val)
+      this.hash = hash
+    }
+    else if (this.hash !== hash) {
       this.sink.next(val)
       this.hash = hash
     }
