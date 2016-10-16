@@ -2,33 +2,33 @@
  * Created by tushar.mathur on 11/10/16.
  */
 
-// Observer
-export {Observer} from './lib/Observer'
 export {Observable} from './lib/Observable'
-
-// Operators
+export {Observer} from './lib/Observer'
+import {Curry} from './lib/Curry'
 import {filter as _filter} from './operators/Filter'
+import {fromArray as _fromArray} from './sources/FromArray'
+import {fromDOM as _fromDOM} from './sources/FromDOM'
+import {fromPromise as _fromPromise} from './sources/FromPromise'
+import {interval as _interval} from './sources/Interval'
 import {join as _join} from './operators/Join'
 import {map as _map} from './operators/Map'
-import {scan as _scan} from './operators/Scan'
-import {slice as _slice} from './operators/Slice'
-import {tap as _tap} from './operators/Tap'
 import {reduce as _reduce} from './operators/Reduce'
+import {scan as _scan} from './operators/Scan'
+import {skipRepeats as _skipRepeats} from './operators/SkipRepeats'
+import {slice as _slice} from './operators/Slice'
 import {switchLatest as _switchLatest} from './operators/Switch'
-import {fromArray as _fromArray} from './sources/FromArray'
-import {interval as _interval} from './sources/Interval'
-import {fromDOM as _fromDOM} from './sources/FromDOM'
-import {Curry} from './lib/Curry'
+import {tap as _tap} from './operators/Tap'
 
-// Sources
 export const filter = Curry(_filter)
+export const fromArray = Curry(_fromArray)
+export const fromDOM = Curry(_fromDOM)
+export const fromPromise = Curry(_fromPromise)
+export const interval = Curry(_interval)
 export const join = Curry(_join)
 export const map = Curry(_map)
-export const scan = Curry(_scan)
-export const slice = Curry(_slice)
-export const tap = Curry(_tap)
 export const reduce = Curry(_reduce)
-export const fromArray = Curry(_fromArray)
-export const interval = Curry(_interval)
-export const fromDOM = Curry(_fromDOM)
+export const scan = Curry(_scan)
+export const skipRepeats = Curry(_skipRepeats)
+export const slice = Curry(_slice)
 export const switchLatest = Curry(_switchLatest)
+export const tap = Curry(_tap)
