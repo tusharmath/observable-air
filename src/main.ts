@@ -8,6 +8,7 @@ import {Curry} from './lib/Curry'
 import {filter as _filter} from './operators/Filter'
 import {fromArray as _fromArray} from './sources/FromArray'
 import {fromDOM as _fromDOM} from './sources/FromDOM'
+import {fromPromise as _fromPromise} from './sources/FromPromise'
 import {interval as _interval} from './sources/Interval'
 import {join as _join} from './operators/Join'
 import {map as _map} from './operators/Map'
@@ -30,3 +31,4 @@ export const skipRepeats = Curry(_skipRepeats)
 export const slice = Curry(_slice)
 export const switchLatest = Curry(_switchLatest)
 export const tap = Curry(_tap)
+export const fromPromise = Curry(_fromPromise)
