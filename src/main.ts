@@ -4,6 +4,7 @@
 
 // Observer
 export {Observer} from './lib/Observer'
+
 // Operators
 import {filter as _filter} from './operators/Filter'
 import {join as _join} from './operators/Join'
@@ -13,11 +14,12 @@ import {slice as _slice} from './operators/Slice'
 import {tap as _tap} from './operators/Tap'
 import {reduce as _reduce} from './operators/Reduce'
 import {switchLatest as _switchLatest} from './operators/Switch'
-// Sources
 import {fromArray as _fromArray} from './sources/FromArray'
 import {interval as _interval} from './sources/Interval'
 import {fromDOM as _fromDOM} from './sources/FromDOM'
 import {Curry} from './lib/Curry'
+
+// Sources
 
 
 export const filter = Curry(_filter)
