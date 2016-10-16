@@ -43,6 +43,14 @@ export class LinkedList<T> {
     return node
   }
 
+  forEach (f: ((value: T) => void)) {
+    var node = this.__head
+    while (node) {
+      f(node.value)
+      node = node.left
+    }
+  }
+
   remove (n: Node<T>) {
     if (n.left && n.right) {
       n.left.right = n.right
