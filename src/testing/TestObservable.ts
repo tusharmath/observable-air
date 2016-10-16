@@ -1,12 +1,10 @@
 /**
  * Created by tushar.mathur on 06/10/16.
  */
-
 import {IObservable} from '../types/core/IObservable'
 import {IObserver} from '../types/core/IObserver'
 import {IScheduler} from '../types/IScheduler'
 import {ISubscription} from '../types/core/ISubscription'
-import {ISubscriberFunction} from '../types/core/ISubscriberFunction'
 import {IEvent} from '../types/IEvent'
 import {ReactiveEvents} from './ReactiveEvents'
 
@@ -14,7 +12,7 @@ import {ReactiveEvents} from './ReactiveEvents'
 export class TestObservable<T> implements IObservable<T> {
   subscriptions: Array<IEvent> = []
 
-  constructor (private func: ISubscriberFunction<T>) {
+  constructor (private func: (observer: IObserver<T>) => ISubscription) {
   }
 
   subscribe (observer: IObserver<T>, scheduler: IScheduler): ISubscription {
