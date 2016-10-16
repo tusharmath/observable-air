@@ -1,8 +1,6 @@
 /**
  * Created by tushar.mathur on 09/10/16.
  */
-
-
 import test from 'ava'
 import {LinkedList} from '../src/lib/LinkedList'
 
@@ -69,4 +67,15 @@ test('remove(): Remove LAST', t => {
   q.remove(a)
   t.deepEqual(toArray(q), [])
   t.is(q.length, 0)
+})
+
+test('forEach()', t => {
+  const results: number[] = []
+  const q = LinkedList.of<number>()
+  q.add(1)
+  q.add(2)
+  q.add(3)
+  q.add(4)
+  q.forEach(i => results.push(i * 100))
+  t.deepEqual(results, [400, 300, 200, 100])
 })

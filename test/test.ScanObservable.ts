@@ -3,9 +3,9 @@
  */
 
 import test from 'ava'
-import {scan} from '../src/main'
 import {TestScheduler} from '../src/testing/TestScheduler'
 import {ReactiveEvents} from '../src/testing/ReactiveEvents'
+import {scan} from '../src/operators/Scan'
 
 const {next, complete} = ReactiveEvents
 
