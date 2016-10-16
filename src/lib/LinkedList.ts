@@ -4,12 +4,12 @@
 
 
 export class Node<T> {
-  public left: Node<T> | null
-  public right: Node<T> | null
+  public left: Node<T> | undefined
+  public right: Node<T> | undefined
 
   constructor (public value: T) {
-    this.right = null
-    this.left = null
+    this.right = undefined
+    this.left = undefined
   }
 
   static of <T> (val: T) {
@@ -19,11 +19,11 @@ export class Node<T> {
 
 export class LinkedList<T> {
   public length: number
-  private __head: Node<T> | null
+  private __head: Node<T> | undefined
 
   constructor () {
     this.length = 0
-    this.__head = null
+    this.__head = undefined
   }
 
   element () {
@@ -58,12 +58,12 @@ export class LinkedList<T> {
     }
     else if (n.left) {
       this.__head = n.left
-      n.left.right = null
+      n.left.right = undefined
     }
     else if (n.right) {
-      n.right.left = null
+      n.right.left = undefined
     } else {
-      this.__head = null
+      this.__head = undefined
     }
     this.length--
   }

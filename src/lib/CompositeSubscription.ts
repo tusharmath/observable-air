@@ -1,26 +1,31 @@
-import {ISubscription} from '../types/core/ISubscription'
 /**
  * Created by tushar.mathur on 12/10/16.
  */
 
+import {ISubscription} from '../types/core/ISubscription'
+import {LinkedList, Node} from './LinkedList'
 
-const propClosed = (x: ISubscription) => x.closed
+const unsubscribe = (x: ISubscription) => x.unsubscribe()
 
 export class CompositeSubscription implements ISubscription {
-  constructor (private subscriptions: ISubscription[] = []) {
+  public closed = false
+  private subscriptions: LinkedList<ISubscription>
+
+  constructor () {
+    this.subscriptions = new LinkedList<ISubscription>()
   }
 
   add (d: ISubscription) {
-    this.subscriptions.push(d)
+    return this.subscriptions.add(d)
+  }
+
+  remove (d: Node<ISubscription>) {
+    d.value.unsubscribe()
+    return this.subscriptions.remove(d)
   }
 
   unsubscribe (): void {
-    for (var i = 0; i < this.subscriptions.length; i++) {
-      this.subscriptions[i].unsubscribe()
-    }
-  }
-
-  get closed (): boolean {
-    return this.subscriptions.map(propClosed).every(Boolean)
+    this.subscriptions.forEach(unsubscribe)
+    this.closed = true
   }
 }
