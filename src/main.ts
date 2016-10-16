@@ -4,7 +4,6 @@
 
 // Observer
 export {Observer} from './lib/Observer'
-
 // Operators
 import {filter as _filter} from './operators/Filter'
 import {join as _join} from './operators/Join'
@@ -13,7 +12,7 @@ import {scan as _scan} from './operators/Scan'
 import {slice as _slice} from './operators/Slice'
 import {tap as _tap} from './operators/Tap'
 import {reduce as _reduce} from './operators/Reduce'
-
+import {switchLatest as _switchLatest} from './operators/Switch'
 // Sources
 import {fromArray as _fromArray} from './sources/FromArray'
 import {interval as _interval} from './sources/Interval'
@@ -31,3 +30,4 @@ export const reduce = Curry(_reduce)
 export const fromArray = Curry(_fromArray)
 export const interval = Curry(_interval)
 export const fromDOM = Curry(_fromDOM)
+export const switchLatest = Curry(_switchLatest)
