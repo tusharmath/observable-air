@@ -4,6 +4,7 @@
 
 // Observer
 export {Observer} from './lib/Observer'
+export {Observable} from './lib/Observable'
 
 // Operators
 import {filter as _filter} from './operators/Filter'
@@ -20,8 +21,6 @@ import {fromDOM as _fromDOM} from './sources/FromDOM'
 import {Curry} from './lib/Curry'
 
 // Sources
-
-
 export const filter = Curry(_filter)
 export const join = Curry(_join)
 export const map = Curry(_map)
