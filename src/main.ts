@@ -18,6 +18,7 @@ import {skipRepeats as _skipRepeats} from './operators/SkipRepeats'
 import {slice as _slice} from './operators/Slice'
 import {switchLatest as _switchLatest} from './operators/Switch'
 import {tap as _tap} from './operators/Tap'
+import {merge as _merge} from './operators/Merge'
 
 export const filter = Curry(_filter)
 export const fromArray = Curry(_fromArray)
@@ -32,3 +33,4 @@ export const skipRepeats = Curry(_skipRepeats)
 export const slice = Curry(_slice)
 export const switchLatest = Curry(_switchLatest)
 export const tap = Curry(_tap)
+export const merge = Curry(_merge)
