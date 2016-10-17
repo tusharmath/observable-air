@@ -13,7 +13,6 @@ export function onResult<T> (observer: IObserver<T>, result: T) {
 }
 
 export function onError<T> (observer: IObserver<T>, error: Error) {
-  console.log(error)
   observer.error(error)
   observer.complete()
 }
