@@ -15,7 +15,7 @@ export class Subscription implements ISubscription {
 
   unsubscribe (): void {
     this.f()
-    closed = true
+    this.closed = true
   }
 
   static from (subscription: ISubscription | ITask | void): ISubscription {
