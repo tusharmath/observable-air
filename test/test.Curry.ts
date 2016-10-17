@@ -10,7 +10,6 @@ const func = Curry<number[], number>(
   (a: number, b: number, c: number) => [a, b, c]
 )
 
-
 test('func(1, 2, 3)', t => {
   t.deepEqual(func(1, 2, 3), [1, 2, 3])
 })
@@ -23,6 +22,13 @@ test('func(1, 2)(3)', t => {
 test('func(1)(2)(3)', t => {
   t.deepEqual((
       (func(1) as ICurryFunction<number[]>)(2) as ICurryFunction<number[]>)(3),
+    [1, 2, 3]
+  )
+})
+
+test('func(1, 2, 3, 4)', t => {
+  t.deepEqual(
+    func(1, 2, 3, 4),
     [1, 2, 3]
   )
 })
