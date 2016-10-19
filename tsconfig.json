@@ -5,6 +5,7 @@
     "noImplicitAny": true,
     "sourceMap": true,
     "declaration": false,
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "removeComments": true
   }
 }

@@ -2,24 +2,31 @@
   "name": "observable-air",
   "description": "Observables for the calorie conscious",
   "main": "src/main",
-  "jsnext:main": "src/main-es",
+  "jsnext:main": "./.dist/main-es.min",
   "scripts": {
     "benchmark": "date >> benchmark.txt && node chore/benchmark >> benchmark.txt",
     "cleanup": "find ./src -type f -name '*.js' -delete && find ./src -type f -name '*.map' -delete",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "hydra": "node --trace-hydrogen --trace-phase=Z --trace-deopt --code-comments --hydrogen-track-positions --redirect-code-traces --redirect-code-traces-to=code.asm chore/benchmark.js",
     "lint": "tslint ./src/**.ts ./src/**/*.ts ./test/*.ts",
-    "prepublish": "tsc && npm run build",
+    "prepublish": "tsc && npm run build && npm run build-min",
     "rfc": "node chore/rfc",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "test": "tsc && ava",
-    "build": "rollup -c"
+    "build": "npm run build-es && npm run build-cjs",
+    "build-min": "npm run build-es-min && npm run build-cjs-min",
+    "build-es": "rollup -c",
+    "build-es-min": "babili .dist/main-es.js > .dist/main-es.min.js",
+    "build-cjs": "browserify src/main.js > .dist/main-cjs.js",
+    "build-cjs-min": "babili .dist/main-cjs.js > .dist/main-cjs.min.js"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "ava": "^0.16.0",
+    "babili": "0.0.7",
     "benchmark": "^2.1.1",
+    "browserify": "^13.1.0",
     "coveralls": "^2.11.14",
     "cz-conventional-changelog": "^1.2.0",
     "ghooks": "^1.3.2",
@@ -29,6 +36,7 @@
     "semantic-release": "^4.3.5",
     "tslint": "^3.15.1",
     "typescript": "^2.0.3",
+    "uglify": "^0.1.5",
     "validate-commit-msg": "^2.8.2"
   },
   "repository": {

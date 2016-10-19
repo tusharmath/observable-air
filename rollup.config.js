@@ -8,7 +8,7 @@ import typescript from 'rollup-plugin-typescript'
 
 export default {
   entry: './src/main.ts',
-  dest: './src/main-es.js',
+  dest: './.dist/main-es.js',
   plugins: [
     typescript()
   ]
