@@ -12,13 +12,14 @@ import {fromPromise as _fromPromise} from './sources/FromPromise'
 import {interval as _interval} from './sources/Interval'
 import {join as _join} from './operators/Join'
 import {map as _map} from './operators/Map'
+import {merge as _merge} from './operators/Merge'
 import {reduce as _reduce} from './operators/Reduce'
+import {sample as _sample} from './operators/Sample'
 import {scan as _scan} from './operators/Scan'
 import {skipRepeats as _skipRepeats} from './operators/SkipRepeats'
 import {slice as _slice} from './operators/Slice'
 import {switchLatest as _switchLatest} from './operators/Switch'
 import {tap as _tap} from './operators/Tap'
-import {merge as _merge} from './operators/Merge'
 
 export const filter = Curry(_filter)
 export const fromArray = Curry(_fromArray)
@@ -27,10 +28,11 @@ export const fromPromise = Curry(_fromPromise)
 export const interval = Curry(_interval)
 export const join = Curry(_join)
 export const map = Curry(_map)
+export const merge = Curry(_merge)
 export const reduce = Curry(_reduce)
+export const sample = Curry(_sample)
 export const scan = Curry(_scan)
 export const skipRepeats = Curry(_skipRepeats)
 export const slice = Curry(_slice)
 export const switchLatest = Curry(_switchLatest)
 export const tap = Curry(_tap)
-export const merge = Curry(_merge)
