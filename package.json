@@ -16,15 +16,16 @@
     "build": "npm run build-es && npm run build-cjs",
     "build-min": "npm run build-es-min && npm run build-cjs-min",
     "build-es": "rollup -c",
-    "build-es-min": "babili .dist/main-es.js > .dist/main-es.min.js",
+    "build-es-min": "babel .dist/main-es.js > .dist/main-es.min.js",
     "build-cjs": "browserify src/main.js > .dist/main-cjs.js",
-    "build-cjs-min": "babili .dist/main-cjs.js > .dist/main-cjs.min.js"
+    "build-cjs-min": "babel .dist/main-cjs.js > .dist/main-cjs.min.js"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "ava": "^0.16.0",
-    "babili": "0.0.7",
+    "babel-cli": "^6.16.0",
+    "babel-preset-es2015": "^6.16.0",
     "benchmark": "^2.1.1",
     "browserify": "^13.1.0",
     "coveralls": "^2.11.14",
