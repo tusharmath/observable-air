@@ -5,3 +5,8 @@
 [![Coverage Status](https://coveralls.io/repos/github/tusharmath/observable-air/badge.svg)](https://coveralls.io/github/tusharmath/observable-air)
 
 Yet another implementation of observables.
+
+### WHY?
+- Performance
+- Small Footprint
+- Testability
