@@ -18,7 +18,9 @@ export class ScheduleRequestAnimationFrame implements IScheduledTask {
   }
 
   unsubscribe (): void {
-    cancelAnimationFrame(this.id)
-    this.closed = true
+    if (closed === false) {
+      cancelAnimationFrame(this.id)
+      this.closed = true
+    }
   }
 }
