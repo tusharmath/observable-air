@@ -10,29 +10,35 @@ import {IEvent} from '../types/IEvent'
 import {TestObserver} from './TestObserver'
 import {ColdTestObservable} from './ColdTestObservable'
 import {HotTestObservable} from './HotTestObservable'
+import {LinkedList, LinkedListNode} from '../lib/LinkedList'
 
 class TaskSchedule {
   constructor (public task: ITask, public time: number) {
   }
 }
-const MockDisposable = {unsubscribe: (): void => void 0, closed: false}
 
-export class TestScheduler implements IScheduler {
-  private clock: number
-  private queue: Array<TaskSchedule>
+class TaskSubscription implements ISubscription {
+  closed: boolean
 
-  constructor () {
-    this.clock = 0
-    this.queue = []
+  constructor (private queue: LinkedList<TaskSchedule>, private taskNode: LinkedListNode<TaskSchedule>) {
   }
 
+  unsubscribe (): void {
+    this.queue.remove(this.taskNode)
+  }
+}
+
+export class TestScheduler implements IScheduler {
+  private clock = 0
+  private queue = new LinkedList<TaskSchedule>()
+
   tick () {
-    this.clock++
     this.run()
+    this.clock++
   }
 
   advanceBy (time: number): void {
-    while (time--) this.tick()
+    while (time-- > -1) this.tick()
   }
 
   now () {
@@ -40,8 +46,7 @@ export class TestScheduler implements IScheduler {
   }
 
   setTimeout (task: ITask, time: number, now: number = this.now()): ISubscription {
-    this.queue.push(new TaskSchedule(task, time + now))
-    return MockDisposable
+    return new TaskSubscription(this.queue, this.queue.add(new TaskSchedule(task, time + now)))
   }
 
   setImmediate (task: ITask): ISubscription {
@@ -53,25 +58,29 @@ export class TestScheduler implements IScheduler {
   }
 
   setInterval (task: ITask, interval: number): ISubscription {
+    var closed = false
     const repeatedTask = () => {
+      if (closed) return
       task()
       this.setTimeout(repeatedTask, interval)
     }
     this.setTimeout(repeatedTask, interval)
-    return MockDisposable
+    return {
+      closed,
+      unsubscribe () {
+        closed = true
+      }
+    }
   }
 
   private run () {
-    const residual: Array<TaskSchedule> = []
-    for (var i = 0; i < this.queue.length; ++i) {
-      const qItem = this.queue[i]
-      if (qItem.time <= this.clock) {
+    this.queue.forEach(node => {
+      const qItem = node.value
+      if (qItem.time === this.clock) {
         qItem.task()
-      } else {
-        residual.push(qItem)
+        this.queue.remove(node)
       }
-    }
-    this.queue = residual
+    })
   }
 
   start<T> (f: () => IObservable<T>, start = 200, stop = 2000): TestObserver<T> {
@@ -79,8 +88,6 @@ export class TestScheduler implements IScheduler {
     const resultsObserver = new TestObserver(this)
     this.setTimeout(() => subscription = f().subscribe(resultsObserver, this), start, 0)
     this.setTimeout(() => !subscription.closed && subscription.unsubscribe(), stop, 0)
-
-    this.run()
     this.advanceBy(stop)
     return resultsObserver
   }
