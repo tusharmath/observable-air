@@ -6,7 +6,7 @@ import {ISubscription} from '../types/core/ISubscription'
 import {IScheduler} from '../types/IScheduler'
 import {IObserver} from '../types/core/IObserver'
 import {CompositeSubscription} from '../lib/CompositeSubscription'
-import {Node} from '../lib/LinkedList'
+import {LinkedListNode} from '../lib/LinkedList'
 
 
 export class SwitchValueObserver<T> implements IObserver<T> {
@@ -26,7 +26,7 @@ export class SwitchValueObserver<T> implements IObserver<T> {
 }
 
 export class SwitchObserver<T> implements IObserver<IObservable<T>> {
-  private currentSub: Node<ISubscription> | undefined = void 0
+  private currentSub: LinkedListNode<ISubscription> | undefined = void 0
 
   constructor (private sink: IObserver<T>,
                private cSub: CompositeSubscription,
