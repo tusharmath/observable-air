@@ -22,8 +22,7 @@ test('subscribe()', t => {
     next(1200, 4),
     next(1400, 5),
     next(1600, 6),
-    next(1800, 7),
-    next(2000, 8)
+    next(1800, 7)
   ])
 })
 
@@ -41,7 +40,7 @@ test('subscribe()', t => {
   interval(100).subscribe(observer, sh)
   sh.advanceBy(100)
   t.deepEqual(results, [
-    error(100, Error())
+    error(100, Error('Yo'))
   ])
   t.is((results[0] as EventError).value.message, 'Yo')
 })

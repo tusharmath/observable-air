@@ -5,14 +5,9 @@ import test from 'ava'
 import {LinkedList} from '../src/lib/LinkedList'
 
 function toArray<T> (q: LinkedList<T>) {
-  var n = q.element()
-  if (!n) return []
-  const arr = [n.value]
-  while (n.left) {
-    n = n.left
-    arr.push(n.value)
-  }
-  return arr.reverse()
+  const arr: Array<T> = []
+  q.forEach(x => arr.push(x.value))
+  return arr
 }
 test('constructor()', t => {
   t.true(LinkedList.of() instanceof LinkedList)
@@ -23,6 +18,8 @@ test('add()', t => {
   q.add('B')
   q.add('C')
   q.add('D')
+  t.is(q.head().value, 'A')
+  t.is(q.tail().value, 'D')
   t.deepEqual(toArray(q), ['A', 'B', 'C', 'D'])
   t.is(q.length, 4)
 })
@@ -32,8 +29,10 @@ test('remove(): Remove First (non-empty)', t => {
   const a = q.add('A')
   const b = q.add('B')
   const c = q.add('C')
-
   q.remove(a)
+
+  t.is(q.head().value, 'B')
+  t.is(q.tail().value, 'C')
   t.deepEqual(toArray(q), ['B', 'C'])
   t.is(q.length, 2)
 })
@@ -44,6 +43,9 @@ test('remove(): Remove LAST (non-empty)', t => {
   const b = q.add('B')
   const c = q.add('C')
   q.remove(c)
+
+  t.is(q.head().value, 'A')
+  t.is(q.tail().value, 'B')
   t.deepEqual(toArray(q), ['A', 'B'])
   t.is(q.length, 2)
 })
@@ -56,6 +58,8 @@ test('remove(): Remove MIDDLE (non-empty)', t => {
   const c = q.add('C')
 
   q.remove(b)
+  t.is(q.head().value, 'A')
+  t.is(q.tail().value, 'C')
   t.deepEqual(toArray(q), ['A', 'C'])
   t.is(q.length, 2)
 })
@@ -65,6 +69,9 @@ test('remove(): Remove LAST', t => {
   const q = LinkedList.of()
   const a = q.add('A')
   q.remove(a)
+
+  t.is(q.head(), undefined)
+  t.is(q.tail(), undefined)
   t.deepEqual(toArray(q), [])
   t.is(q.length, 0)
 })
@@ -76,6 +83,6 @@ test('forEach()', t => {
   q.add(2)
   q.add(3)
   q.add(4)
-  q.forEach(i => results.push(i * 100))
-  t.deepEqual(results, [400, 300, 200, 100])
+  q.forEach(i => results.push(i.value * 100))
+  t.deepEqual(results, [100, 200, 300, 400])
 })
