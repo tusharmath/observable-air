@@ -39,7 +39,7 @@ export class TestScheduler implements IScheduler {
   private clock = 0
   private queue = new LinkedList<TaskSchedule>()
 
-  constructor (private options: SchedulerOptions = {rafTimeout: 16}) {
+  constructor (private options: SchedulerOptions) {
   }
 
   tick () {
@@ -112,7 +112,7 @@ export class TestScheduler implements IScheduler {
     return HotTestObservable(this, events)
   }
 
-  static of (options: SchedulerOptions) {
+  static of (options: SchedulerOptions = {rafTimeout: 16}) {
     return new TestScheduler(options)
   }
 }
