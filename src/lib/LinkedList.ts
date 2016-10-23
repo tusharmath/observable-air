@@ -3,9 +3,9 @@
  */
 
 
-export class Node<T> {
-  public left: Node<T> | undefined
-  public right: Node<T> | undefined
+export class LinkedListNode<T> {
+  public left: LinkedListNode<T> | undefined
+  public right: LinkedListNode<T> | undefined
 
   constructor (public value: T) {
     this.right = undefined
@@ -13,13 +13,13 @@ export class Node<T> {
   }
 
   static of <T> (val: T) {
-    return new Node(val)
+    return new LinkedListNode(val)
   }
 }
 
 export class LinkedList<T> {
   public length: number
-  private __head: Node<T> | undefined
+  private __head: LinkedListNode<T> | undefined
 
   constructor () {
     this.length = 0
@@ -31,7 +31,7 @@ export class LinkedList<T> {
   }
 
   add (val: T) {
-    const node = Node.of(val)
+    const node = LinkedListNode.of(val)
     if (!this.__head) {
       this.__head = node
     } else {
@@ -51,7 +51,7 @@ export class LinkedList<T> {
     }
   }
 
-  remove (n: Node<T>) {
+  remove (n: LinkedListNode<T>) {
     if (n.left && n.right) {
       n.left.right = n.right
       n.right.left = n.left
