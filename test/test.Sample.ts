@@ -11,7 +11,7 @@ function toArray(...t: Array<any>) {
   return t.join(',')
 }
 test(t => {
-  const sh = new TestScheduler()
+  const sh = TestScheduler.of()
   const a$ = sh.Hot([
     ReactiveEvents.next(210, 'A0'),
     ReactiveEvents.next(230, 'A1'),
@@ -45,7 +45,7 @@ test(t => {
 })
 
 test(t => {
-  const sh = new TestScheduler()
+  const sh = TestScheduler.of()
   const a$ = sh.Hot([
     ReactiveEvents.next(210, 0),
     ReactiveEvents.next(230, 1),

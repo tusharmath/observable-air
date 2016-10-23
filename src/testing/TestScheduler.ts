@@ -12,6 +12,13 @@ import {ColdTestObservable} from './ColdTestObservable'
 import {HotTestObservable} from './HotTestObservable'
 import {LinkedList, LinkedListNode} from '../lib/LinkedList'
 
+export const START_SUBSCRIPTION_TIME = 200
+export const STOP_SUBSCRIPTION_TIME = 2000
+
+interface SchedulerOptions {
+  rafTimeout: number
+}
+
 class TaskSchedule {
   constructor (public task: ITask, public time: number) {
   }
@@ -31,6 +38,9 @@ class TaskSubscription implements ISubscription {
 export class TestScheduler implements IScheduler {
   private clock = 0
   private queue = new LinkedList<TaskSchedule>()
+
+  constructor (private options: SchedulerOptions) {
+  }
 
   tick () {
     this.run()
@@ -54,7 +64,7 @@ export class TestScheduler implements IScheduler {
   }
 
   requestAnimationFrame (task: ITask): ISubscription {
-    return this.setTimeout(task, this.now() + 16, 0)
+    return this.setTimeout(task, this.now() + this.options.rafTimeout, 0)
   }
 
   setInterval (task: ITask, interval: number): ISubscription {
@@ -83,7 +93,9 @@ export class TestScheduler implements IScheduler {
     })
   }
 
-  start<T> (f: () => IObservable<T>, start = 200, stop = 2000): TestObserver<T> {
+  start<T> (f: () => IObservable<T>,
+            start = START_SUBSCRIPTION_TIME,
+            stop = STOP_SUBSCRIPTION_TIME) {
     var subscription: ISubscription
     const resultsObserver = new TestObserver(this)
     this.setTimeout(() => subscription = f().subscribe(resultsObserver, this), start, 0)
@@ -100,7 +112,7 @@ export class TestScheduler implements IScheduler {
     return HotTestObservable(this, events)
   }
 
-  static of () {
-    return new TestScheduler()
+  static of (options: SchedulerOptions = {rafTimeout: 16}) {
+    return new TestScheduler(options)
   }
 }

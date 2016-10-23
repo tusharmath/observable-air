@@ -17,6 +17,7 @@ export class LinkedListNode<T> {
   }
 }
 
+// TODO: Use singly linked list
 export class LinkedList<T> {
   public length = 0
   private __tail: LinkedListNode<T> | undefined = undefined
