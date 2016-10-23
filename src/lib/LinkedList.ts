@@ -43,11 +43,11 @@ export class LinkedList<T> {
     return node
   }
 
-  forEach (f: ((value: T) => void)) {
+  forEach (f: ((value: LinkedListNode<T>) => void)) {
     var node = this.__head
     while (node) {
-      f(node.value)
-      node = node.left
+      f(node)
+      node = node.right
     }
   }
 

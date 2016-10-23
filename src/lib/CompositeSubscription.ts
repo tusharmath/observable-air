@@ -5,7 +5,7 @@
 import {ISubscription} from '../types/core/ISubscription'
 import {LinkedList, LinkedListNode} from './LinkedList'
 
-const unsubscribe = (x: ISubscription) => x.unsubscribe()
+const unsubscribe = (x: LinkedListNode<ISubscription>) => x.value.unsubscribe()
 
 export class CompositeSubscription implements ISubscription {
   public closed = false
