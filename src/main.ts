@@ -5,6 +5,7 @@
 export {Observable} from './lib/Observable'
 export {Observer} from './lib/Observer'
 import {Curry} from './lib/Curry'
+import {animationFrames as _animationFrames} from './sources/AnimationFrames'
 import {filter as _filter} from './operators/Filter'
 import {fromArray as _fromArray} from './sources/FromArray'
 import {fromDOM as _fromDOM} from './sources/FromDOM'
@@ -22,6 +23,7 @@ import {switchLatest as _switchLatest} from './operators/Switch'
 import {tap as _tap} from './operators/Tap'
 
 export const filter = Curry(_filter)
+export const frames = Curry(_animationFrames)
 export const fromArray = Curry(_fromArray)
 export const fromDOM = Curry(_fromDOM)
 export const fromPromise = Curry(_fromPromise)
