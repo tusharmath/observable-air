@@ -6,6 +6,7 @@ import {IObservable} from '../types/core/IObservable'
 import {IObserver} from '../types/core/IObserver'
 import {IScheduler} from '../types/IScheduler'
 import {ISubscription} from '../types/core/ISubscription'
+import {DefaultScheduler} from '../scheduling/DefaultScheduler'
 
 export class AnimationFrameSubscription implements ISubscription {
   private count = 0
@@ -32,7 +33,7 @@ export class AnimationFrames implements IObservable<number> {
   constructor () {
   }
 
-  subscribe (observer: IObserver<number>, scheduler: IScheduler): ISubscription {
+  subscribe (observer: IObserver<number>, scheduler: IScheduler = new DefaultScheduler()): ISubscription {
     return new AnimationFrameSubscription(observer, scheduler)
   }
 }
