@@ -3,9 +3,9 @@
  */
 
 import {ISubscription} from '../types/core/ISubscription'
-import {LinkedList, Node} from './LinkedList'
+import {LinkedList, LinkedListNode} from './LinkedList'
 
-const unsubscribe = (x: ISubscription) => x.unsubscribe()
+const unsubscribe = (x: LinkedListNode<ISubscription>) => x.value.unsubscribe()
 
 export class CompositeSubscription implements ISubscription {
   public closed = false
@@ -19,7 +19,7 @@ export class CompositeSubscription implements ISubscription {
     return this.subscriptions.add(d)
   }
 
-  remove (d: Node<ISubscription>) {
+  remove (d: LinkedListNode<ISubscription>) {
     d.value.unsubscribe()
     return this.subscriptions.remove(d)
   }

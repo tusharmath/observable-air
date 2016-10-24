@@ -6,7 +6,7 @@
 import {ICurryFunction} from '../types/ICurryFunction'
 
 export function Curry<T, R> (f: ICurryFunction<T>): ICurryFunction<T> {
-  if (f.length === 1) return f
+  if (f.length <= 1) return f
   return function curried (...t: any[]): T | ICurryFunction<T> {
     if (t.length === 0) return curried
     if (t.length >= f.length) return f(...t)

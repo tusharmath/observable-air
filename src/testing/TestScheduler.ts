@@ -10,29 +10,45 @@ import {IEvent} from '../types/IEvent'
 import {TestObserver} from './TestObserver'
 import {ColdTestObservable} from './ColdTestObservable'
 import {HotTestObservable} from './HotTestObservable'
+import {LinkedList, LinkedListNode} from '../lib/LinkedList'
+
+export const START_SUBSCRIPTION_TIME = 200
+export const STOP_SUBSCRIPTION_TIME = 2000
+
+interface SchedulerOptions {
+  rafTimeout: number
+}
 
 class TaskSchedule {
   constructor (public task: ITask, public time: number) {
   }
 }
-const MockDisposable = {unsubscribe: (): void => void 0, closed: false}
+
+class TaskSubscription implements ISubscription {
+  closed: boolean
+
+  constructor (private queue: LinkedList<TaskSchedule>, private taskNode: LinkedListNode<TaskSchedule>) {
+  }
+
+  unsubscribe (): void {
+    this.queue.remove(this.taskNode)
+  }
+}
 
 export class TestScheduler implements IScheduler {
-  private clock: number
-  private queue: Array<TaskSchedule>
+  private clock = 0
+  private queue = new LinkedList<TaskSchedule>()
 
-  constructor () {
-    this.clock = 0
-    this.queue = []
+  constructor (private options: SchedulerOptions) {
   }
 
   tick () {
-    this.clock++
     this.run()
+    this.clock++
   }
 
   advanceBy (time: number): void {
-    while (time--) this.tick()
+    while (time-- > -1) this.tick()
   }
 
   now () {
@@ -40,8 +56,7 @@ export class TestScheduler implements IScheduler {
   }
 
   setTimeout (task: ITask, time: number, now: number = this.now()): ISubscription {
-    this.queue.push(new TaskSchedule(task, time + now))
-    return MockDisposable
+    return new TaskSubscription(this.queue, this.queue.add(new TaskSchedule(task, time + now)))
   }
 
   setImmediate (task: ITask): ISubscription {
@@ -49,38 +64,42 @@ export class TestScheduler implements IScheduler {
   }
 
   requestAnimationFrame (task: ITask): ISubscription {
-    return this.setTimeout(task, this.now() + 16, 0)
+    return this.setTimeout(task, this.now() + this.options.rafTimeout, 0)
   }
 
   setInterval (task: ITask, interval: number): ISubscription {
+    var closed = false
     const repeatedTask = () => {
+      if (closed) return
       task()
       this.setTimeout(repeatedTask, interval)
     }
     this.setTimeout(repeatedTask, interval)
-    return MockDisposable
+    return {
+      closed,
+      unsubscribe () {
+        closed = true
+      }
+    }
   }
 
   private run () {
-    const residual: Array<TaskSchedule> = []
-    for (var i = 0; i < this.queue.length; ++i) {
-      const qItem = this.queue[i]
-      if (qItem.time <= this.clock) {
+    this.queue.forEach(node => {
+      const qItem = node.value
+      if (qItem.time === this.clock) {
         qItem.task()
-      } else {
-        residual.push(qItem)
+        this.queue.remove(node)
       }
-    }
-    this.queue = residual
+    })
   }
 
-  start<T> (f: () => IObservable<T>, start = 200, stop = 2000): TestObserver<T> {
+  start<T> (f: () => IObservable<T>,
+            start = START_SUBSCRIPTION_TIME,
+            stop = STOP_SUBSCRIPTION_TIME) {
     var subscription: ISubscription
     const resultsObserver = new TestObserver(this)
     this.setTimeout(() => subscription = f().subscribe(resultsObserver, this), start, 0)
     this.setTimeout(() => !subscription.closed && subscription.unsubscribe(), stop, 0)
-
-    this.run()
     this.advanceBy(stop)
     return resultsObserver
   }
@@ -93,7 +112,7 @@ export class TestScheduler implements IScheduler {
     return HotTestObservable(this, events)
   }
 
-  static of () {
-    return new TestScheduler()
+  static of (options: SchedulerOptions = {rafTimeout: 16}) {
+    return new TestScheduler(options)
   }
 }

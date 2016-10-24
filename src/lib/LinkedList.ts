@@ -3,9 +3,9 @@
  */
 
 
-export class Node<T> {
-  public left: Node<T> | undefined
-  public right: Node<T> | undefined
+export class LinkedListNode<T> {
+  public left: LinkedListNode<T> | undefined
+  public right: LinkedListNode<T> | undefined
 
   constructor (public value: T) {
     this.right = undefined
@@ -13,56 +13,61 @@ export class Node<T> {
   }
 
   static of <T> (val: T) {
-    return new Node(val)
+    return new LinkedListNode(val)
   }
 }
 
+// TODO: Use singly linked list
 export class LinkedList<T> {
-  public length: number
-  private __head: Node<T> | undefined
+  public length = 0
+  private __tail: LinkedListNode<T> | undefined = undefined
+  private __head: LinkedListNode<T> | undefined = undefined
 
-  constructor () {
-    this.length = 0
-    this.__head = undefined
+  tail (): LinkedListNode<T> {
+    return this.__tail as LinkedListNode<T>
   }
 
-  element () {
-    return this.__head
+  head (): LinkedListNode<T> {
+    return this.__head as LinkedListNode<T>
   }
+
 
   add (val: T) {
-    const node = Node.of(val)
-    if (!this.__head) {
-      this.__head = node
+    const node = LinkedListNode.of(val)
+    if (this.length === 0) this.__head = node
+    if (!this.__tail) {
+      this.__tail = node
     } else {
-      this.__head.right = node
-      node.left = this.__head
-      this.__head = node
+      this.__tail.right = node
+      node.left = this.__tail
+      this.__tail = node
     }
     this.length++
     return node
   }
 
-  forEach (f: ((value: T) => void)) {
+  forEach (f: ((value: LinkedListNode<T>) => void)) {
     var node = this.__head
     while (node) {
-      f(node.value)
-      node = node.left
+      f(node)
+      node = node.right
     }
   }
 
-  remove (n: Node<T>) {
+  remove (n: LinkedListNode<T>) {
     if (n.left && n.right) {
       n.left.right = n.right
       n.right.left = n.left
     }
     else if (n.left) {
-      this.__head = n.left
+      this.__tail = n.left
       n.left.right = undefined
     }
     else if (n.right) {
+      this.__head = n.right
       n.right.left = undefined
     } else {
+      this.__tail = undefined
       this.__head = undefined
     }
     this.length--

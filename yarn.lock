@@ -944,7 +944,7 @@ babel-polyfill@^6.16.0:
     core-js "^2.4.0"
     regenerator-runtime "^0.9.5"
 
-babel-preset-babili:
+babel-preset-babili@^0.0.5:
   version "0.0.5"
   resolved "https://registry.yarnpkg.com/babel-preset-babili/-/babel-preset-babili-0.0.5.tgz#9b63ed73512d793910eb51e166c8c23df3e8e97e"
   dependencies:
@@ -1065,8 +1065,8 @@ babel-types@^6.10.2, babel-types@^6.13.0, babel-types@^6.14.0, babel-types@^6.15
     to-fast-properties "^1.0.1"
 
 babylon@^6.1.0, babylon@^6.11.0, babylon@^6.8.1:
-  version "6.12.0"
-  resolved "https://registry.yarnpkg.com/babylon/-/babylon-6.12.0.tgz#953e6202e58062f7f5041fc8037e4bd4e17140a9"
+  version "6.13.0"
+  resolved "https://registry.yarnpkg.com/babylon/-/babylon-6.13.0.tgz#58ed40dd2a8120612be5f318c2c0bedbebde4a0b"
 
 balanced-match@^0.4.1:
   version "0.4.2"
@@ -1414,6 +1414,10 @@ chokidar@^1.0.0, chokidar@^1.4.2:
     readdirp "^2.0.0"
   optionalDependencies:
     fsevents "^1.0.0"
+
+ci-info@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/ci-info/-/ci-info-1.0.0.tgz#dc5285f2b4e251821683681c381c3388f46ec534"
 
 cipher-base@^1.0.0, cipher-base@^1.0.1:
   version "1.0.3"
@@ -2611,8 +2615,10 @@ is-builtin-module@^1.0.0:
     builtin-modules "^1.0.0"
 
 is-ci@^1.0.7:
-  version "1.0.9"
-  resolved "https://registry.yarnpkg.com/is-ci/-/is-ci-1.0.9.tgz#de2c5ffe49ab3237fda38c47c8a3bbfd55bbcca7"
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/is-ci/-/is-ci-1.0.10.tgz#f739336b2632365061a9d48270cd56ae3369318e"
+  dependencies:
+    ci-info "^1.0.0"
 
 is-dotfile@^1.0.0:
   version "1.0.2"
@@ -2625,8 +2631,8 @@ is-equal-shallow@^0.1.3:
     is-primitive "^2.0.0"
 
 is-error@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/is-error/-/is-error-2.2.0.tgz#2f4b67a631261274f6e5a7ef74c2a59a5edb24d1"
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/is-error/-/is-error-2.2.1.tgz#684a96d84076577c98f4cdb40c6d26a5123bf19c"
 
 is-extendable@^0.1.1:
   version "0.1.1"
@@ -3345,8 +3351,8 @@ not-so-shallow@^0.1.3:
     semver "^5.1.0"
 
 npm-registry-client@^7.0.1:
-  version "7.2.1"
-  resolved "https://registry.yarnpkg.com/npm-registry-client/-/npm-registry-client-7.2.1.tgz#c792266b088cc313f8525e7e35248626c723db75"
+  version "7.3.0"
+  resolved "https://registry.yarnpkg.com/npm-registry-client/-/npm-registry-client-7.3.0.tgz#f2a390e8b13b78fafe26e9fa9d8bc74e17bcaa50"
   dependencies:
     concat-stream "^1.5.2"
     graceful-fs "^4.1.6"
@@ -3411,8 +3417,8 @@ number-is-nan@^1.0.0:
   resolved "https://registry.yarnpkg.com/number-is-nan/-/number-is-nan-1.0.1.tgz#097b602b53422a522c1afb8790318336941a011d"
 
 nyc@^8.3.1:
-  version "8.3.1"
-  resolved "https://registry.yarnpkg.com/nyc/-/nyc-8.3.1.tgz#5761e96b0d5871844e8768e35d8c8a0b7fd6b67c"
+  version "8.3.2"
+  resolved "https://registry.yarnpkg.com/nyc/-/nyc-8.3.2.tgz#a3b7a590fe1c6c4b2d0e3f24afe28b62bfafd745"
   dependencies:
     archy "^1.0.0"
     arrify "^1.0.1"
@@ -3941,8 +3947,8 @@ regexpu-core@^2.0.0:
     regjsparser "^0.1.4"
 
 registry-auth-token@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/registry-auth-token/-/registry-auth-token-3.0.1.tgz#c3ee5ec585bce29f88bf41629a3944c71ed53e25"
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/registry-auth-token/-/registry-auth-token-3.1.0.tgz#997c08256e0c7999837b90e944db39d8a790276b"
   dependencies:
     rc "^1.1.6"
 
@@ -4552,13 +4558,13 @@ typedarray@~0.0.5:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
-typescript:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.0.3.tgz#33dec9eae86b8eee327dd419ca050c853cabd514"
-
 typescript@^1.8.9:
   version "1.8.10"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-1.8.10.tgz#b475d6e0dff0bf50f296e5ca6ef9fbb5c7320f1e"
+
+typescript@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.0.3.tgz#33dec9eae86b8eee327dd419ca050c853cabd514"
 
 uglify-js@^2.6:
   version "2.7.3"
@@ -4842,8 +4848,8 @@ yargs-parser@^4.0.2:
     camelcase "^3.0.0"
 
 yargs@^6.0.0:
-  version "6.2.0"
-  resolved "https://registry.yarnpkg.com/yargs/-/yargs-6.2.0.tgz#9001048953def85495a2ce1dcfa690b7ab060fd1"
+  version "6.3.0"
+  resolved "https://registry.yarnpkg.com/yargs/-/yargs-6.3.0.tgz#19c6dbb768744d571eb6ebae0c174cf2f71b188d"
   dependencies:
     camelcase "^3.0.0"
     cliui "^3.2.0"

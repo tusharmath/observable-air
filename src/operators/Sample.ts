@@ -10,8 +10,8 @@ import {CompositeSubscription} from '../lib/CompositeSubscription'
 
 enum StreamStatus { IDLE, STARTED, COMPLETED }
 
-interface IMapper<T> {
-  (e: Array<T>): any
+interface IMapper {
+  (...e: Array<any>): any
 }
 
 function createArray<T>(size: number, value: T) {
@@ -47,7 +47,7 @@ export class SampleObserver<T> implements IObserver<T> {
   private completedCount = 0
   private samplerCompleted = false
 
-  constructor(private total: number, private sink: IObserver<Array<T>>, private func: IMapper<T>) {
+  constructor(private total: number, private sink: IObserver<Array<T>>, private func: IMapper) {
   }
 
   onNext(value: T, id: number) {
@@ -74,7 +74,7 @@ export class SampleObserver<T> implements IObserver<T> {
 
   next(val: T): void {
     if (this.startedCount === this.total) {
-      this.sink.next(this.func(this.values))
+      this.sink.next(this.func.apply(null, this.values))
     }
   }
 
@@ -90,7 +90,7 @@ export class SampleObserver<T> implements IObserver<T> {
 
 
 export class SampleObservable<T> implements IObservable<Array<T>> {
-  constructor(private func: IMapper<T>,
+  constructor(private func: IMapper,
               private sampler: IObservable<T>,
               private sources: Array<IObservable<T>>) {
   }
@@ -107,6 +107,6 @@ export class SampleObservable<T> implements IObservable<Array<T>> {
   }
 }
 
-export function sample<T>(f: IMapper<T>, sampler: IObservable<T>, sources: Array<IObservable<T>>) {
+export function sample<T>(f: IMapper, sampler: IObservable<T>, sources: Array<IObservable<T>>) {
   return new SampleObservable(f, sampler, sources)
 }
