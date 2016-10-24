@@ -32,3 +32,12 @@ test('func(1, 2, 3, 4)', t => {
     [1, 2, 3]
   )
 })
+
+
+test('func()', t => {
+  const f = Curry(() => 'HELLO')
+  t.is(
+    f(),
+    'HELLO'
+  )
+})
