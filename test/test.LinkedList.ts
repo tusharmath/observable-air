@@ -2,7 +2,8 @@
  * Created by tushar.mathur on 09/10/16.
  */
 import test from 'ava'
-import {LinkedList} from '../src/lib/LinkedList'
+import {LinkedList, LinkedListNode} from '../src/lib/LinkedList'
+import {IObserver} from '../src/types/core/IObserver'
 
 function toArray<T> (q: LinkedList<T>) {
   const arr: Array<T> = []
@@ -18,8 +19,8 @@ test('add()', t => {
   q.add('B')
   q.add('C')
   q.add('D')
-  t.is(q.head().value, 'A')
-  t.is(q.tail().value, 'D')
+  t.is((<LinkedListNode<string>> q.head()).value, 'A')
+  t.is((<LinkedListNode<string>> q.tail()).value, 'D')
   t.deepEqual(toArray(q), ['A', 'B', 'C', 'D'])
   t.is(q.length, 4)
 })
@@ -31,8 +32,8 @@ test('remove(): Remove First (non-empty)', t => {
   const c = q.add('C')
   q.remove(a)
 
-  t.is(q.head().value, 'B')
-  t.is(q.tail().value, 'C')
+  t.is((<LinkedListNode<string>> q.head()).value, 'B')
+  t.is((<LinkedListNode<string>> q.tail()).value, 'C')
   t.deepEqual(toArray(q), ['B', 'C'])
   t.is(q.length, 2)
 })
@@ -44,8 +45,8 @@ test('remove(): Remove LAST (non-empty)', t => {
   const c = q.add('C')
   q.remove(c)
 
-  t.is(q.head().value, 'A')
-  t.is(q.tail().value, 'B')
+  t.is((<LinkedListNode<string>> q.head()).value, 'A')
+  t.is((<LinkedListNode<string>> q.tail()).value, 'B')
   t.deepEqual(toArray(q), ['A', 'B'])
   t.is(q.length, 2)
 })
@@ -58,8 +59,8 @@ test('remove(): Remove MIDDLE (non-empty)', t => {
   const c = q.add('C')
 
   q.remove(b)
-  t.is(q.head().value, 'A')
-  t.is(q.tail().value, 'C')
+  t.is((<LinkedListNode<string>> q.head()).value, 'A')
+  t.is((<LinkedListNode<string>> q.tail()).value, 'C')
   t.deepEqual(toArray(q), ['A', 'C'])
   t.is(q.length, 2)
 })

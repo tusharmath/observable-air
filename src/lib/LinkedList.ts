@@ -23,12 +23,12 @@ export class LinkedList<T> {
   private __tail: LinkedListNode<T> | undefined = undefined
   private __head: LinkedListNode<T> | undefined = undefined
 
-  tail (): LinkedListNode<T> {
-    return this.__tail as LinkedListNode<T>
+  tail () {
+    return this.__tail
   }
 
-  head (): LinkedListNode<T> {
-    return this.__head as LinkedListNode<T>
+  head () {
+    return this.__head
   }
 
 
