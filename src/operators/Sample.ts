@@ -10,7 +10,7 @@ import {CompositeSubscription} from '../lib/CompositeSubscription'
 
 enum StreamStatus { IDLE, STARTED, COMPLETED }
 
-interface IMapper {
+export interface ISampleSelector {
   (...e: Array<any>): any
 }
 
@@ -47,7 +47,7 @@ export class SampleObserver<T> implements IObserver<T> {
   private completedCount = 0
   private samplerCompleted = false
 
-  constructor(private total: number, private sink: IObserver<Array<T>>, private func: IMapper) {
+  constructor(private total: number, private sink: IObserver<Array<T>>, private func: ISampleSelector) {
   }
 
   onNext(value: T, id: number) {
@@ -90,7 +90,7 @@ export class SampleObserver<T> implements IObserver<T> {
 
 
 export class SampleObservable<T> implements IObservable<Array<T>> {
-  constructor(private func: IMapper,
+  constructor(private func: ISampleSelector,
               private sampler: IObservable<T>,
               private sources: Array<IObservable<T>>) {
   }
@@ -107,6 +107,6 @@ export class SampleObservable<T> implements IObservable<Array<T>> {
   }
 }
 
-export function sample<T>(f: IMapper, sampler: IObservable<T>, sources: Array<IObservable<T>>) {
+export function sample<T>(f: ISampleSelector, sampler: IObservable<T>, sources: Array<IObservable<T>>) {
   return new SampleObservable(f, sampler, sources)
 }
