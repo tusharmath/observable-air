@@ -11,7 +11,7 @@ import {CompositeObserver} from '../lib/CompositeObserver'
 
 export class MulticastSubscription<T> implements ISubscription {
   closed = false
-  private node = this.sharedObserver.add(this.observer, this.scheduler)
+  private node = this.sharedObserver.addObserver(this.observer, this.scheduler)
 
   constructor (private observer: IObserver<T>,
                private scheduler: IScheduler,
@@ -20,44 +20,31 @@ export class MulticastSubscription<T> implements ISubscription {
 
   unsubscribe (): void {
     this.closed = true
-    this.sharedObserver.remove(this.node)
+    this.sharedObserver.removeObserver(this.node)
   }
 }
 
-export class MulticastObserver<T> implements IObserver<T> {
-  private observers = new CompositeObserver()
+export class MulticastObserver<T> extends CompositeObserver<T> {
   private subscription: ISubscription
 
   constructor (private source: IObservable<T>) {
+    super()
   }
 
-  add (observer: IObserver<T>, scheduler: IScheduler) {
-    const node = this.observers.add(observer)
-    if (this.observers.length === 1) {
+  addObserver (observer: IObserver<T>, scheduler: IScheduler) {
+    const node = this.add(observer)
+    if (this.length === 1) {
       this.subscription = this.source.subscribe(this, scheduler)
     }
     return node
   }
 
-  remove (node: LinkedListNode<IObserver<T>>) {
-    this.observers.remove(node)
-    if (this.observers.length === 0) {
+  removeObserver (node: LinkedListNode<IObserver<T>>) {
+    this.remove(node)
+    if (this.length === 0) {
       this.subscription.unsubscribe()
     }
   }
-
-  next (val: T): void {
-    this.observers.next(val)
-  }
-
-  error (err: Error): void {
-    this.observers.error(err)
-  }
-
-  complete (): void {
-    this.observers.complete()
-  }
-
 }
 
 export class Multicast<T> implements IObservable<T> {
