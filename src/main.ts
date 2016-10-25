@@ -4,8 +4,8 @@
 
 export {Observable} from './lib/Observable'
 export {Observer} from './lib/Observer'
-import {Curry} from './lib/Curry'
 import {animationFrames as _animationFrames} from './sources/AnimationFrames'
+import {Curry} from './lib/Curry'
 import {filter as _filter} from './operators/Filter'
 import {fromArray as _fromArray} from './sources/FromArray'
 import {fromDOM as _fromDOM} from './sources/FromDOM'
@@ -14,6 +14,7 @@ import {interval as _interval} from './sources/Interval'
 import {join as _join} from './operators/Join'
 import {map as _map} from './operators/Map'
 import {merge as _merge} from './operators/Merge'
+import {multicast as _multicast} from './operators/Multicast'
 import {reduce as _reduce} from './operators/Reduce'
 import {sample as _sample} from './operators/Sample'
 import {scan as _scan} from './operators/Scan'
@@ -31,6 +32,7 @@ export const interval = Curry(_interval)
 export const join = Curry(_join)
 export const map = Curry(_map)
 export const merge = Curry(_merge)
+export const multicast = Curry(_multicast)
 export const reduce = Curry(_reduce)
 export const sample = Curry(_sample)
 export const scan = Curry(_scan)
