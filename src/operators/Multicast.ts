@@ -6,7 +6,8 @@ import {IObservable} from '../types/core/IObservable'
 import {IObserver} from '../types/core/IObserver'
 import {IScheduler} from '../types/IScheduler'
 import {ISubscription} from '../types/core/ISubscription'
-import {LinkedList, LinkedListNode} from '../lib/LinkedList'
+import {LinkedListNode} from '../lib/LinkedList'
+import {CompositeObserver} from '../lib/CompositeObserver'
 
 export class MulticastSubscription<T> implements ISubscription {
   closed = false
@@ -14,7 +15,7 @@ export class MulticastSubscription<T> implements ISubscription {
 
   constructor (private observer: IObserver<T>,
                private scheduler: IScheduler,
-               private sharedObserver: SharedObserver<T>) {
+               private sharedObserver: MulticastObserver<T>) {
   }
 
   unsubscribe (): void {
@@ -23,8 +24,8 @@ export class MulticastSubscription<T> implements ISubscription {
   }
 }
 
-export class SharedObserver<T> implements IObserver<T> {
-  private observers = new LinkedList<IObserver<T>>()
+export class MulticastObserver<T> implements IObserver<T> {
+  private observers = new CompositeObserver()
   private subscription: ISubscription
 
   constructor (private source: IObservable<T>) {
@@ -46,28 +47,28 @@ export class SharedObserver<T> implements IObserver<T> {
   }
 
   next (val: T): void {
-    this.observers.forEach(ob => ob.value.next(val))
+    this.observers.next(val)
   }
 
   error (err: Error): void {
-    this.observers.forEach(ob => ob.value.error(err))
+    this.observers.error(err)
   }
 
   complete (): void {
-    this.observers.forEach(ob => ob.value.complete())
+    this.observers.complete()
   }
 
 }
 
 export class Multicast<T> implements IObservable<T> {
+  private sharedObserver = new MulticastObserver(this.source)
+
   constructor (private source: IObservable<T>) {
   }
 
-  private sharedObserver = new SharedObserver(this.source)
 
 
   subscribe (observer: IObserver<T>, scheduler: IScheduler): ISubscription {
-
     return new MulticastSubscription(observer, scheduler, this.sharedObserver)
   }
 }
