@@ -7,7 +7,7 @@ import {TestScheduler} from '../src/testing/TestScheduler'
 import {ReactiveEvents} from '../src/testing/ReactiveEvents'
 import {sample} from '../src/operators/Sample'
 
-function toArray(...t: Array<any>) {
+function toArray (...t: Array<any>) {
   return t.join(',')
 }
 test(t => {
@@ -67,7 +67,7 @@ test(t => {
     ReactiveEvents.next(251, '#'),
     ReactiveEvents.complete(251)
   ])
-  const {results} = sh.start(() => sample<number>((a, b) => a + b, S$, [a$, b$]))
+  const {results} = sh.start(() => sample((a, b) => a + b, S$, [a$, b$]))
   t.deepEqual(results, [
     ReactiveEvents.next(211, 0 + 0),
     ReactiveEvents.next(221, 0 + 1000),

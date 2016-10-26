@@ -6,12 +6,13 @@
 import {IObservable} from '../types/core/IObservable'
 import {IObserver} from '../types/core/IObserver'
 import {ISubscription} from '../types/core/ISubscription'
-import {IPredicate} from '../types/IPredicate'
 import {IScheduler} from '../types/IScheduler'
+import {Curry2} from '../lib/Curry'
+import {ICurriedFunction2} from '../types/ICurriedFunction'
 
 
 class FilterObserver <T> implements IObserver<T> {
-  constructor (private predicate: IPredicate<T>, private sink: IObserver<T>) {
+  constructor (private predicate: {(t: T): boolean}, private sink: IObserver<T>) {
   }
 
   next (val: T) {
@@ -29,7 +30,7 @@ class FilterObserver <T> implements IObserver<T> {
 
 
 export class FilterObservable <T> implements IObservable<T> {
-  constructor (private predicate: IPredicate<T>,
+  constructor (private predicate: {(t: T): boolean},
                private source: IObservable<T>) {
   }
 
@@ -38,6 +39,6 @@ export class FilterObservable <T> implements IObservable<T> {
   }
 }
 
-export function filter<T> (predicate: IPredicate<T>, source: IObservable<T>): IObservable<T> {
+export const filter = Curry2(function (predicate: {(t: any): boolean}, source: IObservable<any>) {
   return new FilterObservable(predicate, source)
-}
+}) as ICurriedFunction2<{(t: any): boolean}, IObservable<any>, IObservable<any>>

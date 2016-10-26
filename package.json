@@ -1,7 +1,7 @@
 {
   "name": "observable-air",
   "description": "Observables for the calorie conscious",
-  "main": "src/main",
+  "main": ".dist/src/main",
   "jsnext:main": "./.dist/main-es.min",
   "scripts": {
     "benchmark": "date >> benchmark.txt && node chore/benchmark >> benchmark.txt",
@@ -12,12 +12,12 @@
     "prepublish": "tsc && npm run build && npm run build-min",
     "rfc": "node chore/rfc",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
-    "test": "tsc && ava",
+    "test": "tsc && ava .dist/test",
     "build": "npm run build-es && npm run build-cjs",
     "build-min": "npm run build-es-min && npm run build-cjs-min",
     "build-es": "rollup -c",
     "build-es-min": "babel .dist/main-es.js > .dist/main-es.min.js",
-    "build-cjs": "browserify src/main.js > .dist/main-cjs.js",
+    "build-cjs": "browserify .dist/src/main.js > .dist/main-cjs.js",
     "build-cjs-min": "babel .dist/main-cjs.js > .dist/main-cjs.min.js"
   },
   "author": "",

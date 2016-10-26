@@ -6,6 +6,8 @@ import {IObservable} from '../types/core/IObservable'
 import {IObserver} from '../types/core/IObserver'
 import {ISubscription} from '../types/core/ISubscription'
 import {IScheduler} from '../types/IScheduler'
+import {Curry2} from '../lib/Curry'
+import {ICurriedFunction2} from '../types/ICurriedFunction'
 
 class MapObserver<T> implements IObserver<T> {
   constructor (private mapper: (a: T) =>  T, private sink: IObserver<T>) {
@@ -34,6 +36,6 @@ export class MapObservable <T> implements IObservable<T> {
   }
 }
 
-export function map <T> (mapFunction: (a: T) => T, source: IObservable<T>): IObservable<T> {
+export const map = Curry2(function (mapFunction: (a: any) => any, source: IObservable<any>) {
   return new MapObservable(mapFunction, source)
-}
+}) as ICurriedFunction2<(value: any) => any, IObservable<any>, IObservable<any>>

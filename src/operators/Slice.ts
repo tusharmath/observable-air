@@ -6,6 +6,8 @@ import {IObservable} from '../types/core/IObservable'
 import {IObserver} from '../types/core/IObserver'
 import {ISubscription} from '../types/core/ISubscription'
 import {IScheduler} from '../types/IScheduler'
+import {Curry3} from '../lib/Curry'
+import {ICurriedFunction3} from '../types/ICurriedFunction'
 
 class SliceObserver<T> implements IObserver<T> {
   closed: boolean
@@ -61,6 +63,6 @@ export class SliceObservable<T> implements IObservable<T> {
 
 }
 
-export function slice<T> (start: number, count: number, source: IObservable<T>): IObservable<T> {
+export const slice = Curry3(function (start: number, count: number, source: IObservable<any>) {
   return new SliceObservable(start, count, source)
-}
+}) as ICurriedFunction3<number, number, IObservable<any>, IObservable<any>>

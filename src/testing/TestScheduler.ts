@@ -11,13 +11,12 @@ import {TestObserver} from './TestObserver'
 import {ColdTestObservable} from './ColdTestObservable'
 import {HotTestObservable} from './HotTestObservable'
 import {LinkedList, LinkedListNode} from '../lib/LinkedList'
+import {ISchedulerOptions} from '../types/ISchedulerOptions'
+import {TestObservable} from './TestObservable'
 
 export const START_SUBSCRIPTION_TIME = 200
 export const STOP_SUBSCRIPTION_TIME = 2000
 
-interface SchedulerOptions {
-  rafTimeout: number
-}
 
 class TaskSchedule {
   constructor (public task: ITask, public time: number) {
@@ -39,7 +38,7 @@ export class TestScheduler implements IScheduler {
   private clock = 0
   private queue = new LinkedList<TaskSchedule>()
 
-  constructor (private options: SchedulerOptions) {
+  constructor (private options: ISchedulerOptions) {
   }
 
   tick () {
@@ -105,14 +104,14 @@ export class TestScheduler implements IScheduler {
   }
 
   Cold <T> (events: Array<IEvent>) {
-    return ColdTestObservable(this, events)
+    return ColdTestObservable(this, events) as TestObservable<T>
   }
 
   Hot <T> (events: Array<IEvent>) {
-    return HotTestObservable(this, events)
+    return HotTestObservable(this, events) as TestObservable<T>
   }
 
-  static of (options: SchedulerOptions = {rafTimeout: 16}) {
+  static of (options: ISchedulerOptions = {rafTimeout: 16}) {
     return new TestScheduler(options)
   }
 }

@@ -6,13 +6,11 @@ import {IObservable} from '../types/core/IObservable'
 import {IObserver} from '../types/core/IObserver'
 import {ISubscription} from '../types/core/ISubscription'
 import {IScheduler} from '../types/IScheduler'
-
-interface ITapper<T> {
-  (f: T): void
-}
+import {Curry2} from '../lib/Curry'
+import {ICurriedFunction2} from '../types/ICurriedFunction'
 
 export class TapObserver<T> implements IObserver<T> {
-  constructor (private tapper: ITapper<T>, private observer: IObserver<T>) {
+  constructor (private tapper: {(f: T): void}, private observer: IObserver<T>) {
 
   }
 
@@ -32,7 +30,7 @@ export class TapObserver<T> implements IObserver<T> {
 }
 
 export class TapObservable<T> implements IObservable<T> {
-  constructor (private tapper: ITapper<T>, private source: IObservable<T>) {
+  constructor (private tapper: {(f: T): void}, private source: IObservable<T>) {
 
   }
 
@@ -41,6 +39,7 @@ export class TapObservable<T> implements IObservable<T> {
   }
 }
 
-export function tap<T> (tapper: ITapper<T>, source: IObservable<T>): TapObservable<T> {
-  return new TapObservable(tapper, source)
-}
+export const tap = Curry2(function (tapper: {(f: any): void}, source: IObservable < any >) {
+    return new TapObservable(tapper, source)
+  }
+) as ICurriedFunction2<{(f: any): void}, IObservable < any >, IObservable < any >>

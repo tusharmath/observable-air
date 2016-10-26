@@ -7,11 +7,12 @@ import {IObservable} from '../types/core/IObservable'
 import {IObserver} from '../types/core/IObserver'
 import {IScheduler} from '../types/IScheduler'
 import {ISubscription} from '../types/core/ISubscription'
-import {IReducer} from '../types/IReducer'
+import {Curry3} from '../lib/Curry'
+import {ICurriedFunction3} from '../types/ICurriedFunction'
 
 export class ScanObserver<T> implements IObserver<T> {
 
-  constructor (private reducer: IReducer<T>,
+  constructor (private reducer: {(current: T, memory: T): T},
                private value: T,
                private sink: IObserver<T>) {
   }
@@ -32,7 +33,7 @@ export class ScanObserver<T> implements IObserver<T> {
 }
 
 export class ScanObservable<T> implements IObservable<T> {
-  constructor (private reducer: IReducer<T>, private value: T, private source: IObservable<T>) {
+  constructor (private reducer: {(current: T, memory: T): T}, private value: T, private source: IObservable<T>) {
 
   }
 
@@ -41,6 +42,6 @@ export class ScanObservable<T> implements IObservable<T> {
   }
 }
 
-export function scan<T> (reducer: IReducer<T>, value: T, source: IObservable<T>) {
+export const scan = Curry3(function (reducer: {(current: any, memory: any): any}, value: any, source: IObservable<any>) {
   return new ScanObservable(reducer, value, source)
-}
+}) as ICurriedFunction3<{(current: any, memory: any): any}, any, IObservable<any>, IObservable<any>>

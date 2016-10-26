@@ -7,14 +7,16 @@ import {IObserver} from '../types/core/IObserver'
 import {IScheduler} from '../types/IScheduler'
 import {ISubscription} from '../types/core/ISubscription'
 import {CompositeSubscription} from '../lib/CompositeSubscription'
+import {Curry3} from '../lib/Curry'
+import {ICurriedFunction3} from '../types/ICurriedFunction'
 
 enum StreamStatus { IDLE, STARTED, COMPLETED }
 
-interface IMapper {
+export interface ISampleSelector {
   (...e: Array<any>): any
 }
 
-function createArray<T>(size: number, value: T) {
+function createArray<T> (size: number, value: T) {
   const arr: Array<T> = new Array(size)
   for (var i = 0; i < size; ++i) {
     arr[i] = value
@@ -23,19 +25,19 @@ function createArray<T>(size: number, value: T) {
 }
 
 export class SampleValueObserver<T> implements IObserver<T> {
-  constructor(private id: number,
-              private sampleObserver: SampleObserver<T>) {
+  constructor (private id: number,
+               private sampleObserver: SampleObserver<T>) {
   }
 
-  next(val: T): void {
+  next (val: T): void {
     this.sampleObserver.onNext(val, this.id)
   }
 
-  error(err: Error): void {
+  error (err: Error): void {
     this.sampleObserver.error(err)
   }
 
-  complete(): void {
+  complete (): void {
     this.sampleObserver.onComplete(this.id)
   }
 
@@ -47,10 +49,10 @@ export class SampleObserver<T> implements IObserver<T> {
   private completedCount = 0
   private samplerCompleted = false
 
-  constructor(private total: number, private sink: IObserver<Array<T>>, private func: IMapper) {
+  constructor (private total: number, private sink: IObserver<Array<T>>, private func: ISampleSelector) {
   }
 
-  onNext(value: T, id: number) {
+  onNext (value: T, id: number) {
     if (this.streamStatuses[id] === StreamStatus.IDLE) {
       this.streamStatuses[id] = StreamStatus.STARTED
       this.startedCount++
@@ -58,7 +60,7 @@ export class SampleObserver<T> implements IObserver<T> {
     this.values[id] = value
   }
 
-  onComplete(id: number) {
+  onComplete (id: number) {
     if (this.streamStatuses[id] !== StreamStatus.COMPLETED) {
       this.streamStatuses[id] = StreamStatus.COMPLETED
       this.completedCount++
@@ -66,23 +68,23 @@ export class SampleObserver<T> implements IObserver<T> {
     }
   }
 
-  private actuallyCompleted() {
+  private actuallyCompleted () {
     if (this.samplerCompleted && this.completedCount === this.total) {
       this.sink.complete()
     }
   }
 
-  next(val: T): void {
+  next (val: T): void {
     if (this.startedCount === this.total) {
       this.sink.next(this.func.apply(null, this.values))
     }
   }
 
-  error(err: Error): void {
+  error (err: Error): void {
     this.sink.error(err)
   }
 
-  complete(): void {
+  complete (): void {
     this.samplerCompleted = true
     this.actuallyCompleted()
   }
@@ -90,12 +92,12 @@ export class SampleObserver<T> implements IObserver<T> {
 
 
 export class SampleObservable<T> implements IObservable<Array<T>> {
-  constructor(private func: IMapper,
-              private sampler: IObservable<T>,
-              private sources: Array<IObservable<T>>) {
+  constructor (private func: ISampleSelector,
+               private sampler: IObservable<T>,
+               private sources: Array<IObservable<T>>) {
   }
 
-  subscribe(observer: IObserver<Array<T>>, scheduler: IScheduler): ISubscription {
+  subscribe (observer: IObserver<Array<T>>, scheduler: IScheduler): ISubscription {
     const cSub = new CompositeSubscription()
     const sampleObserver = new SampleObserver(this.sources.length, observer, this.func)
     cSub.add(this.sampler.subscribe(sampleObserver, scheduler))
@@ -107,6 +109,6 @@ export class SampleObservable<T> implements IObservable<Array<T>> {
   }
 }
 
-export function sample<T>(f: IMapper, sampler: IObservable<T>, sources: Array<IObservable<T>>) {
+export const sample = Curry3(function (f: ISampleSelector, sampler: IObservable<any>, sources: Array<IObservable<any>>) {
   return new SampleObservable(f, sampler, sources)
-}
+}) as ICurriedFunction3<ISampleSelector, IObservable<any>, Array<IObservable<any>>, IObservable<any>>
