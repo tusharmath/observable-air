@@ -8,6 +8,7 @@ import {IObserver} from '../types/core/IObserver'
 import {IScheduler} from '../types/IScheduler'
 import {ISubscription} from '../types/core/ISubscription'
 import {IReducer} from '../types/IReducer'
+import {Curry3} from '../lib/Curry'
 
 export class ScanObserver<T> implements IObserver<T> {
 
@@ -41,6 +42,6 @@ export class ScanObservable<T> implements IObservable<T> {
   }
 }
 
-export function scan<T> (reducer: IReducer<T>, value: T, source: IObservable<T>) {
+export const scan = Curry3(function (reducer: IReducer<any>, value: any, source: IObservable<any>) {
   return new ScanObservable(reducer, value, source)
-}
+})

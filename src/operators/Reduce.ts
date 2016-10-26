@@ -8,6 +8,7 @@ import {IObserver} from '../types/core/IObserver'
 import {ISubscription} from '../types/core/ISubscription'
 import {IReducer} from '../types/IReducer'
 import {IScheduler} from '../types/IScheduler'
+import {Curry3} from '../lib/Curry'
 
 class ReduceObserver<T> implements IObserver<T> {
   constructor (private reducer: IReducer<T>,
@@ -40,6 +41,6 @@ export class ReduceObservable <T> implements IObservable<T> {
   }
 }
 
-export function reduce <T> (reducer: IReducer<T>, value: T, source: IObservable<T>): IObservable<T> {
+export const reduce = Curry3(function (reducer: IReducer<any>, value: any, source: IObservable<any>) {
   return new ReduceObservable(reducer, value, source)
-}
+})

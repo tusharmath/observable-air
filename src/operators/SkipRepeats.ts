@@ -7,6 +7,7 @@ import {IObserver} from '../types/core/IObserver'
 import {ISubscription} from '../types/core/ISubscription'
 import {IScheduler} from '../types/IScheduler'
 import {IHash} from '../types/IHash'
+import {Curry2} from '../lib/Curry'
 
 class SkipRepeatsObserver <T, H> implements IObserver<T> {
   private hash: H | void = undefined
@@ -46,6 +47,6 @@ export class SkipRepeatsObservable <T, H> implements IObservable <T> {
   }
 }
 
-export function skipRepeats<T, H> (hashFunction: IHash<T, H>, source: IObservable<T>): IObservable<T> {
+export const skipRepeats = Curry2(function (hashFunction: IHash<any, any>, source: IObservable<any>) {
   return new SkipRepeatsObservable(hashFunction, source)
-}
+})

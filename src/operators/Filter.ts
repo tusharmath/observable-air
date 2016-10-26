@@ -8,6 +8,7 @@ import {IObserver} from '../types/core/IObserver'
 import {ISubscription} from '../types/core/ISubscription'
 import {IPredicate} from '../types/IPredicate'
 import {IScheduler} from '../types/IScheduler'
+import {Curry2} from '../lib/Curry'
 
 
 class FilterObserver <T> implements IObserver<T> {
@@ -38,6 +39,6 @@ export class FilterObservable <T> implements IObservable<T> {
   }
 }
 
-export function filter<T> (predicate: IPredicate<T>, source: IObservable<T>): IObservable<T> {
+export const filter = Curry2(function (predicate: IPredicate<any>, source: IObservable<any>) {
   return new FilterObservable(predicate, source)
-}
+})

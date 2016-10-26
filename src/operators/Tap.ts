@@ -6,6 +6,7 @@ import {IObservable} from '../types/core/IObservable'
 import {IObserver} from '../types/core/IObserver'
 import {ISubscription} from '../types/core/ISubscription'
 import {IScheduler} from '../types/IScheduler'
+import {Curry2} from '../lib/Curry'
 
 interface ITapper<T> {
   (f: T): void
@@ -41,6 +42,6 @@ export class TapObservable<T> implements IObservable<T> {
   }
 }
 
-export function tap<T> (tapper: ITapper<T>, source: IObservable<T>): TapObservable<T> {
+export const tap = Curry2(function (tapper: ITapper<any>, source: IObservable<any>) {
   return new TapObservable(tapper, source)
-}
+})

@@ -6,6 +6,7 @@ import {IObserver} from '../types/core/IObserver'
 import {IScheduler} from '../types/IScheduler'
 import {ISubscription} from '../types/core/ISubscription'
 import {IListener} from '../types/IListener'
+import {Curry2} from '../lib/Curry'
 
 
 export class DOMSubscription implements ISubscription {
@@ -31,6 +32,6 @@ export class DOMObservable implements IObservable<Event> {
 
 }
 
-export function fromDOM (element: HTMLElement, name: string) {
+export const fromDOM = Curry2(function (element: HTMLElement, name: string) {
   return new DOMObservable(name, element)
-}
+})

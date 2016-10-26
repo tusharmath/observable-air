@@ -6,8 +6,7 @@
 import {
   ICurriedFunction,
   ICurriedFunction2,
-  ICurriedFunction3,
-  ICurriedFunction0
+  ICurriedFunction3
 } from '../types/ICurryFunction'
 
 export function Curry (f: ICurriedFunction): ICurriedFunction {
@@ -19,18 +18,10 @@ export function Curry (f: ICurriedFunction): ICurriedFunction {
   }
 }
 
-export function Curry0<R> (f: Function) {
-  return f as ICurriedFunction0<R>
-}
-
-export function Curry1<T, R> (f: Function) {
-  return f
-}
-
 export function Curry2<T1, T2, R> (f: {(t1: T1, t2: T2): R}) {
   return Curry(f) as ICurriedFunction2<T1, T2, R>
 }
 
-export function Curry3<T1, T2, T3, R> (f: Function) {
+export function Curry3<T1, T2, T3, R> (f: {(t1: T1, t2: T2, t3: T3): R}) {
   return Curry(f) as ICurriedFunction3<T1, T2, T3, R>
 }

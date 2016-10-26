@@ -5,11 +5,6 @@
 export interface ICurriedFunction extends Function {
 }
 
-export interface ICurriedFunction0 <R> extends ICurriedFunction {
-  (): R
-}
-
-
 export interface ICurriedFunction1 <T, R> extends ICurriedFunction {
   (t: T): R
 }
