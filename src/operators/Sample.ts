@@ -8,6 +8,7 @@ import {IScheduler} from '../types/IScheduler'
 import {ISubscription} from '../types/core/ISubscription'
 import {CompositeSubscription} from '../lib/CompositeSubscription'
 import {Curry3} from '../lib/Curry'
+import {ICurriedFunction3} from '../types/ICurriedFunction'
 
 enum StreamStatus { IDLE, STARTED, COMPLETED }
 
@@ -110,4 +111,4 @@ export class SampleObservable<T> implements IObservable<Array<T>> {
 
 export const sample = Curry3(function (f: ISampleSelector, sampler: IObservable<any>, sources: Array<IObservable<any>>) {
   return new SampleObservable(f, sampler, sources)
-})
+}) as ICurriedFunction3<ISampleSelector, IObservable<any>, Array<IObservable<any>>, IObservable<any>>

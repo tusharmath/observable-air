@@ -6,12 +6,12 @@
 import {IObservable} from '../types/core/IObservable'
 import {IObserver} from '../types/core/IObserver'
 import {ISubscription} from '../types/core/ISubscription'
-import {IReducer} from '../types/IReducer'
 import {IScheduler} from '../types/IScheduler'
 import {Curry3} from '../lib/Curry'
+import {ICurriedFunction3} from '../types/ICurriedFunction'
 
 class ReduceObserver<T> implements IObserver<T> {
-  constructor (private reducer: IReducer<T>,
+  constructor (private reducer: {(current: T, memory: T): T},
                private value: T,
                private sink: IObserver<T>) {
   }
@@ -31,7 +31,7 @@ class ReduceObserver<T> implements IObserver<T> {
 }
 
 export class ReduceObservable <T> implements IObservable<T> {
-  constructor (private reducer: IReducer<T>,
+  constructor (private reducer: {(current: T, memory: T): T},
                private value: T,
                private source: IObservable<T>) {
   }
@@ -41,6 +41,6 @@ export class ReduceObservable <T> implements IObservable<T> {
   }
 }
 
-export const reduce = Curry3(function (reducer: IReducer<any>, value: any, source: IObservable<any>) {
+export const reduce = Curry3(function (reducer: {(current: any, memory: any): any}, value: any, source: IObservable<any>) {
   return new ReduceObservable(reducer, value, source)
-})
+}) as ICurriedFunction3<{(current: any, memory: any): any}, any, IObservable<any>, IObservable<any>>

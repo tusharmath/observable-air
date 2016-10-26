@@ -7,7 +7,7 @@ import {
   ICurriedFunction,
   ICurriedFunction2,
   ICurriedFunction3
-} from '../types/ICurryFunction'
+} from '../types/ICurriedFunction'
 
 export function Curry (f: ICurriedFunction): ICurriedFunction {
   if (f.length <= 1) return f
