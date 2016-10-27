@@ -21,3 +21,4 @@ export {skipRepeats} from './operators/SkipRepeats'
 export {slice} from './operators/Slice'
 export {switchLatest} from './operators/Switch'
 export {tap} from './operators/Tap'
+
