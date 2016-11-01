@@ -10,5 +10,5 @@ import {Curry2} from './Curry'
 import {ICurriedFunction2} from '../types/ICurriedFunction'
 
 export const subscribe = Curry2(function (observable: IObservable<any>, observer: IObserver<any>) {
-  return observable.subscribe(observer, new DefaultScheduler())
+  return observable.subscribe(observer, DefaultScheduler.of())
 }) as ICurriedFunction2<IObservable<any>, IObserver<any>, ISubscription>
