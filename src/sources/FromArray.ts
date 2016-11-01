@@ -6,7 +6,6 @@ import {IObservable} from '../types/core/IObservable'
 import {ISubscription} from '../types/core/ISubscription'
 import {IObserver} from '../types/core/IObserver'
 import {IScheduler} from '../types/IScheduler'
-import {DefaultScheduler} from '../scheduling/DefaultScheduler'
 import {ILazySubscription} from '../types/ILazySubscription'
 import {SafeExecutor} from '../lib/SafeExecutor'
 
@@ -47,8 +46,7 @@ export class FromObservable<T> implements IObservable<T> {
   constructor (private array: Array<T>) {
   }
 
-  subscribe (observer: IObserver<T>,
-             scheduler: IScheduler = new DefaultScheduler()): ISubscription {
+  subscribe (observer: IObserver<T>, scheduler: IScheduler): ISubscription {
 
     return new FromRunner<T>(this.array, observer, scheduler).run()
   }
