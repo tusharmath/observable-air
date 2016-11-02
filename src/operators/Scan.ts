@@ -10,15 +10,17 @@ import {ISubscription} from '../types/core/ISubscription'
 import {Curry3} from '../lib/Curry'
 import {ICurriedFunction3} from '../types/ICurriedFunction'
 
-export class ScanObserver<T> implements IObserver<T> {
+export type Reducer <T, V> = (current: T, memory: V) => V
 
-  constructor (private reducer: {(current: T, memory: T): T},
-               private value: T,
-               private sink: IObserver<T>) {
+export class ScanObserver<T, V> implements IObserver<T> {
+
+  constructor (private reducer: Reducer<T, V>,
+               private value: V,
+               private sink: IObserver<V>) {
   }
 
   next (val: T): void {
-    this.value = this.reducer(this.value, val)
+    this.value = this.reducer(val, this.value)
     this.sink.next(this.value)
   }
 
@@ -32,16 +34,16 @@ export class ScanObserver<T> implements IObserver<T> {
 
 }
 
-export class ScanObservable<T> implements IObservable<T> {
-  constructor (private reducer: {(current: T, memory: T): T}, private value: T, private source: IObservable<T>) {
+export class ScanObservable<T, V> implements IObservable<V> {
+  constructor (private reducer: Reducer<T, V>, private value: V, private source: IObservable<T>) {
 
   }
 
-  subscribe (observer: IObserver<T>, scheduler: IScheduler): ISubscription {
-    return this.source.subscribe(new ScanObserver(this.reducer, this.value, observer), scheduler)
+  subscribe (observer: IObserver<V>, scheduler: IScheduler): ISubscription {
+    return this.source.subscribe(new ScanObserver<T, V>(this.reducer, this.value, observer), scheduler)
   }
 }
 
-export const scan = Curry3(function (reducer: {(current: any, memory: any): any}, value: any, source: IObservable<any>) {
+export const scan = Curry3(function <T, V> (reducer: Reducer<T, V>, value: V, source: IObservable<T>) {
   return new ScanObservable(reducer, value, source)
-}) as ICurriedFunction3<{(current: any, memory: any): any}, any, IObservable<any>, IObservable<any>>
+}) as ICurriedFunction3<Reducer<any, any>, any, IObservable<any>, IObservable<any>>
