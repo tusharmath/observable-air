@@ -4,12 +4,13 @@
 
 'use strict'
 
-import typescript from 'rollup-plugin-typescript'
+import commonjs from 'rollup-plugin-commonjs'
 
 export default {
-  entry: './src/main.ts',
+  exports: 'named',
+  entry: './.dist/src/main.js',
   dest: './.dist/main-es.js',
   plugins: [
-    typescript()
+    commonjs({})
   ]
 }
