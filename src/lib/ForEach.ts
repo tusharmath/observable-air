@@ -3,7 +3,6 @@
  */
 
 import {IObservable} from '../types/core/IObservable'
-import {IObserver} from '../types/core/IObserver'
 import {DefaultScheduler} from '../scheduling/DefaultScheduler'
 import {ISubscription} from '../types/core/ISubscription'
 import {Curry2} from './Curry'
