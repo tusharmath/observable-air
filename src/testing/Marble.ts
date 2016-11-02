@@ -33,16 +33,17 @@ export function marble <T> (message: String, err: Error = new Error()): Array<IE
 }
 
 export function toMarble<T> (events: Array<IEvent>) {
-  var message = ''
-  var time = START_SUBSCRIPTION_TIME
+  let time = START_SUBSCRIPTION_TIME
+  let message = ''
+  let startCount = (events[0].time - time) / MARBLE_SIZE
+  while (startCount-- !== 0) message += '-'
+
   events.forEach(ev => {
     if (ev.time % MARBLE_SIZE !== 0)
       throw TypeError(`the time (${ev.time}) not a multiple of frame ${MARBLE_SIZE}`)
-    var count = (ev.time - time) / MARBLE_SIZE
+    let count = (ev.time - time) / MARBLE_SIZE
     time = ev.time
-    while (count-- > 1) {
-      message += '-'
-    }
+    while (count-- > 1) message += '-'
     switch (ev.type) {
       case EventType.next:
         message += (ev as EventNext<T>).value.toString()
