@@ -10,5 +10,5 @@ import {toMarble} from '../src/testing/Marble'
 test(t => {
   const sh = TestScheduler.of({rafTimeout: 10})
   const {results} = sh.start(() => animationFrames(), 200, 300)
-  t.is(toMarble(results), '012345678')
+  t.is(toMarble(results), '-012345678')
 })
