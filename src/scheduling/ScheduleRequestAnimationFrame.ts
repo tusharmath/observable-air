@@ -13,14 +13,16 @@ export class ScheduleRequestAnimationFrame implements IScheduledTask {
   }
 
   run () {
-    this.id = requestAnimationFrame(() => this.task())
+    this.id = requestAnimationFrame(() => {
+      this.task()
+      this.closed = true
+    })
     return this
   }
 
   unsubscribe (): void {
-    if (closed === false) {
-      cancelAnimationFrame(this.id)
-      this.closed = true
-    }
+    if (this.closed) return
+    cancelAnimationFrame(this.id)
+    this.closed = true
   }
 }

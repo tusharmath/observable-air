@@ -14,11 +14,15 @@ export class ScheduleImmediately implements IScheduledTask {
   }
 
   run () {
-    this.id = setImmediate(() => this.task())
+    this.id = setImmediate(() => {
+      this.task()
+      this.closed = true
+    })
     return this
   }
 
   unsubscribe (): void {
+    if (this.closed) return
     clearImmediate(this.id)
     this.closed = true
   }

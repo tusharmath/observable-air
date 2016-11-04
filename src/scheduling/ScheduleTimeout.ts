@@ -15,11 +15,15 @@ export class ScheduleTimeout implements IScheduledTask {
   }
 
   run () {
-    this.timer = setTimeout(() => this.task(), this.timeout)
+    this.timer = setTimeout(() => {
+      this.task()
+      this.closed = true
+    }, this.timeout)
     return this
   }
 
   unsubscribe (): void {
+    if (this.closed) return
     clearTimeout(this.timer)
     this.closed = true
   }
