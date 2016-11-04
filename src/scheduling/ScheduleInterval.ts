@@ -6,7 +6,7 @@ import {IScheduledTask} from '../types/IScheduledTask'
 import {ITask} from '../types/ITask'
 
 export class ScheduleInterval implements IScheduledTask {
-  closed: boolean
+  closed = false
   private id: number
 
   constructor (private task: ITask,

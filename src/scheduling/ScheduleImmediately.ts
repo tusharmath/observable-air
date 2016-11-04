@@ -6,11 +6,10 @@ import {ITask} from '../types/ITask'
 import {IScheduledTask} from '../types/IScheduledTask'
 
 export class ScheduleImmediately implements IScheduledTask {
-  closed: boolean
+  closed = false
   private id: number
 
   constructor (private task: ITask) {
-    this.closed = false
   }
 
   run () {
