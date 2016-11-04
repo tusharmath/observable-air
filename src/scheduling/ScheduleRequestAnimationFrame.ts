@@ -14,8 +14,8 @@ export class ScheduleRequestAnimationFrame implements IScheduledTask {
 
   run () {
     this.id = requestAnimationFrame(() => {
-      this.task()
       this.closed = true
+      this.task()
     })
     return this
   }

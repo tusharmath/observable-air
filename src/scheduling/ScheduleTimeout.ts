@@ -15,8 +15,8 @@ export class ScheduleTimeout implements IScheduledTask {
 
   run () {
     this.timer = setTimeout(() => {
-      this.task()
       this.closed = true
+      this.task()
     }, this.timeout)
     return this
   }

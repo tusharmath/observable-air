@@ -14,8 +14,8 @@ export class ScheduleImmediately implements IScheduledTask {
 
   run () {
     this.id = setImmediate(() => {
-      this.task()
       this.closed = true
+      this.task()
     })
     return this
   }
