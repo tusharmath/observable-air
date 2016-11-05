@@ -3,24 +3,24 @@
  */
 
 'use strict'
+import {reduce} from '../src/operators/Reduce'
+import {map} from '../src/operators/Map'
+import {filter} from '../src/operators/Filter'
+import {fromArray} from '../src/sources/FromArray'
 
-const {map} = require('../src/operators/Map')
-const {filter} = require('../src/operators/Filter')
-const {from} = require('../src/sources/FromArray')
-const {reduce} = require('../src/operators/Reduce')
 
 function noop () {
 }
-function onError (err) {
+function onError (err: Error) {
   console.log(err)
 }
-function add1 (x) {
+function add1 (x: number) {
   return x + 1
 }
-function even (e) {
+function even (e: number) {
   return e % 2 === 0
 }
-function sum (a, b) {
+function sum (a: number, b: number) {
   return a + b
 }
 const n = 1000000
@@ -36,7 +36,7 @@ var params = {
 }
 
 function runner () {
-  reduce(sum, 0, map(add1, filter(even, from(a)))).subscribe(params)
+  reduce(sum, 0, map(add1, filter(even, fromArray(a)))).subscribe(params)
 }
 
 for (var k = 0; k < 5; k++) {
