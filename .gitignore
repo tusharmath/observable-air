@@ -47,3 +47,4 @@ src/**/*.d.ts
 *.asm
 test/**/*.js
 test/**/*.d.ts
+typings/

@@ -8,7 +8,7 @@ import {IScheduledTask} from '../types/IScheduledTask'
 
 export class ScheduleTimeout implements IScheduledTask {
   closed = false
-  private timer: number
+  private timer: any
 
   constructor (private task: ITask, private timeout: number) {
   }
