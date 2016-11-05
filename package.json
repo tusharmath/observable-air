@@ -27,7 +27,7 @@
     "ava": "^0.16.0",
     "babel-cli": "^6.16.0",
     "babel-preset-babili": "^0.0.8",
-    "benchmark": "^2.1.1",
+    "benchmark": "^2.1.2",
     "browserify": "^13.1.0",
     "coveralls": "^2.11.14",
     "cz-conventional-changelog": "^1.2.0",
