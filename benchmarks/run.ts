@@ -12,6 +12,7 @@ import {fromArray} from '../src/sources/FromArray'
 import {slice} from '../src/operators/Slice'
 import {scan} from '../src/operators/Scan'
 import {IObservable} from '../src/types/core/IObservable'
+import {DefaultScheduler} from '../src/scheduling/DefaultScheduler'
 
 
 function add1 (x: number) {
@@ -32,9 +33,9 @@ for (var i = 0; i < a.length; ++i) {
   a[i] = i
 }
 const suite = new Suite('filter -> map -> reduce ' + n + ' integers')
-
+const scheduler = new DefaultScheduler()
 function run (observable: IObservable<any>, d: any) {
-  observable.subscribe(Observer.of(undefined, undefined, () => d.resolve()))
+  observable.subscribe(Observer.of(undefined, undefined, () => d.resolve()), scheduler)
 }
 const options = {defer: true}
 suite
