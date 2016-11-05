@@ -7,7 +7,7 @@ import {ISubscription} from '../types/core/ISubscription'
 import {IObserver} from '../types/core/IObserver'
 import {IScheduler} from '../types/IScheduler'
 import {ILazySubscription} from '../types/ILazySubscription'
-import {SafeExecutor} from '../lib/SafeExecutor'
+import {TryCatch} from '../lib/TryCatch'
 
 class FromRunner <T> implements ILazySubscription {
   closed: boolean
@@ -23,7 +23,7 @@ class FromRunner <T> implements ILazySubscription {
   }
 
   executeSafely () {
-    const r = SafeExecutor(() => this.execute())
+    const r = TryCatch(this.execute).call(this)
     if (r.hasError()) this.sink.error(r.error)
   }
 
