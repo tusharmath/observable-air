@@ -1,4 +1,8 @@
 sudo: false
+env:
+  - NPM_SCRIPT=lint
+  - NPM_SCRIPT=benchmark
+  - NPM_SCRIPT=coverage
 language: node_js
 cache:
   directories:
@@ -11,9 +15,7 @@ before_install:
   - npm i -g npm@^2.0.0
 before_script:
   - npm prune
-  - npm run lint
-  - npm run benchmark
-  - npm run coverage
+  - npm run $NPM_SCRIPT
 after_success:
   - npm run semantic-release
 branches:
