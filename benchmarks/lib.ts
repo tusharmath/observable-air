@@ -7,7 +7,7 @@ import {IObservable} from '../src/types/core/IObservable'
 import {Observer} from '../src/lib/Observer'
 import {DefaultScheduler} from '../src/scheduling/DefaultScheduler'
 
-export interface IDefered {
+export interface IDeferred {
   resolve (): void
 }
 export function add1 (x: number) {
@@ -26,7 +26,7 @@ export function passthrough (z: any, x: any) {
 
 export const scheduler = new DefaultScheduler()
 
-export function run (observable: IObservable<any>, d: IDefered) {
+export function run (observable: IObservable<any>, d: IDeferred) {
   observable.subscribe(Observer.of(undefined, undefined, () => d.resolve()), scheduler)
 }
 

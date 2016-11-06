@@ -6,24 +6,19 @@ import {IObservable} from '../types/core/IObservable'
 import {ISubscription} from '../types/core/ISubscription'
 import {IObserver} from '../types/core/IObserver'
 import {IScheduler} from '../types/IScheduler'
-import {ILazySubscription} from '../types/ILazySubscription'
-import {SafeExecutor} from '../lib/SafeExecutor'
+import {toSafeFunction} from '../lib/TryCatch'
 
-class FromRunner <T> implements ILazySubscription {
-  closed: boolean
-  private schedule: ISubscription
+class FromArraySubscription <T> implements ISubscription {
+  private subscription: ISubscription
+  closed = false
 
   constructor (private array: Array<T>, private sink: IObserver<T>, private scheduler: IScheduler) {
-    this.closed = false
+    this.subscription = scheduler.setTimeout(this.executeSafely.bind(this), 1)
   }
 
-  run () {
-    this.schedule = this.scheduler.setTimeout(() => this.executeSafely(), 1)
-    return this
-  }
 
-  executeSafely () {
-    const r = SafeExecutor(() => this.execute())
+  private executeSafely () {
+    const r = toSafeFunction(this.execute).call(this)
     if (r.hasError()) this.sink.error(r.error)
   }
 
@@ -37,7 +32,7 @@ class FromRunner <T> implements ILazySubscription {
   }
 
   unsubscribe (): void {
-    this.schedule.unsubscribe()
+    this.subscription.unsubscribe()
     this.closed = true
   }
 }
@@ -47,8 +42,7 @@ export class FromObservable<T> implements IObservable<T> {
   }
 
   subscribe (observer: IObserver<T>, scheduler: IScheduler): ISubscription {
-
-    return new FromRunner<T>(this.array, observer, scheduler).run()
+    return new FromArraySubscription<T>(this.array, observer, scheduler)
   }
 }
 
