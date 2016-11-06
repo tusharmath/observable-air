@@ -6,7 +6,7 @@ import {IObservable} from '../types/core/IObservable'
 import {ISubscription} from '../types/core/ISubscription'
 import {IObserver} from '../types/core/IObserver'
 import {IScheduler} from '../types/IScheduler'
-import {toSafeFunction, SafeFunction} from '../lib/TryCatch'
+import {toSafeFunction, SafeFunction} from '../lib/ToSafeFunction'
 
 export class IntervalSubscription implements ISubscription {
   private count = 0

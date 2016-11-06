@@ -4,8 +4,8 @@
 
 import * as assert from 'assert'
 import {Suite} from 'benchmark'
-import {toSafeFunction} from '../src/lib/TryCatch'
 import {SafeValue} from '../src/lib/SafeValue'
+import {toSafeFunction} from '../src/lib/ToSafeFunction'
 
 function addThis (b: number) {
   this.a = this.a + b

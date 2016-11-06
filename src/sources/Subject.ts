@@ -8,7 +8,7 @@ import {IScheduler} from '../types/IScheduler'
 import {ISubscription} from '../types/core/ISubscription'
 import {LinkedListNode} from '../lib/LinkedList'
 import {CompositeObserver} from '../lib/CompositeObserver'
-import {toSafeFunction} from '../lib/TryCatch'
+import {toSafeFunction} from '../lib/ToSafeFunction'
 
 export class SubjectSubscription<T> implements ISubscription {
   closed: boolean = false
