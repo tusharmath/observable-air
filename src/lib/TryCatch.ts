@@ -4,17 +4,19 @@
 
 import {SafeValue} from './SafeValue'
 
-var target: Function
+export class SafeFunction<T extends Function> {
+  constructor (private f: T) {
+  }
 
-export function runner () {
-  try {
-    return new SafeValue(target.apply(this, arguments))
-  } catch (err) {
-    return new SafeValue(err)
+  call (context: any, ...t: any[]) {
+    try {
+      return new SafeValue(this.f.apply(context, t))
+    } catch (e) {
+      return new SafeValue(e)
+    }
   }
 }
 
-export function TryCatch (f: Function) {
-  target = f
-  return runner
+export function toSafeFunction <T extends Function> (f: T) {
+  return new SafeFunction<T>(f)
 }

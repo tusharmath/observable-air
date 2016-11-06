@@ -6,19 +6,20 @@ import {IObservable} from '../types/core/IObservable'
 import {ISubscription} from '../types/core/ISubscription'
 import {IObserver} from '../types/core/IObserver'
 import {IScheduler} from '../types/IScheduler'
-import {TryCatch} from '../lib/TryCatch'
-import {SafeValue} from '../lib/SafeValue'
+import {toSafeFunction, SafeFunction} from '../lib/TryCatch'
 
 export class IntervalSubscription implements ISubscription {
-  count = 0
+  private count = 0
   private subscription: ISubscription
+  private safeSinkNext: SafeFunction<(v: number) => void>
 
   constructor (private sink: IObserver<number>, private scheduler: IScheduler, interval: number) {
     this.subscription = scheduler.setInterval(this.dispatch, interval)
+    this.safeSinkNext = toSafeFunction(this.sink.next)
   }
 
   dispatch = () => {
-    const r = TryCatch(this.sink.next).call(this.sink, this.count++) as SafeValue<void>
+    const r = this.safeSinkNext.call(this.sink, this.count++)
     if (r.hasError()) this.sink.error(r.error)
   }
 
