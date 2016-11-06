@@ -54,8 +54,8 @@
       "pre-commit": "npm run lint",
       "commit-msg": "validate-commit-msg",
       "pre-push": "npm test",
-      "post-merge": "npm install",
-      "post-rewrite": "npm install"
+      "post-merge": "yarn install",
+      "post-rewrite": "yarn install"
     }
   }
 }
