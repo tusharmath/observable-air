@@ -1,38 +1,9 @@
-Wed Oct  5 15:22:48 IST 2016
-file -> map -> reduce x 616 ops/sec ±1.23% (78 runs sampled)
-file -> takeN x 266 ops/sec ±1.09% (79 runs sampled)
-Wed Oct  5 23:03:55 IST 2016
-file -> map -> reduce x 609 ops/sec ±1.33% (76 runs sampled)
-file -> takeN x 259 ops/sec ±1.28% (76 runs sampled)
-Fri Oct  7 18:55:28 IST 2016
-file -> map -> reduce x 624 ops/sec ±1.08% (78 runs sampled)
-file -> takeN x 263 ops/sec ±1.11% (78 runs sampled)
-Fri Oct  7 19:23:46 IST 2016
-file -> map -> reduce x 614 ops/sec ±2.14% (78 runs sampled)
-Fri Oct  7 19:24:27 IST 2016
-file -> map -> reduce x 613 ops/sec ±1.52% (75 runs sampled)
-Fri Oct  7 19:25:31 IST 2016
-file -> map -> reduce x 618 ops/sec ±2.50% (81 runs sampled)
-file -> takeN(0, n/10) x 259 ops/sec ±1.40% (78 runs sampled)
-Sun Oct  9 10:51:49 IST 2016
-file -> map -> reduce x 650 ops/sec ±1.20% (77 runs sampled)
-file -> takeN(0, n/10) x 271 ops/sec ±0.63% (80 runs sampled)
-Sun Oct  9 18:56:04 IST 2016
-file -> map -> reduce x 545 ops/sec ±0.80% (79 runs sampled)
-file -> takeN(0, n/10) x 259 ops/sec ±0.74% (82 runs sampled)
-Sun Oct  9 19:01:52 IST 2016
-file -> map -> reduce x 545 ops/sec ±1.09% (80 runs sampled)
-file -> takeN(0, n/10) x 255 ops/sec ±0.65% (78 runs sampled)
-file -> scan -> reduce x 82.85 ops/sec ±2.59% (74 runs sampled)
-Tue Oct 11 11:37:52 IST 2016
-file -> map -> reduce x 522 ops/sec ±1.24% (78 runs sampled)
-file -> takeN(0, n/10) x 254 ops/sec ±0.86% (80 runs sampled)
-file -> scan -> reduce x 83.45 ops/sec ±1.08% (75 runs sampled)
-Thu Oct 13 17:36:52 IST 2016
-file -> map -> reduce x 522 ops/sec ±1.07% (79 runs sampled)
-file -> takeN(0, n/10) x 2,527 ops/sec ±1.18% (77 runs sampled)
-file -> scan -> reduce x 82.16 ops/sec ±1.03% (74 runs sampled)
-Mon Oct 24 21:54:40 IST 2016
-file -> map -> reduce x 304 ops/sec ±0.79% (81 runs sampled)
-file -> takeN(0, n/10) x 608 ops/sec ±0.68% (83 runs sampled)
-file -> scan -> reduce x 68.88 ops/sec ±2.11% (79 runs sampled)
+
+Date: Sun Nov 06 2016
+Node: v7.0.0
+V8:   5.4.500.36
+------------------------------
+file -> map -> reduce x 264 ops/sec ±5.95% (71 runs sampled)
+file -> takeN(0, n/10) x 561 ops/sec ±1.78% (84 runs sampled)
+file -> scan -> reduce x 67.46 ops/sec ±3.44% (78 runs sampled)
+tryCatch x 17,448,962 ops/sec ±3.10% (88 runs sampled)
