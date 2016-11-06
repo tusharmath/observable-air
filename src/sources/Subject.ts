@@ -8,6 +8,7 @@ import {IScheduler} from '../types/IScheduler'
 import {ISubscription} from '../types/core/ISubscription'
 import {LinkedListNode} from '../lib/LinkedList'
 import {CompositeObserver} from '../lib/CompositeObserver'
+import {toSafeFunction} from '../lib/TryCatch'
 
 export class SubjectSubscription<T> implements ISubscription {
   closed: boolean = false
@@ -23,6 +24,7 @@ export class SubjectSubscription<T> implements ISubscription {
 
 export class Subject<T> implements IObservable<T>, IObserver<T> {
   private observers = new CompositeObserver<T>()
+  private observersNext = toSafeFunction(this.observers.next)
 
   subscribe (observer: IObserver<T>, scheduler: IScheduler): ISubscription {
     const node = this.observers.add(observer)
@@ -34,7 +36,8 @@ export class Subject<T> implements IObservable<T>, IObserver<T> {
   }
 
   next (val: T): void {
-    this.observers.next(val)
+    const r = this.observersNext.call(this.observers, val)
+    if (r.hasError()) this.error(r.error)
   }
 
   error (err: Error): void {
