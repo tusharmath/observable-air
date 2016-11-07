@@ -23,6 +23,6 @@ export function testFunction (): SafeValue<any> {
 
 test('class-based', testFunction)
 
-export function tryCatch (suite: Suite) {
+export function bm_tryCatch (suite: Suite) {
   return suite.add('tryCatch', testFunction)
 }

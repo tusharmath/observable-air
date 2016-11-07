@@ -8,7 +8,7 @@ import {run, array, IDeferred} from './lib'
 import {slice} from '../src/operators/Slice'
 
 const a = array(1e6)
-export function fromArray_takeN (suite: Suite) {
+export function bm_fromArray_takeN (suite: Suite) {
   return suite
     .add(
       'file -> takeN(0, n/10)',
