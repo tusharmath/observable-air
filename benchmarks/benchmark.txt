@@ -1,9 +1,10 @@
 
-Date: Sun Nov 06 2016
+Date: Mon Nov 07 2016
 Node: v7.0.0
 V8:   5.4.500.36
 ------------------------------
-file -> map -> reduce x 264 ops/sec ±5.95% (71 runs sampled)
-file -> takeN(0, n/10) x 561 ops/sec ±1.78% (84 runs sampled)
-file -> scan -> reduce x 67.46 ops/sec ±3.44% (78 runs sampled)
-tryCatch x 17,448,962 ops/sec ±3.10% (88 runs sampled)
+file -> map -> reduce x 291 ops/sec ±1.07% (83 runs sampled)
+file -> takeN(0, n/10) x 636 ops/sec ±0.89% (83 runs sampled)
+file -> scan -> reduce x 61.42 ops/sec ±1.25% (72 runs sampled)
+tryCatch x 14,543,151 ops/sec ±0.87% (87 runs sampled)
+scheduleImmediately x 523,957 ops/sec ±1.05% (80 runs sampled)
