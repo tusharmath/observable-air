@@ -2,13 +2,13 @@
  * Created by tushar.mathur on 05/11/16.
  */
 
-import {IObservable} from '../types/core/IObservable'
 import {IObserver} from '../types/core/IObserver'
 import {IScheduler} from '../types/IScheduler'
 import {ISubscription} from '../types/core/ISubscription'
 import {LinkedListNode} from '../lib/LinkedList'
 import {CompositeObserver} from '../lib/CompositeObserver'
 import {toSafeFunction} from '../lib/ToSafeFunction'
+import {ISubject} from '../types/ISubject'
 
 export class SubjectSubscription<T> implements ISubscription {
   closed: boolean = false
@@ -22,7 +22,7 @@ export class SubjectSubscription<T> implements ISubscription {
   }
 }
 
-export class Subject<T> implements IObservable<T>, IObserver<T> {
+export class Subject<T> implements ISubject<T> {
   private observers = new CompositeObserver<T>()
   private observersNext = toSafeFunction(this.observers.next)
 
