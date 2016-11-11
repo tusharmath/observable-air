@@ -2,7 +2,6 @@
  * Created by tushar.mathur on 11/10/16.
  */
 
-export {animationFrames} from './sources/AnimationFrames'
 export {filter} from './operators/Filter'
 export {forEach} from './lib/ForEach'
 export {fromArray} from './sources/FromArray'
