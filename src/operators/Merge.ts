@@ -44,6 +44,6 @@ export class MergeObservable implements IObservable<any> {
   }
 }
 
-export function merge (sources: Array<IObservable<any>>) {
+export function merge (...sources: Array<IObservable<any>>) {
   return new MergeObservable(sources)
 }

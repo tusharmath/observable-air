@@ -24,7 +24,7 @@ test(t => {
     ReactiveEvents.next(225, 'C1'),
     ReactiveEvents.complete(235)
   ])
-  const {results} = sh.start(() => merge([a$, b$, c$]))
+  const {results} = sh.start(() => merge(a$, b$, c$))
   t.deepEqual(results, [
     ReactiveEvents.next(210, 'A0'),
     ReactiveEvents.next(212, 'B0'),
