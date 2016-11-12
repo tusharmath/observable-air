@@ -49,3 +49,7 @@ export class FromObservable<T> implements IObservable<T> {
 export function fromArray<T> (list: Array<T>): IObservable<T> {
   return new FromObservable(list)
 }
+
+export function of<T> (...list: Array<T>) {
+  return fromArray(list)
+}

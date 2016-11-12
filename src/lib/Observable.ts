@@ -8,14 +8,9 @@ import {IScheduler} from '../types/IScheduler'
 import {ISubscription} from '../types/core/ISubscription'
 import {ISubscriberFunction} from '../types/core/ISubscriberFunction'
 import {Subscription} from './Subscription'
-import {fromArray} from '../sources/FromArray'
 
 export class Observable<T> implements IObservable<T> {
   constructor (private f: ISubscriberFunction<T>) {
-  }
-
-  static of<T> (...i: T[]) {
-    return fromArray(i)
   }
 
   subscribe (observer: IObserver<T>, scheduler: IScheduler): ISubscription {
