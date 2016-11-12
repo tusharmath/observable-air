@@ -8,6 +8,7 @@ import {bm_fromArray_scan_reduce} from './bm.fromArray-scan-reduce'
 import {bm_fromArray_takeN} from './bm.fromArray-takeN'
 import {onCycle} from './lib'
 import {bm_tryCatch} from './bm.tryCatch'
+import {bm_scheduleImmediately} from './bm.ScheduleImmediately'
 
 // Run All Benchmarks
 
@@ -22,5 +23,5 @@ bm_fromArray_map_reduce(suite)
 bm_fromArray_takeN(suite)
 bm_fromArray_scan_reduce(suite)
 bm_tryCatch(suite)
+bm_scheduleImmediately(suite)
 suite.on('cycle', onCycle).run()
-
