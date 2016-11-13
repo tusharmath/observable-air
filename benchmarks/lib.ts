@@ -47,7 +47,7 @@ export const onCycle = (event: any) => {
   const target = event.target
   table.push([
     target.name,
-    `${Math.floor(target.hz)} (±${Math.round(target.stats.rme * 100) / 100}%)`,
+    `${Math.floor(target.hz).toLocaleString()} (±${Math.round(target.stats.rme * 100) / 100}%)`,
     target.stats.sample.length,
   ])
 }
