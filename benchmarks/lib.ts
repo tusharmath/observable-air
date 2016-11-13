@@ -3,6 +3,7 @@
  */
 
 
+const Table = require('cli-table2')
 import {IObservable} from '../src/types/core/IObservable'
 import {Observer} from '../src/lib/Observer'
 import {DefaultScheduler} from '../src/scheduling/DefaultScheduler'
@@ -38,4 +39,22 @@ export function array (n: number) {
   return a
 }
 
-export const onCycle = (event: any) => console.log(String(event.target))
+const table = new Table({
+  head: ['name', 'ops/sec', 'samples']
+})
+
+export const onCycle = (event: any) => {
+  const target = event.target
+  table.push([
+    target.name,
+    `${Math.floor(target.hz).toLocaleString()} (±${Math.round(target.stats.rme * 100) / 100}%)`,
+    target.stats.sample.length,
+  ])
+}
+
+export const onEnd = () => {
+  console.log('```')
+  console.log(table.toString())
+  console.log('```')
+}
+
