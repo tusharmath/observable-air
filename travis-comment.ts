@@ -10,7 +10,7 @@ process.stdin.resume()
 process.stdin.setEncoding('utf8')
 process.stdin.on('data', (chunk: string) => body += chunk)
 process.stdin.on('end', () => main().then(
-  x => console.log('Success'),
+  x => console.log('PR updated'),
   function (err) {
     console.error(err.message)
   }
@@ -27,7 +27,6 @@ function getParams () {
 async function main () {
   if (!process.env.TRAVIS_PULL_REQUEST) return
   const p = getParams()
-  console.log(process.env)
   const uri = `https://api.github.com/repos/${p.owner}/${p.repo}/issues/${p.number}/comments`
   return rp({
     uri,
