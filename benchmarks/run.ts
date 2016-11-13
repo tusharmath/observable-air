@@ -12,10 +12,8 @@ import {Suite} from 'benchmark'
 
 // Run All Benchmarks
 
-console.log('')
-console.log('##### Date:', (new Date()).toDateString())
-console.log('##### Node:', process.version)
-console.log('##### V8:  ', process.versions.v8)
+console.log('**Node:**', process.version)
+console.log('**V8:**  ', process.versions.v8)
 
 const suite = new Suite()
 bm_fromArray_map_reduce(suite)
