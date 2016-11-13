@@ -8,13 +8,14 @@ notifications:
 node_js:
   - 'stable'
 before_install:
+  - pip install travis_bot
   - npm i -g typings
   - typings install
   - npm i -g npm@^2.0.0
 before_script:
   - npm prune
   - npm run lint
-  - npm run benchmark
+  - npm run benchmark | travis_bot
   - npm run coverage
 after_success:
   - npm run semantic-release
