@@ -27,6 +27,7 @@ function getParams () {
 async function main () {
   if (!process.env.TRAVIS_PULL_REQUEST) return
   const p = getParams()
+  console.log(process.env)
   const uri = `https://api.github.com/repos/${p.owner}/${p.repo}/issues/${p.number}/comments`
   return rp({
     uri,
