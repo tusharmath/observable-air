@@ -7,14 +7,15 @@ import {IObserver} from '../types/core/IObserver'
 import {IScheduler} from '../types/IScheduler'
 import {ISubscription} from '../types/core/ISubscription'
 import {CompositeSubscription} from '../lib/CompositeSubscription'
-import {Curry3} from '../lib/Curry'
-import {ICurriedFunction3} from '../types/ICurriedFunction'
+import {Curry} from '../lib/Curry'
+
+
+export type TSelector<T> = {(...e: Array<any>): T}
+export type TSampler = IObservable<any>
+export type TSources = Array<IObservable<any>>
+export type TResult<T> = IObservable<T>
 
 enum StreamStatus { IDLE, STARTED, COMPLETED }
-
-export interface ISampleSelector {
-  (...e: Array<any>): any
-}
 
 function createArray<T> (size: number, value: T) {
   const arr: Array<T> = new Array(size)
@@ -49,7 +50,7 @@ export class SampleObserver<T> implements IObserver<T> {
   private completedCount = 0
   private samplerCompleted = false
 
-  constructor (private total: number, private sink: IObserver<Array<T>>, private func: ISampleSelector) {
+  constructor (private total: number, private sink: IObserver<T>, private func: TSelector<T>) {
   }
 
   onNext (value: T, id: number) {
@@ -91,13 +92,13 @@ export class SampleObserver<T> implements IObserver<T> {
 }
 
 
-export class SampleObservable<T> implements IObservable<Array<T>> {
-  constructor (private func: ISampleSelector,
-               private sampler: IObservable<T>,
-               private sources: Array<IObservable<T>>) {
+export class SampleObservable<T> implements TResult<T> {
+  constructor (private func: TSelector<T>,
+               private sampler: TSampler,
+               private sources: TSources) {
   }
 
-  subscribe (observer: IObserver<Array<T>>, scheduler: IScheduler): ISubscription {
+  subscribe (observer: IObserver<T>, scheduler: IScheduler): ISubscription {
     const cSub = new CompositeSubscription()
     const sampleObserver = new SampleObserver(this.sources.length, observer, this.func)
     cSub.add(this.sampler.subscribe(sampleObserver, scheduler))
@@ -109,6 +110,10 @@ export class SampleObservable<T> implements IObservable<Array<T>> {
   }
 }
 
-export const sample = Curry3(function (f: ISampleSelector, sampler: IObservable<any>, sources: Array<IObservable<any>>) {
+export const sample = Curry(function <T, R> (f: TSelector<R>, sampler: TSampler, sources: TSources) {
   return new SampleObservable(f, sampler, sources)
-}) as ICurriedFunction3<ISampleSelector, IObservable<any>, Array<IObservable<any>>, IObservable<any>>
+}) as Function &
+  {<T>(selector: TSelector<T>, sampler: TSampler, source: TSources): TResult<T>} &
+  {<T>(selector: TSelector<T>): {(sampler: TSampler, source: TSources): TResult<T>}} &
+  {<T>(selector: TSelector<T>, sampler: TSampler): {(source: TSources): TResult<T>}} &
+  {<T>(selector: TSelector<T>): { (sampler: TSampler): { (source: TSources): TResult<T> } } }

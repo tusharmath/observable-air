@@ -7,9 +7,11 @@ import {IObservable} from '../types/core/IObservable'
 import {IObserver} from '../types/core/IObserver'
 import {ISubscription} from '../types/core/ISubscription'
 import {IScheduler} from '../types/IScheduler'
-import {Curry2} from '../lib/Curry'
-import {ICurriedFunction2} from '../types/ICurriedFunction'
+import {Curry} from '../lib/Curry'
 
+export type TPredicate<T> = {(value: T): boolean}
+export type TSource<T> = IObservable<T>
+export type TResult<T> = IObservable<T>
 
 class FilterObserver <T> implements IObserver<T> {
   constructor (private predicate: {(t: T): boolean}, private sink: IObserver<T>) {
@@ -29,7 +31,7 @@ class FilterObserver <T> implements IObserver<T> {
 }
 
 
-export class FilterObservable <T> implements IObservable<T> {
+export class FilterObservable <T> implements TResult<T> {
   constructor (private predicate: {(t: T): boolean},
                private source: IObservable<T>) {
   }
@@ -39,6 +41,8 @@ export class FilterObservable <T> implements IObservable<T> {
   }
 }
 
-export const filter = Curry2(function (predicate: {(t: any): boolean}, source: IObservable<any>) {
+export const filter = Curry(function<T> (predicate: TPredicate<T>, source: TSource<T>) {
   return new FilterObservable(predicate, source)
-}) as ICurriedFunction2<{(t: any): boolean}, IObservable<any>, IObservable<any>>
+}) as Function &
+  {<T> (predicate: TPredicate<T>, source: TSource<T>): TResult<T>} &
+  {<T> (predicate: TPredicate<T>): {(source: TSource<T>): TResult<T>}}
