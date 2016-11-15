@@ -8,13 +8,13 @@ import {IScheduler} from '../types/IScheduler'
 import {ISubscription} from '../types/core/ISubscription'
 import {CompositeSubscription} from '../lib/CompositeSubscription'
 
-export class MergeObserver implements IObserver<any> {
+export class MergeObserver<T> implements IObserver<T> {
   private count = 0
 
-  constructor (private total: number, private sink: IObserver<any>) {
+  constructor (private total: number, private sink: IObserver<T>) {
   }
 
-  next (val: any): void {
+  next (val: T): void {
     this.sink.next(val)
   }
 
@@ -30,11 +30,11 @@ export class MergeObserver implements IObserver<any> {
   }
 }
 
-export class MergeObservable implements IObservable<any> {
-  constructor (private sources: Array<IObservable<any>>) {
+export class MergeObservable<T> implements IObservable<T> {
+  constructor (private sources: Array<IObservable<T>>) {
   }
 
-  subscribe (observer: IObserver<any>, scheduler: IScheduler): ISubscription {
+  subscribe (observer: IObserver<T>, scheduler: IScheduler): ISubscription {
     const cSub = new CompositeSubscription()
     const mergeObserver = new MergeObserver(this.sources.length, observer)
     for (var i = 0; i < this.sources.length; ++i) {
@@ -44,6 +44,6 @@ export class MergeObservable implements IObservable<any> {
   }
 }
 
-export function merge (...sources: Array<IObservable<any>>) {
+export function merge <T> (...sources: Array<IObservable<T>>) {
   return new MergeObservable(sources)
 }
