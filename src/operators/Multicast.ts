@@ -54,7 +54,6 @@ export class Multicast<T> implements IObservable<T> {
   }
 
 
-
   subscribe (observer: IObserver<T>, scheduler: IScheduler): ISubscription {
     return new MulticastSubscription(observer, scheduler, this.sharedObserver)
   }

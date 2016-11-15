@@ -5,10 +5,16 @@
 import {IObservable} from '../types/core/IObservable'
 import {DefaultScheduler} from '../scheduling/DefaultScheduler'
 import {ISubscription} from '../types/core/ISubscription'
-import {Curry2} from './Curry'
-import {ICurriedFunction2} from '../types/ICurriedFunction'
+import {Curry} from './Curry'
 import {Observer} from './Observer'
 
-export const forEach = Curry2(function <T> (onNext: {(value: T): void}, observable: IObservable<any>) {
+export type TOnNext<T> = {(value: T): void}
+export type TSource<T> = IObservable<T>
+export type TResult = ISubscription
+
+export const forEach = Curry(function <T> (onNext: TOnNext<T>, observable: TSource<T>) {
   return observable.subscribe(Observer.of(onNext), DefaultScheduler.of())
-}) as ICurriedFunction2<{(value: any): void}, IObservable<any>, ISubscription>
+}) as Function &
+  {<T, R> (onNext: TOnNext<T>, source: TSource<T>): TResult} &
+  {<T, R> (onNext: TOnNext<T>): {(source: TSource<T>): TResult}}
+

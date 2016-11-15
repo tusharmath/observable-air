@@ -6,11 +6,16 @@ import {IObservable} from '../types/core/IObservable'
 import {IObserver} from '../types/core/IObserver'
 import {ISubscription} from '../types/core/ISubscription'
 import {IScheduler} from '../types/IScheduler'
-import {Curry2} from '../lib/Curry'
-import {ICurriedFunction2} from '../types/ICurriedFunction'
+import {Curry} from '../lib/Curry'
 
-class MapObserver<T> implements IObserver<T> {
-  constructor (private mapper: (a: T) =>  T, private sink: IObserver<T>) {
+
+export type TMapper<T, R> = (value: T) => R
+export type TSource<T> = IObservable<T>
+export type TResult<R> = IObservable<R>
+
+
+class MapObserver<T, R> implements IObserver<T> {
+  constructor (private mapper: TMapper<T, R>, private sink: IObserver<R>) {
 
   }
 
@@ -27,15 +32,17 @@ class MapObserver<T> implements IObserver<T> {
   }
 }
 
-export class MapObservable <T> implements IObservable<T> {
-  constructor (private mapper: (a: T) =>  T, private observer: IObservable<T>) {
+export class MapObservable <T, R> implements TResult<R> {
+  constructor (private mapper: TMapper<T, R>, private source: TSource<T>) {
   }
 
-  subscribe (observer: IObserver<T>, scheduler: IScheduler): ISubscription {
-    return this.observer.subscribe(new MapObserver(this.mapper, observer), scheduler)
+  subscribe (observer: IObserver<R>, scheduler: IScheduler): ISubscription {
+    return this.source.subscribe(new MapObserver(this.mapper, observer), scheduler)
   }
 }
 
-export const map = Curry2(function (mapFunction: (a: any) => any, source: IObservable<any>) {
+export const map = Curry(function <T, R> (mapFunction: (a: T) => R, source: IObservable<T>) {
   return new MapObservable(mapFunction, source)
-}) as ICurriedFunction2<(value: any) => any, IObservable<any>, IObservable<any>>
+}) as Function &
+  {<T, R> (mapper: TMapper<T, R>, source: TSource<T>): TResult<T>} &
+  {<T, R> (mapper: TMapper<T, R>): {(source: TSource<T>): TResult<T>}}
