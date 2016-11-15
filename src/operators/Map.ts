@@ -44,5 +44,5 @@ export class MapObservable <T, R> implements TResult<R> {
 export const map = Curry(function <T, R> (mapFunction: (a: T) => R, source: IObservable<T>) {
   return new MapObservable(mapFunction, source)
 }) as Function &
-  {<T, R> (mapper: TMapper<T, R>, source: TSource<T>): TResult<T>} &
-  {<T, R> (mapper: TMapper<T, R>): {(source: TSource<T>): TResult<T>}}
+  {<T, R> (mapper: TMapper<T, R>, source: TSource<T>): TResult<R>} &
+  {<T, R> (mapper: TMapper<T, R>): {(source: TSource<T>): TResult<R>}}
