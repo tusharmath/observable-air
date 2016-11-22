@@ -38,7 +38,7 @@
     "request-promise": "^4.1.1",
     "rollup": "^0.36.3",
     "rollup-plugin-commonjs": "^5.0.5",
-    "semantic-release": "^4.3.5",
+    "semantic-release": "^6.3.2",
     "tslint": "^4.0.1",
     "typescript": "^2.0.3",
     "uglify": "^0.1.5",
