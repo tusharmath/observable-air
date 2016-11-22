@@ -7,7 +7,7 @@ import {subject} from '../src/sources/Subject'
 import {TestScheduler} from '../src/testing/TestScheduler'
 import {TestObserver} from '../src/testing/TestObserver'
 import {ReactiveEvents} from '../src/testing/ReactiveEvents'
-import {thrower} from '../src/testing/Thrower'
+import {thrower, ERROR_MESSAGE} from '../src/testing/Thrower'
 
 test('observer+observable', t => {
   const sh = TestScheduler.of()
@@ -55,6 +55,6 @@ test('observer+observable', t => {
   thrower(sub).subscribe(ob, sh)
   sub.next(100)
   t.deepEqual(ob.results, [
-    ReactiveEvents.error(0, Error())
+    ReactiveEvents.error(0, Error(ERROR_MESSAGE))
   ])
 })
