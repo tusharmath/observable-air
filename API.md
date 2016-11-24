@@ -1,22 +1,33 @@
 ## Sources
 ```ts
-function fromArray<T>(arr: Array<T>): IObservable<T>
+function fromArray<T>(
+    arr: Array<T>
+): IObservable<T>
 ```
 
 ```ts
-function fromDOM(element: HTMLElement, name: string): IObservable<T>
+function fromDOM(
+    element: HTMLElement, 
+    name: string
+): IObservable<T>
 ``` 
 
 ```ts
-function fromPromise<T>((f: () => Promise<T>)): IObservable<T>
+function fromPromise<T>(
+    f: () => Promise<T>
+): IObservable<T>
 ``` 
 
 ```ts
-function interval(duration: number): IObservable<T>
+function interval(
+    duration: number
+): IObservable<T>
 ``` 
 
 ```ts
-function of(...t: Array<any>): IObservable<any>
+function of(
+    ...t: Array<any>
+): IObservable<any>
 ``` 
 
 ```ts
@@ -26,55 +37,90 @@ function subject(): ISubject<T>
 
 ## Operators
 ```ts
-function filter<T>((t: T) => Boolean, s: IObservable<T>): IObservable<T>
+function filter<T>(
+    (t: T) => Boolean, 
+    s: IObservable<T>
+): IObservable<T>
 ``` 
 
 ```ts
-function join<T>(s: IObservable<IObservable<T>>): IObservable<T>
+function join<T>(
+    s: IObservable<IObservable<T>>
+): IObservable<T>
 ``` 
 
 ```ts
-function map<T, R>(m: (v: T) => R, s: IObservable<T>): IObservable<R>
+function map<T, R>(
+    m: (v: T) => R, 
+    s: IObservable<T>
+): IObservable<R>
 ``` 
 
 ```ts
-function merge<T>(...t: Array<IObservable<T>>): IObservable<T>
+function merge<T>(...t: Array<IObservable<T>>
+): IObservable<T>
 ``` 
 
 ```ts
-function multicast<T>(s: IObservable<T>): IObservable<T>
+function multicast<T>(
+    s: IObservable<T>
+): IObservable<T>
 ``` 
 
 ```ts
-function rafThrottle<T>(s: IObservable<T>): IObservable<T>
+function rafThrottle<T>(
+    s: IObservable<T>
+): IObservable<T>
 ``` 
 
 ```ts
-function reduce<T, R>(r: (a: R, b: T) => R, v: T, s: IObservable<T>): IObservable<R>
+function reduce<T, R>(
+    r: (a: R, b: T) => R, 
+    v: T, s: IObservable<T>
+): IObservable<R>
 ``` 
 
 ```ts
-function sample<T, R> (f: (...e: Array<any>) => R, sampler: IObservable<any>, sources: Array<IObservable<any>>) : IObservable<T>
+function sample<T, R> (
+    f: (...e: Array<any>) => R, 
+    sampler: IObservable<any>, 
+    sources: Array<IObservable<any>>
+) : IObservable<T>
 ``` 
 
 ```ts
-function scan<T, R>(r: (a: R, b: T) => R, v: T, s: IObservable<T>): IObservable<R>
+function scan<T, R>(
+    r: (a: R, b: T) => R, 
+    v: T, 
+    s: IObservable<T>
+): IObservable<R>
 ``` 
 
 ```ts
-function skipRepeats<T, H>(x: (i: T) => H, s: IObservable<T>): IObservable<T>
+function skipRepeats<T, H>(
+    x: (i: T) => H, 
+    s: IObservable<T>
+): IObservable<T>
 ``` 
 
 ```ts
-function slice(start: number, count: number, source: IObservable<T>): IObservable<T>
+function slice(
+    start: number, 
+    count: number, 
+    source: IObservable<T>
+): IObservable<T>
 ``` 
 
 ```ts
-function switchLatest<T>(s: IObservable<IObservable<T>>): IObservable<T>
+function switchLatest<T>(
+    s: IObservable<IObservable<T>>
+): IObservable<T>
 ``` 
 
 ```ts
-function tap<T>(m: (v: T) => void, s: IObservable<T>): IObservable<T>
+function tap<T>(
+    m: (v: T) => void, s: IObservable<T>
+): IObservable<T>
 ``` 
 
 
@@ -82,7 +128,10 @@ function tap<T>(m: (v: T) => void, s: IObservable<T>): IObservable<T>
 ## Interfaces
 ```ts
 interface IObservable<T> {
-  subscribe(observer: IObserver<T>, scheduler: IScheduler): ISubscription
+    subscribe(
+        observer: IObserver<T>, 
+        scheduler: IScheduler
+    ): ISubscription
 }
 ``` 
 
@@ -120,7 +169,10 @@ ISubscription {
 
 ## Utilities
 ```ts
-function function forEach <T> (onNext: (t: T) => void, source: IObservable<T>): ISubscription
+function function forEach <T> (
+    onNext: (t: T) => void, 
+    source: IObservable<T>
+): ISubscription
 ``` 
 
 
