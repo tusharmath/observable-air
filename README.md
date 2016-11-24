@@ -10,3 +10,5 @@
 1. **Small Footprint:** The library contains only basic operators which might not be a good thing for some users, but it keeps the library size small.
 1. **Curried by default:** All the `Operators` and `Sources` are curried out of the box. The typings have been updated to support generics also.
 1. **Performance:** Performance is of utmost importance to `observable-air` a ton of micro optimizations have been done to improve performance.
+
+## [Documentation](https://github.com/tusharmath/observable-air/blob/master/API.md)
