@@ -1,0 +1,64 @@
+# API
+
+## Sources
+### fromArray 
+**type:** sources
+### fromDOM 
+**type:** sources
+### fromPromise 
+**type:** sources
+### interval 
+**type:** sources
+### of 
+**type:** sources
+### subject 
+**type:** sources
+
+## Operators
+### filter 
+**type:** operators
+### join 
+**type:** operators
+### map 
+**type:** operators
+### merge 
+**type:** operators
+### multicast 
+**type:** operators
+### rafThrottle 
+**type:** operators
+### reduce 
+**type:** operators
+### sample 
+**type:** operators
+### scan 
+**type:** operators
+### skipRepeats 
+**type:** operators
+### slice 
+**type:** operators
+### switchLatest 
+**type:** operators
+### tap 
+**type:** operators
+
+
+## Interfaces
+### IObservable 
+**type:** types
+### IObserver 
+**type:** types
+### ISubject 
+**type:** types
+### ISubscriberFunction 
+**type:** types
+### ISubscription 
+**type:** types
+
+## Utility
+### forEach 
+**type:** lib
+### Observable 
+**type:** lib
+### Observer 
+**type:** lib
