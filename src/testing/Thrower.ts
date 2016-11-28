@@ -7,12 +7,16 @@ import {ISubscription} from '../types/core/ISubscription'
 import {IScheduler} from '../types/IScheduler'
 import {IObserver} from '../types/core/IObserver'
 
+export const ERROR_MESSAGE = 'Test Exception'
+export function throwError (message: string) {
+  throw Error(message)
+}
 class ThrowerObserver implements IObserver<void> {
   constructor (private sink: IObserver<void>) {
   }
 
   next (val: void): void {
-    throw Error('Test Exception')
+    throwError(ERROR_MESSAGE)
   }
 
   error (err: Error): void {

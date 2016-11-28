@@ -7,13 +7,18 @@ import {IObservable} from '../types/core/IObservable'
 import {IObserver} from '../types/core/IObserver'
 import {ISubscription} from '../types/core/ISubscription'
 import {IScheduler} from '../types/IScheduler'
-import {Curry3} from '../lib/Curry'
-import {ICurriedFunction3} from '../types/ICurriedFunction'
+import {Curry} from '../lib/Curry'
 
-class ReduceObserver<T> implements IObserver<T> {
-  constructor (private reducer: {(current: T, memory: T): T},
-               private value: T,
-               private sink: IObserver<T>) {
+
+export type TReducer<T, R> = {(previousValue: R, currentValue: T): R}
+export type TSeed<R> = R
+export type TSource<T> = IObservable<T>
+export type TResult<R> = IObservable<R>
+
+class ReduceObserver<T, R> implements IObserver<T> {
+  constructor (private reducer: TReducer<T, R>,
+               private value: TSeed<R>,
+               private sink: IObserver<R>) {
   }
 
   next (val: T): void {
@@ -30,17 +35,21 @@ class ReduceObserver<T> implements IObserver<T> {
   }
 }
 
-export class ReduceObservable <T> implements IObservable<T> {
-  constructor (private reducer: {(current: T, memory: T): T},
-               private value: T,
-               private source: IObservable<T>) {
+export class ReduceObservable <T, R> implements TResult<R> {
+  constructor (private reducer: TReducer<T, R>,
+               private seed: TSeed<R>,
+               private source: TSource<T>) {
   }
 
-  subscribe (obr: IObserver<T>, scheduler: IScheduler): ISubscription {
-    return this.source.subscribe(new ReduceObserver(this.reducer, this.value, obr), scheduler)
+  subscribe (obr: IObserver<R>, scheduler: IScheduler): ISubscription {
+    return this.source.subscribe(new ReduceObserver<T, R>(this.reducer, this.seed, obr), scheduler)
   }
 }
 
-export const reduce = Curry3(function (reducer: {(current: any, memory: any): any}, value: any, source: IObservable<any>) {
-  return new ReduceObservable(reducer, value, source)
-}) as ICurriedFunction3<{(current: any, memory: any): any}, any, IObservable<any>, IObservable<any>>
+export const reduce = Curry(function <T, R> (t0: TReducer<T, R>, t1: R, t2: IObservable<T>) {
+  return new ReduceObservable(t0, t1, t2)
+}) as Function &
+  {<T, R>(reducer: TReducer<T, R>, seed: TSeed<R>, source: TSource<T>): TResult<R>} &
+  {<T, R>(reducer: TReducer<T, R>): {(seed: TSeed<R>, source: TSource<T>): TResult<R>}} &
+  {<T, R>(reducer: TReducer<T, R>, seed: TSeed<R>): {(source: TSource<T>): TResult<R>}} &
+  {<T, R>(reducer: TReducer<T, R>): { (seed: TSeed<R>): { (source: TSource<T>): TResult<R> } } }

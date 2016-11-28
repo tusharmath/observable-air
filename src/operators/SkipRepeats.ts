@@ -6,8 +6,11 @@ import {IObservable} from '../types/core/IObservable'
 import {IObserver} from '../types/core/IObserver'
 import {ISubscription} from '../types/core/ISubscription'
 import {IScheduler} from '../types/IScheduler'
-import {Curry2} from '../lib/Curry'
-import {ICurriedFunction2} from '../types/ICurriedFunction'
+import {Curry} from '../lib/Curry'
+
+export type THasher<T, R> = (value: T) => R
+export type TSource<T> = IObservable<T>
+export type TResult<T> = IObservable<T>
 
 class SkipRepeatsObserver <T, H> implements IObserver<T> {
   private hash: H | void = undefined
@@ -38,8 +41,8 @@ class SkipRepeatsObserver <T, H> implements IObserver<T> {
   }
 }
 
-export class SkipRepeatsObservable <T, H> implements IObservable <T> {
-  constructor (private hashFunction: {(a: T): H}, private source: IObservable<T>) {
+export class SkipRepeatsObservable <T, H> implements TResult <T> {
+  constructor (private hashFunction: THasher<T, H>, private source: TSource<T>) {
   }
 
   subscribe (observer: IObserver<T>, scheduler: IScheduler): ISubscription {
@@ -47,6 +50,9 @@ export class SkipRepeatsObservable <T, H> implements IObservable <T> {
   }
 }
 
-export const skipRepeats = Curry2(function (hashFunction: {(t: any): any}, source: IObservable<any>) {
+export const skipRepeats = Curry(function (hashFunction: {(t: any): any}, source: IObservable<any>) {
   return new SkipRepeatsObservable(hashFunction, source)
-}) as ICurriedFunction2<{(t: any): any}, IObservable<any>, IObservable<any>>
+}) as Function &
+  {<T, R> (mapper: THasher<T, R>, source: TSource<T>): TResult<T>} &
+  {<T, R> (mapper: THasher<T, R>): {(source: TSource<T>): TResult<T>}}
+
