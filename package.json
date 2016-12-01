@@ -27,7 +27,7 @@
   "devDependencies": {
     "ava": "^0.17.0",
     "babel-cli": "^6.16.0",
-    "babel-preset-babili": "^0.0.8",
+    "babel-preset-babili": "^0.0.9",
     "benchmark": "^2.1.2",
     "browserify": "^13.1.0",
     "cli-table2": "^0.2.0",
