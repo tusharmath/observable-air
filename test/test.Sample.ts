@@ -6,6 +6,7 @@ import test from 'ava'
 import {TestScheduler} from '../src/testing/TestScheduler'
 import {ReactiveEvents} from '../src/testing/ReactiveEvents'
 import {sample} from '../src/operators/Sample'
+import {marble, toMarble} from '../src/testing/Marble'
 
 function toArray (...t: Array<any>) {
   return t.join(',')
@@ -78,3 +79,16 @@ test(t => {
   ])
 })
 
+
+test(t => {
+  const sh = TestScheduler.of()
+  const t1$ = sh.Hot(marble('-A-B-C-D'))
+  const t2$ = sh.Hot(marble('--a-b-c-d'))
+  const {results} = sh.start(() => sample((a, b) => a + b, t2$, [t1$, t2$]))
+  t.deepEqual(results, [
+    ReactiveEvents.next(220, 'Aa'),
+    ReactiveEvents.next(240, 'Bb'),
+    ReactiveEvents.next(260, 'Cc'),
+    ReactiveEvents.next(280, 'Dd')
+  ])
+})
