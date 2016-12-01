@@ -101,11 +101,11 @@ export class SampleObservable<T> implements TResult<T> {
   subscribe (observer: IObserver<T>, scheduler: IScheduler): ISubscription {
     const cSub = new CompositeSubscription()
     const sampleObserver = new SampleObserver(this.sources.length, observer, this.func)
-    cSub.add(this.sampler.subscribe(sampleObserver, scheduler))
     for (var i = 0; i < this.sources.length; ++i) {
       const sampleValueObserver = new SampleValueObserver(i, sampleObserver)
       cSub.add(this.sources[i].subscribe(sampleValueObserver, scheduler))
     }
+    cSub.add(this.sampler.subscribe(sampleObserver, scheduler))
     return cSub
   }
 }
