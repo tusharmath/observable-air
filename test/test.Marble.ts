@@ -22,3 +22,25 @@ test(t => {
   ])
   t.is('-ABC|', message)
 })
+
+test(t => {
+  const message = toMarble([
+    ReactiveEvents.next(200, 'A'),
+    ReactiveEvents.next(210, 'B'),
+    ReactiveEvents.next(220, 'C'),
+    ReactiveEvents.next(230, 'D'),
+    ReactiveEvents.complete(230)
+  ])
+  t.is('ABCD|', message)
+})
+
+test(t => {
+  const message = toMarble([
+    ReactiveEvents.next(220, 'A'),
+    ReactiveEvents.next(240, 'B'),
+    ReactiveEvents.next(260, 'C'),
+    ReactiveEvents.next(280, 'D'),
+    ReactiveEvents.complete(280)
+  ])
+  t.is('--A-B-C-D|', message)
+})
