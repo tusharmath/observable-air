@@ -6,8 +6,12 @@ import {IObserver} from '../types/core/IObserver'
 import {IScheduler} from '../types/IScheduler'
 import {ISubscription} from '../types/core/ISubscription'
 import {CompositeSubscription} from '../lib/CompositeSubscription'
-import {TSelector} from './Sample'
 import {ObservableCollection} from '../lib/ObservableCollection'
+import {Curry} from '../lib/Curry'
+
+export type TSelector<T> = {(...e: Array<any>): T}
+export type TSource = Array<IObservable<any>>
+export type TResult <T> = IObservable<T>
 
 export class CombineValueObserver<T> implements IObserver<T> {
   constructor (private id: number, private sink: CombinedObserver<T>) {
@@ -65,5 +69,8 @@ export class CombineObservable<T> implements IObservable<T> {
   }
 }
 
-export const combine = <T> (selector: TSelector<T>, sources: IObservable<any>[]) =>
+export const combine = Curry(<T> (selector: TSelector<T>, sources: IObservable<any>[]) =>
   new CombineObservable(selector, sources)
+) as Function &
+  {<T, R> (selector: TSelector<T>, sources: TSource): TResult<R>} &
+  {<T, R> (selector: TSelector<T>): {(sources: TSource): TResult<R>}}

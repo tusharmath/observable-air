@@ -2,6 +2,7 @@
  * Created by tushar.mathur on 11/10/16.
  */
 
+export {combine} from './operators/Combine'
 export {filter} from './operators/Filter'
 export {forEach} from './lib/ForEach'
 export {fromArray} from './sources/FromArray'
