@@ -6,7 +6,7 @@ import {EventType, IEvent} from '../types/IEvent'
 import {TestObservable} from './TestObservable'
 import {EventNext, EventError} from './ReactiveEvents'
 import {TestScheduler} from './TestScheduler'
-import {Observer} from '../types/core/IObserver'
+import {Observer} from '../types/core/Observer'
 
 export function dispatchEvents<T> (event: IEvent, observers: Array<Observer<T>>, closed: Array<boolean>) {
   observers

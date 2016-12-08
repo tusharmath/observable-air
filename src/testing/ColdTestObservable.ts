@@ -5,7 +5,7 @@
 import {IEvent, EventType} from '../types/IEvent'
 import {TestObservable} from './TestObservable'
 import {EventNext} from './ReactiveEvents'
-import {Observer} from '../types/core/IObserver'
+import {Observer} from '../types/core/Observer'
 import {IScheduler} from '../types/IScheduler'
 
 export function ColdTestObservable<T> (scheduler: IScheduler, events: Array<IEvent>) {

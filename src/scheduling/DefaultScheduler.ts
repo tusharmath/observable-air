@@ -4,7 +4,7 @@
 
 
 import {IScheduler} from '../types/IScheduler'
-import {Subscription} from '../types/core/ISubscription'
+import {Subscription} from '../types/core/Subscription'
 import {ITask} from '../types/ITask'
 import {ScheduleTimeout} from './ScheduleTimeout'
 import {ScheduleImmediately} from './ScheduleImmediately'

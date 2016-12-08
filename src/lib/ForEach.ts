@@ -2,9 +2,9 @@
  * Created by tushar.mathur on 01/11/16.
  */
 
-import {Observable} from '../types/core/IObservable'
+import {Observable} from '../types/core/Observable'
 import {DefaultScheduler} from '../scheduling/DefaultScheduler'
-import {Subscription} from '../types/core/ISubscription'
+import {Subscription} from '../types/core/Subscription'
 import {Curry} from './Curry'
 import {BaseObserver} from './BaseObserver'
 

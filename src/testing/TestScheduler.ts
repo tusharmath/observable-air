@@ -4,8 +4,8 @@
 
 import {ITask} from '../types/ITask'
 import {IScheduler} from '../types/IScheduler'
-import {Observable} from '../types/core/IObservable'
-import {Subscription} from '../types/core/ISubscription'
+import {Observable} from '../types/core/Observable'
+import {Subscription} from '../types/core/Subscription'
 import {IEvent} from '../types/IEvent'
 import {TestObserver} from './TestObserver'
 import {ColdTestObservable} from './ColdTestObservable'

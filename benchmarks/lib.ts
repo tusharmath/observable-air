@@ -4,7 +4,7 @@
 
 
 const Table = require('cli-table2')
-import {Observable} from '../src/types/core/IObservable'
+import {Observable} from '../src/types/core/Observable'
 import {BaseObserver} from '../src/lib/BaseObserver'
 import {DefaultScheduler} from '../src/scheduling/DefaultScheduler'
 

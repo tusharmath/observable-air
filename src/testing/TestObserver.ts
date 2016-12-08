@@ -5,7 +5,7 @@
 import {ReactiveEvents} from './ReactiveEvents'
 import {IScheduler} from '../types/IScheduler'
 import {IEvent} from '../types/IEvent'
-import {Observer} from '../types/core/IObserver'
+import {Observer} from '../types/core/Observer'
 
 export class TestObserver<T> implements Observer<T> {
   results: Array<IEvent>

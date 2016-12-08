@@ -1,10 +1,10 @@
 /**
  * Created by tushar.mathur on 16/10/16.
  */
-import {Observable} from '../types/core/IObservable'
-import {Subscription} from '../types/core/ISubscription'
+import {Observable} from '../types/core/Observable'
+import {Subscription} from '../types/core/Subscription'
 import {IScheduler} from '../types/IScheduler'
-import {Observer} from '../types/core/IObserver'
+import {Observer} from '../types/core/Observer'
 import {CompositeSubscription} from '../lib/CompositeSubscription'
 import {LinkedListNode} from '../lib/LinkedList'
 

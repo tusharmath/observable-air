@@ -2,8 +2,8 @@
  * Created by tushar.mathur on 27/09/16.
  */
 
-import {Subscription} from './ISubscription'
-import {Observer} from './IObserver'
+import {Subscription} from './Subscription'
+import {Observer} from './Observer'
 import {IScheduler} from '../IScheduler'
 
 export interface Observable<T> {

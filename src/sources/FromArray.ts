@@ -2,9 +2,9 @@
  * Created by tushar.mathur on 28/09/16.
  */
 
-import {Observable} from '../types/core/IObservable'
-import {Subscription} from '../types/core/ISubscription'
-import {Observer} from '../types/core/IObserver'
+import {Observable} from '../types/core/Observable'
+import {Subscription} from '../types/core/Subscription'
+import {Observer} from '../types/core/Observer'
 import {IScheduler} from '../types/IScheduler'
 import {toSafeFunction} from '../lib/ToSafeFunction'
 

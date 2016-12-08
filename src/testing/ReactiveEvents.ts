@@ -3,7 +3,7 @@
  */
 
 import {IEvent, EventType} from '../types/IEvent'
-import {Subscription} from '../types/core/ISubscription'
+import {Subscription} from '../types/core/Subscription'
 
 export class EventNext<T> implements IEvent {
   type: EventType

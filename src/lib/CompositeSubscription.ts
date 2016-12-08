@@ -2,7 +2,7 @@
  * Created by tushar.mathur on 12/10/16.
  */
 
-import {Subscription} from '../types/core/ISubscription'
+import {Subscription} from '../types/core/Subscription'
 import {LinkedList, LinkedListNode} from './LinkedList'
 
 const unsubscribe = (x: LinkedListNode<Subscription>) => x.value.unsubscribe()

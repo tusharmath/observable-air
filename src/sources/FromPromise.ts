@@ -4,7 +4,7 @@
 
 
 import {CreateObservable} from './CreateObservable'
-import {Observer} from '../types/core/IObserver'
+import {Observer} from '../types/core/Observer'
 
 
 export function onResult<T> (observer: Observer<T>, result: T) {
