@@ -2,6 +2,7 @@
  * Created by tushar.mathur on 11/10/16.
  */
 
+export {combine} from './operators/Combine'
 export {create} from './sources/CreateObservable'
 export {debounce} from './operators/Debounce'
 export {delay} from './operators/Delay'
