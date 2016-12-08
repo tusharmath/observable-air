@@ -3,6 +3,7 @@
  */
 
 export {combine} from './operators/Combine'
+export {create} from './sources/CreateObservable'
 export {filter} from './operators/Filter'
 export {forEach} from './lib/ForEach'
 export {fromArray} from './sources/FromArray'
@@ -18,7 +19,6 @@ export {join} from './operators/Join'
 export {map} from './operators/Map'
 export {merge} from './operators/Merge'
 export {multicast} from './operators/Multicast'
-export {Observable} from './lib/Observable'
 export {of} from './sources/FromArray'
 export {rafThrottle} from './operators/RafThrottle'
 export {reduce} from './operators/Reduce'

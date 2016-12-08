@@ -3,7 +3,7 @@
  */
 
 
-import {Observable} from '../lib/Observable'
+import {CreateObservable} from './CreateObservable'
 import {IObserver} from '../types/core/IObserver'
 
 
@@ -24,5 +24,5 @@ export function subscriberFunction<T> (f: () => Promise<T>, observer: IObserver<
 }
 
 export function fromPromise<T> (f: () => Promise<T>) {
-  return new Observable(observer => subscriberFunction(f, observer))
+  return new CreateObservable(observer => subscriberFunction(f, observer))
 }
