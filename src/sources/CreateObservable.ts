@@ -6,14 +6,14 @@ import {Observer} from '../types/core/Observer'
 import {IScheduler} from '../types/IScheduler'
 import {Subscription} from '../types/core/Subscription'
 import {SubscriberFunction} from '../types/core/SubscriberFunction'
-import {CreateSubscription} from '../lib/CreateSubscription'
+import {BaseSubscription} from '../lib/BaseSubscription'
 
 export class CreateObservable<T> implements Observable<T> {
   constructor (private f: SubscriberFunction<T>) {
   }
 
   subscribe (observer: Observer<T>, scheduler: IScheduler): Subscription {
-    return CreateSubscription.from(this.f(observer, scheduler))
+    return BaseSubscription.from(this.f(observer, scheduler))
   }
 }
 
