@@ -15,9 +15,9 @@ export type TSampler = IObservable<any>
 export type TSources = Array<IObservable<any>>
 export type TResult<T> = IObservable<T>
 
-enum StreamStatus { IDLE, STARTED, COMPLETED }
+export enum StreamStatus { IDLE, STARTED, COMPLETED }
 
-function createArray<T> (size: number, value: T) {
+export function createArray<T> (size: number, value: T) {
   const arr: Array<T> = new Array(size)
   for (var i = 0; i < size; ++i) {
     arr[i] = value
