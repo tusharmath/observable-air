@@ -4,8 +4,8 @@
 
 import {ITask} from '../types/ITask'
 import {IScheduler} from '../types/IScheduler'
-import {IObservable} from '../types/core/IObservable'
-import {ISubscription} from '../types/core/ISubscription'
+import {Observable} from '../types/core/IObservable'
+import {Subscription} from '../types/core/ISubscription'
 import {IEvent} from '../types/IEvent'
 import {TestObserver} from './TestObserver'
 import {ColdTestObservable} from './ColdTestObservable'
@@ -23,7 +23,7 @@ class TaskSchedule {
   }
 }
 
-class TaskSubscription implements ISubscription {
+class TaskSubscription implements Subscription {
   closed: boolean
 
   constructor (private queue: LinkedList<TaskSchedule>, private taskNode: LinkedListNode<TaskSchedule>) {
@@ -54,19 +54,19 @@ export class TestScheduler implements IScheduler {
     return this.clock
   }
 
-  setTimeout (task: ITask, time: number, now: number = this.now()): ISubscription {
+  setTimeout (task: ITask, time: number, now: number = this.now()): Subscription {
     return new TaskSubscription(this.queue, this.queue.add(new TaskSchedule(task, time + now)))
   }
 
-  setImmediate (task: ITask): ISubscription {
+  setImmediate (task: ITask): Subscription {
     return this.setTimeout(task, this.now() + 1, 0)
   }
 
-  requestAnimationFrame (task: ITask): ISubscription {
+  requestAnimationFrame (task: ITask): Subscription {
     return this.setTimeout(task, this.now() + this.options.rafTimeout, 0)
   }
 
-  setInterval (task: ITask, interval: number): ISubscription {
+  setInterval (task: ITask, interval: number): Subscription {
     var closed = false
     const repeatedTask = () => {
       if (closed) return
@@ -92,10 +92,10 @@ export class TestScheduler implements IScheduler {
     })
   }
 
-  start<T> (f: () => IObservable<T>,
+  start<T> (f: () => Observable<T>,
             start = START_SUBSCRIPTION_TIME,
             stop = STOP_SUBSCRIPTION_TIME) {
-    var subscription: ISubscription
+    var subscription: Subscription
     const resultsObserver = new TestObserver(this)
     this.setTimeout(() => subscription = f().subscribe(resultsObserver, this), start, 0)
     this.setTimeout(() => !subscription.closed && subscription.unsubscribe(), stop, 0)

@@ -2,7 +2,7 @@
  * Created by tushar.mathur on 27/09/16.
  */
 
-export interface IObserver<T> {
+export interface Observer<T> {
   // Receives the next value in the sequence
   next (val: T): void
 

@@ -2,14 +2,14 @@
  * Created by tushar.mathur on 16/10/16.
  */
 
-import {ISubscription} from '../types/core/ISubscription'
+import {Subscription} from '../types/core/ISubscription'
 import {ITask} from '../types/ITask'
 
-export function isSubscription (subscription: ISubscription) {
+export function isSubscription (subscription: Subscription) {
   return subscription instanceof CreateSubscription || (subscription && typeof subscription.unsubscribe === 'function')
 }
 
-export class CreateSubscription implements ISubscription {
+export class CreateSubscription implements Subscription {
   constructor (private f: (() => void), public closed = false) {
   }
 
@@ -18,9 +18,9 @@ export class CreateSubscription implements ISubscription {
     this.closed = true
   }
 
-  static from (subscription: ISubscription | ITask | void): ISubscription {
-    if (isSubscription(subscription as ISubscription))
-      return subscription as ISubscription
+  static from (subscription: Subscription | ITask | void): Subscription {
+    if (isSubscription(subscription as Subscription))
+      return subscription as Subscription
 
     if (typeof subscription === 'function')
       return new CreateSubscription(subscription as ITask)

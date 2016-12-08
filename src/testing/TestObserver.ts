@@ -5,9 +5,9 @@
 import {ReactiveEvents} from './ReactiveEvents'
 import {IScheduler} from '../types/IScheduler'
 import {IEvent} from '../types/IEvent'
-import {IObserver} from '../types/core/IObserver'
+import {Observer} from '../types/core/IObserver'
 
-export class TestObserver<T> implements IObserver<T> {
+export class TestObserver<T> implements Observer<T> {
   results: Array<IEvent>
 
   constructor (private scheduler: IScheduler) {

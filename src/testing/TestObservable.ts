@@ -1,21 +1,21 @@
 /**
  * Created by tushar.mathur on 06/10/16.
  */
-import {IObservable} from '../types/core/IObservable'
-import {IObserver} from '../types/core/IObserver'
+import {Observable} from '../types/core/IObservable'
+import {Observer} from '../types/core/IObserver'
 import {IScheduler} from '../types/IScheduler'
-import {ISubscription} from '../types/core/ISubscription'
+import {Subscription} from '../types/core/ISubscription'
 import {IEvent} from '../types/IEvent'
 import {ReactiveEvents} from './ReactiveEvents'
 
 
-export class TestObservable<T> implements IObservable<T> {
+export class TestObservable<T> implements Observable<T> {
   subscriptions: Array<IEvent> = []
 
-  constructor (private func: (observer: IObserver<T>) => ISubscription) {
+  constructor (private func: (observer: Observer<T>) => Subscription) {
   }
 
-  subscribe (observer: IObserver<T>, scheduler: IScheduler): ISubscription {
+  subscribe (observer: Observer<T>, scheduler: IScheduler): Subscription {
     const subscription = this.func(observer)
     const connections = this.subscriptions
     connections.push(ReactiveEvents.start(scheduler.now(), subscription))

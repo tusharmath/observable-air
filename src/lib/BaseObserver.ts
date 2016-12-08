@@ -1,7 +1,7 @@
 /**
  * Created by tushar.mathur on 13/10/16.
  */
-import {IObserver} from '../types/core/IObserver'
+import {Observer} from '../types/core/IObserver'
 
 function noop () {
 }
@@ -13,7 +13,7 @@ function onErrorHandler (err: Error) {
 const onCompleteHandler = noop
 const onNextHandler = noop
 
-export class BaseObserver<T> implements IObserver<T> {
+export class BaseObserver<T> implements Observer<T> {
   constructor (private onNext: (v: T) => void,
                private onError: (v: Error) => void,
                private onComplete: () => void) {

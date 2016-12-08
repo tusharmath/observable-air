@@ -4,20 +4,20 @@
 
 
 import {CreateObservable} from './CreateObservable'
-import {IObserver} from '../types/core/IObserver'
+import {Observer} from '../types/core/IObserver'
 
 
-export function onResult<T> (observer: IObserver<T>, result: T) {
+export function onResult<T> (observer: Observer<T>, result: T) {
   observer.next(result)
   observer.complete()
 }
 
-export function onError<T> (observer: IObserver<T>, error: Error) {
+export function onError<T> (observer: Observer<T>, error: Error) {
   observer.error(error)
   observer.complete()
 }
 
-export function subscriberFunction<T> (f: () => Promise<T>, observer: IObserver<T>) {
+export function subscriberFunction<T> (f: () => Promise<T>, observer: Observer<T>) {
   f()
     .then(result => onResult(observer, result))
     .catch(err => onError(observer, err))

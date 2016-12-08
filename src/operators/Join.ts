@@ -3,15 +3,15 @@
  */
 
 
-import {IObservable} from '../types/core/IObservable'
-import {IObserver} from '../types/core/IObserver'
+import {Observable} from '../types/core/IObservable'
+import {Observer} from '../types/core/IObserver'
 import {IScheduler} from '../types/IScheduler'
-import {ISubscription} from '../types/core/ISubscription'
+import {Subscription} from '../types/core/ISubscription'
 import {CompositeSubscription} from '../lib/CompositeSubscription'
 
 
-export class JoinValueObserver<T> implements IObserver<T> {
-  constructor (private sink: IObserver<T>, private root: JoinObserver<T>) {
+export class JoinValueObserver<T> implements Observer<T> {
+  constructor (private sink: Observer<T>, private root: JoinObserver<T>) {
   }
 
   next (val: T): void {
@@ -28,11 +28,11 @@ export class JoinValueObserver<T> implements IObserver<T> {
 
 }
 
-export class JoinObserver<T> implements IObserver<IObservable<T>> {
+export class JoinObserver<T> implements Observer<Observable<T>> {
   private count: number
   private sourceCompleted: boolean
 
-  constructor (private sink: IObserver<T>, private scheduler: IScheduler, private subscriptions: CompositeSubscription) {
+  constructor (private sink: Observer<T>, private scheduler: IScheduler, private subscriptions: CompositeSubscription) {
     this.sourceCompleted = false
     this.count = 0
   }
@@ -49,7 +49,7 @@ export class JoinObserver<T> implements IObserver<IObservable<T>> {
   }
 
 
-  next (val: IObservable<T>): void {
+  next (val: Observable<T>): void {
     const joinValueObserver = new JoinValueObserver(this.sink, this)
     this.count++
     this.subscriptions.add(
@@ -68,11 +68,11 @@ export class JoinObserver<T> implements IObserver<IObservable<T>> {
 }
 
 
-export class JoinObservable<T> implements IObservable<T> {
-  constructor (private source: IObservable<IObservable<T>>) {
+export class JoinObservable<T> implements Observable<T> {
+  constructor (private source: Observable<Observable<T>>) {
   }
 
-  subscribe (observer: IObserver<T>, scheduler: IScheduler): ISubscription {
+  subscribe (observer: Observer<T>, scheduler: IScheduler): Subscription {
     const subscription = new CompositeSubscription()
     subscription.add(
       this.source.subscribe(new JoinObserver(observer, scheduler, subscription), scheduler)
@@ -81,6 +81,6 @@ export class JoinObservable<T> implements IObservable<T> {
   }
 }
 
-export function join <T> (source: IObservable<IObservable<T>>) {
+export function join <T> (source: Observable<Observable<T>>) {
   return new JoinObservable(source)
 }

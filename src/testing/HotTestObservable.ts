@@ -6,9 +6,9 @@ import {EventType, IEvent} from '../types/IEvent'
 import {TestObservable} from './TestObservable'
 import {EventNext, EventError} from './ReactiveEvents'
 import {TestScheduler} from './TestScheduler'
-import {IObserver} from '../types/core/IObserver'
+import {Observer} from '../types/core/IObserver'
 
-export function dispatchEvents<T> (event: IEvent, observers: Array<IObserver<T>>, closed: Array<boolean>) {
+export function dispatchEvents<T> (event: IEvent, observers: Array<Observer<T>>, closed: Array<boolean>) {
   observers
     .filter((x, i) => !closed[i])
     .forEach(ob => {
@@ -19,7 +19,7 @@ export function dispatchEvents<T> (event: IEvent, observers: Array<IObserver<T>>
 }
 
 export function HotTestObservable<T> (scheduler: TestScheduler, events: Array<IEvent>) {
-  const observers: Array<IObserver<T>> = []
+  const observers: Array<Observer<T>> = []
   const closed: Array<boolean> = []
   events.forEach(ev => {
       scheduler.setTimeout(
@@ -28,7 +28,7 @@ export function HotTestObservable<T> (scheduler: TestScheduler, events: Array<IE
         0)
     }
   )
-  return new TestObservable((ob: IObserver<T>) => {
+  return new TestObservable((ob: Observer<T>) => {
     const i = observers.push(ob) - 1
     closed[i] = false
     return {

@@ -1,16 +1,16 @@
 /**
  * Created by tushar.mathur on 14/10/16.
  */
-import {IObservable} from '../types/core/IObservable'
-import {IObserver} from '../types/core/IObserver'
+import {Observable} from '../types/core/IObservable'
+import {Observer} from '../types/core/IObserver'
 import {IScheduler} from '../types/IScheduler'
-import {ISubscription} from '../types/core/ISubscription'
+import {Subscription} from '../types/core/ISubscription'
 import {IListener} from '../types/IListener'
 import {Curry} from '../lib/Curry'
 
-export type TResult = IObservable<Event>
+export type TResult = Observable<Event>
 
-export class DOMSubscription implements ISubscription {
+export class DOMSubscription implements Subscription {
   closed: boolean = false
 
   constructor (private element: HTMLElement, private listener: IListener, private name: string) {
@@ -25,7 +25,7 @@ export class DOMObservable implements TResult {
   constructor (private name: string, private element: HTMLElement) {
   }
 
-  subscribe (observer: IObserver<Event>, scheduler: IScheduler): ISubscription {
+  subscribe (observer: Observer<Event>, scheduler: IScheduler): Subscription {
     const listener = (e: Event) => observer.next(e)
     this.element.addEventListener(this.name, listener)
     return new DOMSubscription(this.element, listener, this.name)

@@ -3,18 +3,18 @@
  */
 
 
-import {IObservable} from '../types/core/IObservable'
-import {IObserver} from '../types/core/IObserver'
-import {ISubscription} from '../types/core/ISubscription'
+import {Observable} from '../types/core/IObservable'
+import {Observer} from '../types/core/IObserver'
+import {Subscription} from '../types/core/ISubscription'
 import {IScheduler} from '../types/IScheduler'
 import {Curry} from '../lib/Curry'
 
 export type TPredicate<T> = {(value: T): boolean}
-export type TSource<T> = IObservable<T>
-export type TResult<T> = IObservable<T>
+export type TSource<T> = Observable<T>
+export type TResult<T> = Observable<T>
 
-class FilterObserver <T> implements IObserver<T> {
-  constructor (private predicate: {(t: T): boolean}, private sink: IObserver<T>) {
+class FilterObserver <T> implements Observer<T> {
+  constructor (private predicate: {(t: T): boolean}, private sink: Observer<T>) {
   }
 
   next (val: T) {
@@ -33,10 +33,10 @@ class FilterObserver <T> implements IObserver<T> {
 
 export class FilterObservable <T> implements TResult<T> {
   constructor (private predicate: {(t: T): boolean},
-               private source: IObservable<T>) {
+               private source: Observable<T>) {
   }
 
-  subscribe (observer: IObserver<T>, scheduler: IScheduler): ISubscription {
+  subscribe (observer: Observer<T>, scheduler: IScheduler): Subscription {
     return this.source.subscribe(new FilterObserver(this.predicate, observer), scheduler)
   }
 }

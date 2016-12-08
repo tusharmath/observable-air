@@ -2,15 +2,15 @@
  * Created by tushar.mathur on 01/11/16.
  */
 
-import {IObservable} from '../types/core/IObservable'
+import {Observable} from '../types/core/IObservable'
 import {DefaultScheduler} from '../scheduling/DefaultScheduler'
-import {ISubscription} from '../types/core/ISubscription'
+import {Subscription} from '../types/core/ISubscription'
 import {Curry} from './Curry'
 import {BaseObserver} from './BaseObserver'
 
 export type TOnNext<T> = {(value: T): void}
-export type TSource<T> = IObservable<T>
-export type TResult = ISubscription
+export type TSource<T> = Observable<T>
+export type TResult = Subscription
 
 export const forEach = Curry(function <T> (onNext: TOnNext<T>, observable: TSource<T>) {
   return observable.subscribe(BaseObserver.of(onNext), DefaultScheduler.of())

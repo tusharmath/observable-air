@@ -4,7 +4,7 @@
 
 
 import {IScheduler} from '../types/IScheduler'
-import {ISubscription} from '../types/core/ISubscription'
+import {Subscription} from '../types/core/ISubscription'
 import {ITask} from '../types/ITask'
 import {ScheduleTimeout} from './ScheduleTimeout'
 import {ScheduleImmediately} from './ScheduleImmediately'
@@ -16,15 +16,15 @@ function run (task: IScheduledTask) {
   return task.run()
 }
 export class DefaultScheduler implements IScheduler {
-  setImmediate (task: ITask): ISubscription {
+  setImmediate (task: ITask): Subscription {
     return run(new ScheduleImmediately(task))
   }
 
-  setInterval (task: ITask, interval: number): ISubscription {
+  setInterval (task: ITask, interval: number): Subscription {
     return run(new ScheduleInterval(task, interval))
   }
 
-  setTimeout (task: ITask, relativeTime: number): ISubscription {
+  setTimeout (task: ITask, relativeTime: number): Subscription {
     return run(new ScheduleTimeout(task, relativeTime))
   }
 

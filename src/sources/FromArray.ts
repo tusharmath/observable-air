@@ -2,17 +2,17 @@
  * Created by tushar.mathur on 28/09/16.
  */
 
-import {IObservable} from '../types/core/IObservable'
-import {ISubscription} from '../types/core/ISubscription'
-import {IObserver} from '../types/core/IObserver'
+import {Observable} from '../types/core/IObservable'
+import {Subscription} from '../types/core/ISubscription'
+import {Observer} from '../types/core/IObserver'
 import {IScheduler} from '../types/IScheduler'
 import {toSafeFunction} from '../lib/ToSafeFunction'
 
-class FromArraySubscription <T> implements ISubscription {
-  private subscription: ISubscription
+class FromArraySubscription <T> implements Subscription {
+  private subscription: Subscription
   closed = false
 
-  constructor (private array: Array<T>, private sink: IObserver<T>, private scheduler: IScheduler) {
+  constructor (private array: Array<T>, private sink: Observer<T>, private scheduler: IScheduler) {
     this.subscription = scheduler.setTimeout(this.executeSafely.bind(this), 1)
   }
 
@@ -37,16 +37,16 @@ class FromArraySubscription <T> implements ISubscription {
   }
 }
 
-export class FromObservable<T> implements IObservable<T> {
+export class FromObservable<T> implements Observable<T> {
   constructor (private array: Array<T>) {
   }
 
-  subscribe (observer: IObserver<T>, scheduler: IScheduler): ISubscription {
+  subscribe (observer: Observer<T>, scheduler: IScheduler): Subscription {
     return new FromArraySubscription<T>(this.array, observer, scheduler)
   }
 }
 
-export function fromArray<T> (list: Array<T>): IObservable<T> {
+export function fromArray<T> (list: Array<T>): Observable<T> {
   return new FromObservable(list)
 }
 
