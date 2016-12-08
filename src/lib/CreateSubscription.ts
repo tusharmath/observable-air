@@ -6,10 +6,10 @@ import {ISubscription} from '../types/core/ISubscription'
 import {ITask} from '../types/ITask'
 
 export function isSubscription (subscription: ISubscription) {
-  return subscription instanceof Subscription || (subscription && typeof subscription.unsubscribe === 'function')
+  return subscription instanceof CreateSubscription || (subscription && typeof subscription.unsubscribe === 'function')
 }
 
-export class Subscription implements ISubscription {
+export class CreateSubscription implements ISubscription {
   constructor (private f: (() => void), public closed = false) {
   }
 
@@ -23,9 +23,9 @@ export class Subscription implements ISubscription {
       return subscription as ISubscription
 
     if (typeof subscription === 'function')
-      return new Subscription(subscription as ITask)
+      return new CreateSubscription(subscription as ITask)
 
-    return new Subscription(() => undefined)
+    return new CreateSubscription(() => undefined)
   }
 }
 
