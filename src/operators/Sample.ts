@@ -1,13 +1,13 @@
 /**
  * Created by tushar.mathur on 18/10/16.
  */
-
 import {IObservable} from '../types/core/IObservable'
 import {IObserver} from '../types/core/IObserver'
 import {IScheduler} from '../types/IScheduler'
 import {ISubscription} from '../types/core/ISubscription'
 import {CompositeSubscription} from '../lib/CompositeSubscription'
 import {Curry} from '../lib/Curry'
+import {ObservableCollection} from '../lib/ObservableCollection'
 
 
 export type TSelector<T> = {(...e: Array<any>): T}
@@ -44,40 +44,32 @@ export class SampleValueObserver<T> implements IObserver<T> {
 
 }
 export class SampleObserver<T> implements IObserver<T> {
-  private values = new Array(this.total)
-  private streamStatuses = createArray(this.total, StreamStatus.IDLE)
-  private startedCount = 0
-  private completedCount = 0
+  private collection = new ObservableCollection(this.total)
   private samplerCompleted = false
 
   constructor (private total: number, private sink: IObserver<T>, private func: TSelector<T>) {
   }
 
   onNext (value: T, id: number) {
-    if (this.streamStatuses[id] === StreamStatus.IDLE) {
-      this.streamStatuses[id] = StreamStatus.STARTED
-      this.startedCount++
-    }
-    this.values[id] = value
+    this.collection.onNext(value, id)
   }
 
   onComplete (id: number) {
-    if (this.streamStatuses[id] !== StreamStatus.COMPLETED) {
-      this.streamStatuses[id] = StreamStatus.COMPLETED
-      this.completedCount++
-      this.actuallyCompleted()
+    const hasCompleted = this.collection.onComplete(id)
+    if (this.samplerCompleted && hasCompleted) {
+      this.sink.complete()
     }
   }
 
   private actuallyCompleted () {
-    if (this.samplerCompleted && this.completedCount === this.total) {
+    if (this.samplerCompleted && this.collection.hasCompleted()) {
       this.sink.complete()
     }
   }
 
   next (val: T): void {
-    if (this.startedCount === this.total) {
-      this.sink.next(this.func.apply(null, this.values))
+    if (this.collection.hasStarted()) {
+      this.sink.next(this.func.apply(null, this.collection.getValues()))
     }
   }
 

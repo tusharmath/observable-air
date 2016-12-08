@@ -6,7 +6,8 @@ import {IObserver} from '../types/core/IObserver'
 import {IScheduler} from '../types/IScheduler'
 import {ISubscription} from '../types/core/ISubscription'
 import {CompositeSubscription} from '../lib/CompositeSubscription'
-import {TSelector, StreamStatus, createArray} from './Sample'
+import {TSelector} from './Sample'
+import {ObservableCollection} from '../lib/ObservableCollection'
 
 export class CombineValueObserver<T> implements IObserver<T> {
   constructor (private id: number, private sink: CombinedObserver<T>) {
@@ -17,7 +18,7 @@ export class CombineValueObserver<T> implements IObserver<T> {
   }
 
   error (err: Error): void {
-    this.sink.error(err)
+    this.sink.onError(err)
   }
 
   complete (): void {
@@ -25,43 +26,27 @@ export class CombineValueObserver<T> implements IObserver<T> {
   }
 }
 
-export class CombinedObserver <T> implements IObserver<T> {
-  private values = new Array(this.total)
-  private streamStatuses = createArray(this.total, StreamStatus.IDLE)
-  private startedCount = 0
-  private completedCount = 0
+export class CombinedObserver<T> {
+  private collection = new ObservableCollection(this.total)
 
   constructor (private func: TSelector<T>, private total: number, private sink: IObserver<T>) {
   }
 
-  next (val: T): void {
-  }
-
-  complete (): void {
-  }
-
   onNext (value: T, id: number) {
-    if (this.streamStatuses[id] === StreamStatus.IDLE) {
-      this.streamStatuses[id] = StreamStatus.STARTED
-      this.startedCount++
-    }
-    this.values[id] = value
-    if (this.startedCount === this.total) {
-      this.sink.next(this.func.apply(null, this.values))
+    this.collection.onNext(value, id)
+    if (this.collection.hasStarted()) {
+      this.sink.next(this.func.apply(null, this.collection.getValues()))
     }
   }
 
   onComplete (id: number) {
-    if (this.streamStatuses[id] !== StreamStatus.COMPLETED) {
-      this.streamStatuses[id] = StreamStatus.COMPLETED
-      this.completedCount++
-      if (this.completedCount === this.total) {
-        this.sink.complete()
-      }
+    const hasCompleted = this.collection.onComplete(id)
+    if (hasCompleted) {
+      this.sink.complete()
     }
   }
 
-  error (err: Error): void {
+  onError (err: Error): void {
     this.sink.error(err)
   }
 }
