@@ -6,6 +6,7 @@ import {Observer} from '../types/core/Observer'
 import {IScheduler} from '../types/IScheduler'
 import {Subscription} from '../types/core/Subscription'
 import {SubscriberFunction} from '../types/core/SubscriberFunction'
+import {CompositeSubscription} from '../lib/CompositeSubscription'
 import {BaseSubscription} from '../lib/BaseSubscription'
 
 export class CreateObservable<T> implements Observable<T> {
@@ -13,7 +14,11 @@ export class CreateObservable<T> implements Observable<T> {
   }
 
   subscribe (observer: Observer<T>, scheduler: IScheduler): Subscription {
-    return BaseSubscription.from(this.f(observer, scheduler))
+    const cSub = new CompositeSubscription()
+    cSub.add(scheduler.setTimeout(() => {
+      cSub.add(BaseSubscription.from(this.f(observer, scheduler)))
+    }, 1))
+    return cSub
   }
 }
 
