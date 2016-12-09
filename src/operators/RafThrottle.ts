@@ -2,20 +2,20 @@
  * Created by tushar.mathur on 02/11/16.
  */
 
-import {IObservable} from '../types/core/IObservable'
-import {ISubscription} from '../types/core/ISubscription'
-import {IScheduler} from '../types/IScheduler'
-import {IObserver} from '../types/core/IObserver'
+import {Observable} from '../types/core/Observable'
+import {Subscription} from '../types/core/Subscription'
+import {Scheduler} from '../types/Scheduler'
+import {Observer} from '../types/core/Observer'
 import {CompositeSubscription} from '../lib/CompositeSubscription'
 import {LinkedListNode} from '../lib/LinkedList'
 
-export class RafObserver<T> implements IObserver<T> {
+export class RafObserver<T> implements Observer<T> {
   private completed = false
-  private queue: LinkedListNode<ISubscription>
+  private queue: LinkedListNode<Subscription>
   private canFlush = true
 
-  constructor (private sink: IObserver<T>,
-               private scheduler: IScheduler,
+  constructor (private sink: Observer<T>,
+               private scheduler: Scheduler,
                private cSub: CompositeSubscription) {
     this.flush = this.flush.bind(this)
   }
@@ -44,17 +44,17 @@ export class RafObserver<T> implements IObserver<T> {
   }
 }
 
-export class RafThrottle<T> implements IObservable<T> {
-  constructor (private source: IObservable<T>) {
+export class RafThrottle<T> implements Observable<T> {
+  constructor (private source: Observable<T>) {
   }
 
-  subscribe (observer: IObserver<T>, scheduler: IScheduler): ISubscription {
+  subscribe (observer: Observer<T>, scheduler: Scheduler): Subscription {
     const cSub = new CompositeSubscription()
     cSub.add(this.source.subscribe(new RafObserver(observer, scheduler, cSub), scheduler))
     return cSub
   }
 }
 
-export function rafThrottle<T> (source: IObservable<T>) {
+export function rafThrottle<T> (source: Observable<T>) {
   return new RafThrottle(source)
 }

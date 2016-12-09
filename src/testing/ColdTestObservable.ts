@@ -5,11 +5,11 @@
 import {IEvent, EventType} from '../types/IEvent'
 import {TestObservable} from './TestObservable'
 import {EventNext} from './ReactiveEvents'
-import {IObserver} from '../types/core/IObserver'
-import {IScheduler} from '../types/IScheduler'
+import {Observer} from '../types/core/Observer'
+import {Scheduler} from '../types/Scheduler'
 
-export function ColdTestObservable<T> (scheduler: IScheduler, events: Array<IEvent>) {
-  return new TestObservable((observer: IObserver<any>) => {
+export function ColdTestObservable<T> (scheduler: Scheduler, events: Array<IEvent>) {
+  return new TestObservable((observer: Observer<any>) => {
     var closed = false
     for (var i = 0; i < events.length && !closed; i++) {
       const event = events[i]

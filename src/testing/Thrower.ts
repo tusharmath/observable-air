@@ -2,17 +2,17 @@
  * Created by tushar.mathur on 06/11/16.
  */
 
-import {IObservable} from '../types/core/IObservable'
-import {ISubscription} from '../types/core/ISubscription'
-import {IScheduler} from '../types/IScheduler'
-import {IObserver} from '../types/core/IObserver'
+import {Observable} from '../types/core/Observable'
+import {Subscription} from '../types/core/Subscription'
+import {Scheduler} from '../types/Scheduler'
+import {Observer} from '../types/core/Observer'
 
 export const ERROR_MESSAGE = 'Test Exception'
 export function throwError (message: string) {
   throw Error(message)
 }
-class ThrowerObserver implements IObserver<void> {
-  constructor (private sink: IObserver<void>) {
+class ThrowerObserver implements Observer<void> {
+  constructor (private sink: Observer<void>) {
   }
 
   next (val: void): void {
@@ -28,15 +28,15 @@ class ThrowerObserver implements IObserver<void> {
   }
 }
 
-export class Thrower implements IObservable<void> {
-  constructor (private source: IObservable<any>) {
+export class Thrower implements Observable<void> {
+  constructor (private source: Observable<any>) {
   }
 
-  subscribe (observer: IObserver<void>, scheduler: IScheduler): ISubscription {
+  subscribe (observer: Observer<void>, scheduler: Scheduler): Subscription {
     return this.source.subscribe(new ThrowerObserver(observer), scheduler)
   }
 }
 
-export function thrower (ob: IObservable<any>) {
+export function thrower (ob: Observable<any>) {
   return new Thrower(ob)
 }

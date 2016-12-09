@@ -4,8 +4,8 @@
 
 
 const Table = require('cli-table2')
-import {IObservable} from '../src/types/core/IObservable'
-import {Observer} from '../src/lib/Observer'
+import {Observable} from '../src/types/core/Observable'
+import {BaseObserver} from '../src/lib/BaseObserver'
 import {DefaultScheduler} from '../src/scheduling/DefaultScheduler'
 
 export interface IDeferred {
@@ -27,8 +27,8 @@ export function passthrough (z: any, x: any) {
 
 export const scheduler = new DefaultScheduler()
 
-export function run (observable: IObservable<any>, d: IDeferred) {
-  observable.subscribe(Observer.of(undefined, undefined, () => d.resolve()), scheduler)
+export function run (observable: Observable<any>, d: IDeferred) {
+  observable.subscribe(BaseObserver.of(undefined, undefined, () => d.resolve()), scheduler)
 }
 
 export function array (n: number) {

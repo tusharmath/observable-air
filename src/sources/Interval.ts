@@ -2,18 +2,18 @@
  * Created by tushar.mathur on 27/09/16.
  */
 
-import {IObservable} from '../types/core/IObservable'
-import {ISubscription} from '../types/core/ISubscription'
-import {IObserver} from '../types/core/IObserver'
-import {IScheduler} from '../types/IScheduler'
+import {Observable} from '../types/core/Observable'
+import {Subscription} from '../types/core/Subscription'
+import {Observer} from '../types/core/Observer'
+import {Scheduler} from '../types/Scheduler'
 import {toSafeFunction, SafeFunction} from '../lib/ToSafeFunction'
 
-export class IntervalSubscription implements ISubscription {
+export class IntervalSubscription implements Subscription {
   private count = 0
-  private subscription: ISubscription
+  private subscription: Subscription
   private safeSinkNext: SafeFunction<(v: number) => void>
 
-  constructor (private sink: IObserver<number>, private scheduler: IScheduler, interval: number) {
+  constructor (private sink: Observer<number>, private scheduler: Scheduler, interval: number) {
     this.subscription = scheduler.setInterval(this.dispatch, interval)
     this.safeSinkNext = toSafeFunction(this.sink.next)
   }
@@ -32,16 +32,16 @@ export class IntervalSubscription implements ISubscription {
   }
 }
 
-export class IntervalObservable<Number> implements IObservable<number> {
+export class IntervalObservable<Number> implements Observable<number> {
   constructor (private interval: number) {
   }
 
-  subscribe (observer: IObserver<number>, scheduler: IScheduler): ISubscription {
+  subscribe (observer: Observer<number>, scheduler: Scheduler): Subscription {
     return new IntervalSubscription(observer, scheduler, this.interval)
   }
 }
 
 
-export function interval (interval: number): IObservable<number> {
+export function interval (interval: number): Observable<number> {
   return new IntervalObservable(interval)
 }

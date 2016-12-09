@@ -3,7 +3,7 @@
  */
 import test from 'ava'
 import {LinkedList, LinkedListNode} from '../src/lib/LinkedList'
-import {IObserver} from '../src/types/core/IObserver'
+import {Observer} from '../src/types/core/Observer'
 
 function toArray<T> (q: LinkedList<T>) {
   const arr: Array<T> = []

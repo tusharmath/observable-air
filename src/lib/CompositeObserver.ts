@@ -2,22 +2,22 @@
  * Created by tushar.mathur on 25/10/16.
  */
 
-import {IObserver} from '../types/core/IObserver'
+import {Observer} from '../types/core/Observer'
 import {LinkedList, LinkedListNode} from './LinkedList'
 
 
-export class CompositeObserver<T> implements IObserver<T> {
-  private observers = new LinkedList<IObserver<T>>()
+export class CompositeObserver<T> implements Observer<T> {
+  private observers = new LinkedList<Observer<T>>()
 
   get length () {
     return this.observers.length
   }
 
-  add (observer: IObserver<T>) {
+  add (observer: Observer<T>) {
     return this.observers.add(observer)
   }
 
-  remove (node: LinkedListNode<IObserver<T>>) {
+  remove (node: LinkedListNode<Observer<T>>) {
     return this.observers.remove(node)
   }
 

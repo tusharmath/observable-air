@@ -2,18 +2,18 @@
  * Created by tushar.mathur on 02/10/16.
  */
 
-import {IObservable} from '../types/core/IObservable'
-import {IObserver} from '../types/core/IObserver'
-import {ISubscription} from '../types/core/ISubscription'
-import {IScheduler} from '../types/IScheduler'
+import {Observable} from '../types/core/Observable'
+import {Observer} from '../types/core/Observer'
+import {Subscription} from '../types/core/Subscription'
+import {Scheduler} from '../types/Scheduler'
 import {Curry} from '../lib/Curry'
 
 export type TTapper<T> = (value: T) => void
-export type TSource<T> = IObservable<T>
-export type TResult<T> = IObservable<T>
+export type TSource<T> = Observable<T>
+export type TResult<T> = Observable<T>
 
-export class TapObserver<T> implements IObserver<T> {
-  constructor (private tapper: TTapper<T>, private observer: IObserver<T>) {
+export class TapObserver<T> implements Observer<T> {
+  constructor (private tapper: TTapper<T>, private observer: Observer<T>) {
 
   }
 
@@ -37,12 +37,12 @@ export class TapObservable<T> implements TResult<T> {
 
   }
 
-  subscribe (observer: IObserver<T>, scheduler: IScheduler): ISubscription {
+  subscribe (observer: Observer<T>, scheduler: Scheduler): Subscription {
     return this.source.subscribe(new TapObserver(this.tapper, observer), scheduler)
   }
 }
 
-export const tap = Curry(function (tapper: {(f: any): void}, source: IObservable < any >) {
+export const tap = Curry(function (tapper: {(f: any): void}, source: Observable < any >) {
     return new TapObservable(tapper, source)
   }
 ) as Function &

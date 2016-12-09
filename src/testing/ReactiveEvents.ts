@@ -3,7 +3,7 @@
  */
 
 import {IEvent, EventType} from '../types/IEvent'
-import {ISubscription} from '../types/core/ISubscription'
+import {Subscription} from '../types/core/Subscription'
 
 export class EventNext<T> implements IEvent {
   type: EventType
@@ -33,7 +33,7 @@ export class EventComplete implements IEvent {
 export class EventEnd implements IEvent {
   type: EventType
 
-  constructor (public time: number, public subscription: ISubscription) {
+  constructor (public time: number, public subscription: Subscription) {
     this.type = EventType.end
   }
 }
@@ -42,7 +42,7 @@ export class EventEnd implements IEvent {
 export class EventStart implements IEvent {
   type: EventType
 
-  constructor (public time: number, public subscription: ISubscription) {
+  constructor (public time: number, public subscription: Subscription) {
     this.type = EventType.start
   }
 }
@@ -60,11 +60,11 @@ export const ReactiveEvents = {
     return new EventComplete(time)
   },
 
-  start (time: number, subscription: ISubscription): EventComplete {
+  start (time: number, subscription: Subscription): EventComplete {
     return new EventStart(time, subscription)
   },
 
-  end (time: number, subscription: ISubscription): EventComplete {
+  end (time: number, subscription: Subscription): EventComplete {
     return new EventEnd(time, subscription)
   }
 }

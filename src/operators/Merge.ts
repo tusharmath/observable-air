@@ -2,16 +2,16 @@
  * Created by tushar.mathur on 17/10/16.
  */
 
-import {IObservable} from '../types/core/IObservable'
-import {IObserver} from '../types/core/IObserver'
-import {IScheduler} from '../types/IScheduler'
-import {ISubscription} from '../types/core/ISubscription'
+import {Observable} from '../types/core/Observable'
+import {Observer} from '../types/core/Observer'
+import {Scheduler} from '../types/Scheduler'
+import {Subscription} from '../types/core/Subscription'
 import {CompositeSubscription} from '../lib/CompositeSubscription'
 
-export class MergeObserver<T> implements IObserver<T> {
+export class MergeObserver<T> implements Observer<T> {
   private count = 0
 
-  constructor (private total: number, private sink: IObserver<T>) {
+  constructor (private total: number, private sink: Observer<T>) {
   }
 
   next (val: T): void {
@@ -30,11 +30,11 @@ export class MergeObserver<T> implements IObserver<T> {
   }
 }
 
-export class MergeObservable<T> implements IObservable<T> {
-  constructor (private sources: Array<IObservable<T>>) {
+export class MergeObservable<T> implements Observable<T> {
+  constructor (private sources: Array<Observable<T>>) {
   }
 
-  subscribe (observer: IObserver<T>, scheduler: IScheduler): ISubscription {
+  subscribe (observer: Observer<T>, scheduler: Scheduler): Subscription {
     const cSub = new CompositeSubscription()
     const mergeObserver = new MergeObserver(this.sources.length, observer)
     for (var i = 0; i < this.sources.length; ++i) {
@@ -44,6 +44,6 @@ export class MergeObservable<T> implements IObservable<T> {
   }
 }
 
-export function merge <T> (...sources: Array<IObservable<T>>) {
+export function merge <T> (...sources: Array<Observable<T>>) {
   return new MergeObservable(sources)
 }

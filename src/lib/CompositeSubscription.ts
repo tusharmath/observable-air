@@ -2,24 +2,24 @@
  * Created by tushar.mathur on 12/10/16.
  */
 
-import {ISubscription} from '../types/core/ISubscription'
+import {Subscription} from '../types/core/Subscription'
 import {LinkedList, LinkedListNode} from './LinkedList'
 
-const unsubscribe = (x: LinkedListNode<ISubscription>) => x.value.unsubscribe()
+const unsubscribe = (x: LinkedListNode<Subscription>) => x.value.unsubscribe()
 
-export class CompositeSubscription implements ISubscription {
+export class CompositeSubscription implements Subscription {
   public closed = false
-  private subscriptions: LinkedList<ISubscription>
+  private subscriptions: LinkedList<Subscription>
 
   constructor () {
-    this.subscriptions = new LinkedList<ISubscription>()
+    this.subscriptions = new LinkedList<Subscription>()
   }
 
-  add (d: ISubscription) {
+  add (d: Subscription) {
     return this.subscriptions.add(d)
   }
 
-  remove (d: LinkedListNode<ISubscription>) {
+  remove (d: LinkedListNode<Subscription>) {
     d.value.unsubscribe()
     return this.subscriptions.remove(d)
   }
