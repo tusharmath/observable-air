@@ -1,7 +1,6 @@
 /**
  * Created by tushar.mathur on 27/09/16.
  */
-
 import {Observable} from '../types/core/Observable'
 import {Subscription} from '../types/core/Subscription'
 import {Observer} from '../types/core/Observer'
@@ -13,7 +12,7 @@ export class IntervalSubscription implements Subscription {
   private subscription: Subscription
   private safeSinkNext: SafeFunction<(v: number) => void>
 
-  constructor (private sink: Observer<number>, private scheduler: Scheduler, interval: number) {
+  constructor (private sink: Observer<number>, scheduler: Scheduler, interval: number) {
     this.subscription = scheduler.setInterval(this.dispatch, interval)
     this.safeSinkNext = toSafeFunction(this.sink.next)
   }
@@ -32,7 +31,7 @@ export class IntervalSubscription implements Subscription {
   }
 }
 
-export class IntervalObservable<Number> implements Observable<number> {
+export class IntervalObservable implements Observable<number> {
   constructor (private interval: number) {
   }
 

@@ -1,7 +1,6 @@
 /**
  * Created by tushar.mathur on 28/09/16.
  */
-
 import {Observable} from '../types/core/Observable'
 import {Subscription} from '../types/core/Subscription'
 import {Observer} from '../types/core/Observer'
@@ -12,7 +11,7 @@ class FromArraySubscription <T> implements Subscription {
   private subscription: Subscription
   closed = false
 
-  constructor (private array: Array<T>, private sink: Observer<T>, private scheduler: Scheduler) {
+  constructor (private array: Array<T>, private sink: Observer<T>, scheduler: Scheduler) {
     this.subscription = scheduler.setTimeout(this.executeSafely.bind(this), 1)
   }
 

@@ -36,6 +36,6 @@ export class DOMObservable implements TResult {
 export const fromDOM = Curry(function (element: HTMLElement, name: string) {
   return new DOMObservable(name, element)
 }) as Function &
-  {<T, R> (element: HTMLElement, name: string): TResult} &
-  {<T, R> (element: HTMLElement): {(name: string): TResult}}
+  {(element: HTMLElement, name: string): TResult} &
+  {(element: HTMLElement): {(name: string): TResult}}
 

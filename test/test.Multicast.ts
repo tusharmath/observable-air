@@ -11,8 +11,6 @@ import {multicast} from '../src/operators/Multicast'
 
 test(t => {
   let i = 0
-  const results0: Array<number> = []
-  const results1: Array<number> = []
   const sh = TestScheduler.of()
   const ob0 = new TestObserver(sh)
   const ob1 = new TestObserver(sh)

@@ -15,6 +15,6 @@ export type TResult = Subscription
 export const forEach = Curry(function <T> (onNext: TOnNext<T>, observable: TSource<T>) {
   return observable.subscribe(BaseObserver.of(onNext), DefaultScheduler.of())
 }) as Function &
-  {<T, R> (onNext: TOnNext<T>, source: TSource<T>): TResult} &
-  {<T, R> (onNext: TOnNext<T>): {(source: TSource<T>): TResult}}
+  {<T> (onNext: TOnNext<T>, source: TSource<T>): TResult} &
+  {<T> (onNext: TOnNext<T>): {(source: TSource<T>): TResult}}
 

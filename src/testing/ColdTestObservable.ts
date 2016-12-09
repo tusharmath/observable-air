@@ -8,7 +8,7 @@ import {EventNext} from './ReactiveEvents'
 import {Observer} from '../types/core/Observer'
 import {Scheduler} from '../types/Scheduler'
 
-export function ColdTestObservable<T> (scheduler: Scheduler, events: Array<IEvent>) {
+export function ColdTestObservable (scheduler: Scheduler, events: Array<IEvent>) {
   return new TestObservable((observer: Observer<any>) => {
     var closed = false
     for (var i = 0; i < events.length && !closed; i++) {

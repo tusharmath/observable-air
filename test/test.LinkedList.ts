@@ -3,7 +3,6 @@
  */
 import test from 'ava'
 import {LinkedList, LinkedListNode} from '../src/lib/LinkedList'
-import {Observer} from '../src/types/core/Observer'
 
 function toArray<T> (q: LinkedList<T>) {
   const arr: Array<T> = []
@@ -28,8 +27,8 @@ test('add()', t => {
 test('remove(): Remove First (non-empty)', t => {
   const q = LinkedList.of()
   const a = q.add('A')
-  const b = q.add('B')
-  const c = q.add('C')
+  q.add('B')
+  q.add('C')
   q.remove(a)
 
   t.is((<LinkedListNode<string>> q.head()).value, 'B')
@@ -40,8 +39,8 @@ test('remove(): Remove First (non-empty)', t => {
 
 test('remove(): Remove LAST (non-empty)', t => {
   const q = LinkedList.of()
-  const a = q.add('A')
-  const b = q.add('B')
+  q.add('A')
+  q.add('B')
   const c = q.add('C')
   q.remove(c)
 
@@ -54,9 +53,9 @@ test('remove(): Remove LAST (non-empty)', t => {
 
 test('remove(): Remove MIDDLE (non-empty)', t => {
   const q = LinkedList.of()
-  const a = q.add('A')
+  q.add('A')
   const b = q.add('B')
-  const c = q.add('C')
+  q.add('C')
 
   q.remove(b)
   t.is((<LinkedListNode<string>> q.head()).value, 'A')

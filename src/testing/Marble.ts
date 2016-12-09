@@ -1,7 +1,6 @@
 /**
  * Created by tushar.mathur on 23/10/16.
  */
-
 import {START_SUBSCRIPTION_TIME} from './TestScheduler'
 import {IEvent, EventType} from '../types/IEvent'
 import {ReactiveEvents, EventNext} from './ReactiveEvents'
@@ -10,7 +9,7 @@ import {ReactiveEvents, EventNext} from './ReactiveEvents'
 // todo: configurations should be arguments and not globally set once
 export const MARBLE_SIZE = 10
 
-export function marble <T> (message: String, err: Error = new Error()): Array<IEvent> {
+export function marble (message: String, err: Error = new Error()): Array<IEvent> {
   var events: Array<IEvent> = []
   var time = START_SUBSCRIPTION_TIME
   for (var i = 0; i < message.length; ++i) {

@@ -1,12 +1,11 @@
 /**
  * Created by tushar.mathur on 19/10/16.
  */
-
 import test from 'ava'
 import {TestScheduler} from '../src/testing/TestScheduler'
 import {ReactiveEvents} from '../src/testing/ReactiveEvents'
 import {sample} from '../src/operators/Sample'
-import {marble, toMarble} from '../src/testing/Marble'
+import {marble} from '../src/testing/Marble'
 
 function toArray (...t: Array<any>) {
   return t.join(',')
