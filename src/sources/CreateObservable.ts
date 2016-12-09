@@ -15,9 +15,7 @@ export class CreateObservable<T> implements Observable<T> {
 
   subscribe (observer: Observer<T>, scheduler: Scheduler): Subscription {
     const cSub = new CompositeSubscription()
-    cSub.add(scheduler.setTimeout(() => {
-      cSub.add(BaseSubscription.from(this.f(observer, scheduler)))
-    }, 1))
+    cSub.add(scheduler.setTimeout(() => cSub.add(BaseSubscription.from(this.f(observer, scheduler))), 1))
     return cSub
   }
 }
