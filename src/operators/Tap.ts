@@ -5,7 +5,7 @@
 import {Observable} from '../types/core/Observable'
 import {Observer} from '../types/core/Observer'
 import {Subscription} from '../types/core/Subscription'
-import {IScheduler} from '../types/IScheduler'
+import {Scheduler} from '../types/Scheduler'
 import {Curry} from '../lib/Curry'
 
 export type TTapper<T> = (value: T) => void
@@ -37,7 +37,7 @@ export class TapObservable<T> implements TResult<T> {
 
   }
 
-  subscribe (observer: Observer<T>, scheduler: IScheduler): Subscription {
+  subscribe (observer: Observer<T>, scheduler: Scheduler): Subscription {
     return this.source.subscribe(new TapObserver(this.tapper, observer), scheduler)
   }
 }

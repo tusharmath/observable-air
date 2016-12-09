@@ -3,7 +3,7 @@
  */
 
 
-import {IScheduler} from '../types/IScheduler'
+import {Scheduler} from '../types/Scheduler'
 import {Subscription} from '../types/core/Subscription'
 import {ITask} from '../types/ITask'
 import {ScheduleTimeout} from './ScheduleTimeout'
@@ -15,7 +15,7 @@ import {ScheduleRequestAnimationFrame} from './ScheduleRequestAnimationFrame'
 function run (task: IScheduledTask) {
   return task.run()
 }
-export class DefaultScheduler implements IScheduler {
+export class DefaultScheduler implements Scheduler {
   setImmediate (task: ITask): Subscription {
     return run(new ScheduleImmediately(task))
   }

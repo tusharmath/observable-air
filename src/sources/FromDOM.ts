@@ -3,7 +3,7 @@
  */
 import {Observable} from '../types/core/Observable'
 import {Observer} from '../types/core/Observer'
-import {IScheduler} from '../types/IScheduler'
+import {Scheduler} from '../types/Scheduler'
 import {Subscription} from '../types/core/Subscription'
 import {IListener} from '../types/IListener'
 import {Curry} from '../lib/Curry'
@@ -25,7 +25,7 @@ export class DOMObservable implements TResult {
   constructor (private name: string, private element: HTMLElement) {
   }
 
-  subscribe (observer: Observer<Event>, scheduler: IScheduler): Subscription {
+  subscribe (observer: Observer<Event>, scheduler: Scheduler): Subscription {
     const listener = (e: Event) => observer.next(e)
     this.element.addEventListener(this.name, listener)
     return new DOMSubscription(this.element, listener, this.name)

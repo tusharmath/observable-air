@@ -4,7 +4,7 @@
 
 import {Observable} from '../types/core/Observable'
 import {Observer} from '../types/core/Observer'
-import {IScheduler} from '../types/IScheduler'
+import {Scheduler} from '../types/Scheduler'
 import {Subscription} from '../types/core/Subscription'
 import {CompositeSubscription} from '../lib/CompositeSubscription'
 
@@ -34,7 +34,7 @@ export class MergeObservable<T> implements Observable<T> {
   constructor (private sources: Array<Observable<T>>) {
   }
 
-  subscribe (observer: Observer<T>, scheduler: IScheduler): Subscription {
+  subscribe (observer: Observer<T>, scheduler: Scheduler): Subscription {
     const cSub = new CompositeSubscription()
     const mergeObserver = new MergeObserver(this.sources.length, observer)
     for (var i = 0; i < this.sources.length; ++i) {

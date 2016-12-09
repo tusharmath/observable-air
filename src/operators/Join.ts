@@ -5,7 +5,7 @@
 
 import {Observable} from '../types/core/Observable'
 import {Observer} from '../types/core/Observer'
-import {IScheduler} from '../types/IScheduler'
+import {Scheduler} from '../types/Scheduler'
 import {Subscription} from '../types/core/Subscription'
 import {CompositeSubscription} from '../lib/CompositeSubscription'
 
@@ -32,7 +32,7 @@ export class JoinObserver<T> implements Observer<Observable<T>> {
   private count: number
   private sourceCompleted: boolean
 
-  constructor (private sink: Observer<T>, private scheduler: IScheduler, private subscriptions: CompositeSubscription) {
+  constructor (private sink: Observer<T>, private scheduler: Scheduler, private subscriptions: CompositeSubscription) {
     this.sourceCompleted = false
     this.count = 0
   }
@@ -72,7 +72,7 @@ export class JoinObservable<T> implements Observable<T> {
   constructor (private source: Observable<Observable<T>>) {
   }
 
-  subscribe (observer: Observer<T>, scheduler: IScheduler): Subscription {
+  subscribe (observer: Observer<T>, scheduler: Scheduler): Subscription {
     const subscription = new CompositeSubscription()
     subscription.add(
       this.source.subscribe(new JoinObserver(observer, scheduler, subscription), scheduler)

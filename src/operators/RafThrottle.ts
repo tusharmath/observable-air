@@ -4,7 +4,7 @@
 
 import {Observable} from '../types/core/Observable'
 import {Subscription} from '../types/core/Subscription'
-import {IScheduler} from '../types/IScheduler'
+import {Scheduler} from '../types/Scheduler'
 import {Observer} from '../types/core/Observer'
 import {CompositeSubscription} from '../lib/CompositeSubscription'
 import {LinkedListNode} from '../lib/LinkedList'
@@ -15,7 +15,7 @@ export class RafObserver<T> implements Observer<T> {
   private canFlush = true
 
   constructor (private sink: Observer<T>,
-               private scheduler: IScheduler,
+               private scheduler: Scheduler,
                private cSub: CompositeSubscription) {
     this.flush = this.flush.bind(this)
   }
@@ -48,7 +48,7 @@ export class RafThrottle<T> implements Observable<T> {
   constructor (private source: Observable<T>) {
   }
 
-  subscribe (observer: Observer<T>, scheduler: IScheduler): Subscription {
+  subscribe (observer: Observer<T>, scheduler: Scheduler): Subscription {
     const cSub = new CompositeSubscription()
     cSub.add(this.source.subscribe(new RafObserver(observer, scheduler, cSub), scheduler))
     return cSub

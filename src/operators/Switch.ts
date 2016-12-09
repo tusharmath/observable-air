@@ -3,7 +3,7 @@
  */
 import {Observable} from '../types/core/Observable'
 import {Subscription} from '../types/core/Subscription'
-import {IScheduler} from '../types/IScheduler'
+import {Scheduler} from '../types/Scheduler'
 import {Observer} from '../types/core/Observer'
 import {CompositeSubscription} from '../lib/CompositeSubscription'
 import {LinkedListNode} from '../lib/LinkedList'
@@ -30,7 +30,7 @@ export class SwitchObserver<T> implements Observer<Observable<T>> {
 
   constructor (private sink: Observer<T>,
                private cSub: CompositeSubscription,
-               private scheduler: IScheduler) {
+               private scheduler: Scheduler) {
   }
 
   private removeCurrentSub () {
@@ -60,7 +60,7 @@ export class SwitchLatest<T> implements Observable<T> {
   constructor (private source: Observable<Observable<T>>) {
   }
 
-  subscribe (observer: Observer<T>, scheduler: IScheduler): Subscription {
+  subscribe (observer: Observer<T>, scheduler: Scheduler): Subscription {
     const cSub = new CompositeSubscription()
     cSub.add(this.source.subscribe(new SwitchObserver(observer, cSub, scheduler), scheduler))
     return cSub

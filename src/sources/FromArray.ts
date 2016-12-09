@@ -5,14 +5,14 @@
 import {Observable} from '../types/core/Observable'
 import {Subscription} from '../types/core/Subscription'
 import {Observer} from '../types/core/Observer'
-import {IScheduler} from '../types/IScheduler'
+import {Scheduler} from '../types/Scheduler'
 import {toSafeFunction} from '../lib/ToSafeFunction'
 
 class FromArraySubscription <T> implements Subscription {
   private subscription: Subscription
   closed = false
 
-  constructor (private array: Array<T>, private sink: Observer<T>, private scheduler: IScheduler) {
+  constructor (private array: Array<T>, private sink: Observer<T>, private scheduler: Scheduler) {
     this.subscription = scheduler.setTimeout(this.executeSafely.bind(this), 1)
   }
 
@@ -41,7 +41,7 @@ export class FromObservable<T> implements Observable<T> {
   constructor (private array: Array<T>) {
   }
 
-  subscribe (observer: Observer<T>, scheduler: IScheduler): Subscription {
+  subscribe (observer: Observer<T>, scheduler: Scheduler): Subscription {
     return new FromArraySubscription<T>(this.array, observer, scheduler)
   }
 }

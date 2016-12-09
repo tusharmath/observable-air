@@ -3,14 +3,14 @@
  */
 
 import {ReactiveEvents} from './ReactiveEvents'
-import {IScheduler} from '../types/IScheduler'
+import {Scheduler} from '../types/Scheduler'
 import {IEvent} from '../types/IEvent'
 import {Observer} from '../types/core/Observer'
 
 export class TestObserver<T> implements Observer<T> {
   results: Array<IEvent>
 
-  constructor (private scheduler: IScheduler) {
+  constructor (private scheduler: Scheduler) {
     this.results = []
   }
 

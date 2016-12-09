@@ -4,7 +4,7 @@
 
 import {Observable} from '../types/core/Observable'
 import {Subscription} from '../types/core/Subscription'
-import {IScheduler} from '../types/IScheduler'
+import {Scheduler} from '../types/Scheduler'
 import {Observer} from '../types/core/Observer'
 
 export const ERROR_MESSAGE = 'Test Exception'
@@ -32,7 +32,7 @@ export class Thrower implements Observable<void> {
   constructor (private source: Observable<any>) {
   }
 
-  subscribe (observer: Observer<void>, scheduler: IScheduler): Subscription {
+  subscribe (observer: Observer<void>, scheduler: Scheduler): Subscription {
     return this.source.subscribe(new ThrowerObserver(observer), scheduler)
   }
 }

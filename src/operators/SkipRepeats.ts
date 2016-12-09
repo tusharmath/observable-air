@@ -5,7 +5,7 @@
 import {Observable} from '../types/core/Observable'
 import {Observer} from '../types/core/Observer'
 import {Subscription} from '../types/core/Subscription'
-import {IScheduler} from '../types/IScheduler'
+import {Scheduler} from '../types/Scheduler'
 import {Curry} from '../lib/Curry'
 
 export type THasher<T, R> = (value: T) => R
@@ -45,7 +45,7 @@ export class SkipRepeatsObservable <T, H> implements TResult <T> {
   constructor (private hashFunction: THasher<T, H>, private source: TSource<T>) {
   }
 
-  subscribe (observer: Observer<T>, scheduler: IScheduler): Subscription {
+  subscribe (observer: Observer<T>, scheduler: Scheduler): Subscription {
     return this.source.subscribe(new SkipRepeatsObserver(this.hashFunction, observer), scheduler)
   }
 }

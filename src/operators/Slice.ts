@@ -5,7 +5,7 @@
 import {Observable} from '../types/core/Observable'
 import {Observer} from '../types/core/Observer'
 import {Subscription} from '../types/core/Subscription'
-import {IScheduler} from '../types/IScheduler'
+import {Scheduler} from '../types/Scheduler'
 import {Curry} from '../lib/Curry'
 
 class SliceObserver<T> implements Observer<T> {
@@ -53,7 +53,7 @@ export class SliceObservable<T> implements Observable<T> {
   constructor (private start: number, private total: number, private source: Observable<T>) {
   }
 
-  subscribe (observer: Observer<T>, scheduler: IScheduler): Subscription {
+  subscribe (observer: Observer<T>, scheduler: Scheduler): Subscription {
     const sliceObserver = new SliceObserver(this.start, this.total, observer)
     const subscription = this.source.subscribe(sliceObserver, scheduler)
     sliceObserver.start(subscription)

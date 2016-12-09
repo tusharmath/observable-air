@@ -6,7 +6,7 @@
 import {Observable} from '../types/core/Observable'
 import {Observer} from '../types/core/Observer'
 import {Subscription} from '../types/core/Subscription'
-import {IScheduler} from '../types/IScheduler'
+import {Scheduler} from '../types/Scheduler'
 import {Curry} from '../lib/Curry'
 
 export type TPredicate<T> = {(value: T): boolean}
@@ -36,7 +36,7 @@ export class FilterObservable <T> implements TResult<T> {
                private source: Observable<T>) {
   }
 
-  subscribe (observer: Observer<T>, scheduler: IScheduler): Subscription {
+  subscribe (observer: Observer<T>, scheduler: Scheduler): Subscription {
     return this.source.subscribe(new FilterObserver(this.predicate, observer), scheduler)
   }
 }

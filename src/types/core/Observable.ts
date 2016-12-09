@@ -4,8 +4,8 @@
 
 import {Subscription} from './Subscription'
 import {Observer} from './Observer'
-import {IScheduler} from '../IScheduler'
+import {Scheduler} from '../Scheduler'
 
 export interface Observable<T> {
-  subscribe(observer: Observer<T>, scheduler: IScheduler): Subscription
+  subscribe(observer: Observer<T>, scheduler: Scheduler): Subscription
 }

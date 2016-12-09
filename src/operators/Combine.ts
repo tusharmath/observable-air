@@ -3,7 +3,7 @@
  */
 import {Observable} from '../types/core/Observable'
 import {Observer} from '../types/core/Observer'
-import {IScheduler} from '../types/IScheduler'
+import {Scheduler} from '../types/Scheduler'
 import {Subscription} from '../types/core/Subscription'
 import {CompositeSubscription} from '../lib/CompositeSubscription'
 import {ObservableCollection} from '../lib/ObservableCollection'
@@ -59,7 +59,7 @@ export class CombineObservable<T> implements Observable<T> {
   constructor (private selector: TSelector<T>, private sources: Array<Observable<any>>) {
   }
 
-  subscribe (observer: Observer<T>, scheduler: IScheduler): Subscription {
+  subscribe (observer: Observer<T>, scheduler: Scheduler): Subscription {
     const cSub = new CompositeSubscription()
     const ob = new CombinedObserver(this.selector, this.sources.length, observer)
     for (var i = 0; i < this.sources.length; ++i) {

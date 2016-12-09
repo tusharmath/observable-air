@@ -3,7 +3,7 @@
  */
 
 import {ITask} from '../types/ITask'
-import {IScheduler} from '../types/IScheduler'
+import {Scheduler} from '../types/Scheduler'
 import {Observable} from '../types/core/Observable'
 import {Subscription} from '../types/core/Subscription'
 import {IEvent} from '../types/IEvent'
@@ -34,7 +34,7 @@ class TaskSubscription implements Subscription {
   }
 }
 
-export class TestScheduler implements IScheduler {
+export class TestScheduler implements Scheduler {
   private clock = 0
   private queue = new LinkedList<TaskSchedule>()
 

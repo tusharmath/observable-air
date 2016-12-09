@@ -4,7 +4,7 @@
 
 import {Observable} from '../types/core/Observable'
 import {Observer} from '../types/core/Observer'
-import {IScheduler} from '../types/IScheduler'
+import {Scheduler} from '../types/Scheduler'
 import {Subscription} from '../types/core/Subscription'
 import {LinkedListNode} from '../lib/LinkedList'
 import {CompositeObserver} from '../lib/CompositeObserver'
@@ -14,7 +14,7 @@ export class MulticastSubscription<T> implements Subscription {
   private node = this.sharedObserver.addObserver(this.observer, this.scheduler)
 
   constructor (private observer: Observer<T>,
-               private scheduler: IScheduler,
+               private scheduler: Scheduler,
                private sharedObserver: MulticastObserver<T>) {
   }
 
@@ -31,7 +31,7 @@ export class MulticastObserver<T> extends CompositeObserver<T> {
     super()
   }
 
-  addObserver (observer: Observer<T>, scheduler: IScheduler) {
+  addObserver (observer: Observer<T>, scheduler: Scheduler) {
     const node = this.add(observer)
     if (this.length === 1) {
       this.subscription = this.source.subscribe(this, scheduler)
@@ -54,7 +54,7 @@ export class Multicast<T> implements Observable<T> {
   }
 
 
-  subscribe (observer: Observer<T>, scheduler: IScheduler): Subscription {
+  subscribe (observer: Observer<T>, scheduler: Scheduler): Subscription {
     return new MulticastSubscription(observer, scheduler, this.sharedObserver)
   }
 }

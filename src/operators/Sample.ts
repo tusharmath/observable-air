@@ -3,7 +3,7 @@
  */
 import {Observable} from '../types/core/Observable'
 import {Observer} from '../types/core/Observer'
-import {IScheduler} from '../types/IScheduler'
+import {Scheduler} from '../types/Scheduler'
 import {Subscription} from '../types/core/Subscription'
 import {CompositeSubscription} from '../lib/CompositeSubscription'
 import {Curry} from '../lib/Curry'
@@ -80,7 +80,7 @@ export class SampleObservable<T> implements TResult<T> {
                private sources: TSources) {
   }
 
-  subscribe (observer: Observer<T>, scheduler: IScheduler): Subscription {
+  subscribe (observer: Observer<T>, scheduler: Scheduler): Subscription {
     const cSub = new CompositeSubscription()
     const sampleObserver = new SampleObserver(this.sources.length, observer, this.func)
     for (var i = 0; i < this.sources.length; ++i) {
