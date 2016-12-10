@@ -10,7 +10,7 @@ test(t => {
   const sh = TestScheduler.of()
   const {results} = sh.start(() => create(ob => ob.next('A')))
   t.deepEqual(results, [
-    ReactiveEvents.next(201, 'A')
+    ReactiveEvents.next(200, 'A')
   ])
 })
 
@@ -20,6 +20,6 @@ test(t => {
     sh.setTimeout(() => ob.next('A'), 15)
   }))
   t.deepEqual(results, [
-    ReactiveEvents.next(216, 'A')
+    ReactiveEvents.next(215, 'A')
   ])
 })
