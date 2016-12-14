@@ -9,7 +9,6 @@
     "cleanup": "find ./src -type f -name '*.js' -delete && find ./src -type f -name '*.map' -delete",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "hydra": "node --trace-hydrogen --trace-phase=Z --trace-deopt --code-comments --hydrogen-track-positions --redirect-code-traces --redirect-code-traces-to=code.asm .dist/benchmarks/run",
-    "lint": "tslint ./src/**.ts ./src/**/*.ts ./test/*.ts",
     "prepublish": "tsc -d && npm run build && npm run build-min",
     "rfc": "node chore/rfc",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
@@ -38,7 +37,6 @@
     "rollup": "^0.36.3",
     "rollup-plugin-commonjs": "^5.0.5",
     "semantic-release": "^6.3.2",
-    "tslint": "^4.0.1",
     "typescript": "^2.0.3",
     "uglify": "^0.1.5",
     "validate-commit-msg": "^2.8.2"
@@ -52,7 +50,6 @@
       "path": "./node_modules/cz-conventional-changelog"
     },
     "ghooks": {
-      "pre-commit": "npm run lint",
       "commit-msg": "validate-commit-msg",
       "pre-push": "npm test",
       "post-merge": "yarn install",
