@@ -3,7 +3,7 @@
   "description": "Observables for the calorie conscious",
   "main": "./src/main",
   "jsnext:main": "./.dist/main-es.min",
-  "typings": ".dist/src/main.d.ts",
+  "typings": "./src/main.d.ts",
   "scripts": {
     "benchmark": "tsc && node ./benchmarks/run",
     "cleanup": "find ./src -type f -name '*.js' -delete && find ./src -type f -name '*.map' -delete",
