@@ -13,7 +13,6 @@ before_install:
   - npm i -g npm@^2.0.0
 before_script:
   - npm prune
-  - npm run lint
   - npm run benchmark | node ./travis-comment
   - npm run coverage
 after_success:
