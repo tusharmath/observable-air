@@ -3,7 +3,7 @@
   "description": "Observables for the calorie conscious",
   "main": "./src/main",
   "jsnext:main": "./.dist/main-es.min",
-  "typings": ".dist/src/main.d.ts",
+  "typings": "./src/main.d.ts",
   "scripts": {
     "benchmark": "tsc && node ./benchmarks/run",
     "cleanup": "find ./src -type f -name '*.js' -delete && find ./src -type f -name '*.map' -delete",
@@ -34,7 +34,7 @@
     "ghooks": "^1.3.2",
     "nyc": "^10.0.0",
     "request-promise": "^4.1.1",
-    "rollup": "^0.37.0",
+    "rollup": "^0.41.0",
     "rollup-plugin-commonjs": "^5.0.5",
     "semantic-release": "^6.3.2",
     "typescript": "^2.0.3",
