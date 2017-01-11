@@ -1,13 +1,10 @@
 /**
  * Created by tushar.mathur on 27/09/16.
  */
-
-
 import {Observable} from '../types/core/Observable'
 import {Observer} from '../types/core/Observer'
 import {Subscription} from '../types/core/Subscription'
 import {Scheduler} from '../types/Scheduler'
-import {Curry} from '../lib/Curry'
 
 
 export type TReducer<T, R> = {(previousValue: R, currentValue: T): R}
@@ -46,10 +43,6 @@ export class ReduceObservable <T, R> implements TResult<R> {
   }
 }
 
-export const reduce = Curry(function <T, R> (t0: TReducer<T, R>, t1: R, t2: Observable<T>) {
+export const reduce = function <T, R> (t0: TReducer<T, R>, t1: R, t2: Observable<T>) {
   return new ReduceObservable(t0, t1, t2)
-}) as Function &
-  {<T, R>(reducer: TReducer<T, R>, seed: TSeed<R>, source: TSource<T>): TResult<R>} &
-  {<T, R>(reducer: TReducer<T, R>): {(seed: TSeed<R>, source: TSource<T>): TResult<R>}} &
-  {<T, R>(reducer: TReducer<T, R>, seed: TSeed<R>): {(source: TSource<T>): TResult<R>}} &
-  {<T, R>(reducer: TReducer<T, R>): { (seed: TSeed<R>): { (source: TSource<T>): TResult<R> } } }
+}

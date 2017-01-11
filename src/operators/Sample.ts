@@ -6,7 +6,6 @@ import {Observer} from '../types/core/Observer'
 import {Scheduler} from '../types/Scheduler'
 import {Subscription} from '../types/core/Subscription'
 import {CompositeSubscription} from '../lib/CompositeSubscription'
-import {Curry} from '../lib/Curry'
 import {ObservableCollection} from '../lib/ObservableCollection'
 
 
@@ -92,10 +91,6 @@ export class SampleObservable<T> implements TResult<T> {
   }
 }
 
-export const sample = Curry(function <T> (f: TSelector<T>, sampler: TSampler, sources: TSources) {
+export const sample = function <T> (f: TSelector<T>, sampler: TSampler, sources: TSources) {
   return new SampleObservable(f, sampler, sources)
-}) as Function &
-  {<T>(selector: TSelector<T>, sampler: TSampler, source: TSources): TResult<T>} &
-  {<T>(selector: TSelector<T>): {(sampler: TSampler, source: TSources): TResult<T>}} &
-  {<T>(selector: TSelector<T>, sampler: TSampler): {(source: TSources): TResult<T>}} &
-  {<T>(selector: TSelector<T>): { (sampler: TSampler): { (source: TSources): TResult<T> } } }
+}
