@@ -48,6 +48,6 @@ export class SkipRepeatsObservable <T, H> implements TResult <T> {
   }
 }
 
-export const skipRepeats = function (hashFunction: {(t: any): any}, source: Observable<any>) {
+export const skipRepeats = function <T, R>(hashFunction: {(t: T): R}, source: Observable<T>) {
   return new SkipRepeatsObservable(hashFunction, source)
 }
