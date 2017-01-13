@@ -30,15 +30,11 @@ class MapObserver<T, R> implements Observer<T> {
   }
 }
 
-export class MapObservable <T, R> implements TResult<R> {
+export class Mapper <T, R> implements TResult<R> {
   constructor (private mapper: TMapper<T, R>, private source: TSource<T>) {
   }
 
   subscribe (observer: Observer<R>, scheduler: Scheduler): Subscription {
     return this.source.subscribe(new MapObserver(this.mapper, observer), scheduler)
   }
-}
-
-export const map = function <T, R> (mapFunction: (a: T) => R, source: Observable<T>) {
-  return new MapObservable(mapFunction, source)
 }

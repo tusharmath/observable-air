@@ -32,7 +32,7 @@ class ReduceObserver<T, R> implements Observer<T> {
   }
 }
 
-export class ReduceObservable <T, R> implements TResult<R> {
+export class Reducer <T, R> implements TResult<R> {
   constructor (private reducer: TReducer<T, R>,
                private seed: TSeed<R>,
                private source: TSource<T>) {
@@ -41,8 +41,4 @@ export class ReduceObservable <T, R> implements TResult<R> {
   subscribe (obr: Observer<R>, scheduler: Scheduler): Subscription {
     return this.source.subscribe(new ReduceObserver<T, R>(this.reducer, this.seed, obr), scheduler)
   }
-}
-
-export const reduce = function <T, R> (t0: TReducer<T, R>, t1: R, t2: Observable<T>) {
-  return new ReduceObservable(t0, t1, t2)
 }

@@ -59,7 +59,3 @@ export class SliceObservable<T> implements Observable<T> {
   }
 
 }
-
-export const slice = function (start: number, count: number, source: Observable<any>) {
-  return new SliceObservable(start, count, source)
-}

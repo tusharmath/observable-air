@@ -54,7 +54,7 @@ export class CombinedObserver<T> {
   }
 }
 
-export class CombineObservable<T> implements Observable<T> {
+export class Combine<T> implements Observable<T> {
   constructor (private selector: TSelector<T>, private sources: Array<Observable<any>>) {
   }
 
@@ -67,6 +67,3 @@ export class CombineObservable<T> implements Observable<T> {
     return cSub
   }
 }
-
-export const combine = <T> (selector: TSelector<T>, sources: Observable<any>[]) =>
-  new CombineObservable(selector, sources)

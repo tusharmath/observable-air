@@ -20,7 +20,7 @@ export class DOMSubscription implements Subscription {
   }
 }
 
-export class DOMObservable implements TResult {
+export class FromDOM implements TResult {
   constructor (private name: string, private element: HTMLElement) {
   }
 
@@ -30,8 +30,4 @@ export class DOMObservable implements TResult {
     return new DOMSubscription(this.element, listener, this.name)
   }
 
-}
-
-export const fromDOM = function (element: HTMLElement, name: string) {
-  return new DOMObservable(name, element)
 }

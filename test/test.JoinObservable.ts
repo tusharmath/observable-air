@@ -1,11 +1,11 @@
 /**
  * Created by tushar.mathur on 10/10/16.
  */
-
 import test from 'ava'
 import {TestScheduler} from '../src/testing/TestScheduler'
 import {ReactiveEvents} from '../src/testing/ReactiveEvents'
-import {join} from '../src/operators/Join'
+import {from} from '../src/main'
+
 const {next, complete} = ReactiveEvents
 
 test('subscribe()', t => {
@@ -27,7 +27,7 @@ test('subscribe()', t => {
     next(20, sb$$),
     complete(100)
   ])
-  const {results} = sh.start<number>(() => join(s$$))
+  const {results} = sh.start<number>(() => from(s$$).join())
 
   t.deepEqual(results, [
     next(220, 'A0'),
@@ -66,7 +66,7 @@ test('subscribe():hot', t => {
     next(220, sb$$),
     complete(300)
   ])
-  const {results} = sh.start<number>(() => join(s$$))
+  const {results} = sh.start<number>(() => from(s$$).join())
   t.deepEqual(results, [
     next(211, 'A0'),
     next(220, 'A1'),

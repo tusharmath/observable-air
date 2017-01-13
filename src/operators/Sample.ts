@@ -73,7 +73,7 @@ export class SampleObserver<T> implements Observer<T> {
 }
 
 
-export class SampleObservable<T> implements TResult<T> {
+export class Sample<T> implements TResult<T> {
   constructor (private func: TSelector<T>,
                private sampler: TSampler,
                private sources: TSources) {
@@ -89,8 +89,4 @@ export class SampleObservable<T> implements TResult<T> {
     cSub.add(this.sampler.subscribe(sampleObserver, scheduler))
     return cSub
   }
-}
-
-export const sample = function <T> (f: TSelector<T>, sampler: TSampler, sources: TSources) {
-  return new SampleObservable(f, sampler, sources)
 }

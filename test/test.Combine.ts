@@ -1,12 +1,12 @@
 /**
  * Created by tushar on 08/12/16.
  */
-
 import test from 'ava'
-import {combine} from '../src/operators/Combine'
 import {TestScheduler} from '../src/testing/TestScheduler'
 import {marble} from '../src/testing/Marble'
-import { ReactiveEvents } from '../src/testing/ReactiveEvents'
+import {ReactiveEvents} from '../src/testing/ReactiveEvents'
+import {combine} from '../src/main'
+
 
 test(t => {
   const S = TestScheduler.of()

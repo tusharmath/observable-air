@@ -28,7 +28,7 @@ class FilterObserver <T> implements Observer<T> {
 }
 
 
-export class FilterObservable <T> implements TResult<T> {
+export class Filter <T> implements TResult<T> {
   constructor (private predicate: {(t: T): boolean},
                private source: Observable<T>) {
   }
@@ -36,8 +36,4 @@ export class FilterObservable <T> implements TResult<T> {
   subscribe (observer: Observer<T>, scheduler: Scheduler): Subscription {
     return this.source.subscribe(new FilterObserver(this.predicate, observer), scheduler)
   }
-}
-
-export const filter = function<T> (predicate: TPredicate<T>, source: TSource<T>) {
-  return new FilterObservable(predicate, source)
 }

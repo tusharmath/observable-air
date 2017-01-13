@@ -4,8 +4,8 @@
 import test from 'ava'
 import {TestScheduler} from '../src/testing/TestScheduler'
 import {ReactiveEvents} from '../src/testing/ReactiveEvents'
-import {sample} from '../src/operators/Sample'
 import {marble} from '../src/testing/Marble'
+import {from} from '../src/Main'
 
 function toArray (...t: Array<any>) {
   return t.join(',')
@@ -33,7 +33,7 @@ test(t => {
     ReactiveEvents.next(251, '#'),
     ReactiveEvents.complete(251)
   ])
-  const {results} = sh.start(() => sample(toArray, S$, [a$, b$]))
+  const {results} = sh.start(() => from(S$).sample(toArray, [a$, b$]))
   t.deepEqual(results, [
     ReactiveEvents.next(211, 'A0,B0'),
     ReactiveEvents.next(221, 'A0,B1'),
@@ -67,7 +67,7 @@ test(t => {
     ReactiveEvents.next(251, '#'),
     ReactiveEvents.complete(251)
   ])
-  const {results} = sh.start(() => sample((a, b) => a + b, S$, [a$, b$]))
+  const {results} = sh.start(() => from(S$).sample((a, b) => a + b, [a$, b$]))
   t.deepEqual(results, [
     ReactiveEvents.next(211, 0 + 0),
     ReactiveEvents.next(221, 0 + 1000),
@@ -83,7 +83,7 @@ test(t => {
   const sh = TestScheduler.of()
   const t1$ = sh.Hot(marble('-A-B-C-D'))
   const t2$ = sh.Hot(marble('--a-b-c-d'))
-  const {results} = sh.start(() => sample((a, b) => a + b, t2$, [t1$, t2$]))
+  const {results} = sh.start(() => from(t2$).sample((a, b) => a + b, [t1$, t2$]))
   t.deepEqual(results, [
     ReactiveEvents.next(220, 'Aa'),
     ReactiveEvents.next(240, 'Bb'),

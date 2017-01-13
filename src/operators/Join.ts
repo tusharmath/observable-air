@@ -68,7 +68,7 @@ export class JoinObserver<T> implements Observer<Observable<T>> {
 }
 
 
-export class JoinObservable<T> implements Observable<T> {
+export class Join<T> implements Observable<T> {
   constructor (private source: Observable<Observable<T>>) {
   }
 
@@ -79,8 +79,4 @@ export class JoinObservable<T> implements Observable<T> {
     )
     return subscription
   }
-}
-
-export function join <T> (source: Observable<Observable<T>>) {
-  return new JoinObservable(source)
 }

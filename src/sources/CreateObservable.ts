@@ -16,5 +16,3 @@ export class CreateObservable<T> implements Observable<T> {
     return BaseSubscription.from(this.f(observer, scheduler))
   }
 }
-
-export const create = <T> (f: SubscriberFunction<T>) => new CreateObservable(f)

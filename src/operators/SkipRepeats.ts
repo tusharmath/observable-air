@@ -39,15 +39,11 @@ class SkipRepeatsObserver <T, H> implements Observer<T> {
   }
 }
 
-export class SkipRepeatsObservable <T, H> implements TResult <T> {
+export class SkipRepeats <T, H> implements TResult <T> {
   constructor (private hashFunction: THasher<T, H>, private source: TSource<T>) {
   }
 
   subscribe (observer: Observer<T>, scheduler: Scheduler): Subscription {
     return this.source.subscribe(new SkipRepeatsObserver(this.hashFunction, observer), scheduler)
   }
-}
-
-export const skipRepeats = function <T, R>(hashFunction: {(t: T): R}, source: Observable<T>) {
-  return new SkipRepeatsObservable(hashFunction, source)
 }

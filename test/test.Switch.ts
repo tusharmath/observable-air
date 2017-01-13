@@ -4,8 +4,7 @@
 import test from 'ava'
 import {TestScheduler} from '../src/testing/TestScheduler'
 import {ReactiveEvents} from '../src/testing/ReactiveEvents'
-import {switchLatest} from '../src/operators/Switch'
-
+import {from} from '../src/Main'
 
 test(t => {
   const sh = TestScheduler.of()
@@ -28,7 +27,7 @@ test(t => {
     ReactiveEvents.next(225, b$$),
     ReactiveEvents.complete(300)
   ])
-  const {results} = sh.start(() => switchLatest(source$))
+  const {results} = sh.start(() => from(source$).switchLatest())
   t.deepEqual(results, [
     ReactiveEvents.next(210, 'A0'),
     ReactiveEvents.next(220, 'A1'),
