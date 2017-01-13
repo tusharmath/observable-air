@@ -4,7 +4,7 @@
 
 'use strict'
 
-import commonjs from 'rollup-plugin-commonjs'
+const commonjs = require('rollup-plugin-commonjs')
 
 export default {
   exports: 'named',
