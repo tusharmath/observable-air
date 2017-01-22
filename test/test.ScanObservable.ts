@@ -4,7 +4,7 @@
 import test from 'ava'
 import {TestScheduler} from '../src/testing/TestScheduler'
 import {ReactiveEvents} from '../src/testing/ReactiveEvents'
-import {from} from '../src/Main'
+import {air} from '../src/Main'
 
 const {next, complete} = ReactiveEvents
 
@@ -18,7 +18,7 @@ test('ScanObservable.subscribe()', t => {
     next(250, 4),
     complete(250)
   ])
-  const {results} = sh.start(() => from($).scan((a, b) => a + b, 0))
+  const {results} = sh.start(() => air($).scan((a, b) => a + b, 0))
   t.deepEqual(results, [
     next(410, 0),
     next(420, 1),

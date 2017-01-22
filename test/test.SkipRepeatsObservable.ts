@@ -7,7 +7,7 @@
 import test from 'ava'
 import {TestScheduler} from '../src/testing/TestScheduler'
 import {ReactiveEvents} from '../src/testing/ReactiveEvents'
-import {from} from '../src/Main'
+import {air} from '../src/Main'
 
 const {next, complete} = ReactiveEvents
 
@@ -21,7 +21,7 @@ test('SkipRepeatsObservable.subscribe()', t => {
     next(235, 20),
     complete(250)
   ])
-  const {results} = sh.start(() => from($).skipRepeats((x: number) => x))
+  const {results} = sh.start(() => air($).skipRepeats((x: number) => x))
   t.deepEqual(results, [
     next(410, 0),
     next(420, 10),

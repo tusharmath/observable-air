@@ -5,14 +5,14 @@ import test from 'ava'
 import {TestScheduler} from '../src/testing/TestScheduler'
 import {ReactiveEvents} from '../src/testing/ReactiveEvents'
 import {TestObserver} from '../src/testing/TestObserver'
-import {from} from '../src/Main'
+import {air} from '../src/Main'
 
 test(t => {
   let i = 0
   const sh = TestScheduler.of()
   const ob0 = new TestObserver(sh)
   const ob1 = new TestObserver(sh)
-  const t$ = from(sh.Hot([
+  const t$ = air(sh.Hot([
     ReactiveEvents.next(10, () => ++i),
     ReactiveEvents.next(20, () => ++i),
     ReactiveEvents.next(30, () => ++i),
