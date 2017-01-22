@@ -12,7 +12,7 @@ test(t => {
   const S = TestScheduler.of()
   const a$ = S.Hot(marble('-a-b-c|'))
   const b$ = S.Hot(marble('--A-B-C--|'))
-  const {results} = S.start(() => combine((a, b) => a + b, [a$, b$]))
+  const {results} = S.start(() => combine([a$, b$], (a: number, b: number) => a + b))
 
   t.deepEqual(results, [
     ReactiveEvents.next(220, 'aA'),

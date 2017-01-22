@@ -40,6 +40,7 @@ export const of = <T> (...t: T[]) => {
 export const fromArray = <T> (t: T[]) => {
   return air(new FromObservable(t))
 }
-export const combine = <R> (fn: (...t: any[]) => R, source: Observable<any>[]) => {
+const defaultCombinator = (...t: any[]) => t
+export const combine = (source: Observable<any>[], fn: <R> (...t: any[]) => R = defaultCombinator) => {
   return air(new Combine(fn, source))
 }

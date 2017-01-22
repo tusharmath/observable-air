@@ -15,7 +15,7 @@ export function bm_fromArray_combine (suite: Suite) {
   return suite
     .add(
       'file -> combine(sum3, [a, b, c]) -> reduce(sum2, 0)',
-      (d: IDeferred) => run(combine(sum3, [fromArray(a), fromArray(b), fromArray(c)]).reduce(sum2, 0), d),
+      (d: IDeferred) => run(combine([fromArray(a), fromArray(b), fromArray(c)], sum3).reduce(sum2, 0), d),
       {defer: true}
     )
 }
