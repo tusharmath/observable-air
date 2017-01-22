@@ -4,7 +4,7 @@
 import test from 'ava'
 import {TestScheduler} from '../src/testing/TestScheduler'
 import {marble, toMarble} from '../src/testing/Marble'
-import {air} from '../src/Main'
+import {air} from '../src/main'
 
 test(t => {
   const sh = TestScheduler.of()

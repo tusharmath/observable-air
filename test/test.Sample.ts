@@ -5,7 +5,7 @@ import test from 'ava'
 import {TestScheduler} from '../src/testing/TestScheduler'
 import {ReactiveEvents} from '../src/testing/ReactiveEvents'
 import {marble} from '../src/testing/Marble'
-import {air} from '../src/Main'
+import {air} from '../src/main'
 
 function toArray (...t: Array<any>) {
   return t.join(',')
