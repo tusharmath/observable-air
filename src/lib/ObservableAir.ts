@@ -42,6 +42,10 @@ export class Air<T> implements Observable<T> {
     return Air.from(new Join(this as any))
   }
 
+  flatMap (fn: <T, V> (t: T) => Observable<V>) {
+    return this.map(fn).join()
+  }
+
   map <R> (fn: (t: T) => R) {
     return Air.from(new Mapper(fn, this))
   }
