@@ -58,7 +58,3 @@ export class Multicast<T> implements Observable<T> {
     return new MulticastSubscription(observer, scheduler, this.sharedObserver)
   }
 }
-
-export function multicast<T> (source: Observable<T>) {
-  return new Multicast(source)
-}

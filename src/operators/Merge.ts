@@ -30,7 +30,7 @@ export class MergeObserver<T> implements Observer<T> {
   }
 }
 
-export class MergeObservable<T> implements Observable<T> {
+export class Merge<T> implements Observable<T> {
   constructor (private sources: Array<Observable<T>>) {
   }
 
@@ -42,8 +42,4 @@ export class MergeObservable<T> implements Observable<T> {
     }
     return cSub
   }
-}
-
-export function merge <T> (...sources: Array<Observable<T>>) {
-  return new MergeObservable(sources)
 }

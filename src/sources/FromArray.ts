@@ -45,10 +45,3 @@ export class FromObservable<T> implements Observable<T> {
   }
 }
 
-export function fromArray<T> (list: Array<T>): Observable<T> {
-  return new FromObservable(list)
-}
-
-export function of<T> (...list: Array<T>) {
-  return fromArray(list)
-}

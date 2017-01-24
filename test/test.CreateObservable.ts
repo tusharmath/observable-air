@@ -3,8 +3,8 @@
  */
 import test from 'ava'
 import {TestScheduler} from '../src/testing/TestScheduler'
-import {create} from '../src/sources/CreateObservable'
 import {ReactiveEvents} from '../src/testing/ReactiveEvents'
+import {create} from '../src/main'
 
 test(t => {
   const sh = TestScheduler.of()

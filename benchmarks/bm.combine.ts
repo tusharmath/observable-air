@@ -2,10 +2,8 @@
  * Created by tushar on 08/12/16.
  */
 import {Suite} from 'benchmark'
-import {fromArray} from '../src/sources/FromArray'
 import {run, array, IDeferred} from './lib'
-import {combine} from '../src/operators/Combine'
-import {reduce} from '../src/operators/Reduce'
+import {combine, fromArray} from '../src/main'
 
 const a = array(1e2)
 const b = array(1e2)
@@ -17,10 +15,7 @@ export function bm_fromArray_combine (suite: Suite) {
   return suite
     .add(
       'file -> combine(sum3, [a, b, c]) -> reduce(sum2, 0)',
-      (d: IDeferred) => run(
-        reduce(sum2, 0, combine(sum3, [fromArray(a), fromArray(b), fromArray(c)])),
-        d
-      ),
+      (d: IDeferred) => run(combine([fromArray(a), fromArray(b), fromArray(c)], sum3).reduce(sum2, 0), d),
       {defer: true}
     )
 }

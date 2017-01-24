@@ -6,7 +6,6 @@ import {Observer} from '../types/core/Observer'
 import {Scheduler} from '../types/Scheduler'
 import {Subscription} from '../types/core/Subscription'
 import {IListener} from '../types/IListener'
-import {Curry} from '../lib/Curry'
 
 export type TResult = Observable<Event>
 
@@ -21,7 +20,7 @@ export class DOMSubscription implements Subscription {
   }
 }
 
-export class DOMObservable implements TResult {
+export class FromDOM implements TResult {
   constructor (private name: string, private element: HTMLElement) {
   }
 
@@ -32,10 +31,3 @@ export class DOMObservable implements TResult {
   }
 
 }
-
-export const fromDOM = Curry(function (element: HTMLElement, name: string) {
-  return new DOMObservable(name, element)
-}) as Function &
-  {(element: HTMLElement, name: string): TResult} &
-  {(element: HTMLElement): {(name: string): TResult}}
-

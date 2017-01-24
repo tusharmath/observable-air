@@ -8,7 +8,8 @@ import test from 'ava'
 import {TestScheduler} from '../src/testing/TestScheduler'
 import {ReactiveEvents, EventError} from '../src/testing/ReactiveEvents'
 import {IEvent} from '../src/types/IEvent'
-import {interval} from '../src/sources/Interval'
+import {interval} from '../src/main'
+
 const {next, error} = ReactiveEvents
 
 test('subscribe()', t => {
