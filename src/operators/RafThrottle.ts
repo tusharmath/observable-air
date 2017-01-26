@@ -55,6 +55,6 @@ class RafThrottle<T> implements Observable<T> {
   }
 }
 
-export function rafThrottle<T> (source: Observable<T>) {
+export function rafThrottle<T> (source: Observable<T>): Observable<T> {
   return new RafThrottle(source)
 }

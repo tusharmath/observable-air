@@ -1,8 +1,6 @@
 /**
  * Created by tushar.mathur on 10/10/16.
  */
-
-
 import {Observable} from '../types/core/Observable'
 import {Observer} from '../types/core/Observer'
 import {Scheduler} from '../types/Scheduler'
@@ -81,6 +79,6 @@ class JoinObservable<T> implements Observable<T> {
   }
 }
 
-export function join <T> (source: Observable<Observable<T>>) {
+export function join <T> (source: Observable<Observable<T>>): Observable<T> {
   return new JoinObservable(source)
 }

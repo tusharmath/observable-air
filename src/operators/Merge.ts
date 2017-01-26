@@ -1,7 +1,6 @@
 /**
  * Created by tushar.mathur on 17/10/16.
  */
-
 import {Observable} from '../types/core/Observable'
 import {Observer} from '../types/core/Observer'
 import {Scheduler} from '../types/Scheduler'
@@ -44,6 +43,6 @@ class MergeObservable<T> implements Observable<T> {
   }
 }
 
-export function merge <T> (...sources: Array<Observable<T>>) {
+export function merge <T> (...sources: Array<Observable<T>>): Observable<T> {
   return new MergeObservable(sources)
 }

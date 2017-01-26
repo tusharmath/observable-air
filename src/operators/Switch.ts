@@ -67,6 +67,6 @@ class SwitchLatest<T> implements Observable<T> {
   }
 }
 
-export function switchLatest<T> (source: Observable<Observable<T>>) {
+export function switchLatest<T> (source: Observable<Observable<T>>): Observable<T> {
   return new SwitchLatest(source)
 }

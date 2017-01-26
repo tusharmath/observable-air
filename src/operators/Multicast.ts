@@ -59,6 +59,6 @@ class Multicast<T> implements Observable<T> {
   }
 }
 
-export function multicast<T> (source: Observable<T>) {
+export function multicast<T> (source: Observable<T>): Observable<T> {
   return new Multicast(source)
 }
