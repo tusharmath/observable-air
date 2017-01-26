@@ -10,7 +10,7 @@ import {Subscription} from '../types/core/Subscription'
 import {CompositeSubscription} from '../lib/CompositeSubscription'
 
 
-export class JoinValueObserver<T> implements Observer<T> {
+class JoinValueObserver<T> implements Observer<T> {
   constructor (private sink: Observer<T>, private root: JoinObserver<T>) {
   }
 
@@ -28,7 +28,7 @@ export class JoinValueObserver<T> implements Observer<T> {
 
 }
 
-export class JoinObserver<T> implements Observer<Observable<T>> {
+class JoinObserver<T> implements Observer<Observable<T>> {
   private count: number
   private sourceCompleted: boolean
 
@@ -68,7 +68,7 @@ export class JoinObserver<T> implements Observer<Observable<T>> {
 }
 
 
-export class JoinObservable<T> implements Observable<T> {
+class JoinObservable<T> implements Observable<T> {
   constructor (private source: Observable<Observable<T>>) {
   }
 

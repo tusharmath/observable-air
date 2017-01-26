@@ -31,7 +31,7 @@ class FilterObserver <T> implements Observer<T> {
 }
 
 
-export class FilterObservable <T> implements TResult<T> {
+class FilterObservable <T> implements TResult<T> {
   constructor (private predicate: {(t: T): boolean},
                private source: Observable<T>) {
   }

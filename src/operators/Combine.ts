@@ -13,7 +13,7 @@ export type TSelector<T> = {(...e: Array<any>): T}
 export type TSource = Array<Observable<any>>
 export type TResult <T> = Observable<T>
 
-export class CombineValueObserver<T> implements Observer<T> {
+class CombineValueObserver<T> implements Observer<T> {
   constructor (private id: number, private sink: CombinedObserver<T>) {
   }
 
@@ -30,7 +30,7 @@ export class CombineValueObserver<T> implements Observer<T> {
   }
 }
 
-export class CombinedObserver<T> {
+class CombinedObserver<T> {
   private collection = new ObservableCollection(this.total)
 
   constructor (private func: TSelector<T>, private total: number, private sink: Observer<T>) {
@@ -55,7 +55,7 @@ export class CombinedObserver<T> {
   }
 }
 
-export class CombineObservable<T> implements Observable<T> {
+class CombineObservable<T> implements Observable<T> {
   constructor (private selector: TSelector<T>, private sources: Array<Observable<any>>) {
   }
 

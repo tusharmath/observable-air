@@ -12,7 +12,7 @@ export type TTapper<T> = (value: T) => void
 export type TSource<T> = Observable<T>
 export type TResult<T> = Observable<T>
 
-export class TapObserver<T> implements Observer<T> {
+class TapObserver<T> implements Observer<T> {
   constructor (private tapper: TTapper<T>, private observer: Observer<T>) {
 
   }
@@ -32,7 +32,7 @@ export class TapObserver<T> implements Observer<T> {
 
 }
 
-export class TapObservable<T> implements TResult<T> {
+class TapObservable<T> implements TResult<T> {
   constructor (private tapper: TTapper<T>, private source: TSource<T>) {
 
   }

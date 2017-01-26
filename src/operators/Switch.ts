@@ -9,7 +9,7 @@ import {CompositeSubscription} from '../lib/CompositeSubscription'
 import {LinkedListNode} from '../lib/LinkedList'
 
 
-export class SwitchValueObserver<T> implements Observer<T> {
+class SwitchValueObserver<T> implements Observer<T> {
   constructor (private sink: Observer<T>) {
   }
 
@@ -25,7 +25,7 @@ export class SwitchValueObserver<T> implements Observer<T> {
   }
 }
 
-export class SwitchObserver<T> implements Observer<Observable<T>> {
+class SwitchObserver<T> implements Observer<Observable<T>> {
   private currentSub: LinkedListNode<Subscription> | undefined = void 0
 
   constructor (private sink: Observer<T>,
@@ -56,7 +56,7 @@ export class SwitchObserver<T> implements Observer<Observable<T>> {
   }
 }
 
-export class SwitchLatest<T> implements Observable<T> {
+class SwitchLatest<T> implements Observable<T> {
   constructor (private source: Observable<Observable<T>>) {
   }
 

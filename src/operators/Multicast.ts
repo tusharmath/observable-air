@@ -9,7 +9,7 @@ import {Subscription} from '../types/core/Subscription'
 import {LinkedListNode} from '../lib/LinkedList'
 import {CompositeObserver} from '../lib/CompositeObserver'
 
-export class MulticastSubscription<T> implements Subscription {
+class MulticastSubscription<T> implements Subscription {
   closed = false
   private node = this.sharedObserver.addObserver(this.observer, this.scheduler)
 
@@ -24,7 +24,7 @@ export class MulticastSubscription<T> implements Subscription {
   }
 }
 
-export class MulticastObserver<T> extends CompositeObserver<T> {
+class MulticastObserver<T> extends CompositeObserver<T> {
   private subscription: Subscription
 
   constructor (private source: Observable<T>) {
@@ -47,7 +47,7 @@ export class MulticastObserver<T> extends CompositeObserver<T> {
   }
 }
 
-export class Multicast<T> implements Observable<T> {
+class Multicast<T> implements Observable<T> {
   private sharedObserver = new MulticastObserver(this.source)
 
   constructor (private source: Observable<T>) {

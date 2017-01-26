@@ -9,7 +9,7 @@ import {Observer} from '../types/core/Observer'
 import {CompositeSubscription} from '../lib/CompositeSubscription'
 import {LinkedListNode} from '../lib/LinkedList'
 
-export class RafObserver<T> implements Observer<T> {
+class RafObserver<T> implements Observer<T> {
   private completed = false
   private queue: LinkedListNode<Subscription>
   private canFlush = true
@@ -44,7 +44,7 @@ export class RafObserver<T> implements Observer<T> {
   }
 }
 
-export class RafThrottle<T> implements Observable<T> {
+class RafThrottle<T> implements Observable<T> {
   constructor (private source: Observable<T>) {
   }
 

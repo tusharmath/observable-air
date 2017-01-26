@@ -15,7 +15,7 @@ export type TSampler = Observable<any>
 export type TSources = Array<Observable<any>>
 export type TResult<T> = Observable<T>
 
-export class SampleValueObserver<T> implements Observer<T> {
+class SampleValueObserver<T> implements Observer<T> {
   constructor (private id: number,
                private sampleObserver: SampleObserver<T>) {
   }
@@ -33,7 +33,7 @@ export class SampleValueObserver<T> implements Observer<T> {
   }
 
 }
-export class SampleObserver<T> implements Observer<T> {
+class SampleObserver<T> implements Observer<T> {
   private collection = new ObservableCollection(this.total)
   private samplerCompleted = false
 
@@ -74,7 +74,7 @@ export class SampleObserver<T> implements Observer<T> {
 }
 
 
-export class SampleObservable<T> implements TResult<T> {
+class SampleObservable<T> implements TResult<T> {
   constructor (private func: TSelector<T>,
                private sampler: TSampler,
                private sources: TSources) {
