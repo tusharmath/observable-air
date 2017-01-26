@@ -66,3 +66,7 @@ export class SwitchLatest<T> implements Observable<T> {
     return cSub
   }
 }
+
+export function switchLatest<T> (source: Observable<Observable<T>>) {
+  return new SwitchLatest(source)
+}

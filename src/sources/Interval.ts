@@ -31,11 +31,16 @@ export class IntervalSubscription implements Subscription {
   }
 }
 
-export class Interval implements Observable<number> {
+export class IntervalObservable implements Observable<number> {
   constructor (private interval: number) {
   }
 
   subscribe (observer: Observer<number>, scheduler: Scheduler): Subscription {
     return new IntervalSubscription(observer, scheduler, this.interval)
   }
+}
+
+
+export function interval (interval: number): Observable<number> {
+  return new IntervalObservable(interval)
 }

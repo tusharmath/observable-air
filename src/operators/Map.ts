@@ -1,10 +1,12 @@
 /**
  * Created by tushar.mathur on 27/09/16.
  */
+
 import {Observable} from '../types/core/Observable'
 import {Observer} from '../types/core/Observer'
 import {Subscription} from '../types/core/Subscription'
 import {Scheduler} from '../types/Scheduler'
+import {Curry} from '../lib/Curry'
 
 
 export type TMapper<T, R> = (value: T) => R
@@ -30,7 +32,7 @@ class MapObserver<T, R> implements Observer<T> {
   }
 }
 
-export class Mapper <T, R> implements TResult<R> {
+export class MapObservable <T, R> implements TResult<R> {
   constructor (private mapper: TMapper<T, R>, private source: TSource<T>) {
   }
 
@@ -38,3 +40,9 @@ export class Mapper <T, R> implements TResult<R> {
     return this.source.subscribe(new MapObserver(this.mapper, observer), scheduler)
   }
 }
+
+export const map = Curry(function <T, R> (mapFunction: (a: T) => R, source: Observable<T>) {
+  return new MapObservable(mapFunction, source)
+}) as Function &
+  {<T, R> (mapper: TMapper<T, R>, source: TSource<T>): TResult<R>} &
+  {<T, R> (mapper: TMapper<T, R>): {(source: TSource<T>): TResult<R>}}

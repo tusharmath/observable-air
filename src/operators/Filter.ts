@@ -1,10 +1,13 @@
 /**
  * Created by tushar.mathur on 27/09/16.
  */
+
+
 import {Observable} from '../types/core/Observable'
 import {Observer} from '../types/core/Observer'
 import {Subscription} from '../types/core/Subscription'
 import {Scheduler} from '../types/Scheduler'
+import {Curry} from '../lib/Curry'
 
 export type TPredicate<T> = {(value: T): boolean}
 export type TSource<T> = Observable<T>
@@ -28,7 +31,7 @@ class FilterObserver <T> implements Observer<T> {
 }
 
 
-export class Filter <T> implements TResult<T> {
+export class FilterObservable <T> implements TResult<T> {
   constructor (private predicate: {(t: T): boolean},
                private source: Observable<T>) {
   }
@@ -37,3 +40,9 @@ export class Filter <T> implements TResult<T> {
     return this.source.subscribe(new FilterObserver(this.predicate, observer), scheduler)
   }
 }
+
+export const filter = Curry(function<T> (predicate: TPredicate<T>, source: TSource<T>) {
+  return new FilterObservable(predicate, source)
+}) as Function &
+  {<T> (predicate: TPredicate<T>, source: TSource<T>): TResult<T>} &
+  {<T> (predicate: TPredicate<T>): {(source: TSource<T>): TResult<T>}}
