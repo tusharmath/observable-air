@@ -34,7 +34,7 @@
     "ghooks": "^2.0.0",
     "nyc": "^10.0.0",
     "request-promise": "^4.1.1",
-    "rollup": "^0.41.0",
+    "rollup": "^0.41.2",
     "rollup-plugin-commonjs": "^7.0.0",
     "semantic-release": "^6.3.2",
     "typescript": "^2.0.3",
