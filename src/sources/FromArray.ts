@@ -36,7 +36,7 @@ class FromArraySubscription <T> implements Subscription {
   }
 }
 
-export class FromObservable<T> implements Observable<T> {
+class FromObservable<T> implements Observable<T> {
   constructor (private array: Array<T>) {
   }
 

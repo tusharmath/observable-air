@@ -10,7 +10,7 @@ import {Curry} from '../lib/Curry'
 
 export type TResult = Observable<Event>
 
-export class DOMSubscription implements Subscription {
+class DOMSubscription implements Subscription {
   closed: boolean = false
 
   constructor (private element: HTMLElement, private listener: IListener, private name: string) {
@@ -21,7 +21,7 @@ export class DOMSubscription implements Subscription {
   }
 }
 
-export class DOMObservable implements TResult {
+class DOMObservable implements TResult {
   constructor (private name: string, private element: HTMLElement) {
   }
 

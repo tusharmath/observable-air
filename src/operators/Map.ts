@@ -32,7 +32,7 @@ class MapObserver<T, R> implements Observer<T> {
   }
 }
 
-export class MapObservable <T, R> implements TResult<R> {
+class MapObservable <T, R> implements TResult<R> {
   constructor (private mapper: TMapper<T, R>, private source: TSource<T>) {
   }
 

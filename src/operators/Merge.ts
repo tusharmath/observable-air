@@ -1,14 +1,13 @@
 /**
  * Created by tushar.mathur on 17/10/16.
  */
-
 import {Observable} from '../types/core/Observable'
 import {Observer} from '../types/core/Observer'
 import {Scheduler} from '../types/Scheduler'
 import {Subscription} from '../types/core/Subscription'
 import {CompositeSubscription} from '../lib/CompositeSubscription'
 
-export class MergeObserver<T> implements Observer<T> {
+class MergeObserver<T> implements Observer<T> {
   private count = 0
 
   constructor (private total: number, private sink: Observer<T>) {
@@ -30,7 +29,7 @@ export class MergeObserver<T> implements Observer<T> {
   }
 }
 
-export class MergeObservable<T> implements Observable<T> {
+class MergeObservable<T> implements Observable<T> {
   constructor (private sources: Array<Observable<T>>) {
   }
 
@@ -44,6 +43,6 @@ export class MergeObservable<T> implements Observable<T> {
   }
 }
 
-export function merge <T> (...sources: Array<Observable<T>>) {
+export function merge <T> (...sources: Array<Observable<T>>): Observable<T> {
   return new MergeObservable(sources)
 }

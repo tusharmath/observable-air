@@ -35,7 +35,7 @@ class ReduceObserver<T, R> implements Observer<T> {
   }
 }
 
-export class ReduceObservable <T, R> implements TResult<R> {
+class ReduceObservable <T, R> implements TResult<R> {
   constructor (private reducer: TReducer<T, R>,
                private seed: TSeed<R>,
                private source: TSource<T>) {
