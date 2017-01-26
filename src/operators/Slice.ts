@@ -1,10 +1,12 @@
 /**
  * Created by tushar.mathur on 27/09/16.
  */
+
 import {Observable} from '../types/core/Observable'
 import {Observer} from '../types/core/Observer'
 import {Subscription} from '../types/core/Subscription'
 import {Scheduler} from '../types/Scheduler'
+import {Curry} from '../lib/Curry'
 
 class SliceObserver<T> implements Observer<T> {
   closed: boolean
@@ -59,3 +61,11 @@ export class SliceObservable<T> implements Observable<T> {
   }
 
 }
+
+export const slice = Curry(function (start: number, count: number, source: Observable<any>) {
+  return new SliceObservable(start, count, source)
+}) as Function &
+  {<T>(start: number, count: number, source: Observable<T>): Observable<T>} &
+  {<T>(start: number): {(count: number, source: Observable<T>): Observable<T>}} &
+  {<T>(start: number, count: number): {(source: Observable<T>): Observable<T>}} &
+  {<T>(start: number): { (count: number): { (source: Observable<T>): Observable<T> } } }

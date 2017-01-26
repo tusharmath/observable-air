@@ -7,8 +7,7 @@
 import test from 'ava'
 import {TestScheduler} from '../src/testing/TestScheduler'
 import {ReactiveEvents} from '../src/testing/ReactiveEvents'
-import {air} from '../src/main'
-
+import {map} from '../src/operators/Map'
 
 const {next, complete} = ReactiveEvents
 
@@ -20,7 +19,7 @@ test('MapObservable.subscribe()', t => {
     next(230, 20),
     complete(250)
   ])
-  const {results} = sh.start(() => air($).map((x: number) => x + 1))
+  const {results} = sh.start(() => map((x: number) => x + 1, $))
   t.deepEqual(results, [
     next(410, 1),
     next(420, 11),
@@ -38,7 +37,7 @@ test('MapObservable.subscribe():HOT', t => {
     next(230, 20),
     complete(250)
   ])
-  const {results} = sh.start(() => air($).map((x: number) => x + 1))
+  const {results} = sh.start(() => map((x: number) => x + 1, $))
   t.deepEqual(results, [
     next(210, 1),
     next(220, 11),

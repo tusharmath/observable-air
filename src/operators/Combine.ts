@@ -7,6 +7,7 @@ import {Scheduler} from '../types/Scheduler'
 import {Subscription} from '../types/core/Subscription'
 import {CompositeSubscription} from '../lib/CompositeSubscription'
 import {ObservableCollection} from '../lib/ObservableCollection'
+import {Curry} from '../lib/Curry'
 
 export type TSelector<T> = {(...e: Array<any>): T}
 export type TSource = Array<Observable<any>>
@@ -54,7 +55,7 @@ export class CombinedObserver<T> {
   }
 }
 
-export class Combine<T> implements Observable<T> {
+export class CombineObservable<T> implements Observable<T> {
   constructor (private selector: TSelector<T>, private sources: Array<Observable<any>>) {
   }
 
@@ -67,3 +68,9 @@ export class Combine<T> implements Observable<T> {
     return cSub
   }
 }
+
+export const combine = Curry(<T> (selector: TSelector<T>, sources: Observable<any>[]) =>
+  new CombineObservable(selector, sources)
+) as Function &
+  {<T, R> (selector: TSelector<T>, sources: TSource): TResult<R>} &
+  {<T, R> (selector: TSelector<T>): {(sources: TSource): TResult<R>}}

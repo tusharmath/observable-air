@@ -1,10 +1,11 @@
 /**
  * Created by tushar.mathur on 09/10/16.
  */
+
 import test from 'ava'
 import {TestScheduler} from '../src/testing/TestScheduler'
 import {ReactiveEvents} from '../src/testing/ReactiveEvents'
-import {air} from '../src/main'
+import {scan} from '../src/operators/Scan'
 
 const {next, complete} = ReactiveEvents
 
@@ -18,7 +19,7 @@ test('ScanObservable.subscribe()', t => {
     next(250, 4),
     complete(250)
   ])
-  const {results} = sh.start(() => air($).scan((a, b) => a + b, 0))
+  const {results} = sh.start(() => scan((a, b) => a + b, 0, $))
   t.deepEqual(results, [
     next(410, 0),
     next(420, 1),
