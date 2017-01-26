@@ -8,7 +8,7 @@ import {Subscription} from '../types/core/Subscription'
 import {SubscriberFunction} from '../types/core/SubscriberFunction'
 import {BaseSubscription} from '../lib/BaseSubscription'
 
-export class CreateObservable<T> implements Observable<T> {
+class CreateObservable<T> implements Observable<T> {
   constructor (private f: SubscriberFunction<T>) {
   }
 
@@ -17,4 +17,4 @@ export class CreateObservable<T> implements Observable<T> {
   }
 }
 
-export const create = <T> (f: SubscriberFunction<T>) => new CreateObservable(f)
+export const create = <T> (f: SubscriberFunction<T>): Observable<T> => new CreateObservable(f)

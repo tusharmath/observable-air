@@ -14,7 +14,7 @@ export type TSeed <R> = R
 export type TSource <T> = Observable<T>
 export type TResult <R> = Observable<R>
 
-export class ScanObserver<T, V> implements Observer<T> {
+class ScanObserver<T, V> implements Observer<T> {
 
   constructor (private reducer: TReducer<T, V>,
                private value: V,
@@ -36,7 +36,7 @@ export class ScanObserver<T, V> implements Observer<T> {
 
 }
 
-export class ScanObservable<T, R> implements TResult<R> {
+class ScanObservable<T, R> implements TResult<R> {
   constructor (private reducer: TReducer<T, R>, private seed: TSeed<R>, private source: TSource<T>) {
 
   }

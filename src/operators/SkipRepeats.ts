@@ -41,7 +41,7 @@ class SkipRepeatsObserver <T, H> implements Observer<T> {
   }
 }
 
-export class SkipRepeatsObservable <T, H> implements TResult <T> {
+class SkipRepeatsObservable <T, H> implements TResult <T> {
   constructor (private hashFunction: THasher<T, H>, private source: TSource<T>) {
   }
 

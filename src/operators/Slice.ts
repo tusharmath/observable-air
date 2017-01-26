@@ -49,7 +49,7 @@ class SliceObserver<T> implements Observer<T> {
   }
 }
 
-export class SliceObservable<T> implements Observable<T> {
+class SliceObservable<T> implements Observable<T> {
   constructor (private start: number, private total: number, private source: Observable<T>) {
   }
 

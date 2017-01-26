@@ -7,7 +7,7 @@ import {Observer} from '../types/core/Observer'
 import {Scheduler} from '../types/Scheduler'
 import {toSafeFunction, SafeFunction} from '../lib/ToSafeFunction'
 
-export class IntervalSubscription implements Subscription {
+class IntervalSubscription implements Subscription {
   private count = 0
   private subscription: Subscription
   private safeSinkNext: SafeFunction<(v: number) => void>
@@ -31,7 +31,7 @@ export class IntervalSubscription implements Subscription {
   }
 }
 
-export class IntervalObservable implements Observable<number> {
+class IntervalObservable implements Observable<number> {
   constructor (private interval: number) {
   }
 

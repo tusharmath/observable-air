@@ -1,10 +1,9 @@
 /**
  * Created by tushar.mathur on 16/10/16.
  */
-
-
-import {CreateObservable} from './CreateObservable'
+import {create} from './CreateObservable'
 import {Observer} from '../types/core/Observer'
+import {Observable} from '../types/core/Observable'
 
 
 export function onResult<T> (observer: Observer<T>, result: T) {
@@ -23,6 +22,6 @@ export function subscriberFunction<T> (f: () => Promise<T>, observer: Observer<T
     .catch(err => onError(observer, err))
 }
 
-export function fromPromise<T> (f: () => Promise<T>) {
-  return new CreateObservable(observer => subscriberFunction(f, observer))
+export function fromPromise<T> (f: () => Promise<T>): Observable<T> {
+  return create(observer => subscriberFunction(f, observer))
 }
