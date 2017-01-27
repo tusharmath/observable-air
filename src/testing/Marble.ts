@@ -3,7 +3,7 @@
  */
 import {IEvent, EventType} from '../types/IEvent'
 import {ReactiveEvents, EventNext} from './ReactiveEvents'
-import {OptionType, resolveOptions} from './TestOptions'
+import {resolveOptions} from './TestOptions'
 
 // todo: migrate all tests to use marble
 // todo: configurations should be arguments and not globally set once
@@ -11,7 +11,7 @@ export const MARBLE_SIZE = 10
 
 export function marble (message: String,
                         err: Error = new Error(),
-                        o?: OptionType): Array<IEvent> {
+                        o?: {start?: number, size?: number}): Array<IEvent> {
   const options = resolveOptions(o)
   const events: Array<IEvent> = []
   let time = options.start
@@ -35,7 +35,7 @@ export function marble (message: String,
 }
 
 export function toMarble<T> (events: Array<IEvent>,
-                             o?: OptionType) {
+                             o?: {start?: number, size?: number}) {
   const options = resolveOptions(o)
   let time = options.start - options.size
   let message = ''
