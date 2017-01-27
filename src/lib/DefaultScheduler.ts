@@ -10,27 +10,6 @@ function run (task: IScheduledTask) {
   return task.run()
 }
 
-class ScheduleImmediately implements IScheduledTask {
-  closed = false
-  private id: number
-
-  constructor (private task: ITask) {
-  }
-
-  run () {
-    this.id = setImmediate(() => {
-      this.closed = true
-      this.task()
-    })
-    return this
-  }
-
-  unsubscribe (): void {
-    if (this.closed) return
-    clearImmediate(this.id)
-    this.closed = true
-  }
-}
 
 class ScheduleRequestAnimationFrame implements IScheduledTask {
   closed = false
@@ -96,10 +75,6 @@ class ScheduleTimeout implements IScheduledTask {
 }
 
 class DefaultScheduler implements Scheduler {
-  setImmediate (task: ITask): Subscription {
-    return run(new ScheduleImmediately(task))
-  }
-
   setInterval (task: ITask, interval: number): Subscription {
     return run(new ScheduleInterval(task, interval))
   }

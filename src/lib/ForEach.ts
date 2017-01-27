@@ -2,7 +2,7 @@
  * Created by tushar.mathur on 01/11/16.
  */
 import {Observable} from '../types/core/Observable'
-import {createScheduler} from '../scheduling/DefaultScheduler'
+import {createScheduler} from './DefaultScheduler'
 import {Subscription} from '../types/core/Subscription'
 import {Curry} from './Curry'
 import {BaseObserver} from './BaseObserver'

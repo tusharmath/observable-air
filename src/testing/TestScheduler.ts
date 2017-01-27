@@ -1,7 +1,6 @@
 /**
  * Created by tushar.mathur on 02/10/16.
  */
-
 import {ITask} from '../types/ITask'
 import {Scheduler} from '../types/Scheduler'
 import {Observable} from '../types/core/Observable'
@@ -56,10 +55,6 @@ export class TestScheduler implements Scheduler {
 
   setTimeout (task: ITask, time: number, now: number = this.now()): Subscription {
     return new TaskSubscription(this.queue, this.queue.add(new TaskSchedule(task, time + now)))
-  }
-
-  setImmediate (task: ITask): Subscription {
-    return this.setTimeout(task, this.now() + 1, 0)
   }
 
   requestAnimationFrame (task: ITask): Subscription {
