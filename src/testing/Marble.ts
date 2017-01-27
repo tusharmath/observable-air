@@ -1,18 +1,21 @@
 /**
  * Created by tushar.mathur on 23/10/16.
  */
-import {START_SUBSCRIPTION_TIME} from './TestScheduler'
 import {IEvent, EventType} from '../types/IEvent'
 import {ReactiveEvents, EventNext} from './ReactiveEvents'
+import {OptionType, resolveOptions} from './TestOptions'
 
 // todo: migrate all tests to use marble
 // todo: configurations should be arguments and not globally set once
 export const MARBLE_SIZE = 10
 
-export function marble (message: String, err: Error = new Error()): Array<IEvent> {
-  var events: Array<IEvent> = []
-  var time = START_SUBSCRIPTION_TIME
-  for (var i = 0; i < message.length; ++i) {
+export function marble (message: String,
+                        err: Error = new Error(),
+                        o?: OptionType): Array<IEvent> {
+  const options = resolveOptions(o)
+  const events: Array<IEvent> = []
+  let time = options.start
+  for (let i = 0; i < message.length; ++i) {
     switch (message[i]) {
       case '-' :
         break
@@ -31,8 +34,10 @@ export function marble (message: String, err: Error = new Error()): Array<IEvent
   return events
 }
 
-export function toMarble<T> (events: Array<IEvent>) {
-  let time = START_SUBSCRIPTION_TIME - MARBLE_SIZE
+export function toMarble<T> (events: Array<IEvent>,
+                             o?: OptionType) {
+  const options = resolveOptions(o)
+  let time = options.start - options.size
   let message = ''
   events.forEach(ev => {
     if (ev.time % MARBLE_SIZE !== 0)

@@ -12,10 +12,7 @@ import {HotTestObservable} from './HotTestObservable'
 import {LinkedList, LinkedListNode} from '../lib/LinkedList'
 import {ISchedulerOptions} from '../types/ISchedulerOptions'
 import {TestObservable} from './TestObservable'
-
-export const START_SUBSCRIPTION_TIME = 200
-export const STOP_SUBSCRIPTION_TIME = 2000
-
+import {resolveOptions, OptionType} from './TestOptions'
 
 class TaskSchedule {
   constructor (public task: ITask, public time: number) {
@@ -88,13 +85,13 @@ export class TestScheduler implements Scheduler {
   }
 
   start<T> (f: () => Observable<T>,
-            start = START_SUBSCRIPTION_TIME,
-            stop = STOP_SUBSCRIPTION_TIME) {
-    var subscription: Subscription
+            o?: OptionType) {
+    const options = resolveOptions(o)
+    let subscription: Subscription
     const resultsObserver = new TestObserver(this)
-    this.setTimeout(() => subscription = f().subscribe(resultsObserver, this), start, 0)
-    this.setTimeout(() => !subscription.closed && subscription.unsubscribe(), stop, 0)
-    this.advanceBy(stop)
+    this.setTimeout(() => subscription = f().subscribe(resultsObserver, this), options.start, 0)
+    this.setTimeout(() => !subscription.closed && subscription.unsubscribe(), options.stop, 0)
+    this.advanceBy(options.stop)
     return resultsObserver
   }
 
