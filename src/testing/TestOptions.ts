@@ -6,13 +6,15 @@ export type OptionType = {
   start: number
   stop: number
   size: number
+  rafTimeout: number
 }
 const DEFAULT_OPTIONS = {
   start: 200,
   stop: 2000,
-  size: 10
+  size: 10,
+  rafTimeout: 16
 }
 
-export const resolveOptions = (opt: {start?: number, stop?: number, size?: number} = {}): OptionType => {
-  return {...opt, ...DEFAULT_OPTIONS}
+export const resolveOptions = <T> (opt: T): OptionType & T => {
+  return Object.assign({}, DEFAULT_OPTIONS, opt)
 }
