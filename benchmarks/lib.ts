@@ -1,4 +1,4 @@
-import {createScheduler} from '../src/scheduling/DefaultScheduler'
+import {createScheduler} from '../src/lib/DefaultScheduler'
 import {Observable} from '../src/types/core/Observable'
 import {BaseObserver} from '../src/lib/BaseObserver'
 import {Scheduler} from '../src/types/Scheduler'

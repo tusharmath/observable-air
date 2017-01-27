@@ -3,7 +3,7 @@
  */
 import test from 'ava'
 import {fromPromise} from '../src/sources/FromPromise'
-import {createScheduler} from '../src/scheduling/DefaultScheduler'
+import {createScheduler} from '../src/lib/DefaultScheduler'
 
 test.cb(t => {
   t.plan(1)
