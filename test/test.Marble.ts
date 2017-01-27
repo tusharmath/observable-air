@@ -1,10 +1,10 @@
 /**
  * Created by tushar.mathur on 02/11/16.
  */
-
 import test from 'ava'
 import {marble, toMarble} from '../src/testing/Marble'
 import {ReactiveEvents} from '../src/testing/ReactiveEvents'
+import {TestScheduler} from '../src/testing/TestScheduler'
 
 test(t => {
   const message = 'ABC|'
@@ -43,4 +43,11 @@ test(t => {
     ReactiveEvents.complete(280)
   ])
   t.is('--A-B-C-D|', message)
+})
+
+test('delay data', t => {
+  const sh = TestScheduler.of({start: 0, stop: 50})
+  const source = marble('012|', undefined, {start: 0})
+  const {results} = sh.start(() => sh.Hot(source))
+  t.is('012|', toMarble(results))
 })
