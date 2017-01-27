@@ -10,9 +10,8 @@ import {TestObserver} from './TestObserver'
 import {ColdTestObservable} from './ColdTestObservable'
 import {HotTestObservable} from './HotTestObservable'
 import {LinkedList, LinkedListNode} from '../lib/LinkedList'
-import {ISchedulerOptions} from '../types/ISchedulerOptions'
 import {TestObservable} from './TestObservable'
-import {resolveOptions} from './TestOptions'
+import {resolveOptions, OptionType} from './TestOptions'
 
 class TaskSchedule {
   constructor (public task: ITask, public time: number) {
@@ -34,7 +33,7 @@ export class TestScheduler implements Scheduler {
   private clock = 0
   private queue = new LinkedList<TaskSchedule>()
 
-  constructor (private options: ISchedulerOptions) {
+  constructor (private options: OptionType) {
   }
 
   tick () {
@@ -84,9 +83,8 @@ export class TestScheduler implements Scheduler {
     })
   }
 
-  start<T> (f: () => Observable<T>,
-            o?: {start?: number, stop?: number}) {
-    const options = resolveOptions(o)
+  start<T> (f: () => Observable<T>) {
+    const options = resolveOptions(this.options)
     let subscription: Subscription
     const resultsObserver = new TestObserver(this)
     this.setTimeout(() => subscription = f().subscribe(resultsObserver, this), options.start, 0)
@@ -103,7 +101,7 @@ export class TestScheduler implements Scheduler {
     return HotTestObservable(this, events) as TestObservable<T>
   }
 
-  static of (options: ISchedulerOptions = {rafTimeout: 16}) {
-    return new TestScheduler(options)
+  static of (options: {start?: number, stop?: number, rafTimeout?: number} = {}) {
+    return new TestScheduler(resolveOptions(options))
   }
 }
