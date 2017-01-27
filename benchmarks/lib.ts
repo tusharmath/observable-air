@@ -1,12 +1,14 @@
+import {createScheduler} from '../src/scheduling/DefaultScheduler'
+import {Observable} from '../src/types/core/Observable'
+import {BaseObserver} from '../src/lib/BaseObserver'
+import {Scheduler} from '../src/types/Scheduler'
 /**
  * Created by tushar.mathur on 05/11/16.
  */
 
 
 const Table = require('cli-table2')
-import {Observable} from '../src/types/core/Observable'
-import {BaseObserver} from '../src/lib/BaseObserver'
-import {DefaultScheduler} from '../src/scheduling/DefaultScheduler'
+
 
 export interface IDeferred {
   resolve (): void
@@ -25,7 +27,7 @@ export function passthrough (z: any, x: any) {
   return x
 }
 
-export const scheduler = new DefaultScheduler()
+export const scheduler = createScheduler() as Scheduler
 
 export function run (observable: Observable<any>, d: IDeferred) {
   observable.subscribe(BaseObserver.of(undefined, undefined, () => d.resolve()), scheduler)

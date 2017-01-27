@@ -1,10 +1,9 @@
 /**
  * Created by tushar.mathur on 17/10/16.
  */
-
 import test from 'ava'
 import {fromPromise} from '../src/sources/FromPromise'
-import {DefaultScheduler} from '../src/scheduling/DefaultScheduler'
+import {createScheduler} from '../src/scheduling/DefaultScheduler'
 
 test.cb(t => {
   t.plan(1)
@@ -21,5 +20,5 @@ test.cb(t => {
     error: (err: Error) => {
       throw err
     }
-  }, DefaultScheduler.of())
+  }, createScheduler())
 })
