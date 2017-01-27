@@ -13,6 +13,6 @@ const DEFAULT_OPTIONS = {
   size: 10
 }
 
-export const resolveOptions = (opt: {start?: number, stop?: number, size?: number} = {}): OptionType => {
-  return {...opt, ...DEFAULT_OPTIONS}
+export const resolveOptions = <T> (opt: T): OptionType & T => {
+  return Object.assign({}, DEFAULT_OPTIONS, opt)
 }
