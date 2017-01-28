@@ -13,12 +13,12 @@ import {LinkedList, LinkedListNode} from '../lib/LinkedList'
 import {TestObservable} from './TestObservable'
 import {resolveOptions, OptionType} from './TestOptions'
 
-class TaskSchedule {
+export class TaskSchedule {
   constructor (public task: ITask, public time: number) {
   }
 }
 
-class TaskSubscription implements Subscription {
+export class TaskSubscription implements Subscription {
   closed: boolean
 
   constructor (private queue: LinkedList<TaskSchedule>, private taskNode: LinkedListNode<TaskSchedule>) {
