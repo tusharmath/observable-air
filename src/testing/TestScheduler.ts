@@ -31,7 +31,7 @@ class TaskSubscription implements Subscription {
 
 export class TestScheduler implements Scheduler {
   private clock = 0
-  private queue = new LinkedList<TaskSchedule>()
+  readonly queue = new LinkedList<TaskSchedule>()
 
   constructor (private options: OptionType) {
   }
@@ -42,7 +42,11 @@ export class TestScheduler implements Scheduler {
   }
 
   advanceBy (time: number): void {
-    while (time-- > -1) this.tick()
+    while (time-- > 0) this.tick()
+  }
+
+  advanceTo (time: number): void {
+    this.advanceBy(time - this.now())
   }
 
   now () {
@@ -83,13 +87,17 @@ export class TestScheduler implements Scheduler {
     })
   }
 
-  start<T> (f: () => Observable<T>) {
-    const options = resolveOptions(this.options)
+  subscribeTo <T> (f: () => Observable<T>) {
     let subscription: Subscription
     const resultsObserver = new TestObserver(this)
-    this.setTimeout(() => subscription = f().subscribe(resultsObserver, this), options.start, 0)
-    this.setTimeout(() => !subscription.closed && subscription.unsubscribe(), options.stop, 0)
-    this.advanceBy(options.stop)
+    this.setTimeout(() => subscription = f().subscribe(resultsObserver, this), resolveOptions(this.options).start, 0)
+    this.setTimeout(() => !subscription.closed && subscription.unsubscribe(), resolveOptions(this.options).stop, 0)
+    return resultsObserver
+  }
+
+  start<T> (f: () => Observable<T>) {
+    const resultsObserver = this.subscribeTo(f)
+    this.advanceBy(this.options.stop)
     return resultsObserver
   }
 
