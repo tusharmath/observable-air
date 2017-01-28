@@ -5,29 +5,14 @@ import {Observable} from '../types/core/Observable'
 import {Subscription} from '../types/core/Subscription'
 import {Observer} from '../types/core/Observer'
 import {Scheduler} from '../types/Scheduler'
-import {toSafeFunction, SafeFunction} from '../lib/ToSafeFunction'
+import {toSafeFunction} from '../lib/ToSafeFunction'
+import {PeriodicSubscription} from './Frames'
 
-class IntervalSubscription implements Subscription {
-  private count = 0
-  private subscription: Subscription
-  private safeSinkNext: SafeFunction<(v: number) => void>
-
-  constructor (private sink: Observer<number>, scheduler: Scheduler, interval: number) {
+class IntervalSubscription extends PeriodicSubscription {
+  constructor (sink: Observer<number>, scheduler: Scheduler, interval: number) {
+    super(sink)
     this.subscription = scheduler.setInterval(this.dispatch, interval)
     this.safeSinkNext = toSafeFunction(this.sink.next)
-  }
-
-  dispatch = () => {
-    const r = this.safeSinkNext.call(this.sink, this.count++)
-    if (r.hasError()) this.sink.error(r.error)
-  }
-
-  unsubscribe (): void {
-    this.subscription.unsubscribe()
-  }
-
-  get closed () {
-    return this.subscription.closed
   }
 }
 
@@ -39,7 +24,6 @@ class IntervalObservable implements Observable<number> {
     return new IntervalSubscription(observer, scheduler, this.interval)
   }
 }
-
 
 export function interval (interval: number): Observable<number> {
   return new IntervalObservable(interval)
