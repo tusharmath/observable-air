@@ -11,17 +11,19 @@ import {ColdTestObservable} from './ColdTestObservable'
 import {HotTestObservable} from './HotTestObservable'
 import {LinkedList, LinkedListNode} from '../lib/LinkedList'
 import {TestObservable} from './TestObservable'
-import {resolveOptions, OptionType} from './TestOptions'
+import {DEFAULT_OPTIONS} from './TestOptions'
 
-class TaskSchedule {
+// TODO: convert to interface
+export class TaskSchedule {
   constructor (public task: ITask, public time: number) {
   }
 }
 
-class TaskSubscription implements Subscription {
+export class TaskSubscription implements Subscription {
   closed: boolean
 
-  constructor (private queue: LinkedList<TaskSchedule>, private taskNode: LinkedListNode<TaskSchedule>) {
+  constructor (private queue: LinkedList<TaskSchedule>,
+               private taskNode: LinkedListNode<TaskSchedule>) {
   }
 
   unsubscribe (): void {
@@ -31,18 +33,22 @@ class TaskSubscription implements Subscription {
 
 export class TestScheduler implements Scheduler {
   private clock = 0
-  private queue = new LinkedList<TaskSchedule>()
+  readonly queue = new LinkedList<TaskSchedule>()
 
-  constructor (private options: OptionType) {
+  constructor (private rafTimeout: number) {
   }
 
   tick () {
-    this.run()
     this.clock++
+    this.run()
   }
 
   advanceBy (time: number): void {
-    while (time-- > -1) this.tick()
+    while (time-- > 0) this.tick()
+  }
+
+  advanceTo (time: number): void {
+    this.advanceBy(time - this.now())
   }
 
   now () {
@@ -50,11 +56,14 @@ export class TestScheduler implements Scheduler {
   }
 
   setTimeout (task: ITask, time: number, now: number = this.now()): Subscription {
-    return new TaskSubscription(this.queue, this.queue.add(new TaskSchedule(task, time + now)))
+    return new TaskSubscription(
+      this.queue,
+      this.queue.add(new TaskSchedule(task, time + now))
+    )
   }
 
   requestAnimationFrame (task: ITask): Subscription {
-    return this.setTimeout(task, this.now() + this.options.rafTimeout, 0)
+    return this.setTimeout(task, this.now() + this.rafTimeout, 0)
   }
 
   setInterval (task: ITask, interval: number): Subscription {
@@ -83,13 +92,17 @@ export class TestScheduler implements Scheduler {
     })
   }
 
-  start<T> (f: () => Observable<T>) {
-    const options = resolveOptions(this.options)
+  subscribeTo <T> (f: () => Observable<T>, start: number, stop: number) {
     let subscription: Subscription
-    const resultsObserver = new TestObserver(this)
-    this.setTimeout(() => subscription = f().subscribe(resultsObserver, this), options.start, 0)
-    this.setTimeout(() => !subscription.closed && subscription.unsubscribe(), options.stop, 0)
-    this.advanceBy(options.stop)
+    const observer = this.Observer()
+    this.setTimeout(() => subscription = f().subscribe(observer, this), start, 0)
+    this.setTimeout(() => !subscription.closed && subscription.unsubscribe(), stop, 0)
+    return observer
+  }
+
+  start<T> (f: () => Observable<T>, start = DEFAULT_OPTIONS.subscriptionStart, stop = DEFAULT_OPTIONS.subscriptionStop) {
+    const resultsObserver = this.subscribeTo(f, start, stop)
+    this.advanceBy(stop)
     return resultsObserver
   }
 
@@ -101,7 +114,11 @@ export class TestScheduler implements Scheduler {
     return HotTestObservable(this, events) as TestObservable<T>
   }
 
-  static of (options: {start?: number, stop?: number, rafTimeout?: number} = {}) {
-    return new TestScheduler(resolveOptions(options))
+  Observer <T> () {
+    return new TestObserver<T>(this)
+  }
+
+  static of (rafTimeout = DEFAULT_OPTIONS.rafTimeout) {
+    return new TestScheduler(rafTimeout)
   }
 }

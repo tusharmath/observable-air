@@ -46,8 +46,8 @@ test(t => {
 })
 
 test('delay data', t => {
-  const sh = TestScheduler.of({start: 0, stop: 50})
-  const source = marble('012|', undefined, {start: 0})
+  const sh = TestScheduler.of()
+  const source = marble('012|')
   const {results} = sh.start(() => sh.Hot(source))
   t.is('012|', toMarble(results))
 })
