@@ -3,18 +3,16 @@
  */
 import {IEvent, EventType} from '../types/IEvent'
 import {ReactiveEvents, EventNext} from './ReactiveEvents'
-import {resolveOptions} from './TestOptions'
+import {DEFAULT_OPTIONS} from './TestOptions'
 
-// todo: migrate all tests to use marble
-// todo: configurations should be arguments and not globally set once
-export const MARBLE_SIZE = 10
+export const SIZE = DEFAULT_OPTIONS.marbleSize
+export const START = DEFAULT_OPTIONS.subscriptionStart
 
 export function marble (message: String,
-                        err: Error = new Error(),
-                        o?: {start?: number, size?: number}): Array<IEvent> {
-  const options = resolveOptions(o)
+                        start = START,
+                        size = SIZE): Array<IEvent> {
   const events: Array<IEvent> = []
-  let time = options.start
+  let time = start
   for (let i = 0; i < message.length; ++i) {
     switch (message[i]) {
       case '-' :
@@ -23,26 +21,26 @@ export function marble (message: String,
         events.push(ReactiveEvents.complete(time))
         break
       case '#':
-        events.push(ReactiveEvents.error(time, err))
+        events.push(ReactiveEvents.error(time, new Error('#')))
         break
       default:
         events.push(ReactiveEvents.next(time, message[i]))
         break
     }
-    time += MARBLE_SIZE
+    time += size
   }
   return events
 }
 
 export function toMarble<T> (events: Array<IEvent>,
-                             o?: {start?: number, size?: number}) {
-  const options = resolveOptions(o)
-  let time = options.start - options.size
+                             start = START,
+                             size = SIZE) {
+  let time = start - size
   let message = ''
   events.forEach(ev => {
-    if (ev.time % MARBLE_SIZE !== 0)
-      throw TypeError(`the time (${ev.time}) not a multiple of frame ${MARBLE_SIZE}`)
-    let count = (ev.time - time) / MARBLE_SIZE
+    if (ev.time % size !== 0)
+      throw TypeError(`the time (${ev.time}) not a multiple of frame ${size}`)
+    let count = (ev.time - time) / size
     time = ev.time
     while (count-- > 1) message += '-'
     switch (ev.type) {

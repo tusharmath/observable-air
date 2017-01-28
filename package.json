@@ -51,9 +51,7 @@
     },
     "ghooks": {
       "commit-msg": "validate-commit-msg",
-      "pre-push": "npm test",
-      "post-merge": "yarn install",
-      "post-rewrite": "yarn install"
+      "pre-push": "npm test"
     }
   }
 }
