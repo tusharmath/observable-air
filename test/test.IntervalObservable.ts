@@ -7,40 +7,24 @@
 import test from 'ava'
 import {TestScheduler} from '../src/testing/TestScheduler'
 import {ReactiveEvents, EventError} from '../src/testing/ReactiveEvents'
-import {IEvent} from '../src/types/IEvent'
 import {interval} from '../src/sources/Interval'
-const {next, error} = ReactiveEvents
+import {toMarble} from '../src/testing/Marble'
+import {thrower, ERROR_MESSAGE} from '../src/testing/Thrower'
+const {error} = ReactiveEvents
 
 test('subscribe()', t => {
   const sh = TestScheduler.of()
-  const {results} = sh.start<number>(() => interval(200))
-  t.deepEqual(results, [
-    next(400, 0),
-    next(600, 1),
-    next(800, 2),
-    next(1000, 3),
-    next(1200, 4),
-    next(1400, 5),
-    next(1600, 6),
-    next(1800, 7)
-  ])
+  const {results} = sh.start<number>(() => interval(10), 20, 70)
+  t.is(toMarble(results, 20), '-0123')
 })
 
-
 test('subscribe()', t => {
-  const results: IEvent[] = []
   const sh = TestScheduler.of()
-  const observer = {
-    next: (t: number) => {
-      throw Error('Yo')
-    },
-    complete: () => null,
-    error: (err: Error) => results.push(error(sh.now(), err))
-  }
-  interval(100).subscribe(observer, sh)
+  const observer = sh.Observer<void>()
+  thrower(interval(100)).subscribe(observer, sh)
   sh.advanceBy(100)
-  t.deepEqual(results, [
-    error(100, Error('Yo'))
+  t.deepEqual(observer.results, [
+    error(100, Error(ERROR_MESSAGE))
   ])
-  t.is((results[0] as EventError).value.message, 'Yo')
+  t.is((observer.results[0] as EventError).value.message, ERROR_MESSAGE)
 })
