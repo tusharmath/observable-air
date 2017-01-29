@@ -17,7 +17,7 @@
     "build-min": "npm run build-es-min && npm run build-cjs-min",
     "build-es": "rollup -c",
     "build-es-min": "babel .dist/main-es.js > .dist/main-es.min.js",
-    "build-cjs": "browserify ./src/main.js > .dist/main-cjs.js",
+    "build-cjs": "browserify .dist/src/main.js > .dist/main-cjs.js",
     "build-cjs-min": "babel .dist/main-cjs.js > .dist/main-cjs.min.js"
   },
   "author": "",
