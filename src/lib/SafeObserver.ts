@@ -25,7 +25,7 @@ class SafeObserver<T> implements Observer<T> {
   }
 }
 
-export const safeObserver = <T> (observer: Observer<T>) =>
+export const safeObserver = <T> (observer: Observer<T>): Observer<T> =>
   observer instanceof SafeObserver
     ? observer
     : new SafeObserver(observer)
