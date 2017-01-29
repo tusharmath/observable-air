@@ -8,12 +8,12 @@ notifications:
 node_js:
   - 'stable'
 before_install:
-  - npm i -g typings
+  - npm i -g typings commentator
   - typings install
   - npm i -g npm@^2.0.0
 before_script:
   - npm prune
-  - npm run benchmark | node ./travis-comment
+  - npm run benchmark | commentator
   - npm run coverage
 after_success:
   - npm run semantic-release
