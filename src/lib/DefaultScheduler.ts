@@ -11,7 +11,7 @@ function run (task: IScheduledTask) {
 }
 
 
-class ScheduleRequestAnimationFrame implements IScheduledTask {
+class AnimationFrame implements IScheduledTask {
   closed = false
   private id: number
 
@@ -33,7 +33,31 @@ class ScheduleRequestAnimationFrame implements IScheduledTask {
   }
 }
 
-class ScheduleInterval implements IScheduledTask {
+class AnimationFrames implements IScheduledTask {
+  closed = false
+  private id: number
+
+  constructor (private task: ITask) {
+  }
+
+  onFrame = () => {
+    this.task()
+    if (!this.closed) this.run()
+  }
+
+  run () {
+    this.id = requestAnimationFrame(this.onFrame)
+    return this
+  }
+
+  unsubscribe (): void {
+    if (this.closed) return
+    cancelAnimationFrame(this.id)
+    this.closed = true
+  }
+}
+
+class Interval implements IScheduledTask {
   closed = false
   private id: any
 
@@ -52,7 +76,7 @@ class ScheduleInterval implements IScheduledTask {
   }
 }
 
-class ScheduleTimeout implements IScheduledTask {
+class Timeout implements IScheduledTask {
   closed = false
   private timer: any
 
@@ -76,15 +100,19 @@ class ScheduleTimeout implements IScheduledTask {
 
 class DefaultScheduler implements Scheduler {
   setInterval (task: ITask, interval: number): Subscription {
-    return run(new ScheduleInterval(task, interval))
+    return run(new Interval(task, interval))
   }
 
   setTimeout (task: ITask, relativeTime: number): Subscription {
-    return run(new ScheduleTimeout(task, relativeTime))
+    return run(new Timeout(task, relativeTime))
   }
 
   requestAnimationFrame (task: ITask): Subscription {
-    return run(new ScheduleRequestAnimationFrame(task))
+    return run(new AnimationFrame(task))
+  }
+
+  requestAnimationFrames (task: ITask): Subscription {
+    return run(new AnimationFrames(task))
   }
 
   now (): number {

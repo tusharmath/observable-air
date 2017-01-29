@@ -5,6 +5,7 @@
 export {create} from './sources/CreateObservable'
 export {filter} from './operators/Filter'
 export {forEach} from './lib/ForEach'
+export {frames} from './sources/Frames'
 export {fromDOM} from './sources/FromDOM'
 export {fromPromise} from './sources/FromPromise'
 export {interval} from './sources/Interval'
