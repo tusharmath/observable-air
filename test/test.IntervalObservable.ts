@@ -18,7 +18,7 @@ test('subscribe()', t => {
   t.is(toMarble(results, 20), '-0123')
 })
 
-test('subscribe()', t => {
+test('ERROR!', t => {
   const sh = TestScheduler.of()
   const observer = sh.Observer<void>()
   thrower(interval(100)).subscribe(observer, sh)
