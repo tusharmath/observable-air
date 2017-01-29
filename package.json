@@ -3,7 +3,7 @@
   "description": "Observables for the calorie conscious",
   "main": "./src/main",
   "jsnext:main": "./.dist/main-es.min",
-  "typings": "./src/main.d.ts",
+  "typings": "./.dist/src/main.d.ts",
   "scripts": {
     "benchmark": "tsc && node ./benchmarks/run",
     "cleanup": "find ./src -type f -name '*.js' -delete && find ./src -type f -name '*.map' -delete",
@@ -12,7 +12,7 @@
     "prepublish": "tsc -d && npm run build && npm run build-min",
     "rfc": "node chore/rfc",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
-    "test": "tsc && ava",
+    "test": "tsc -d && ava .dist/test",
     "build": "npm run build-es && npm run build-cjs",
     "build-min": "npm run build-es-min && npm run build-cjs-min",
     "build-es": "rollup -c",
