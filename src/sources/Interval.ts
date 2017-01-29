@@ -5,23 +5,15 @@ import {Observable} from '../types/core/Observable'
 import {Subscription} from '../types/core/Subscription'
 import {Observer} from '../types/core/Observer'
 import {Scheduler} from '../types/Scheduler'
-import {toSafeFunction} from '../lib/ToSafeFunction'
-import {PeriodicSubscription} from './Frames'
+import {asyncSubscription} from '../lib/AsyncSubscription'
 
-class IntervalSubscription extends PeriodicSubscription {
-  constructor (sink: Observer<number>, scheduler: Scheduler, interval: number) {
-    super(sink)
-    this.subscription = scheduler.setInterval(this.dispatch, interval)
-    this.safeSinkNext = toSafeFunction(this.sink.next)
-  }
-}
 
 class IntervalObservable implements Observable<number> {
   constructor (private interval: number) {
   }
 
   subscribe (observer: Observer<number>, scheduler: Scheduler): Subscription {
-    return new IntervalSubscription(observer, scheduler, this.interval)
+    return asyncSubscription((t) => scheduler.setInterval(t.onNext, this.interval), observer)
   }
 }
 
