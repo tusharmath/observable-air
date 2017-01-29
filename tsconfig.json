@@ -6,6 +6,8 @@
     "sourceMap": true,
     "strictNullChecks": true,
     "removeComments": true,
-    "noUnusedLocals": true
+    "noUnusedLocals": true,
+    "outDir": "./.dist",
+    "declaration": true
   }
 }
