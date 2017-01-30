@@ -1,7 +1,6 @@
 /**
  * Created by tushar.mathur on 03/10/16.
  */
-
 import {ReactiveEvents} from './ReactiveEvents'
 import {Scheduler} from '../types/Scheduler'
 import {IEvent} from '../types/IEvent'
