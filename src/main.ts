@@ -3,6 +3,7 @@
  */
 
 export {create} from './sources/CreateObservable'
+export {delay} from './operators/Delay'
 export {filter} from './operators/Filter'
 export {forEach} from './lib/ForEach'
 export {frames} from './sources/Frames'
