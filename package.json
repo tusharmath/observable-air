@@ -13,6 +13,7 @@
     "rfc": "node chore/rfc",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "test": "tsc -d && ava .dist/test",
+    "test:watch": "ava .dist/test --watch --source .dist",
     "build": "npm run build-es && npm run build-cjs",
     "build-min": "npm run build-es-min && npm run build-cjs-min",
     "build-es": "rollup -c",
