@@ -86,3 +86,12 @@ test('forEach()', t => {
   q.forEach(i => results.push(i.value * 100))
   t.deepEqual(results, [100, 200, 300, 400])
 })
+
+
+test('remove(): Remove LAST more than once', t => {
+  const q = LinkedList.of()
+  const a = q.add('A')
+  q.remove(a)
+  q.remove(a)
+  t.is(q.length, 0)
+})

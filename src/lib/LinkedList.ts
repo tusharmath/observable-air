@@ -70,7 +70,7 @@ export class LinkedList<T> {
       this.__tail = undefined
       this.__head = undefined
     }
-    this.length--
+    this.length > 0 ? this.length-- : void 0
   }
 
   static of<T> () {
