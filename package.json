@@ -1,7 +1,7 @@
 {
   "name": "observable-air",
   "description": "Observables for the calorie conscious",
-  "main": "./src/main",
+  "main": "./.dist/src/main",
   "jsnext:main": "./.dist/main-es.min",
   "typings": "./.dist/src/main.d.ts",
   "scripts": {
