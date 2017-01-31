@@ -1,11 +1,8 @@
 /**
  * Created by tushar.mathur on 12/10/16.
  */
-
 import {Subscription} from '../types/core/Subscription'
 import {LinkedList, LinkedListNode} from './LinkedList'
-
-const unsubscribe = (x: LinkedListNode<Subscription>) => x.value.unsubscribe()
 
 export class CompositeSubscription implements Subscription {
   public closed = false
@@ -25,7 +22,7 @@ export class CompositeSubscription implements Subscription {
   }
 
   unsubscribe (): void {
-    this.subscriptions.forEach(unsubscribe)
+    this.subscriptions.forEach(this.remove, this)
     this.closed = true
   }
 }
