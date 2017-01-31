@@ -12,7 +12,7 @@ class FromArraySubscription <T> implements Subscription {
   closed = false
 
   constructor (private array: Array<T>, private sink: Observer<T>, scheduler: Scheduler) {
-    this.subscription = scheduler.setTimeout(this.executeSafely.bind(this), 1)
+    this.subscription = scheduler.setTimeout(this.executeSafely.bind(this), 0)
   }
 
 
