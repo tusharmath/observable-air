@@ -14,12 +14,12 @@ import {TestObservable} from './TestObservable'
 import {DEFAULT_OPTIONS} from './TestOptions'
 
 // TODO: convert to interface
-export class TaskSchedule {
+class TaskSchedule {
   constructor (public task: ITask, public time: number) {
   }
 }
 
-export class TaskSubscription implements Subscription {
+class TaskSubscription implements Subscription {
   closed: boolean
 
   constructor (private queue: LinkedList<TaskSchedule>,
@@ -33,9 +33,13 @@ export class TaskSubscription implements Subscription {
 
 export class TestScheduler implements Scheduler {
   private clock = 0
-  readonly queue = new LinkedList<TaskSchedule>()
+  private queue = new LinkedList<TaskSchedule>()
 
   constructor (private rafTimeout: number) {
+  }
+
+  get length () {
+    return this.queue.length
   }
 
   tick () {

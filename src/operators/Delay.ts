@@ -6,13 +6,13 @@ import {Observer} from '../types/core/Observer'
 import {Scheduler} from '../types/Scheduler'
 import {Subscription} from '../types/core/Subscription'
 import {safeObserver} from '../lib/SafeObserver'
+import {CompositeSubscription} from '../lib/CompositeSubscription'
 
 class DelayObserver<T> implements Observer<T> {
-  constructor (private timeout: number, private sink: Observer<T>, private scheduler: Scheduler) {
-  }
-
-  private nextDelayed (value: T) {
-    this.sink.next(value)
+  constructor (private timeout: number,
+               private sink: Observer<T>,
+               private scheduler: Scheduler,
+               private cSub: CompositeSubscription) {
   }
 
   private completeDelayed = () => {
@@ -20,7 +20,10 @@ class DelayObserver<T> implements Observer<T> {
   }
 
   next (val: T): void {
-    this.scheduler.setTimeout(this.nextDelayed.bind(this, val), this.timeout)
+    const node = this.cSub.add(this.scheduler.setTimeout(() => {
+      this.sink.next(val)
+      this.cSub.remove(node)
+    }, this.timeout))
   }
 
   error (err: Error): void {
@@ -28,7 +31,7 @@ class DelayObserver<T> implements Observer<T> {
   }
 
   complete (): void {
-    this.scheduler.setTimeout(this.completeDelayed, this.timeout)
+    this.cSub.add(this.scheduler.setTimeout(this.completeDelayed, this.timeout))
   }
 }
 
@@ -37,7 +40,10 @@ class DelayObservable<T> implements Observable<T> {
   }
 
   subscribe (observer: Observer<T>, scheduler: Scheduler): Subscription {
-    return this.source.subscribe(new DelayObserver(this.timeout, safeObserver(observer), scheduler), scheduler)
+    const cSub = new CompositeSubscription()
+    const delayObserver = new DelayObserver(this.timeout, safeObserver(observer), scheduler, cSub)
+    cSub.add(this.source.subscribe(delayObserver, scheduler))
+    return cSub
   }
 }
 
