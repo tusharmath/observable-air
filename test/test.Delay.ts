@@ -27,3 +27,9 @@ test('exception', t => {
     ReactiveEvents.error(220, Error(ERROR_MESSAGE))
   ])
 })
+
+test('unsubscribe', t => {
+  const sh = TestScheduler.of()
+  sh.start(() => delay(50, sh.Hot(marble('0'))), 200, 230)
+  t.is(sh.length, 0)
+})
