@@ -18,11 +18,13 @@ class AnimationFrame implements IScheduledTask {
   constructor (private task: ITask) {
   }
 
+  onFrame () {
+    this.closed = true
+    this.task()
+  }
+
   run () {
-    this.id = requestAnimationFrame(() => {
-      this.closed = true
-      this.task()
-    })
+    this.id = requestAnimationFrame(this.onFrame.bind(this))
     return this
   }
 
@@ -66,7 +68,7 @@ class Interval implements IScheduledTask {
   }
 
   run () {
-    this.id = setInterval(() => this.task(), this.interval)
+    this.id = setInterval(this.task, this.interval)
     return this
   }
 
@@ -83,18 +85,21 @@ class Timeout implements IScheduledTask {
   constructor (private task: ITask, private timeout: number) {
   }
 
+  private onTimeout () {
+    this.task()
+    this.closed = true
+  }
+
   run () {
-    this.timer = setTimeout(() => {
-      this.closed = true
-      this.task()
-    }, this.timeout)
+    this.timer = setTimeout(this.onTimeout.bind(this), this.timeout)
     return this
   }
 
   unsubscribe (): void {
-    if (this.closed) return
-    clearTimeout(this.timer)
-    this.closed = true
+    if (this.closed === false) {
+      clearTimeout(this.timer)
+      this.closed = true
+    }
   }
 }
 
