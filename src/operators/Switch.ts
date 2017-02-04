@@ -27,10 +27,12 @@ class SwitchValueObserver<T> implements Observer<T> {
 
 class SwitchObserver<T> implements Observer<Observable<T>> {
   private currentSub: LinkedListNode<Subscription> | undefined = void 0
+  private sink: SwitchValueObserver<T>
 
-  constructor (private sink: Observer<T>,
+  constructor (private mainSink: Observer<T>,
                private cSub: CompositeSubscription,
                private scheduler: Scheduler) {
+    this.sink = new SwitchValueObserver(mainSink)
   }
 
   private removeCurrentSub () {
@@ -43,7 +45,7 @@ class SwitchObserver<T> implements Observer<Observable<T>> {
   }
 
   next (val: Observable<T>): void {
-    this.setCurrentSub(val.subscribe(new SwitchValueObserver(this.sink), this.scheduler))
+    this.setCurrentSub(val.subscribe(this.sink, this.scheduler))
   }
 
   error (err: Error): void {
@@ -52,7 +54,7 @@ class SwitchObserver<T> implements Observer<Observable<T>> {
 
   complete (): void {
     this.removeCurrentSub()
-    this.sink.complete()
+    this.mainSink.complete()
   }
 }
 
