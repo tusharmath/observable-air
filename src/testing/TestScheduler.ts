@@ -86,6 +86,14 @@ export class TestScheduler implements Scheduler {
     }
   }
 
+  requestIdleCallback (task: ITask, options: {timeout: number}): Subscription {
+    return this.setTimeout(task, options.timeout > 0 ? options.timeout : 50)
+  }
+
+  nextTick (task: ITask): Subscription {
+    return this.setTimeout(task, 1)
+  }
+
   private run () {
     this.queue.forEach(node => {
       const qItem = node.value

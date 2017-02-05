@@ -6,10 +6,13 @@ import {Subscription} from '../types/core/Subscription'
 import {ITask} from '../types/ITask'
 import {IScheduledTask} from '../types/IScheduledTask'
 
+type RicOptions = {timeout: number}
+declare function requestIdleCallback (fn: () => void, options?: RicOptions): number
+declare function cancelIdleCallback (id: number): void
+
 function run (task: IScheduledTask) {
   return task.run()
 }
-
 class AnimationFrame implements IScheduledTask {
   closed = false
   private id: number
@@ -33,7 +36,6 @@ class AnimationFrame implements IScheduledTask {
     this.closed = true
   }
 }
-
 class Interval implements IScheduledTask {
   closed = false
   private id: any
@@ -52,7 +54,6 @@ class Interval implements IScheduledTask {
     this.closed = true
   }
 }
-
 class Timeout implements IScheduledTask {
   closed = false
   private timer: any
@@ -77,8 +78,56 @@ class Timeout implements IScheduledTask {
     }
   }
 }
+class RequestIdleCallback implements IScheduledTask {
+  closed: boolean
+  private id: number
 
+  constructor (private task: ITask, private options?: RicOptions) {
+  }
+
+  run (): IScheduledTask {
+    this.id = requestIdleCallback(this.task, this.options)
+    return this
+  }
+
+  unsubscribe (): void {
+    if (this.closed) return
+    this.closed = false
+    cancelIdleCallback(this.id)
+  }
+}
+class NextTick implements IScheduledTask {
+  closed: boolean
+  private id: number
+
+  constructor (private task: ITask) {
+  }
+
+  onTick (i: NextTick) {
+    if (i.closed) return
+    i.task()
+  }
+
+  run (): IScheduledTask {
+    process.nextTick(this.onTick, this)
+    return this
+  }
+
+  unsubscribe (): void {
+    if (this.closed) return
+    this.closed = false
+    cancelIdleCallback(this.id)
+  }
+}
 class DefaultScheduler implements Scheduler {
+  requestIdleCallback (task: ITask, options?: RicOptions): Subscription {
+    return run(new RequestIdleCallback(task, options))
+  }
+
+  nextTick (task: ITask): Subscription {
+    return run(new NextTick(task))
+  }
+
   setInterval (task: ITask, interval: number): Subscription {
     return run(new Interval(task, interval))
   }
@@ -95,5 +144,4 @@ class DefaultScheduler implements Scheduler {
     return Date.now()
   }
 }
-
 export const createScheduler = (): Scheduler => new DefaultScheduler()
