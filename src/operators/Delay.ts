@@ -7,16 +7,13 @@ import {Scheduler} from '../types/Scheduler'
 import {Subscription} from '../types/core/Subscription'
 import {safeObserver} from '../lib/SafeObserver'
 import {CompositeSubscription} from '../lib/CompositeSubscription'
+import {Curry} from '../lib/Curry'
 
 class DelayObserver<T> implements Observer<T> {
   constructor (private timeout: number,
                private sink: Observer<T>,
                private scheduler: Scheduler,
                private cSub: CompositeSubscription) {
-  }
-
-  private completeDelayed = () => {
-    this.sink.complete()
   }
 
   next (val: T): void {
@@ -31,7 +28,7 @@ class DelayObserver<T> implements Observer<T> {
   }
 
   complete (): void {
-    this.cSub.add(this.scheduler.setTimeout(this.completeDelayed, this.timeout))
+    this.cSub.add(this.scheduler.setTimeout(this.sink.complete.bind(this.sink), this.timeout))
   }
 }
 
@@ -47,4 +44,6 @@ class DelayObservable<T> implements Observable<T> {
   }
 }
 
-export const delay = <T> (timeout: number, source: Observable<T>): Observable<T> => new DelayObservable(timeout, source)
+export const delay = Curry(<T> (timeout: number, source: Observable<T>): Observable<T> => new DelayObservable(timeout, source)) as Function &
+  {<T> (timeout: number, source: Observable<T>): Observable<T>} &
+  {<T> (timeout: number): {(source: Observable<T>): Observable<T>}}

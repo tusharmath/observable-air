@@ -17,7 +17,7 @@ test(t => {
   const testFunction = (x: any) => x === 2 ? throwError(ERROR_MESSAGE) : x * 100
   const {results} = sh.start(() => map(testFunction, fromArray([1, 2, 3])))
   t.deepEqual(results, [
-    next(200, 100),
-    error(200, new Error(ERROR_MESSAGE))
+    next(201, 100),
+    error(201, new Error(ERROR_MESSAGE))
   ])
 })

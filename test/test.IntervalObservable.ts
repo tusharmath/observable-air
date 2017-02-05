@@ -10,12 +10,13 @@ import {ReactiveEvents, EventError} from '../src/testing/ReactiveEvents'
 import {interval} from '../src/sources/Interval'
 import {toMarble} from '../src/testing/Marble'
 import {thrower, ERROR_MESSAGE} from '../src/testing/Thrower'
+import {scan} from '../src/operators/Scan'
 const {error} = ReactiveEvents
 
 test('subscribe()', t => {
   const sh = TestScheduler.of()
-  const {results} = sh.start<number>(() => interval(10), 20, 70)
-  t.is(toMarble(results, 20), '-0123')
+  const {results} = sh.start(() => scan(i => i + 1, -1, interval(10)), 200, 250)
+  t.is(toMarble(results), '-0123')
 })
 
 test('ERROR!', t => {

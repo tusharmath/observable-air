@@ -70,22 +70,6 @@ export class TestScheduler implements Scheduler {
     return this.setTimeout(task, this.now() + this.rafTimeout, 0)
   }
 
-  requestAnimationFrames (task: ITask): Subscription {
-    var closed = false
-    const repeatedTask = () => {
-      if (closed) return
-      task()
-      this.requestAnimationFrame(repeatedTask)
-    }
-    this.requestAnimationFrame(repeatedTask)
-    return {
-      closed,
-      unsubscribe () {
-        closed = true
-      }
-    }
-  }
-
   setInterval (task: ITask, interval: number): Subscription {
     var closed = false
     const repeatedTask = () => {
@@ -100,6 +84,14 @@ export class TestScheduler implements Scheduler {
         closed = true
       }
     }
+  }
+
+  requestIdleCallback (task: ITask, options: {timeout: number}): Subscription {
+    return this.setTimeout(task, options.timeout > 0 ? options.timeout : 50)
+  }
+
+  nextTick (task: ITask): Subscription {
+    return this.setTimeout(task, 1)
   }
 
   private run () {
