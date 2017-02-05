@@ -98,7 +98,6 @@ class RequestIdleCallback implements IScheduledTask {
 }
 class NextTick implements IScheduledTask {
   closed: boolean
-  private id: number
 
   constructor (private task: ITask) {
   }
@@ -116,7 +115,6 @@ class NextTick implements IScheduledTask {
   unsubscribe (): void {
     if (this.closed) return
     this.closed = false
-    cancelIdleCallback(this.id)
   }
 }
 class DefaultScheduler implements Scheduler {
