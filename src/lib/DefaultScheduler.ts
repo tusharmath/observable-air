@@ -10,7 +10,6 @@ function run (task: IScheduledTask) {
   return task.run()
 }
 
-
 class AnimationFrame implements IScheduledTask {
   closed = false
   private id: number
@@ -25,30 +24,6 @@ class AnimationFrame implements IScheduledTask {
 
   run () {
     this.id = requestAnimationFrame(this.onFrame.bind(this))
-    return this
-  }
-
-  unsubscribe (): void {
-    if (this.closed) return
-    cancelAnimationFrame(this.id)
-    this.closed = true
-  }
-}
-
-class AnimationFrames implements IScheduledTask {
-  closed = false
-  private id: number
-
-  constructor (private task: ITask) {
-  }
-
-  onFrame = () => {
-    this.task()
-    if (!this.closed) this.run()
-  }
-
-  run () {
-    this.id = requestAnimationFrame(this.onFrame)
     return this
   }
 
@@ -114,10 +89,6 @@ class DefaultScheduler implements Scheduler {
 
   requestAnimationFrame (task: ITask): Subscription {
     return run(new AnimationFrame(task))
-  }
-
-  requestAnimationFrames (task: ITask): Subscription {
-    return run(new AnimationFrames(task))
   }
 
   now (): number {

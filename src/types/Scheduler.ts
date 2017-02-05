@@ -9,6 +9,5 @@ export interface Scheduler {
   setTimeout(task: ITask, relativeTime: number): Subscription
   setInterval(task: ITask, interval: number): Subscription
   requestAnimationFrame(task: ITask): Subscription
-  requestAnimationFrames(task: ITask): Subscription
   now(): number
 }

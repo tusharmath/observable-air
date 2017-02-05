@@ -6,24 +6,36 @@ import {Observer} from '../types/core/Observer'
 import {Scheduler} from '../types/Scheduler'
 import {Subscription} from '../types/core/Subscription'
 import {safeObserver} from '../lib/SafeObserver'
-import {CounterSubscription} from '../lib/CounterSubscription'
 
-class RAFSubscription extends CounterSubscription {
+class RAFSubscription implements Subscription {
   observer: Observer<number>
   subscription: Subscription
+  closed = false
 
-  constructor (sink: Observer<number>, scheduler: Scheduler) {
-    super()
-    this.subscription = scheduler.requestAnimationFrames(this.onFrame)
-    this.observer = safeObserver(sink)
+  constructor (private sink: Observer<void>, private scheduler: Scheduler) {
+    this.schedule()
+  }
+
+  private schedule () {
+    this.subscription = this.scheduler.requestAnimationFrame(this.onFrame)
+  }
+
+  onFrame = () => {
+    if (this.closed) return
+    this.sink.next(undefined)
+    this.schedule()
+  }
+
+  unsubscribe (): void {
+    this.closed = true
   }
 }
 
-class FrameObservable implements Observable<number> {
-  subscribe (observer: Observer<number>, scheduler: Scheduler): Subscription {
-    return new RAFSubscription(observer, scheduler)
+class FrameObservable implements Observable<void> {
+  subscribe (observer: Observer<void>, scheduler: Scheduler): Subscription {
+    return new RAFSubscription(safeObserver(observer), scheduler)
   }
 }
-export function frames (): Observable<number> {
+export function frames (): Observable<void> {
   return new FrameObservable()
 }
