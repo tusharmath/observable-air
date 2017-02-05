@@ -1,34 +1,32 @@
 /**
  * Created by niranjan on 12/10/16.
  */
-
 import {Observable} from '../types/core/Observable'
 import {Observer} from '../types/core/Observer'
 import {Subscription} from '../types/core/Subscription'
 import {Scheduler} from '../types/Scheduler'
 import {Curry} from '../lib/Curry'
 
-export type THasher<T, R> = (value: T) => R
+export type TComparator<T> = (a: T, b: T) => boolean
 export type TSource<T> = Observable<T>
 export type TResult<T> = Observable<T>
 
-class SkipRepeatsObserver <T, H> implements Observer<T> {
-  private hash: H | void = undefined
+class SkipRepeatsObserver <T> implements Observer<T> {
+  private previous: T | void = undefined
   private init = true
 
-  constructor (private hasher: {(a: T): H}, private sink: Observer<T>) {
+  constructor (private cmp: {(a: T, b: T): boolean}, private sink: Observer<T>) {
   }
 
   next (val: T) {
-    const hash = this.hasher(val)
     if (this.init) {
       this.init = false
       this.sink.next(val)
-      this.hash = hash
+      this.previous = val
     }
-    else if (this.hash !== hash) {
+    else if (this.cmp(this.previous as T, val) === false) {
       this.sink.next(val)
-      this.hash = hash
+      this.previous = val
     }
   }
 
@@ -41,18 +39,18 @@ class SkipRepeatsObserver <T, H> implements Observer<T> {
   }
 }
 
-class SkipRepeatsObservable <T, H> implements TResult <T> {
-  constructor (private hashFunction: THasher<T, H>, private source: TSource<T>) {
+class SkipRepeatsObservable <T> implements TResult <T> {
+  constructor (private cmp: TComparator<T>, private source: TSource<T>) {
   }
 
   subscribe (observer: Observer<T>, scheduler: Scheduler): Subscription {
-    return this.source.subscribe(new SkipRepeatsObserver(this.hashFunction, observer), scheduler)
+    return this.source.subscribe(new SkipRepeatsObserver(this.cmp, observer), scheduler)
   }
 }
 
 export const skipRepeats = Curry(function (hashFunction: {(t: any): any}, source: Observable<any>) {
   return new SkipRepeatsObservable(hashFunction, source)
 }) as Function &
-  {<T, R> (mapper: THasher<T, R>, source: TSource<T>): TResult<T>} &
-  {<T, R> (mapper: THasher<T, R>): {(source: TSource<T>): TResult<T>}}
+  {<T> (cmp: TComparator<T>, source: TSource<T>): TResult<T>} &
+  {<T> (cmp: TComparator<T>): {(source: TSource<T>): TResult<T>}}
 
