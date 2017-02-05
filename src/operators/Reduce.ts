@@ -10,7 +10,7 @@ import {Scheduler} from '../types/Scheduler'
 import {Curry} from '../lib/Curry'
 
 
-export type TReducer<T, R> = {(previousValue: R, currentValue: T): R}
+export type TReducer<T, R> = {(memory: R, current: T): R}
 export type TSeed<R> = R
 export type TSource<T> = Observable<T>
 export type TResult<R> = Observable<R>

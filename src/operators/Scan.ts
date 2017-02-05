@@ -1,15 +1,13 @@
 /**
  * Created by tushar.mathur on 09/10/16.
  */
-
-
 import {Observable} from '../types/core/Observable'
 import {Observer} from '../types/core/Observer'
 import {Scheduler} from '../types/Scheduler'
 import {Subscription} from '../types/core/Subscription'
 import {Curry} from '../lib/Curry'
 
-export type TReducer <T, R> = (current: T, memory: R) => R
+export type TReducer <T, R> = (memory: R, current: T) => R
 export type TSeed <R> = R
 export type TSource <T> = Observable<T>
 export type TResult <R> = Observable<R>
@@ -22,7 +20,7 @@ class ScanObserver<T, V> implements Observer<T> {
   }
 
   next (val: T): void {
-    this.value = this.reducer(val, this.value)
+    this.value = this.reducer(this.value, val)
     this.sink.next(this.value)
   }
 
@@ -52,4 +50,4 @@ export const scan = Curry(function <T, V> (reducer: TReducer<T, V>, value: V, so
   {<T, R>(reducer: TReducer<T, R>, seed: TSeed<R>, source: TSource<T>): TResult<R>} &
   {<T, R>(reducer: TReducer<T, R>): {(seed: TSeed<R>, source: TSource<T>): TResult<R>}} &
   {<T, R>(reducer: TReducer<T, R>, seed: TSeed<R>): {(source: TSource<T>): TResult<R>}} &
-  {<T, R>(reducer: TReducer<T, R>): { (seed: TSeed<R>): { (source: TSource<T>): TResult<R> } } }
+  {<T, R>(reducer: TReducer<T, R>): {(seed: TSeed<R>): {(source: TSource<T>): TResult<R>}}}

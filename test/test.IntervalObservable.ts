@@ -15,7 +15,7 @@ const {error} = ReactiveEvents
 
 test('subscribe()', t => {
   const sh = TestScheduler.of()
-  const {results} = sh.start(() => scan((i, j) => j + 1, -1, interval(10)), 200, 250)
+  const {results} = sh.start(() => scan(i => i + 1, -1, interval(10)), 200, 250)
   t.is(toMarble(results), '-0123')
 })
 
