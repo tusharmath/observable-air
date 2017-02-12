@@ -55,5 +55,9 @@
       "commit-msg": "validate-commit-msg",
       "pre-push": "npm test"
     }
+  },
+  "esdoc": {
+    "source": "./.dist/src",
+    "destination": "./.dist/doc"
   }
 }
