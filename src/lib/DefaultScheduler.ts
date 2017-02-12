@@ -38,7 +38,7 @@ class Delay implements Subscription {
   private timer: number
 
   constructor (private task: ITask, private timeout: number) {
-    this.timer = setTimeout(this.onEvent, this.timeout) as any as number
+    this.timer = setTimeout(this.onEvent.bind(this), this.timeout) as any as number
   }
 
   private onEvent () {
