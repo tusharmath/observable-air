@@ -5,5 +5,5 @@
 import {Subscription} from './core/Subscription'
 
 export interface IScheduledTask extends Subscription {
-  run (): IScheduledTask
+  run (): void
 }

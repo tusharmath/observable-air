@@ -17,7 +17,7 @@ class RAFSubscription implements Subscription {
   }
 
   private schedule () {
-    this.subscription = this.scheduler.requestAnimationFrame(this.onFrame)
+    this.subscription = this.scheduler.frame(this.onFrame)
   }
 
   onFrame = () => {
