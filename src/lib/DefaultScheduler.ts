@@ -50,7 +50,6 @@ class Delay implements Subscription {
   unsubscribe (): void {
     if (this.closed === false) {
       this.closed = true
-      clearTimeout(this.timer)
     }
   }
 }
