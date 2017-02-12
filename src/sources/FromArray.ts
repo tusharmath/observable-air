@@ -6,14 +6,13 @@ import {Subscription} from '../types/core/Subscription'
 import {Observer} from '../types/core/Observer'
 import {Scheduler} from '../types/Scheduler'
 import {toSafeFunction} from '../lib/ToSafeFunction'
-import {asap} from '../lib/ScheduleAsap'
 
 class FromArraySubscription <T> implements Subscription {
   private subscription: Subscription
   closed = false
 
   constructor (private array: Array<T>, private sink: Observer<T>, scheduler: Scheduler) {
-    this.subscription = asap(scheduler, this.executeSafely.bind(this))
+    this.subscription = scheduler.asap(this.executeSafely.bind(this))
   }
 
 

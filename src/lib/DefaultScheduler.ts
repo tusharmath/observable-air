@@ -4,138 +4,111 @@
 import {Scheduler} from '../types/Scheduler'
 import {Subscription} from '../types/core/Subscription'
 import {ITask} from '../types/ITask'
-import {IScheduledTask} from '../types/IScheduledTask'
 
-type RicOptions = {timeout: number}
-declare function requestIdleCallback (fn: () => void, options?: RicOptions): number
-declare function cancelIdleCallback (id: number): void
-
-function run (task: IScheduledTask) {
-  return task.run()
+interface Global {
+  requestIdleCallback?: Function
+  process?: {nextTick: Function}
 }
-class AnimationFrame implements IScheduledTask {
+
+function getGlobal (): Global {
+  return typeof window === 'object' ? window : global
+}
+
+class Periodic implements Subscription {
   closed = false
   private id: number
 
-  constructor (private task: ITask) {
+  constructor (private task: ITask,
+               private interval: number) {
+    this.id = setInterval(this.onEvent, this.interval) as any as number
   }
 
-  onFrame () {
-    this.closed = true
-    this.task()
-  }
-
-  run () {
-    this.id = requestAnimationFrame(this.onFrame.bind(this))
-    return this
+  private onEvent = () => {
+    if (!this.closed) this.task()
   }
 
   unsubscribe (): void {
     if (this.closed) return
-    cancelAnimationFrame(this.id)
     this.closed = true
-  }
-}
-class Interval implements IScheduledTask {
-  closed = false
-  private id: any
-
-  constructor (private task: ITask,
-               private interval: number) {
-  }
-
-  run () {
-    this.id = setInterval(this.task, this.interval)
-    return this
-  }
-
-  unsubscribe (): void {
     clearInterval(this.id)
-    this.closed = true
   }
 }
-class Timeout implements IScheduledTask {
+class Delay implements Subscription {
   closed = false
-  private timer: any
+  private timer: number
 
   constructor (private task: ITask, private timeout: number) {
+    this.timer = setTimeout(this.onEvent.bind(this), this.timeout) as any as number
   }
 
-  private onTimeout () {
+  private onEvent () {
+    if (this.closed) return
     this.task()
     this.closed = true
-  }
-
-  run () {
-    this.timer = setTimeout(this.onTimeout.bind(this), this.timeout)
-    return this
   }
 
   unsubscribe (): void {
     if (this.closed === false) {
-      clearTimeout(this.timer)
       this.closed = true
+      clearTimeout(this.timer)
     }
   }
 }
-class RequestIdleCallback implements IScheduledTask {
-  closed: boolean
-  private id: number
-
-  constructor (private task: ITask, private options?: RicOptions) {
-  }
-
-  run (): IScheduledTask {
-    this.id = requestIdleCallback(this.task, this.options)
-    return this
-  }
-
-  unsubscribe (): void {
-    if (this.closed) return
-    this.closed = false
-    cancelIdleCallback(this.id)
-  }
-}
-class NextTick implements IScheduledTask {
-  closed: boolean
+class ASAP implements Subscription {
+  closed = false
 
   constructor (private task: ITask) {
+    const global = getGlobal()
+    if (global.requestIdleCallback) global.requestIdleCallback(this.onEvent)
+    else if (global.process) global.process.nextTick(this.onEvent)
+    else Promise.resolve().then(this.onEvent)
   }
 
-  onTick (i: NextTick) {
-    if (i.closed) return
-    i.task()
+  private onEvent = () => {
+    if (!this.closed) this.task()
   }
 
-  run (): IScheduledTask {
-    process.nextTick(this.onTick, this)
-    return this
+  unsubscribe (): void {
+    if (this.closed === false) this.closed = true
+  }
+
+}
+class Frames implements Subscription {
+  closed = false
+  private frame: number
+
+  constructor (private task: ITask) {
+    this.frame = requestAnimationFrame(this.onEvent)
+  }
+
+  private onEvent = () => {
+    if (this.closed) return
+    this.task()
+    this.frame = requestAnimationFrame(this.onEvent)
   }
 
   unsubscribe (): void {
     if (this.closed) return
-    this.closed = false
+    this.closed = true
+    cancelAnimationFrame(this.frame)
   }
+
 }
 class DefaultScheduler implements Scheduler {
-  requestIdleCallback (task: ITask, options?: RicOptions): Subscription {
-    return run(new RequestIdleCallback(task, options))
+  frame (task: ITask): Subscription {
+    return new Frames(task)
   }
 
-  nextTick (task: ITask): Subscription {
-    return run(new NextTick(task))
+  asap (task: ITask): Subscription {
+    return new ASAP(task)
   }
 
-  setInterval (task: ITask, interval: number): Subscription {
-    return run(new Interval(task, interval))
+  periodic (task: ITask, interval: number): Subscription {
+    return new Periodic(task, interval)
   }
 
-  setTimeout (task: ITask, relativeTime: number): Subscription {
-    return run(new Timeout(task, relativeTime))
-  }
-
-  requestAnimationFrame (task: ITask): Subscription {
-    return run(new AnimationFrame(task))
+  delay (task: ITask, relativeTime: number): Subscription {
+    return new Delay(task, relativeTime)
   }
 
   now (): number {

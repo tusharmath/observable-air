@@ -17,7 +17,7 @@ class DelayObserver<T> implements Observer<T> {
   }
 
   next (val: T): void {
-    const node = this.cSub.add(this.scheduler.setTimeout(() => {
+    const node = this.cSub.add(this.scheduler.delay(() => {
       this.sink.next(val)
       this.cSub.remove(node)
     }, this.timeout))
@@ -28,7 +28,7 @@ class DelayObserver<T> implements Observer<T> {
   }
 
   complete (): void {
-    this.cSub.add(this.scheduler.setTimeout(this.sink.complete.bind(this.sink), this.timeout))
+    this.cSub.add(this.scheduler.delay(this.sink.complete.bind(this.sink), this.timeout))
   }
 }
 

@@ -32,6 +32,10 @@ class TaskSubscription implements Subscription {
 }
 
 export class TestScheduler implements Scheduler {
+  asap (task: ITask): Subscription {
+    return this.delay(task, 1)
+  }
+
   private clock = 0
   private queue = new LinkedList<TaskSchedule>()
 
@@ -59,39 +63,31 @@ export class TestScheduler implements Scheduler {
     return this.clock
   }
 
-  setTimeout (task: ITask, time: number, now: number = this.now()): Subscription {
+  delay (task: ITask, time: number, now: number = this.now()): Subscription {
     return new TaskSubscription(
       this.queue,
       this.queue.add(new TaskSchedule(task, time + now))
     )
   }
 
-  requestAnimationFrame (task: ITask): Subscription {
-    return this.setTimeout(task, this.now() + this.rafTimeout, 0)
+  frame (task: ITask): Subscription {
+    return this.delay(task, this.now() + this.rafTimeout, 0)
   }
 
-  setInterval (task: ITask, interval: number): Subscription {
+  periodic (task: ITask, interval: number): Subscription {
     var closed = false
     const repeatedTask = () => {
       if (closed) return
       task()
-      this.setTimeout(repeatedTask, interval)
+      this.delay(repeatedTask, interval)
     }
-    this.setTimeout(repeatedTask, interval)
+    this.delay(repeatedTask, interval)
     return {
       closed,
       unsubscribe () {
         closed = true
       }
     }
-  }
-
-  requestIdleCallback (task: ITask, options: {timeout: number}): Subscription {
-    return this.setTimeout(task, options.timeout > 0 ? options.timeout : 50)
-  }
-
-  nextTick (task: ITask): Subscription {
-    return this.setTimeout(task, 1)
   }
 
   private run () {
@@ -107,8 +103,8 @@ export class TestScheduler implements Scheduler {
   subscribeTo <T> (f: () => Observable<T>, start: number, stop: number) {
     let subscription: Subscription
     const observer = this.Observer()
-    this.setTimeout(() => subscription = f().subscribe(observer, this), start, 0)
-    this.setTimeout(() => !subscription.closed && subscription.unsubscribe(), stop, 0)
+    this.delay(() => subscription = f().subscribe(observer, this), start, 0)
+    this.delay(() => !subscription.closed && subscription.unsubscribe(), stop, 0)
     return observer
   }
 
