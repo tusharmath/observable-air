@@ -22,7 +22,7 @@ export function HotTestObservable<T> (scheduler: TestScheduler, events: Array<IE
   const observers: Array<Observer<T>> = []
   const closed: Array<boolean> = []
   events.forEach(ev => {
-      scheduler.setTimeout(
+      scheduler.delay(
         () => dispatchEvents(ev, observers, closed),
         ev.time,
         0)

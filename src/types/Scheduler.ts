@@ -6,10 +6,9 @@ import {ITask} from './ITask'
 
 
 export interface Scheduler {
-  setTimeout(task: ITask, relativeTime: number): Subscription
-  setInterval(task: ITask, interval: number): Subscription
-  requestAnimationFrame(task: ITask): Subscription
-  requestIdleCallback(task: ITask, options?: {timeout: number}): Subscription
-  nextTick(task: ITask): Subscription
+  delay(task: ITask, relativeTime: number): Subscription
+  periodic(task: ITask, interval: number): Subscription
+  frame(task: ITask): Subscription
+  asap(task: ITask): Subscription
   now(): number
 }

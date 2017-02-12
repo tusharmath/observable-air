@@ -14,10 +14,10 @@ export function ColdTestObservable (scheduler: Scheduler, events: Array<IEvent>)
     for (var i = 0; i < events.length && !closed; i++) {
       const event = events[i]
       if (event.type === EventType.next) {
-        scheduler.setTimeout(() => observer.next((<EventNext<any>> event).value), event.time)
+        scheduler.delay(() => observer.next((<EventNext<any>> event).value), event.time)
       }
       else if (event.type === EventType.complete) {
-        scheduler.setTimeout(() => observer.complete(), event.time)
+        scheduler.delay(() => observer.complete(), event.time)
       }
     }
     return {

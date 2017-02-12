@@ -13,7 +13,7 @@ class TimerSubscription implements Subscription {
 
 
   constructor (private sink: Observer<void>, scheduler: Scheduler, interval: number) {
-    this.subscription = scheduler.setInterval(this.onFrame.bind(this), interval)
+    this.subscription = scheduler.periodic(this.onFrame.bind(this), interval)
   }
 
   onFrame () {
