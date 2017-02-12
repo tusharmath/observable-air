@@ -8,6 +8,7 @@ import {bm_tryCatch} from './bm.tryCatch'
 import {onCycle, onEnd} from './lib'
 import {Suite} from 'benchmark'
 import {bm_create} from './bm.create'
+import {bm_debounce} from './bm.debounce'
 
 // Run All Benchmarks
 
@@ -16,6 +17,7 @@ console.log('**V8:**  ', process.versions.v8)
 
 const suite = new Suite()
 bm_create(suite)
+bm_debounce(suite)
 bm_fromArray_map_reduce(suite)
 bm_fromArray_scan_reduce(suite)
 bm_fromArray_takeN(suite)
