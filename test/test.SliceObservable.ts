@@ -6,10 +6,10 @@
 
 import test from 'ava'
 import {TestScheduler} from '../src/testing/TestScheduler'
-import {ReactiveEvents} from '../src/testing/ReactiveEvents'
+import {EVENT} from '../src/testing/ReactiveEvents'
 import {slice} from '../src/operators/Slice'
 
-const {next, complete} = ReactiveEvents
+const {next, complete} = EVENT
 test('takeN(0, 3)', t => {
   const sh = TestScheduler.of()
   const ob$ = sh.Cold([

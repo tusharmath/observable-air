@@ -4,13 +4,13 @@
 import test from 'ava'
 import {TestScheduler} from '../src/testing/TestScheduler'
 import {create} from '../src/sources/CreateObservable'
-import {ReactiveEvents} from '../src/testing/ReactiveEvents'
+import {EVENT} from '../src/testing/ReactiveEvents'
 
 test(t => {
   const sh = TestScheduler.of()
   const {results} = sh.start(() => create(ob => ob.next('A')))
   t.deepEqual(results, [
-    ReactiveEvents.next(200, 'A')
+    EVENT.next(200, 'A')
   ])
 })
 
@@ -20,6 +20,6 @@ test(t => {
     sh.delay(() => ob.next('A'), 15)
   }))
   t.deepEqual(results, [
-    ReactiveEvents.next(215, 'A')
+    EVENT.next(215, 'A')
   ])
 })

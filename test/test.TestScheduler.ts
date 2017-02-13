@@ -3,7 +3,7 @@
  */
 import {TestScheduler} from '../src/testing/TestScheduler'
 import {test} from 'ava'
-import {ReactiveEvents} from '../src/testing/ReactiveEvents'
+import {EVENT} from '../src/testing/ReactiveEvents'
 
 test(t => {
   const sh = TestScheduler.of()
@@ -23,16 +23,16 @@ test(t => {
 test(t => {
   const sh = TestScheduler.of()
   const {results} = sh.start(() => sh.Hot([
-    ReactiveEvents.next(210, '0'),
-    ReactiveEvents.next(220, '1'),
-    ReactiveEvents.next(230, '2'),
-    ReactiveEvents.complete(240)
+    EVENT.next(210, '0'),
+    EVENT.next(220, '1'),
+    EVENT.next(230, '2'),
+    EVENT.complete(240)
   ]))
 
   t.deepEqual(results, [
-    ReactiveEvents.next(210, '0'),
-    ReactiveEvents.next(220, '1'),
-    ReactiveEvents.next(230, '2'),
-    ReactiveEvents.complete(240)
+    EVENT.next(210, '0'),
+    EVENT.next(220, '1'),
+    EVENT.next(230, '2'),
+    EVENT.complete(240)
   ])
 })

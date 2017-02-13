@@ -5,33 +5,33 @@
 import test from 'ava'
 import {merge} from '../src/operators/Merge'
 import {TestScheduler} from '../src/testing/TestScheduler'
-import {ReactiveEvents} from '../src/testing/ReactiveEvents'
+import {EVENT} from '../src/testing/ReactiveEvents'
 
 test(t => {
   const sh = TestScheduler.of()
   const a$ = sh.Hot([
-    ReactiveEvents.next(210, 'A0'),
-    ReactiveEvents.next(220, 'A1'),
-    ReactiveEvents.complete(230)
+    EVENT.next(210, 'A0'),
+    EVENT.next(220, 'A1'),
+    EVENT.complete(230)
   ])
   const b$ = sh.Hot([
-    ReactiveEvents.next(212, 'B0'),
-    ReactiveEvents.next(222, 'B1'),
-    ReactiveEvents.complete(232)
+    EVENT.next(212, 'B0'),
+    EVENT.next(222, 'B1'),
+    EVENT.complete(232)
   ])
   const c$ = sh.Hot([
-    ReactiveEvents.next(215, 'C0'),
-    ReactiveEvents.next(225, 'C1'),
-    ReactiveEvents.complete(235)
+    EVENT.next(215, 'C0'),
+    EVENT.next(225, 'C1'),
+    EVENT.complete(235)
   ])
   const {results} = sh.start(() => merge(a$, b$, c$))
   t.deepEqual(results, [
-    ReactiveEvents.next(210, 'A0'),
-    ReactiveEvents.next(212, 'B0'),
-    ReactiveEvents.next(215, 'C0'),
-    ReactiveEvents.next(220, 'A1'),
-    ReactiveEvents.next(222, 'B1'),
-    ReactiveEvents.next(225, 'C1'),
-    ReactiveEvents.complete(235)
+    EVENT.next(210, 'A0'),
+    EVENT.next(212, 'B0'),
+    EVENT.next(215, 'C0'),
+    EVENT.next(220, 'A1'),
+    EVENT.next(222, 'B1'),
+    EVENT.next(225, 'C1'),
+    EVENT.complete(235)
   ])
 })

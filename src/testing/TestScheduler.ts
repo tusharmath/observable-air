@@ -5,13 +5,13 @@ import {ITask} from '../types/ITask'
 import {Scheduler} from '../types/Scheduler'
 import {Observable} from '../types/core/Observable'
 import {Subscription} from '../types/core/Subscription'
-import {IEvent} from '../types/IEvent'
 import {TestObserver} from './TestObserver'
 import {ColdTestObservable} from './ColdTestObservable'
 import {HotTestObservable} from './HotTestObservable'
 import {LinkedList, LinkedListNode} from '../lib/LinkedList'
 import {TestObservable} from './TestObservable'
 import {DEFAULT_OPTIONS} from './TestOptions'
+import {ObservableEvent} from './ReactiveEvents'
 
 // TODO: convert to interface
 class TaskSchedule {
@@ -114,11 +114,11 @@ export class TestScheduler implements Scheduler {
     return resultsObserver
   }
 
-  Cold <T> (events: Array<IEvent>) {
+  Cold <T> (events: Array<ObservableEvent>) {
     return ColdTestObservable(this, events) as TestObservable<T>
   }
 
-  Hot <T> (events: Array<IEvent>) {
+  Hot <T> (events: Array<ObservableEvent>) {
     return HotTestObservable(this, events) as TestObservable<T>
   }
 

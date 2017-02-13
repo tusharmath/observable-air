@@ -2,13 +2,12 @@
  * Created by tushar.mathur on 10/10/16.
  */
 
-import {IEvent, EventType} from '../types/IEvent'
 import {TestObservable} from './TestObservable'
-import {EventNext} from './ReactiveEvents'
+import {EventNext, ObservableEvent, EventType} from './ReactiveEvents'
 import {Observer} from '../types/core/Observer'
 import {Scheduler} from '../types/Scheduler'
 
-export function ColdTestObservable (scheduler: Scheduler, events: Array<IEvent>) {
+export function ColdTestObservable (scheduler: Scheduler, events: Array<ObservableEvent>) {
   return new TestObservable((observer: Observer<any>) => {
     var closed = false
     for (var i = 0; i < events.length && !closed; i++) {

@@ -6,12 +6,12 @@
 
 import test from 'ava'
 import {TestScheduler} from '../src/testing/TestScheduler'
-import {ReactiveEvents, EventError} from '../src/testing/ReactiveEvents'
+import {EVENT, EventError} from '../src/testing/ReactiveEvents'
 import {interval} from '../src/sources/Interval'
 import {toMarble} from '../src/testing/Marble'
 import {thrower, ERROR_MESSAGE} from '../src/testing/Thrower'
 import {scan} from '../src/operators/Scan'
-const {error} = ReactiveEvents
+const {error} = EVENT
 
 test('subscribe()', t => {
   const sh = TestScheduler.of()

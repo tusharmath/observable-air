@@ -6,12 +6,12 @@
 
 import test from 'ava'
 import {TestScheduler} from '../src/testing/TestScheduler'
-import {ReactiveEvents} from '../src/testing/ReactiveEvents'
+import {EVENT} from '../src/testing/ReactiveEvents'
 import {map} from '../src/operators/Map'
 import {fromArray} from '../src/sources/FromArray'
 import {ERROR_MESSAGE, throwError} from '../src/testing/Thrower'
 
-const {next, error} = ReactiveEvents
+const {next, error} = EVENT
 test(t => {
   const sh = TestScheduler.of()
   const testFunction = (x: any) => x === 2 ? throwError(ERROR_MESSAGE) : x * 100

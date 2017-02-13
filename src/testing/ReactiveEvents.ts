@@ -1,11 +1,19 @@
 /**
  * Created by tushar.mathur on 03/10/16.
  */
-
-import {IEvent, EventType} from '../types/IEvent'
 import {Subscription} from '../types/core/Subscription'
 
-export class EventNext<T> implements IEvent {
+export interface ObservableEvent {
+  readonly type: EventType
+  readonly time: number
+}
+
+export enum EventType {
+  next, error, complete, start, end
+}
+
+
+export class EventNext<T> implements ObservableEvent {
   type: EventType
 
   constructor (public time: number, public value: T) {
@@ -13,7 +21,7 @@ export class EventNext<T> implements IEvent {
   }
 }
 
-export class EventError implements IEvent {
+export class EventError implements ObservableEvent {
   type: EventType
 
   constructor (public time: number, public value: Error) {
@@ -21,7 +29,7 @@ export class EventError implements IEvent {
   }
 }
 
-export class EventComplete implements IEvent {
+export class EventComplete implements ObservableEvent {
   type: EventType
 
   constructor (public time: number) {
@@ -30,7 +38,7 @@ export class EventComplete implements IEvent {
 }
 
 
-export class EventEnd implements IEvent {
+export class EventEnd implements ObservableEvent {
   type: EventType
 
   constructor (public time: number, public subscription: Subscription) {
@@ -39,7 +47,7 @@ export class EventEnd implements IEvent {
 }
 
 
-export class EventStart implements IEvent {
+export class EventStart implements ObservableEvent {
   type: EventType
 
   constructor (public time: number, public subscription: Subscription) {
@@ -47,7 +55,7 @@ export class EventStart implements IEvent {
   }
 }
 
-export const ReactiveEvents = {
+export const EVENT = {
   next <T> (time: number, value: T): EventNext<T> {
     return new EventNext(time, value)
   },

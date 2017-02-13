@@ -4,9 +4,9 @@
 
 import test from 'ava'
 import {TestScheduler} from '../src/testing/TestScheduler'
-import {ReactiveEvents} from '../src/testing/ReactiveEvents'
+import {EVENT} from '../src/testing/ReactiveEvents'
 import {join} from '../src/operators/Join'
-const {next, complete} = ReactiveEvents
+const {next, complete} = EVENT
 
 test('subscribe()', t => {
   const sh = TestScheduler.of()

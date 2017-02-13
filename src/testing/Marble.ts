@@ -1,8 +1,7 @@
 /**
  * Created by tushar.mathur on 23/10/16.
  */
-import {IEvent, EventType} from '../types/IEvent'
-import {ReactiveEvents, EventNext} from './ReactiveEvents'
+import {EVENT, EventNext, ObservableEvent, EventType} from './ReactiveEvents'
 import {DEFAULT_OPTIONS} from './TestOptions'
 
 export const SIZE = DEFAULT_OPTIONS.marbleSize
@@ -10,21 +9,21 @@ export const START = DEFAULT_OPTIONS.subscriptionStart
 
 export function marble (message: String,
                         start = START,
-                        size = SIZE): Array<IEvent> {
-  const events: Array<IEvent> = []
+                        size = SIZE): Array<ObservableEvent> {
+  const events: Array<ObservableEvent> = []
   let time = start
   for (let i = 0; i < message.length; ++i) {
     switch (message[i]) {
       case '-' :
         break
       case '|':
-        events.push(ReactiveEvents.complete(time))
+        events.push(EVENT.complete(time))
         break
       case '#':
-        events.push(ReactiveEvents.error(time, new Error('#')))
+        events.push(EVENT.error(time, new Error('#')))
         break
       default:
-        events.push(ReactiveEvents.next(time, message[i]))
+        events.push(EVENT.next(time, message[i]))
         break
     }
     time += size
@@ -32,7 +31,7 @@ export function marble (message: String,
   return events
 }
 
-export function toMarble<T> (events: Array<IEvent>,
+export function toMarble<T> (events: Array<ObservableEvent>,
                              start = START,
                              size = SIZE) {
   let time = start - size

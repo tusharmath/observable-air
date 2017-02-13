@@ -4,10 +4,10 @@
 
 import test from 'ava'
 import {TestScheduler} from '../src/testing/TestScheduler'
-import {ReactiveEvents} from '../src/testing/ReactiveEvents'
+import {EVENT} from '../src/testing/ReactiveEvents'
 import {scan} from '../src/operators/Scan'
 
-const {next, complete} = ReactiveEvents
+const {next, complete} = EVENT
 
 test('ScanObservable.subscribe()', t => {
   const sh = TestScheduler.of()
