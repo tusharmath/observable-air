@@ -1,7 +1,6 @@
 /**
  * Created by tushar.mathur on 02/10/16.
  */
-import {ITask} from '../types/ITask'
 import {Scheduler} from '../types/Scheduler'
 import {Observable} from '../types/core/Observable'
 import {Subscription} from '../types/core/Subscription'
@@ -15,7 +14,7 @@ import {ObservableEvent} from './Events'
 
 // TODO: convert to interface
 class TaskSchedule {
-  constructor (public task: ITask, public time: number) {
+  constructor (public task: () => void, public time: number) {
   }
 }
 
@@ -32,7 +31,7 @@ class TaskSubscription implements Subscription {
 }
 
 export class TestScheduler implements Scheduler {
-  asap (task: ITask): Subscription {
+  asap (task: () => void): Subscription {
     return this.delay(task, 1)
   }
 
@@ -63,18 +62,18 @@ export class TestScheduler implements Scheduler {
     return this.clock
   }
 
-  delay (task: ITask, time: number, now: number = this.now()): Subscription {
+  delay (task: () => void, time: number, now: number = this.now()): Subscription {
     return new TaskSubscription(
       this.queue,
       this.queue.add(new TaskSchedule(task, time + now))
     )
   }
 
-  frame (task: ITask): Subscription {
+  frame (task: () => void): Subscription {
     return this.delay(task, this.now() + this.rafTimeout, 0)
   }
 
-  periodic (task: ITask, interval: number): Subscription {
+  periodic (task: () => void, interval: number): Subscription {
     var closed = false
     const repeatedTask = () => {
       if (closed) return

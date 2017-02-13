@@ -3,7 +3,6 @@
  */
 import {Scheduler} from '../types/Scheduler'
 import {Subscription} from '../types/core/Subscription'
-import {ITask} from '../types/ITask'
 
 interface Global {
   requestIdleCallback?: Function
@@ -18,7 +17,7 @@ class Periodic implements Subscription {
   closed = false
   private id: number
 
-  constructor (private task: ITask,
+  constructor (private task: () => void,
                private interval: number) {
     this.id = setInterval(this.onEvent, this.interval) as any as number
   }
@@ -36,7 +35,7 @@ class Periodic implements Subscription {
 class Delay implements Subscription {
   closed = false
 
-  constructor (private task: ITask, private timeout: number) {
+  constructor (private task: () => void, private timeout: number) {
     setTimeout(this.onEvent.bind(this), this.timeout)
   }
 
@@ -55,7 +54,7 @@ class Delay implements Subscription {
 class ASAP implements Subscription {
   closed = false
 
-  constructor (private task: ITask) {
+  constructor (private task: () => void) {
     const global = getGlobal()
     if (global.requestIdleCallback) global.requestIdleCallback(this.onEvent)
     else if (global.process) global.process.nextTick(this.onEvent)
@@ -75,7 +74,7 @@ class Frames implements Subscription {
   closed = false
   private frame: number
 
-  constructor (private task: ITask) {
+  constructor (private task: () => void) {
     this.frame = requestAnimationFrame(this.onEvent)
   }
 
@@ -93,19 +92,19 @@ class Frames implements Subscription {
 
 }
 class DefaultScheduler implements Scheduler {
-  frame (task: ITask): Subscription {
+  frame (task: () => void): Subscription {
     return new Frames(task)
   }
 
-  asap (task: ITask): Subscription {
+  asap (task: () => void): Subscription {
     return new ASAP(task)
   }
 
-  periodic (task: ITask, interval: number): Subscription {
+  periodic (task: () => void, interval: number): Subscription {
     return new Periodic(task, interval)
   }
 
-  delay (task: ITask, relativeTime: number): Subscription {
+  delay (task: () => void, relativeTime: number): Subscription {
     return new Delay(task, relativeTime)
   }
 
