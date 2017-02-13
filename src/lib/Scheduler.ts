@@ -1,7 +1,7 @@
 /**
  * Created by tushar.mathur on 03/10/16.
  */
-import {Subscription} from '../types/core/Subscription'
+import {Subscription} from './Subscription'
 
 interface Global {
   requestIdleCallback?: Function

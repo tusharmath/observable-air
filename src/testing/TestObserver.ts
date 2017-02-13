@@ -3,7 +3,7 @@
  */
 import {EVENT, ObservableEvent} from './Events'
 import {Scheduler} from '../lib/Scheduler'
-import {Observer} from '../types/core/Observer'
+import {Observer} from '../lib/Observer'
 
 export class TestObserver<T> implements Observer<T> {
   results: Array<ObservableEvent>

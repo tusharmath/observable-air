@@ -5,7 +5,7 @@
 import {TestObservable} from './TestObservable'
 import {EventNext, EventError, ObservableEvent, EventType} from './Events'
 import {TestScheduler} from './TestScheduler'
-import {Observer} from '../types/core/Observer'
+import {Observer} from '../lib/Observer'
 
 export function dispatchEvents<T> (event: ObservableEvent, observers: Array<Observer<T>>, closed: Array<boolean>) {
   observers

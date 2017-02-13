@@ -1,10 +1,10 @@
 /**
  * Created by tushar on 28/01/17.
  */
-import {Observable} from '../types/core/Observable'
-import {Observer} from '../types/core/Observer'
+import {Observable} from '../lib/Observable'
+import {Observer} from '../lib/Observer'
 import {Scheduler} from '../lib/Scheduler'
-import {Subscription} from '../types/core/Subscription'
+import {Subscription} from '../lib/Subscription'
 import {safeObserver} from '../lib/SafeObserver'
 
 class RAFSubscription implements Subscription {

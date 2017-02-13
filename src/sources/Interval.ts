@@ -1,9 +1,9 @@
 /**
  * Created by tushar.mathur on 27/09/16.
  */
-import {Observable} from '../types/core/Observable'
-import {Subscription} from '../types/core/Subscription'
-import {Observer} from '../types/core/Observer'
+import {Observable} from '../lib/Observable'
+import {Subscription} from '../lib/Subscription'
+import {Observer} from '../lib/Observer'
 import {Scheduler} from '../lib/Scheduler'
 import {safeObserver} from '../lib/SafeObserver'
 

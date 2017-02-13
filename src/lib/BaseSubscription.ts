@@ -1,7 +1,7 @@
 /**
  * Created by tushar.mathur on 16/10/16.
  */
-import {Subscription} from '../types/core/Subscription'
+import {Subscription} from './Subscription'
 
 export function isSubscription (subscription: Subscription) {
   return subscription instanceof BaseSubscription || (subscription && typeof subscription.unsubscribe === 'function')

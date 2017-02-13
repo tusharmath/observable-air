@@ -1,5 +1,5 @@
 import {createScheduler, Scheduler} from '../src/lib/Scheduler'
-import {Observable} from '../src/types/core/Observable'
+import {Observable} from '../src/lib/Observable'
 import {BaseObserver} from '../src/lib/BaseObserver'
 
 /**

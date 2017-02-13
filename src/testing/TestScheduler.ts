@@ -2,8 +2,8 @@
  * Created by tushar.mathur on 02/10/16.
  */
 import {Scheduler} from '../lib/Scheduler'
-import {Observable} from '../types/core/Observable'
-import {Subscription} from '../types/core/Subscription'
+import {Observable} from '../lib/Observable'
+import {Subscription} from '../lib/Subscription'
 import {TestObserver} from './TestObserver'
 import {ColdTestObservable} from './ColdTestObservable'
 import {HotTestObservable} from './HotTestObservable'
