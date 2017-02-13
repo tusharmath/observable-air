@@ -4,7 +4,7 @@
 import {Observable} from '../types/core/Observable'
 import {Subscription} from '../types/core/Subscription'
 import {Observer} from '../types/core/Observer'
-import {Scheduler} from '../types/Scheduler'
+import {Scheduler} from '../lib/Scheduler'
 import {toSafeFunction} from '../lib/ToSafeFunction'
 
 class FromArraySubscription <T> implements Subscription {

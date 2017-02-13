@@ -4,7 +4,7 @@
 
 import {Subscription} from './Subscription'
 import {Observer} from './Observer'
-import {Scheduler} from '../Scheduler'
+import {Scheduler} from '../../lib/Scheduler'
 
 export interface SubscriberFunction<T> {
   (observer: Observer<T>, scheduler: Scheduler): Subscription | void | (() => void)

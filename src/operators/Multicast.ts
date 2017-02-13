@@ -1,10 +1,9 @@
 /**
  * Created by tushar.mathur on 24/10/16.
  */
-
 import {Observable} from '../types/core/Observable'
 import {Observer} from '../types/core/Observer'
-import {Scheduler} from '../types/Scheduler'
+import {Scheduler} from '../lib/Scheduler'
 import {Subscription} from '../types/core/Subscription'
 import {LinkedListNode} from '../lib/LinkedList'
 import {CompositeObserver} from '../lib/CompositeObserver'

@@ -5,7 +5,7 @@
 import {Observable} from '../types/core/Observable'
 import {Observer} from '../types/core/Observer'
 import {Subscription} from '../types/core/Subscription'
-import {Scheduler} from '../types/Scheduler'
+import {Scheduler} from '../lib/Scheduler'
 import {Curry} from '../lib/Curry'
 
 class SliceObserver<T> implements Observer<T> {

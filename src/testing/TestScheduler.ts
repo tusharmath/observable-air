@@ -1,7 +1,7 @@
 /**
  * Created by tushar.mathur on 02/10/16.
  */
-import {Scheduler} from '../types/Scheduler'
+import {Scheduler} from '../lib/Scheduler'
 import {Observable} from '../types/core/Observable'
 import {Subscription} from '../types/core/Subscription'
 import {TestObserver} from './TestObserver'

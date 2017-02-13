@@ -3,7 +3,7 @@
  */
 import {Observable} from '../types/core/Observable'
 import {Observer} from '../types/core/Observer'
-import {Scheduler} from '../types/Scheduler'
+import {Scheduler} from '../lib/Scheduler'
 import {Subscription} from '../types/core/Subscription'
 import {SubscriberFunction} from '../types/core/SubscriberFunction'
 import {BaseSubscription} from '../lib/BaseSubscription'

@@ -5,7 +5,7 @@
 import {TestObservable} from './TestObservable'
 import {EventNext, ObservableEvent, EventType} from './Events'
 import {Observer} from '../types/core/Observer'
-import {Scheduler} from '../types/Scheduler'
+import {Scheduler} from '../lib/Scheduler'
 
 export function ColdTestObservable (scheduler: Scheduler, events: Array<ObservableEvent>) {
   return new TestObservable((observer: Observer<any>) => {

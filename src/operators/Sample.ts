@@ -3,11 +3,11 @@
  */
 import {Observable} from '../types/core/Observable'
 import {Observer} from '../types/core/Observer'
-import {Scheduler} from '../types/Scheduler'
 import {Subscription} from '../types/core/Subscription'
 import {CompositeSubscription} from '../lib/CompositeSubscription'
 import {Curry} from '../lib/Curry'
 import {ObservableCollection} from '../lib/ObservableCollection'
+import {Scheduler} from '../lib/Scheduler'
 
 
 export type TSelector<T> = {(...e: Array<any>): T}

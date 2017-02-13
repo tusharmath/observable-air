@@ -1,12 +1,19 @@
 /**
  * Created by tushar.mathur on 03/10/16.
  */
-import {Scheduler} from '../types/Scheduler'
 import {Subscription} from '../types/core/Subscription'
 
 interface Global {
   requestIdleCallback?: Function
   process?: {nextTick: Function}
+}
+
+export interface Scheduler {
+  delay(task: () => void, relativeTime: number): Subscription
+  periodic(task: () => void, interval: number): Subscription
+  frame(task: () => void): Subscription
+  asap(task: () => void): Subscription
+  now(): number
 }
 
 function getGlobal (): Global {

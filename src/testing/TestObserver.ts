@@ -2,7 +2,7 @@
  * Created by tushar.mathur on 03/10/16.
  */
 import {EVENT, ObservableEvent} from './Events'
-import {Scheduler} from '../types/Scheduler'
+import {Scheduler} from '../lib/Scheduler'
 import {Observer} from '../types/core/Observer'
 
 export class TestObserver<T> implements Observer<T> {

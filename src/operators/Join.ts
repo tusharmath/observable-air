@@ -3,9 +3,9 @@
  */
 import {Observable} from '../types/core/Observable'
 import {Observer} from '../types/core/Observer'
-import {Scheduler} from '../types/Scheduler'
 import {Subscription} from '../types/core/Subscription'
 import {CompositeSubscription} from '../lib/CompositeSubscription'
+import {Scheduler} from '../lib/Scheduler'
 
 
 class JoinValueObserver<T> implements Observer<T> {
