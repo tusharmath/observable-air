@@ -4,10 +4,12 @@
 import {Observable} from '../types/core/Observable'
 import {Observer} from '../types/core/Observer'
 import {Subscription} from '../types/core/Subscription'
-import {IListener} from '../types/IListener'
 import {Curry} from '../lib/Curry'
 
 export type TResult = Observable<Event>
+export type IListener = {
+  (e: Event): void
+}
 
 class DOMSubscription implements Subscription {
   closed: boolean = false
