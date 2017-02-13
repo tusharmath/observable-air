@@ -11,7 +11,7 @@ import {HotTestObservable} from './HotTestObservable'
 import {LinkedList, LinkedListNode} from '../lib/LinkedList'
 import {TestObservable} from './TestObservable'
 import {DEFAULT_OPTIONS} from './TestOptions'
-import {ObservableEvent} from './ReactiveEvents'
+import {ObservableEvent} from './Events'
 
 // TODO: convert to interface
 class TaskSchedule {

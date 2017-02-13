@@ -3,7 +3,7 @@
  */
 import test from 'ava'
 import {marble, toMarble} from '../src/testing/Marble'
-import {EVENT} from '../src/testing/ReactiveEvents'
+import {EVENT} from '../src/testing/Events'
 import {TestScheduler} from '../src/testing/TestScheduler'
 
 test(t => {

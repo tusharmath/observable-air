@@ -6,7 +6,7 @@
 
 import test from 'ava'
 import {TestScheduler} from '../src/testing/TestScheduler'
-import {EVENT} from '../src/testing/ReactiveEvents'
+import {EVENT} from '../src/testing/Events'
 import {map} from '../src/operators/Map'
 import {fromArray} from '../src/sources/FromArray'
 import {ERROR_MESSAGE, throwError} from '../src/testing/Thrower'

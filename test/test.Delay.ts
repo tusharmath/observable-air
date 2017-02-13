@@ -6,7 +6,7 @@ import {delay} from '../src/main'
 import {TestScheduler} from '../src/testing/TestScheduler'
 import {marble, toMarble} from '../src/testing/Marble'
 import {thrower, ERROR_MESSAGE} from '../src/testing/Thrower'
-import {EVENT} from '../src/testing/ReactiveEvents'
+import {EVENT} from '../src/testing/Events'
 
 test(t => {
   const sh = TestScheduler.of()

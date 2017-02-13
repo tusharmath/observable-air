@@ -3,7 +3,7 @@
  */
 import {TestScheduler} from '../src/testing/TestScheduler'
 import {test} from 'ava'
-import {EVENT} from '../src/testing/ReactiveEvents'
+import {EVENT} from '../src/testing/Events'
 
 test(t => {
   const sh = TestScheduler.of()

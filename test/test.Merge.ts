@@ -5,7 +5,7 @@
 import test from 'ava'
 import {merge} from '../src/operators/Merge'
 import {TestScheduler} from '../src/testing/TestScheduler'
-import {EVENT} from '../src/testing/ReactiveEvents'
+import {EVENT} from '../src/testing/Events'
 
 test(t => {
   const sh = TestScheduler.of()

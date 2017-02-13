@@ -1,7 +1,7 @@
 /**
  * Created by tushar.mathur on 03/10/16.
  */
-import {EVENT, ObservableEvent} from './ReactiveEvents'
+import {EVENT, ObservableEvent} from './Events'
 import {Scheduler} from '../types/Scheduler'
 import {Observer} from '../types/core/Observer'
 

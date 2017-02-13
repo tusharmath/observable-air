@@ -6,7 +6,7 @@
 
 import test from 'ava'
 import {TestScheduler} from '../src/testing/TestScheduler'
-import {EVENT} from '../src/testing/ReactiveEvents'
+import {EVENT} from '../src/testing/Events'
 import {slice} from '../src/operators/Slice'
 
 const {next, complete} = EVENT

@@ -3,7 +3,7 @@
  */
 
 import {TestObservable} from './TestObservable'
-import {EventNext, EventError, ObservableEvent, EventType} from './ReactiveEvents'
+import {EventNext, EventError, ObservableEvent, EventType} from './Events'
 import {TestScheduler} from './TestScheduler'
 import {Observer} from '../types/core/Observer'
 

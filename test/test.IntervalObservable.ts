@@ -6,7 +6,7 @@
 
 import test from 'ava'
 import {TestScheduler} from '../src/testing/TestScheduler'
-import {EVENT, EventError} from '../src/testing/ReactiveEvents'
+import {EVENT, EventError} from '../src/testing/Events'
 import {interval} from '../src/sources/Interval'
 import {toMarble} from '../src/testing/Marble'
 import {thrower, ERROR_MESSAGE} from '../src/testing/Thrower'

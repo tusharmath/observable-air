@@ -3,7 +3,7 @@
  */
 import test from 'ava'
 import {TestScheduler} from '../src/testing/TestScheduler'
-import {EVENT} from '../src/testing/ReactiveEvents'
+import {EVENT} from '../src/testing/Events'
 import {sample} from '../src/operators/Sample'
 import {marble} from '../src/testing/Marble'
 
