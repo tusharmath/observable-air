@@ -22,7 +22,8 @@ export class CompositeSubscription implements Subscription {
   }
 
   unsubscribe (): void {
-    this.subscriptions.forEach(this.remove, this)
+    if (this.closed) return
     this.closed = true
+    this.subscriptions.forEach(this.remove, this)
   }
 }

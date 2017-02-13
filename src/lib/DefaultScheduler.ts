@@ -35,10 +35,9 @@ class Periodic implements Subscription {
 }
 class Delay implements Subscription {
   closed = false
-  private timer: number
 
   constructor (private task: ITask, private timeout: number) {
-    this.timer = setTimeout(this.onEvent.bind(this), this.timeout) as any as number
+    setTimeout(this.onEvent.bind(this), this.timeout)
   }
 
   private onEvent () {
@@ -50,7 +49,6 @@ class Delay implements Subscription {
   unsubscribe (): void {
     if (this.closed === false) {
       this.closed = true
-      clearTimeout(this.timer)
     }
   }
 }
