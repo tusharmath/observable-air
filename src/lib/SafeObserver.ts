@@ -1,19 +1,19 @@
 /**
  * Created by tushar on 29/01/17.
  */
-import {toSafeFunction, SafeFunction} from './ToSafeFunction'
 import {Observer} from './Observer'
+import {SafeFunction, tryCatch} from './Utils'
 
 class SafeObserver<T> implements Observer<T> {
-  private nextSafely: SafeFunction<(val: T) => void>
+  private _next: SafeFunction<void, Observer<T>>
 
   constructor (private sink: Observer<T>) {
-    this.nextSafely = toSafeFunction(this.sink.next)
+    this._next = tryCatch(this.sink.next)
   }
 
   next (val: T): void {
-    const r = this.nextSafely.call(this.sink, val)
-    if (r.hasError()) this.sink.error(r.error)
+    const r = this._next.call(this.sink, val)
+    if (r.isError()) this.sink.error(r.getError())
   }
 
   error (err: Error): void {
