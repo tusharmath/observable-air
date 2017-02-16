@@ -9,6 +9,7 @@ import {onCycle, onEnd} from './lib'
 import {Suite} from 'benchmark'
 import {bm_create} from './bm.create'
 import {bm_debounce} from './bm.debounce'
+import {bm_switch} from './bm.switch'
 
 // Run All Benchmarks
 
@@ -21,6 +22,7 @@ bm_debounce(suite)
 bm_fromArray_map_reduce(suite)
 bm_fromArray_scan_reduce(suite)
 bm_fromArray_takeN(suite)
+bm_switch(suite)
 bm_tryCatch(suite)
 suite
   .on('cycle', onCycle)
