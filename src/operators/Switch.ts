@@ -8,6 +8,8 @@ import {Observer} from '../lib/Observer'
 import {CompositeSubscription} from '../lib/CompositeSubscription'
 import {LinkedListNode} from '../lib/LinkedList'
 import {Operator} from './Operator'
+import {map} from './Map'
+import {curry} from '../lib/Utils'
 
 
 class SwitchValueObserver<T> implements Observer<T> {
@@ -64,3 +66,8 @@ class SwitchLatest<T> implements Observable<T> {
 export function switchLatest<T> (source: Observable<Observable<T>>): Observable<T> {
   return new SwitchLatest(source)
 }
+export const switchMap = curry(<T, K> (fn: (t: K) => Observable<T>, source: Observable<K>) => {
+  return switchLatest((map(fn, source)))
+}) as Function
+  & {<T, K> (mapper: (t: K) => Observable<T>, source: Observable<K>): Observable<T>}
+  & {<T, K> (mapper: (t: K) => Observable<T>): {(source: Observable<K>): Observable<T>}}
