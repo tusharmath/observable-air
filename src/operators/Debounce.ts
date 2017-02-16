@@ -9,29 +9,26 @@ import {CompositeSubscription} from '../lib/CompositeSubscription'
 import {LinkedListNode} from '../lib/LinkedList'
 import {Curry} from '../lib/Curry'
 import {Scheduler} from '../lib/Scheduler'
+import {Operator} from './Operator'
 
-class DebounceOperator <T> implements Observer<T>, Subscription {
+class DebounceOperator <T> extends CompositeSubscription implements Operator<T> {
   private node: LinkedListNode<Subscription>
-  private cSub = new CompositeSubscription()
 
   constructor (private timeout: number,
                src: Observable<T>,
                private sink: Observer<T>,
                private sh: Scheduler) {
-    this.cSub.add(src.subscribe(this, sh))
+    super()
+    this.add(src.subscribe(this, sh))
   }
 
   onEvent (value: T) {
     this.sink.next(value)
   }
 
-  cancelCurrent () {
-    if (this.node) this.cSub.remove(this.node)
-  }
-
   next (val: T): void {
-    this.cancelCurrent()
-    this.node = this.cSub.add(this.sh.delay(this.onEvent.bind(this, val), this.timeout))
+    this.remove(this.node)
+    this.node = this.add(this.sh.delay(this.onEvent.bind(this, val), this.timeout))
   }
 
   error (err: Error): void {
@@ -39,16 +36,8 @@ class DebounceOperator <T> implements Observer<T>, Subscription {
   }
 
   complete (): void {
-    this.cancelCurrent()
+    this.remove(this.node)
     this.sink.complete()
-  }
-
-  unsubscribe (): void {
-    this.cSub.unsubscribe()
-  }
-
-  get closed () {
-    return this.cSub.closed
   }
 }
 class Debounce<T> implements Observable<T> {
