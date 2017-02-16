@@ -3,7 +3,7 @@
  */
 import test from 'ava'
 import {marble, toMarble} from '../src/testing/Marble'
-import {ReactiveEvents} from '../src/testing/ReactiveEvents'
+import {EVENT} from '../src/testing/Events'
 import {TestScheduler} from '../src/testing/TestScheduler'
 
 test(t => {
@@ -15,32 +15,32 @@ test(t => {
 
 test(t => {
   const message = toMarble([
-    ReactiveEvents.next(210, 'A'),
-    ReactiveEvents.next(220, 'B'),
-    ReactiveEvents.next(230, 'C'),
-    ReactiveEvents.complete(240)
+    EVENT.next(210, 'A'),
+    EVENT.next(220, 'B'),
+    EVENT.next(230, 'C'),
+    EVENT.complete(240)
   ])
   t.is('-ABC|', message)
 })
 
 test(t => {
   const message = toMarble([
-    ReactiveEvents.next(200, 'A'),
-    ReactiveEvents.next(210, 'B'),
-    ReactiveEvents.next(220, 'C'),
-    ReactiveEvents.next(230, 'D'),
-    ReactiveEvents.complete(230)
+    EVENT.next(200, 'A'),
+    EVENT.next(210, 'B'),
+    EVENT.next(220, 'C'),
+    EVENT.next(230, 'D'),
+    EVENT.complete(230)
   ])
   t.is('ABCD|', message)
 })
 
 test(t => {
   const message = toMarble([
-    ReactiveEvents.next(220, 'A'),
-    ReactiveEvents.next(240, 'B'),
-    ReactiveEvents.next(260, 'C'),
-    ReactiveEvents.next(280, 'D'),
-    ReactiveEvents.complete(280)
+    EVENT.next(220, 'A'),
+    EVENT.next(240, 'B'),
+    EVENT.next(260, 'C'),
+    EVENT.next(280, 'D'),
+    EVENT.complete(280)
   ])
   t.is('--A-B-C-D|', message)
 })

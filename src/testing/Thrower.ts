@@ -2,10 +2,10 @@
  * Created by tushar.mathur on 06/11/16.
  */
 
-import {Observable} from '../types/core/Observable'
-import {Subscription} from '../types/core/Subscription'
-import {Scheduler} from '../types/Scheduler'
-import {Observer} from '../types/core/Observer'
+import {Observable} from '../lib/Observable'
+import {Subscription} from '../lib/Subscription'
+import {Scheduler} from '../lib/Scheduler'
+import {Observer} from '../lib/Observer'
 
 export const ERROR_MESSAGE = 'Test Exception'
 export function throwError (message: string) {

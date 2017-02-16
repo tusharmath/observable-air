@@ -3,11 +3,11 @@
  */
 
 
-import {Observable} from '../types/core/Observable'
-import {Observer} from '../types/core/Observer'
-import {Subscription} from '../types/core/Subscription'
-import {Scheduler} from '../types/Scheduler'
+import {Observable} from '../lib/Observable'
+import {Observer} from '../lib/Observer'
+import {Subscription} from '../lib/Subscription'
 import {Curry} from '../lib/Curry'
+import {Scheduler} from '../lib/Scheduler'
 
 
 export type TReducer<T, R> = {(memory: R, current: T): R}

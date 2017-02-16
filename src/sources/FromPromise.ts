@@ -2,8 +2,8 @@
  * Created by tushar.mathur on 16/10/16.
  */
 import {create} from './CreateObservable'
-import {Observer} from '../types/core/Observer'
-import {Observable} from '../types/core/Observable'
+import {Observer} from '../lib/Observer'
+import {Observable} from '../lib/Observable'
 
 
 export function onResult<T> (observer: Observer<T>, result: T) {

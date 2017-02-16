@@ -4,7 +4,7 @@
 import {Suite} from 'benchmark'
 import {run, IDeferred} from './lib'
 import {create} from '../src/sources/CreateObservable'
-import {Observer} from '../src/types/core/Observer'
+import {Observer} from '../src/lib/Observer'
 
 function subscriber (observer: Observer<number>) {
   for (var i = 0; i < 1e6; ++i) {

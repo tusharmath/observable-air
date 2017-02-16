@@ -1,7 +1,7 @@
-import {createScheduler} from '../src/lib/DefaultScheduler'
-import {Observable} from '../src/types/core/Observable'
+import {createScheduler, Scheduler} from '../src/lib/Scheduler'
+import {Observable} from '../src/lib/Observable'
 import {BaseObserver} from '../src/lib/BaseObserver'
-import {Scheduler} from '../src/types/Scheduler'
+
 /**
  * Created by tushar.mathur on 05/11/16.
  */
