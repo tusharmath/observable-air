@@ -1,7 +1,7 @@
 /**
  * Created by tushar.mathur on 13/10/16.
  */
-import {Observer} from '../types/core/Observer'
+import {Observer} from './Observer'
 
 function noop () {
 }

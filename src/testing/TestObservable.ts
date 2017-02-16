@@ -1,16 +1,15 @@
 /**
  * Created by tushar.mathur on 06/10/16.
  */
-import {Observable} from '../types/core/Observable'
-import {Observer} from '../types/core/Observer'
-import {Scheduler} from '../types/Scheduler'
-import {Subscription} from '../types/core/Subscription'
-import {IEvent} from '../types/IEvent'
-import {ReactiveEvents} from './ReactiveEvents'
+import {Observable} from '../lib/Observable'
+import {Observer} from '../lib/Observer'
+import {Scheduler} from '../lib/Scheduler'
+import {Subscription} from '../lib/Subscription'
+import {EVENT, ObservableEvent} from './Events'
 
 
 export class TestObservable<T> implements Observable<T> {
-  subscriptions: Array<IEvent> = []
+  subscriptions: Array<ObservableEvent> = []
 
   constructor (private func: (observer: Observer<T>) => Subscription) {
   }
@@ -18,11 +17,11 @@ export class TestObservable<T> implements Observable<T> {
   subscribe (observer: Observer<T>, scheduler: Scheduler): Subscription {
     const subscription = this.func(observer)
     const connections = this.subscriptions
-    connections.push(ReactiveEvents.start(scheduler.now(), subscription))
+    connections.push(EVENT.start(scheduler.now(), subscription))
     return {
       unsubscribe() {
         subscription.unsubscribe()
-        connections.push(ReactiveEvents.end(scheduler.now(), subscription))
+        connections.push(EVENT.end(scheduler.now(), subscription))
       },
       get closed () {
         return subscription.closed

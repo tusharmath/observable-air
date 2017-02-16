@@ -2,10 +2,10 @@
  * Created by tushar.mathur on 27/09/16.
  */
 
-import {Observable} from '../types/core/Observable'
-import {Observer} from '../types/core/Observer'
-import {Subscription} from '../types/core/Subscription'
-import {Scheduler} from '../types/Scheduler'
+import {Observable} from '../lib/Observable'
+import {Observer} from '../lib/Observer'
+import {Subscription} from '../lib/Subscription'
+import {Scheduler} from '../lib/Scheduler'
 import {Curry} from '../lib/Curry'
 
 class SliceObserver<T> implements Observer<T> {

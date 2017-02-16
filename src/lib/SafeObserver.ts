@@ -2,7 +2,7 @@
  * Created by tushar on 29/01/17.
  */
 import {toSafeFunction, SafeFunction} from './ToSafeFunction'
-import {Observer} from '../types/core/Observer'
+import {Observer} from './Observer'
 
 class SafeObserver<T> implements Observer<T> {
   private nextSafely: SafeFunction<(val: T) => void>

@@ -1,10 +1,10 @@
 /**
  * Created by tushar.mathur on 28/09/16.
  */
-import {Observable} from '../types/core/Observable'
-import {Subscription} from '../types/core/Subscription'
-import {Observer} from '../types/core/Observer'
-import {Scheduler} from '../types/Scheduler'
+import {Observable} from '../lib/Observable'
+import {Subscription} from '../lib/Subscription'
+import {Observer} from '../lib/Observer'
+import {Scheduler} from '../lib/Scheduler'
 import {toSafeFunction} from '../lib/ToSafeFunction'
 
 class FromArraySubscription <T> implements Subscription {

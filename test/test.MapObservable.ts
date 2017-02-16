@@ -6,10 +6,10 @@
 
 import test from 'ava'
 import {TestScheduler} from '../src/testing/TestScheduler'
-import {ReactiveEvents} from '../src/testing/ReactiveEvents'
+import {EVENT} from '../src/testing/Events'
 import {map} from '../src/operators/Map'
 
-const {next, complete} = ReactiveEvents
+const {next, complete} = EVENT
 
 test('MapObservable.subscribe()', t => {
   const sh = TestScheduler.of()

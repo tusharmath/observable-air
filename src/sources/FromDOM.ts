@@ -1,13 +1,15 @@
 /**
  * Created by tushar.mathur on 14/10/16.
  */
-import {Observable} from '../types/core/Observable'
-import {Observer} from '../types/core/Observer'
-import {Subscription} from '../types/core/Subscription'
-import {IListener} from '../types/IListener'
+import {Observable} from '../lib/Observable'
+import {Observer} from '../lib/Observer'
+import {Subscription} from '../lib/Subscription'
 import {Curry} from '../lib/Curry'
 
 export type TResult = Observable<Event>
+export type IListener = {
+  (e: Event): void
+}
 
 class DOMSubscription implements Subscription {
   closed: boolean = false

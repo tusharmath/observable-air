@@ -1,14 +1,14 @@
 /**
  * Created by tushar on 12/02/17.
  */
-import {Observable} from '../types/core/Observable'
-import {Observer} from '../types/core/Observer'
-import {Scheduler} from '../types/Scheduler'
-import {Subscription} from '../types/core/Subscription'
+import {Observable} from '../lib/Observable'
+import {Observer} from '../lib/Observer'
+import {Subscription} from '../lib/Subscription'
 import {safeObserver} from '../lib/SafeObserver'
 import {CompositeSubscription} from '../lib/CompositeSubscription'
 import {LinkedListNode} from '../lib/LinkedList'
 import {Curry} from '../lib/Curry'
+import {Scheduler} from '../lib/Scheduler'
 
 class DebounceOperator <T> implements Observer<T>, Subscription {
   private node: LinkedListNode<Subscription>

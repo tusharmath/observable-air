@@ -1,7 +1,7 @@
 /**
  * Created by tushar.mathur on 12/10/16.
  */
-import {Subscription} from '../types/core/Subscription'
+import {Subscription} from './Subscription'
 import {LinkedList, LinkedListNode} from './LinkedList'
 
 export class CompositeSubscription implements Subscription {

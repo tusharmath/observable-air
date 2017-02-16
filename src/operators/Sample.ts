@@ -1,13 +1,13 @@
 /**
  * Created by tushar.mathur on 18/10/16.
  */
-import {Observable} from '../types/core/Observable'
-import {Observer} from '../types/core/Observer'
-import {Scheduler} from '../types/Scheduler'
-import {Subscription} from '../types/core/Subscription'
+import {Observable} from '../lib/Observable'
+import {Observer} from '../lib/Observer'
+import {Subscription} from '../lib/Subscription'
 import {CompositeSubscription} from '../lib/CompositeSubscription'
 import {Curry} from '../lib/Curry'
 import {ObservableCollection} from '../lib/ObservableCollection'
+import {Scheduler} from '../lib/Scheduler'
 
 
 export type TSelector<T> = {(...e: Array<any>): T}

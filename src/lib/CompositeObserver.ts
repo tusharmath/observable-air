@@ -2,7 +2,7 @@
  * Created by tushar.mathur on 25/10/16.
  */
 
-import {Observer} from '../types/core/Observer'
+import {Observer} from './Observer'
 import {LinkedList, LinkedListNode} from './LinkedList'
 
 

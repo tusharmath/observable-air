@@ -1,13 +1,13 @@
 /**
  * Created by tushar on 29/01/17.
  */
-import {Observable} from '../types/core/Observable'
-import {Observer} from '../types/core/Observer'
-import {Scheduler} from '../types/Scheduler'
-import {Subscription} from '../types/core/Subscription'
+import {Observable} from '../lib/Observable'
+import {Observer} from '../lib/Observer'
+import {Subscription} from '../lib/Subscription'
 import {safeObserver} from '../lib/SafeObserver'
 import {CompositeSubscription} from '../lib/CompositeSubscription'
 import {Curry} from '../lib/Curry'
+import {Scheduler} from '../lib/Scheduler'
 
 class DelayObserver<T> implements Observer<T> {
   constructor (private timeout: number,
