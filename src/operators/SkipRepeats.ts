@@ -4,7 +4,7 @@
 import {Observable} from '../lib/Observable'
 import {Observer} from '../lib/Observer'
 import {Subscription} from '../lib/Subscription'
-import {Curry} from '../lib/Curry'
+import {curry} from '../lib/Utils'
 import {Scheduler} from '../lib/Scheduler'
 
 export type TComparator<T> = (a: T, b: T) => boolean
@@ -48,7 +48,7 @@ class SkipRepeatsObservable <T> implements TResult <T> {
   }
 }
 
-export const skipRepeats = Curry(function (hashFunction: {(t: any): any}, source: Observable<any>) {
+export const skipRepeats = curry(function (hashFunction: {(t: any): any}, source: Observable<any>) {
   return new SkipRepeatsObservable(hashFunction, source)
 }) as Function &
   {<T> (cmp: TComparator<T>, source: TSource<T>): TResult<T>} &

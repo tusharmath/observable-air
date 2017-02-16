@@ -7,7 +7,7 @@ import {Subscription} from '../lib/Subscription'
 import {safeObserver} from '../lib/SafeObserver'
 import {CompositeSubscription} from '../lib/CompositeSubscription'
 import {LinkedListNode} from '../lib/LinkedList'
-import {Curry} from '../lib/Curry'
+import {curry} from '../lib/Utils'
 import {Scheduler} from '../lib/Scheduler'
 import {Operator} from './Operator'
 
@@ -49,7 +49,7 @@ class Debounce<T> implements Observable<T> {
   }
 }
 
-export const debounce = Curry(
+export const debounce = curry(
   <T> (timeout: number, source: Observable<T>) => new Debounce(timeout, source)
 ) as Function &
   {<T> (timeout: number, source: Observable<T>): Observable<T>} &
