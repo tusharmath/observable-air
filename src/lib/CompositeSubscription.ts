@@ -16,7 +16,8 @@ export class CompositeSubscription implements Subscription {
     return this.subscriptions.add(d)
   }
 
-  remove (d: LinkedListNode<Subscription>) {
+  remove (d?: LinkedListNode<Subscription>) {
+    if (d === undefined) return this.subscriptions.length
     d.value.unsubscribe()
     return this.subscriptions.remove(d)
   }
