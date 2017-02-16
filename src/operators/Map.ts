@@ -5,7 +5,7 @@
 import {Observable} from '../lib/Observable'
 import {Observer} from '../lib/Observer'
 import {Subscription} from '../lib/Subscription'
-import {Curry} from '../lib/Curry'
+import {curry} from '../lib/Utils'
 import {Scheduler} from '../lib/Scheduler'
 
 
@@ -41,7 +41,7 @@ class MapObservable <T, R> implements TResult<R> {
   }
 }
 
-export const map = Curry(function <T, R> (mapFunction: (a: T) => R, source: Observable<T>) {
+export const map = curry(function <T, R> (mapFunction: (a: T) => R, source: Observable<T>) {
   return new MapObservable(mapFunction, source)
 }) as Function &
   {<T, R> (mapper: TMapper<T, R>, source: TSource<T>): TResult<R>} &

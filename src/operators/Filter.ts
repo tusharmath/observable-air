@@ -6,7 +6,7 @@
 import {Observable} from '../lib/Observable'
 import {Observer} from '../lib/Observer'
 import {Subscription} from '../lib/Subscription'
-import {Curry} from '../lib/Curry'
+import {curry} from '../lib/Utils'
 import {Scheduler} from '../lib/Scheduler'
 
 export type TPredicate<T> = {(value: T): boolean}
@@ -41,7 +41,7 @@ class FilterObservable <T> implements TResult<T> {
   }
 }
 
-export const filter = Curry(function<T> (predicate: TPredicate<T>, source: TSource<T>) {
+export const filter = curry(function<T> (predicate: TPredicate<T>, source: TSource<T>) {
   return new FilterObservable(predicate, source)
 }) as Function &
   {<T> (predicate: TPredicate<T>, source: TSource<T>): TResult<T>} &

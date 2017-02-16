@@ -4,3 +4,4 @@
 
 export {fromArray} from './src/sources/FromArray'
 export {TestScheduler} from './src/testing/TestScheduler'
+export {curry, compose} from './src/lib/Utils'

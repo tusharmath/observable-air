@@ -4,7 +4,7 @@
 import {Observable} from '../lib/Observable'
 import {Observer} from '../lib/Observer'
 import {Subscription} from '../lib/Subscription'
-import {Curry} from '../lib/Curry'
+import {curry} from '../lib/Utils'
 
 export type TResult = Observable<Event>
 export type IListener = {
@@ -34,7 +34,7 @@ class DOMObservable implements TResult {
 
 }
 
-export const fromDOM = Curry(function (element: HTMLElement, name: string) {
+export const fromDOM = curry(function (element: HTMLElement, name: string) {
   return new DOMObservable(name, element)
 }) as Function &
   {(element: HTMLElement, name: string): TResult} &

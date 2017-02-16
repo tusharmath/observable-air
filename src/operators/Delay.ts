@@ -6,7 +6,7 @@ import {Observer} from '../lib/Observer'
 import {Subscription} from '../lib/Subscription'
 import {safeObserver} from '../lib/SafeObserver'
 import {CompositeSubscription} from '../lib/CompositeSubscription'
-import {Curry} from '../lib/Curry'
+import {curry} from '../lib/Utils'
 import {Scheduler} from '../lib/Scheduler'
 
 class DelayObserver<T> implements Observer<T> {
@@ -44,6 +44,6 @@ class DelayObservable<T> implements Observable<T> {
   }
 }
 
-export const delay = Curry(<T> (timeout: number, source: Observable<T>): Observable<T> => new DelayObservable(timeout, source)) as Function &
+export const delay = curry(<T> (timeout: number, source: Observable<T>): Observable<T> => new DelayObservable(timeout, source)) as Function &
   {<T> (timeout: number, source: Observable<T>): Observable<T>} &
   {<T> (timeout: number): {(source: Observable<T>): Observable<T>}}

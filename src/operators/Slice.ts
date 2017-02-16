@@ -6,7 +6,7 @@ import {Observable} from '../lib/Observable'
 import {Observer} from '../lib/Observer'
 import {Subscription} from '../lib/Subscription'
 import {Scheduler} from '../lib/Scheduler'
-import {Curry} from '../lib/Curry'
+import {curry} from '../lib/Utils'
 
 class SliceObserver<T> implements Observer<T> {
   closed: boolean
@@ -62,7 +62,7 @@ class SliceObservable<T> implements Observable<T> {
 
 }
 
-export const slice = Curry(function (start: number, count: number, source: Observable<any>) {
+export const slice = curry(function (start: number, count: number, source: Observable<any>) {
   return new SliceObservable(start, count, source)
 }) as Function &
   {<T>(start: number, count: number, source: Observable<T>): Observable<T>} &
