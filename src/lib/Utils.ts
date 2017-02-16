@@ -20,3 +20,46 @@ export function compose (...t: Function[]) {
     return arg[0]
   }, t[t.length - 1].length)
 }
+
+
+export interface SafeValue<T> {
+  isError(): boolean
+  getValue(): T
+  getError(): Error
+}
+
+export interface SafeFunction<V, C> {
+  call(ctx: C, ...t: any[]): SafeValue<V>
+}
+
+class Gaurded <T> implements SafeValue<T> {
+  constructor (private value: Error|T) {}
+
+  isError (): boolean {
+    return this.value instanceof Error
+  }
+
+  getValue () {
+    return this.value as T
+  }
+
+  getError () {
+    return this.value as Error
+  }
+}
+
+class BaseSafeFunction<T extends Function, V, C> implements SafeFunction<V, C> {
+  constructor (private f: T) {}
+
+  call (ctx: C, ...t: any[]): SafeValue<V> {
+    try {
+      return new Gaurded(this.f.apply(ctx, t))
+    } catch (e) {
+      return new Gaurded(e)
+    }
+  }
+}
+
+export function tryCatch <T extends Function, V, C> (f: T) {
+  return new BaseSafeFunction<T, V, C>(f) as SafeFunction<V, C>
+}
