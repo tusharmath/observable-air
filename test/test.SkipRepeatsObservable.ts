@@ -7,9 +7,9 @@
 import test from 'ava'
 import {skipRepeats} from '../src/operators/SkipRepeats'
 import {TestScheduler} from '../src/testing/TestScheduler'
-import {ReactiveEvents} from '../src/testing/ReactiveEvents'
+import {EVENT} from '../src/testing/Events'
 
-const {next, complete} = ReactiveEvents
+const {next, complete} = EVENT
 
 test('SkipRepeatsObservable.subscribe()', t => {
   const sh = TestScheduler.of()

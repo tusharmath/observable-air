@@ -3,11 +3,11 @@
  */
 
 
-import {Observable} from '../types/core/Observable'
-import {Observer} from '../types/core/Observer'
-import {Subscription} from '../types/core/Subscription'
-import {Scheduler} from '../types/Scheduler'
-import {Curry} from '../lib/Curry'
+import {Observable} from '../lib/Observable'
+import {Observer} from '../lib/Observer'
+import {Subscription} from '../lib/Subscription'
+import {curry} from '../lib/Utils'
+import {Scheduler} from '../lib/Scheduler'
 
 
 export type TReducer<T, R> = {(memory: R, current: T): R}
@@ -46,7 +46,7 @@ class ReduceObservable <T, R> implements TResult<R> {
   }
 }
 
-export const reduce = Curry(function <T, R> (t0: TReducer<T, R>, t1: R, t2: Observable<T>) {
+export const reduce = curry(function <T, R> (t0: TReducer<T, R>, t1: R, t2: Observable<T>) {
   return new ReduceObservable(t0, t1, t2)
 }) as Function &
   {<T, R>(reducer: TReducer<T, R>, seed: TSeed<R>, source: TSource<T>): TResult<R>} &

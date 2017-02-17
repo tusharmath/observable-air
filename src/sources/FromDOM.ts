@@ -1,13 +1,15 @@
 /**
  * Created by tushar.mathur on 14/10/16.
  */
-import {Observable} from '../types/core/Observable'
-import {Observer} from '../types/core/Observer'
-import {Subscription} from '../types/core/Subscription'
-import {IListener} from '../types/IListener'
-import {Curry} from '../lib/Curry'
+import {Observable} from '../lib/Observable'
+import {Observer} from '../lib/Observer'
+import {Subscription} from '../lib/Subscription'
+import {curry} from '../lib/Utils'
 
 export type TResult = Observable<Event>
+export type IListener = {
+  (e: Event): void
+}
 
 class DOMSubscription implements Subscription {
   closed: boolean = false
@@ -32,7 +34,7 @@ class DOMObservable implements TResult {
 
 }
 
-export const fromDOM = Curry(function (element: HTMLElement, name: string) {
+export const fromDOM = curry(function (element: HTMLElement, name: string) {
   return new DOMObservable(name, element)
 }) as Function &
   {(element: HTMLElement, name: string): TResult} &

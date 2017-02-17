@@ -1,11 +1,11 @@
 /**
  * Created by tushar.mathur on 17/10/16.
  */
-import {Observable} from '../types/core/Observable'
-import {Observer} from '../types/core/Observer'
-import {Scheduler} from '../types/Scheduler'
-import {Subscription} from '../types/core/Subscription'
+import {Observable} from '../lib/Observable'
+import {Observer} from '../lib/Observer'
+import {Subscription} from '../lib/Subscription'
 import {CompositeSubscription} from '../lib/CompositeSubscription'
+import {Scheduler} from '../lib/Scheduler'
 
 class MergeObserver<T> implements Observer<T> {
   private count = 0

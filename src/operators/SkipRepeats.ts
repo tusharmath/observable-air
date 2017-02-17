@@ -1,11 +1,11 @@
 /**
  * Created by niranjan on 12/10/16.
  */
-import {Observable} from '../types/core/Observable'
-import {Observer} from '../types/core/Observer'
-import {Subscription} from '../types/core/Subscription'
-import {Scheduler} from '../types/Scheduler'
-import {Curry} from '../lib/Curry'
+import {Observable} from '../lib/Observable'
+import {Observer} from '../lib/Observer'
+import {Subscription} from '../lib/Subscription'
+import {curry} from '../lib/Utils'
+import {Scheduler} from '../lib/Scheduler'
 
 export type TComparator<T> = (a: T, b: T) => boolean
 export type TSource<T> = Observable<T>
@@ -48,7 +48,7 @@ class SkipRepeatsObservable <T> implements TResult <T> {
   }
 }
 
-export const skipRepeats = Curry(function (hashFunction: {(t: any): any}, source: Observable<any>) {
+export const skipRepeats = curry(function (hashFunction: {(t: any): any}, source: Observable<any>) {
   return new SkipRepeatsObservable(hashFunction, source)
 }) as Function &
   {<T> (cmp: TComparator<T>, source: TSource<T>): TResult<T>} &

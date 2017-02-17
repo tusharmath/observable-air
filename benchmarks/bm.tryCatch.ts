@@ -1,28 +1,27 @@
 /**
  * Created by tushar.mathur on 06/11/16.
  */
-
-import * as assert from 'assert'
 import {Suite} from 'benchmark'
-import {SafeValue} from '../src/lib/SafeValue'
-import {toSafeFunction} from '../src/lib/ToSafeFunction'
+import {array} from './lib'
+import {tryCatch, SafeValue} from '../src/lib/Utils'
 
 function addThis (b: number) {
   this.a = this.a + b
+  if (this.a % 2 === 0) {
+    throw 'ERROR'
+  }
   return this
 }
-const safelyAddThis = toSafeFunction(addThis)
+const safelyAddThis = tryCatch(addThis)
 
-function test (message: string, f: Function) {
-  assert.deepStrictEqual(f().value.a, 102, message)
+export function testFunction (arr: number[]): Array<SafeValue<any>> {
+  const results = []
+  for (var i = 0; i < arr.length; ++i) {
+    results.push(safelyAddThis.call({a: 100}, i))
+  }
+  return results
 }
-
-export function testFunction (): SafeValue<any> {
-  return safelyAddThis.call({a: 100}, 2)
-}
-
-test('class-based', testFunction)
-
+const arr = array(1e3)
 export function bm_tryCatch (suite: Suite) {
-  return suite.add('tryCatch', testFunction)
+  return suite.add('tryCatch', () => testFunction(arr))
 }

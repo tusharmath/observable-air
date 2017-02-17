@@ -1,7 +1,7 @@
 /**
  * Created by tushar.mathur on 12/10/16.
  */
-import {Subscription} from '../types/core/Subscription'
+import {Subscription} from './Subscription'
 import {LinkedList, LinkedListNode} from './LinkedList'
 
 export class CompositeSubscription implements Subscription {
@@ -16,13 +16,15 @@ export class CompositeSubscription implements Subscription {
     return this.subscriptions.add(d)
   }
 
-  remove (d: LinkedListNode<Subscription>) {
+  remove (d?: LinkedListNode<Subscription>) {
+    if (d === undefined) return this.subscriptions.length
     d.value.unsubscribe()
     return this.subscriptions.remove(d)
   }
 
   unsubscribe (): void {
-    this.subscriptions.forEach(this.remove, this)
+    if (this.closed) return
     this.closed = true
+    this.subscriptions.forEach(this.remove, this)
   }
 }

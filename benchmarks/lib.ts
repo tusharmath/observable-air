@@ -1,7 +1,7 @@
-import {createScheduler} from '../src/lib/DefaultScheduler'
-import {Observable} from '../src/types/core/Observable'
-import {BaseObserver} from '../src/lib/BaseObserver'
-import {Scheduler} from '../src/types/Scheduler'
+import {createScheduler, Scheduler} from '../src/lib/Scheduler'
+import {Observable} from '../src/lib/Observable'
+import {Observer} from '../src/lib/Observer'
+
 /**
  * Created by tushar.mathur on 05/11/16.
  */
@@ -29,8 +29,24 @@ export function passthrough (z: any, x: any) {
 
 export const scheduler = createScheduler() as Scheduler
 
+class BmObserver<T> implements Observer<T> {
+  constructor (private d: IDeferred) {}
+
+  next (val: T): void {
+  }
+
+  error (err: Error): void {
+    throw err
+  }
+
+  complete (): void {
+    this.d.resolve()
+  }
+}
+
 export function run (observable: Observable<any>, d: IDeferred) {
-  observable.subscribe(BaseObserver.of(undefined, undefined, () => d.resolve()), scheduler)
+  observable.subscribe(new BmObserver(d), scheduler
+  )
 }
 
 export function array (n: number) {

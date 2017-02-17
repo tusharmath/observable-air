@@ -2,11 +2,11 @@
  * Created by tushar.mathur on 27/09/16.
  */
 
-import {Observable} from '../types/core/Observable'
-import {Observer} from '../types/core/Observer'
-import {Subscription} from '../types/core/Subscription'
-import {Scheduler} from '../types/Scheduler'
-import {Curry} from '../lib/Curry'
+import {Observable} from '../lib/Observable'
+import {Observer} from '../lib/Observer'
+import {Subscription} from '../lib/Subscription'
+import {curry} from '../lib/Utils'
+import {Scheduler} from '../lib/Scheduler'
 
 
 export type TMapper<T, R> = (value: T) => R
@@ -41,7 +41,7 @@ class MapObservable <T, R> implements TResult<R> {
   }
 }
 
-export const map = Curry(function <T, R> (mapFunction: (a: T) => R, source: Observable<T>) {
+export const map = curry(function <T, R> (mapFunction: (a: T) => R, source: Observable<T>) {
   return new MapObservable(mapFunction, source)
 }) as Function &
   {<T, R> (mapper: TMapper<T, R>, source: TSource<T>): TResult<R>} &

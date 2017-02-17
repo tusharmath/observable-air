@@ -1,11 +1,11 @@
 /**
  * Created by tushar.mathur on 28/09/16.
  */
-import {Observable} from '../types/core/Observable'
-import {Subscription} from '../types/core/Subscription'
-import {Observer} from '../types/core/Observer'
-import {Scheduler} from '../types/Scheduler'
-import {toSafeFunction} from '../lib/ToSafeFunction'
+import {Observable} from '../lib/Observable'
+import {Subscription} from '../lib/Subscription'
+import {Observer} from '../lib/Observer'
+import {Scheduler} from '../lib/Scheduler'
+import {tryCatch} from '../lib/Utils'
 
 class FromArraySubscription <T> implements Subscription {
   private subscription: Subscription
@@ -17,8 +17,8 @@ class FromArraySubscription <T> implements Subscription {
 
 
   private executeSafely () {
-    const r = toSafeFunction(this.execute).call(this)
-    if (r.hasError()) this.sink.error(r.error)
+    const r = tryCatch(this.execute).call(this)
+    if (r.isError()) this.sink.error(r.getError())
   }
 
   execute () {

@@ -1,11 +1,13 @@
 /**
  * Created by tushar.mathur on 10/10/16.
  */
-import {Observable} from '../types/core/Observable'
-import {Observer} from '../types/core/Observer'
-import {Scheduler} from '../types/Scheduler'
-import {Subscription} from '../types/core/Subscription'
+import {Observable} from '../lib/Observable'
+import {Observer} from '../lib/Observer'
+import {Subscription} from '../lib/Subscription'
 import {CompositeSubscription} from '../lib/CompositeSubscription'
+import {Scheduler} from '../lib/Scheduler'
+import {curry} from '../lib/Utils'
+import {map} from './Map'
 
 
 class JoinValueObserver<T> implements Observer<T> {
@@ -82,3 +84,8 @@ class JoinObservable<T> implements Observable<T> {
 export function join <T> (source: Observable<Observable<T>>): Observable<T> {
   return new JoinObservable(source)
 }
+export const flatMap = curry(<T, K> (fn: (t: K) => Observable<T>, source: Observable<K>) => {
+  return join((map(fn, source)))
+}) as Function
+  & {<T, K> (mapper: (t: K) => Observable<T>, source: Observable<K>): Observable<T>}
+  & {<T, K> (mapper: (t: K) => Observable<T>): {(source: Observable<K>): Observable<T>}}

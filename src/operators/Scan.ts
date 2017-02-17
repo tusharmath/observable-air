@@ -1,11 +1,11 @@
 /**
  * Created by tushar.mathur on 09/10/16.
  */
-import {Observable} from '../types/core/Observable'
-import {Observer} from '../types/core/Observer'
-import {Scheduler} from '../types/Scheduler'
-import {Subscription} from '../types/core/Subscription'
-import {Curry} from '../lib/Curry'
+import {Observable} from '../lib/Observable'
+import {Observer} from '../lib/Observer'
+import {Scheduler} from '../lib/Scheduler'
+import {Subscription} from '../lib/Subscription'
+import {curry} from '../lib/Utils'
 
 export type TReducer <T, R> = (memory: R, current: T) => R
 export type TSeed <R> = R
@@ -44,7 +44,7 @@ class ScanObservable<T, R> implements TResult<R> {
   }
 }
 
-export const scan = Curry(function <T, V> (reducer: TReducer<T, V>, value: V, source: Observable<T>) {
+export const scan = curry(function <T, V> (reducer: TReducer<T, V>, value: V, source: Observable<T>) {
   return new ScanObservable(reducer, value, source)
 }) as Function &
   {<T, R>(reducer: TReducer<T, R>, seed: TSeed<R>, source: TSource<T>): TResult<R>} &

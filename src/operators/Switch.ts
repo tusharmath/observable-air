@@ -1,12 +1,15 @@
 /**
  * Created by tushar.mathur on 16/10/16.
  */
-import {Observable} from '../types/core/Observable'
-import {Subscription} from '../types/core/Subscription'
-import {Scheduler} from '../types/Scheduler'
-import {Observer} from '../types/core/Observer'
+import {Observable} from '../lib/Observable'
+import {Subscription} from '../lib/Subscription'
+import {Scheduler} from '../lib/Scheduler'
+import {Observer} from '../lib/Observer'
 import {CompositeSubscription} from '../lib/CompositeSubscription'
 import {LinkedListNode} from '../lib/LinkedList'
+import {Operator} from './Operator'
+import {map} from './Map'
+import {curry} from '../lib/Utils'
 
 
 class SwitchValueObserver<T> implements Observer<T> {
@@ -25,27 +28,20 @@ class SwitchValueObserver<T> implements Observer<T> {
   }
 }
 
-class SwitchObserver<T> implements Observer<Observable<T>> {
-  private currentSub: LinkedListNode<Subscription> | undefined = void 0
-  private sink: SwitchValueObserver<T>
+class SwitchOperator<T> extends CompositeSubscription implements Operator <Observable<T>> {
+  private sink = new SwitchValueObserver(this.mainSink)
+  private srcSub: LinkedListNode<Subscription>
 
-  constructor (private mainSink: Observer<T>,
-               private cSub: CompositeSubscription,
+  constructor (private source: Observable<Observable<T>>,
+               private mainSink: Observer<T>,
                private scheduler: Scheduler) {
-    this.sink = new SwitchValueObserver(mainSink)
-  }
-
-  private removeCurrentSub () {
-    if (this.currentSub) this.cSub.remove(this.currentSub)
-  }
-
-  private setCurrentSub (subscription: Subscription) {
-    this.removeCurrentSub()
-    this.currentSub = this.cSub.add(subscription)
+    super()
+    this.add(this.source.subscribe(this, scheduler))
   }
 
   next (val: Observable<T>): void {
-    this.setCurrentSub(val.subscribe(this.sink, this.scheduler))
+    this.remove(this.srcSub)
+    this.srcSub = this.add(val.subscribe(this.sink, this.scheduler))
   }
 
   error (err: Error): void {
@@ -53,7 +49,7 @@ class SwitchObserver<T> implements Observer<Observable<T>> {
   }
 
   complete (): void {
-    this.removeCurrentSub()
+    this.remove(this.srcSub)
     this.mainSink.complete()
   }
 }
@@ -63,12 +59,15 @@ class SwitchLatest<T> implements Observable<T> {
   }
 
   subscribe (observer: Observer<T>, scheduler: Scheduler): Subscription {
-    const cSub = new CompositeSubscription()
-    cSub.add(this.source.subscribe(new SwitchObserver(observer, cSub, scheduler), scheduler))
-    return cSub
+    return new SwitchOperator(this.source, observer, scheduler)
   }
 }
 
 export function switchLatest<T> (source: Observable<Observable<T>>): Observable<T> {
   return new SwitchLatest(source)
 }
+export const switchMap = curry(<T, K> (fn: (t: K) => Observable<T>, source: Observable<K>) => {
+  return switchLatest((map(fn, source)))
+}) as Function
+  & {<T, K> (mapper: (t: K) => Observable<T>, source: Observable<K>): Observable<T>}
+  & {<T, K> (mapper: (t: K) => Observable<T>): {(source: Observable<K>): Observable<T>}}
