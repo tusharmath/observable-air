@@ -9,13 +9,13 @@ A **4kb** high performance alternative to [RxJS].
 If you are new to reactive programming then you should definitely checkout —  [The introduction to Reactive Programming you've been missing]
 
 ## Links
-   - [Benchmarks]
-   - [Documentation]
-   - [RxJS Compatibility]
    - [Usage](#Usage)
    - [Example](#Example)
    - [Installation](#Installation)
    - [Why an RxJS Alternative?](#WhyanRxJSAlternative?)
+   - [Benchmarks]
+   - [Documentation]
+   - [RxJS Compatibility]
 
 
 [RxJS]:                                                          https://github.com/ReactiveX/rxjs
