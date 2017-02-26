@@ -12,41 +12,49 @@ export function createArray<T> (size: number, value: T) {
   return arr
 }
 
+export interface ObservableContainer {
+  complete (id: number): void
+  hasStarted(): boolean
+  isComplete(): boolean
+  next (value: any, id: number): void
+  values: any[]
+}
 
-export class ObservableCollection {
-  private values = new Array(this.total)
-  private streamStatuses = createArray(this.total, StreamStatus.IDLE)
-  private startedCount = 0
-  private completedCount = 0
+/**
+ * Maintains a the stream status and the most recent values.
+ */
+class Container implements ObservableContainer {
+  public values = new Array(this.total)
+  private status = createArray(this.total, StreamStatus.IDLE)
+  private started = 0
+  private completed = 0
 
   constructor (private total: number) {
   }
 
-  onNext (value: any, id: number) {
-    if (this.streamStatuses[id] === StreamStatus.IDLE) {
-      this.streamStatuses[id] = StreamStatus.STARTED
-      this.startedCount++
+  next (value: any, id: number) {
+    if (this.status[id] === StreamStatus.IDLE) {
+      this.status[id] = StreamStatus.STARTED
+      this.started++
     }
     this.values[id] = value
   }
 
-  onComplete (id: number) {
-    if (this.streamStatuses[id] !== StreamStatus.COMPLETED) {
-      this.streamStatuses[id] = StreamStatus.COMPLETED
-      this.completedCount++
+  complete (id: number) {
+    if (this.status[id] !== StreamStatus.COMPLETED) {
+      this.status[id] = StreamStatus.COMPLETED
+      this.completed++
     }
-    return this.hasCompleted()
+    return this.isComplete()
   }
 
-  hasCompleted () {
-    return this.completedCount === this.total
+  isComplete () {
+    return this.completed === this.total
   }
 
   hasStarted () {
-    return this.startedCount === this.total
-  }
-
-  getValues () {
-    return this.values
+    return this.started === this.total
   }
 }
+
+export const container = (count: number) => new Container(count) as ObservableContainer

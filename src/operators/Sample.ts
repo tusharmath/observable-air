@@ -6,8 +6,8 @@ import {Observer} from '../lib/Observer'
 import {Subscription} from '../lib/Subscription'
 import {CompositeSubscription} from '../lib/CompositeSubscription'
 import {curry} from '../lib/Utils'
-import {ObservableCollection} from '../lib/ObservableCollection'
 import {Scheduler} from '../lib/Scheduler'
+import {container} from '../lib/ObservableCollection'
 
 
 export type TSelector<T> = {(...e: Array<any>): T}
@@ -34,32 +34,32 @@ class SampleValueObserver<T> implements Observer<T> {
 
 }
 class SampleObserver<T> implements Observer<T> {
-  private collection = new ObservableCollection(this.total)
+  private collection = container(this.total)
   private samplerCompleted = false
 
   constructor (private total: number, private sink: Observer<T>, private func: TSelector<T>) {
   }
 
   onNext (value: T, id: number) {
-    this.collection.onNext(value, id)
+    this.collection.next(value, id)
   }
 
   onComplete (id: number) {
-    const hasCompleted = this.collection.onComplete(id)
+    const hasCompleted = this.collection.complete(id)
     if (this.samplerCompleted && hasCompleted) {
       this.sink.complete()
     }
   }
 
-  private actuallyCompleted () {
-    if (this.samplerCompleted && this.collection.hasCompleted()) {
+  private __complete () {
+    if (this.samplerCompleted && this.collection.isComplete()) {
       this.sink.complete()
     }
   }
 
   next (val: T): void {
     if (this.collection.hasStarted()) {
-      this.sink.next(this.func.apply(null, this.collection.getValues()))
+      this.sink.next(this.func.apply(null, this.collection.values))
     }
   }
 
@@ -69,7 +69,7 @@ class SampleObserver<T> implements Observer<T> {
 
   complete (): void {
     this.samplerCompleted = true
-    this.actuallyCompleted()
+    this.__complete()
   }
 }
 
@@ -98,4 +98,4 @@ export const sample = curry(function <T> (f: TSelector<T>, sampler: TSampler, so
   {<T>(selector: TSelector<T>, sampler: TSampler, source: TSources): TResult<T>} &
   {<T>(selector: TSelector<T>): {(sampler: TSampler, source: TSources): TResult<T>}} &
   {<T>(selector: TSelector<T>, sampler: TSampler): {(source: TSources): TResult<T>}} &
-  {<T>(selector: TSelector<T>): { (sampler: TSampler): { (source: TSources): TResult<T> } } }
+  {<T>(selector: TSelector<T>): {(sampler: TSampler): {(source: TSources): TResult<T>}}}

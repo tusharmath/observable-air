@@ -3,17 +3,17 @@
  */
 import {CompositeSubscription} from '../lib/CompositeSubscription'
 import {curry} from '../lib/Utils'
-import {ObservableCollection} from '../lib/ObservableCollection'
 import {Observable} from '../lib/Observable'
 import {Observer} from '../lib/Observer'
 import {Scheduler} from '../lib/Scheduler'
 import {Subscription} from '../lib/Subscription'
+import {container} from '../lib/ObservableCollection'
 
 export type TSelector<T> = {(...e: Array<any>): T}
 export type TSource = Array<Observable<any>>
 export type TResult <T> = Observable<T>
 
-export class CombineValueObserver<T> implements Observer<T> {
+class CombineValueObserver<T> implements Observer<T> {
   constructor (private id: number, private sink: CombinedObserver<T>) {
   }
 
@@ -30,21 +30,21 @@ export class CombineValueObserver<T> implements Observer<T> {
   }
 }
 
-export class CombinedObserver<T> {
-  private collection = new ObservableCollection(this.total)
+class CombinedObserver<T> {
+  private collection = container(this.total)
 
   constructor (private func: TSelector<T>, private total: number, private sink: Observer<T>) {
   }
 
   onNext (value: T, id: number) {
-    this.collection.onNext(value, id)
+    this.collection.next(value, id)
     if (this.collection.hasStarted()) {
-      this.sink.next(this.func.apply(null, this.collection.getValues()))
+      this.sink.next(this.func.apply(null, this.collection.values))
     }
   }
 
   onComplete (id: number) {
-    const hasCompleted = this.collection.onComplete(id)
+    const hasCompleted = this.collection.complete(id)
     if (hasCompleted) {
       this.sink.complete()
     }
@@ -55,7 +55,7 @@ export class CombinedObserver<T> {
   }
 }
 
-export class CombineObservable<T> implements Observable<T> {
+class CombineObservable<T> implements Observable<T> {
   constructor (private selector: TSelector<T>, private sources: Array<Observable<any>>) {
   }
 
