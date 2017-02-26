@@ -30,7 +30,7 @@ import {switchLatest, switchMap} from './operators/Switch'
 
 const air = <T> (o: Observable<T>) => new Air(o)
 
-export class Air<T> implements Observable<T> {
+export default class Air<T> implements Observable<T> {
   constructor (private src: Observable<T>) {}
 
   subscribe (observer: Observer<T>, scheduler: Scheduler = createScheduler()): Subscription {
