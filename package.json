@@ -19,7 +19,9 @@
     "build:es": "rollup -c",
     "build:es:min": "babel .dist/main-es.js > .dist/main-es.min.js",
     "build:cjs": "browserify .dist/src/main.js > .dist/main-cjs.js",
-    "build:cjs:min": "babel .dist/main-cjs.js > .dist/main-cjs.min.js"
+    "build:cjs:min": "babel .dist/main-cjs.js > .dist/main-cjs.min.js",
+    "gh-pages": "node ./dist/scripts/gh-pages.js",
+    "postpublish": "npm run gh-pages"
   },
   "author": "",
   "license": "ISC",
@@ -33,6 +35,7 @@
     "commentator": "^1.0.5",
     "coveralls": "^2.11.14",
     "cz-conventional-changelog": "^2.0.0",
+    "gh-pages": "^0.12.0",
     "ghooks": "^2.0.0",
     "nyc": "^10.0.0",
     "request-promise": "^4.1.1",
