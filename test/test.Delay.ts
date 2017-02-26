@@ -2,7 +2,7 @@
  * Created by tushar on 29/01/17.
  */
 import {test} from 'ava'
-import {delay} from '../src/main'
+import {delay} from '../fp'
 import {TestScheduler} from '../src/testing/TestScheduler'
 import {marble, toMarble} from '../src/testing/Marble'
 import {thrower, ERROR_MESSAGE} from '../src/testing/Thrower'
