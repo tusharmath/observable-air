@@ -2,7 +2,7 @@
  * Created by tushar.mathur on 11/10/16.
  */
 
-export {create} from './src/sources/CreateObservable'
+export {create} from './src/sources/Create'
 export {debounce} from './src/operators/Debounce'
 export {delay} from './src/operators/Delay'
 export {filter} from './src/operators/Filter'

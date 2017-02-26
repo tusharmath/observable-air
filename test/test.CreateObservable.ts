@@ -3,7 +3,7 @@
  */
 import test from 'ava'
 import {TestScheduler} from '../src/testing/TestScheduler'
-import {create} from '../src/sources/CreateObservable'
+import {create} from '../src/sources/Create'
 import {EVENT} from '../src/testing/Events'
 
 test(t => {
