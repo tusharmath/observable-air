@@ -24,7 +24,7 @@ If you are new to reactive programming then you should definitely checkout —  
 [download and parsing]:                                          https://medium.com/@addyosmani/javascript-start-up-performance-69200f43b201#.upm9f4v8u
 [The introduction to Reactive Programming you've been missing]:  https://gist.github.com/staltz/868e7e9bc2a7b8c1f754
 [RxJS Compatibility]:                                            https://github.com/tusharmath/observable-air/blob/master/COMPATIBILITY.md
-[Documentation]:                                                 https://tusharm.com/observable-air
+[Documentation]:                                                 https://tusharmath.github.io/observable-air
 [Benchmarks]:                                                    https://github.com/tusharmath/observable-air/blob/master/BENCHMARK.md
 
 ## Usage
