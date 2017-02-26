@@ -2,11 +2,10 @@
  * Created by tushar.mathur on 24/10/16.
  */
 import {Observable} from '../lib/Observable'
-import {Observer} from '../lib/Observer'
+import {Observer, CompositeObserver} from '../lib/Observer'
 import {Scheduler} from '../lib/Scheduler'
 import {Subscription} from '../lib/Subscription'
 import {LinkedListNode} from '../lib/LinkedList'
-import {CompositeObserver} from '../lib/CompositeObserver'
 
 class MulticastSubscription<T> implements Subscription {
   closed = false
