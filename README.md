@@ -14,22 +14,30 @@ If you are new to reactive programming then you should definitely checkout —  
 [download and parsing]:                                          https://medium.com/@addyosmani/javascript-start-up-performance-69200f43b201#.upm9f4v8u
 [The introduction to Reactive Programming you've been missing]:  https://gist.github.com/staltz/868e7e9bc2a7b8c1f754
 
-## Why use RxJS?
-
-- Tons of operators that can help in writing really concise code.
-- It has an active community and is the closest to the [Observable Proposal].
-- Contains helpful abstractions such as `Schedulers` and `Subjects`.
-- Default support for `jQuery` like fluidic syntax.
-
-## Why use Observable Air?
-
-- Small in size (5kb) when compared to 28kb of RxJS (both minified and gzipped). This reduces [download and parsing] time significantly.
-- Wicked fast, checkout the benchmarks section for comparison.
-- All operators a `curried` by default so you could `compose` to combine multiple operators to easily create new ones.
-- Inter-operates well with [Ramda]. New operators can be created using `R.compose()`. 
+## Why an RxJS Alternative?
+RxJS has a ton of operators that can help you write really concise code. **Air** on the other hand makes sure that with the given set of operators once can combine and compose to create more sophisticated operators. The operators and designed in such a way that there is no drop in performance and adhere to RxJS's API as much as possible. New operators are only created when the current ones don't cut it interms of performance.
 
 ## Installation
 
 ```bash
  npm install observable-air --save
 ```
+
+## Basic Usage
+
+```js
+const O = require('observable-air').Air
+
+O
+  .interval(1000)
+  .scan((a, b) => a + b, 0)
+  .forEach(x => console.log(x))
+
+```
+
+## Differences to RxJS
+Most of the common operators are available for direct consumption to the developers. Some of them can be created by combining one or more operators.
+
+|RxJS |Air Recipe|
+|---|---|
+|`Rx.filter()`| `Air.filter()`| 
