@@ -15,7 +15,42 @@ If you are new to reactive programming then you should definitely checkout —  
 [The introduction to Reactive Programming you've been missing]:  https://gist.github.com/staltz/868e7e9bc2a7b8c1f754
 
 ## Why an RxJS Alternative?
-RxJS has a ton of operators that can help you write really concise code. **Air** on the other hand makes sure that with the given set of operators once can combine and compose to create more sophisticated operators. The operators and designed in such a way that there is no drop in performance and adhere to RxJS's API as much as possible. New operators are only created when the current ones don't cut it interms of performance.
+RxJS has a ton of operators that can help you write really concise code. Most of the operators can be re-created using a set of core operators. Unfortunately in Rx such a composition has a significant performance impact on the end result. This makes it really unsuitable for doing JS based animations on a low end mobile device.
+ 
+ **Air** tries to mitigate this problem by re-architecting the internals so much so that it has minimal performance-overhead of composition. This also reduces the size of the library considerably, hence a lot more suitable for low end devices.  
+
+Most of the common operators are available for direct consumption to the developers. Some of them can be created by combining one or more operators.
+
+|RxJS |Air|
+|---|---|
+|`Rx.filter()`| `Air.filter()`|
+| `Rx.create()` | `Air.create`|
+| `Rx.debounce()` | `Air.debounce`|
+| `Rx.delay()` | `Air.delay`|
+| `Rx.filter()` | `Air.filter`|
+| `Rx.flatMap()` | `Air.flatMap`|
+| `Rx.forEach()` | `Air.forEach`|
+| `Rx.frames()` | `Air.frames`|
+| `Rx.fromDOM()` | `Air.fromDOM`|
+| `Rx.fromPromise()` | `Air.fromPromise`|
+| `Rx.interval()` | `Air.interval`|
+| `Rx.join()` | `Air.join`|
+| `Rx.map()` | `Air.map`|
+| `Rx.merge()` | `Air.merge`|
+| `Rx.multicast()` | `Air.multicast`|
+| `Rx.Observable()` | `Air.Observable`|
+| `Rx.Observer()` | `Air.Observer`|
+| `Rx.of()` | `Air.of()`|
+| `Rx.reduce()` | `Air.reduce`|
+| `Rx.sample()` | `Air.sample`|
+| `Rx.scan()` | `Air.scan`|
+| `Rx.skipRepeats()` | `Air.skipRepeats`|
+| `Rx.slice()` | `Air.slice`|
+| `Rx.SubscriberFunction()` | `Air.SubscriberFunction`|
+| `Rx.Subscription()` | `Air.Subscription`|
+| `Rx.switchLatest()` | `Air.switchLatest`|
+| `Rx.switchMap()` | `Air.switchMap`|
+
 
 ## Installation
 
@@ -34,10 +69,3 @@ O
   .forEach(x => console.log(x))
 
 ```
-
-## Differences to RxJS
-Most of the common operators are available for direct consumption to the developers. Some of them can be created by combining one or more operators.
-
-|RxJS |Air Recipe|
-|---|---|
-|`Rx.filter()`| `Air.filter()`| 
