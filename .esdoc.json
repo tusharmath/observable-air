@@ -1,4 +1,4 @@
 {
-  "source": "./.dist/src",
+  "source": "./.dist/es6",
   "destination": "./.dist/doc"
 }
