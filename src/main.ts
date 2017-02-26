@@ -30,6 +30,11 @@ import {switchLatest, switchMap} from './operators/Switch'
 
 const air = <T> (o: Observable<T>) => new Air(o)
 
+/**
+ * Base class for fluidic API
+ * @implements Observable
+ * @class
+ */
 export default class Air<T> implements Observable<T> {
   constructor (private src: Observable<T>) {}
 
