@@ -1,7 +1,7 @@
 /**
  * Created by tushar on 17/02/17.
  */
-import {create} from './sources/CreateObservable'
+import {create} from './sources/Create'
 import {debounce} from './operators/Debounce'
 import {delay} from './operators/Delay'
 import {filter} from './operators/Filter'
