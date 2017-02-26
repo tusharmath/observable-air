@@ -20,7 +20,7 @@
     "build:es:min": "babel .dist/main-es.js > .dist/main-es.min.js",
     "build:cjs": "browserify .dist/src/main.js > .dist/main-cjs.js",
     "build:cjs:min": "babel .dist/main-cjs.js > .dist/main-cjs.min.js",
-    "doc": "esdoc -c esdoc.json",
+    "doc": "tsc --module es6 --target es6 --outDir .dist/es6 src/main.ts && esdoc",
     "gh-pages": "node ./dist/scripts/gh-pages.js",
     "postpublish": "npm run doc && npm run gh-pages"
   },
