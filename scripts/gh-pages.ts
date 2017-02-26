@@ -2,7 +2,7 @@
  * Created by tushar on 26/02/17.
  */
 
-const {version} = require('../package.json')
+const {version} = require('../../package.json')
 const ghPages = require('gh-pages')
 const path = require('path')
 
