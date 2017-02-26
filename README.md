@@ -28,12 +28,11 @@ import O from 'observable-air'
 ```
 
 ## Example
-```
+```js
 O
   .interval(1000)
   .scan((a, b) => a + b, 0)
   .forEach(x => console.log(x))
-
 ```
 
 ## Installation
