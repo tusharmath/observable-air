@@ -3,8 +3,7 @@
  */
 import {Observable} from '../lib/Observable'
 import {Observer} from '../lib/Observer'
-import {Subscription} from '../lib/Subscription'
-import {CompositeSubscription} from '../lib/CompositeSubscription'
+import {Subscription, CompositeSubscription} from '../lib/Subscription'
 import {Scheduler} from '../lib/Scheduler'
 
 class MergeObserver<T> implements Observer<T> {

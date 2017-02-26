@@ -1,7 +1,7 @@
 /**
  * Created by tushar.mathur on 16/10/16.
  */
-import {create} from './CreateObservable'
+import {create} from './Create'
 import {Observer} from '../lib/Observer'
 import {Observable} from '../lib/Observable'
 
