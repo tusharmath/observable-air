@@ -8,6 +8,6 @@ const path = require('path')
 
 const message = `docs(gh-pages): publishing version ${version}
 [skip ci]`
-ghPages.publish(path.join(__dirname, {message: message}, '../doc'), function (err: Error) {
+ghPages.publish(path.join(__dirname, '../doc'), {message: message}, function (err: Error) {
   throw err
 })
