@@ -4,11 +4,56 @@
 [![npm](https://img.shields.io/npm/v/observable-air.svg)](https://www.npmjs.com/package/observable-air)
 [![Coverage Status](https://coveralls.io/repos/github/tusharmath/observable-air/badge.svg)](https://coveralls.io/github/tusharmath/observable-air)
 
-## Features
+A **4kb** high performance alternative to [RxJS].
 
-1. **Testable**: It uses schedulers to maintain a global sense of time. This makes it easy to swipe in the `DefaultScheduler` which uses the CPU clock, with a `TestScheduler` that has its own local clock and can be controlled by the developer.
-1. **Small Footprint:** The library contains only basic operators which might not be a good thing for some users, but it keeps the library size small.
-1. **Curried by default:** All the `Operators` and `Sources` are curried out of the box. The typings have been updated to support generics also.
-1. **Performance:** Performance is of utmost importance to `observable-air` a ton of micro optimizations have been done to improve performance.
+If you are new to reactive programming then you should definitely checkout —  [The introduction to Reactive Programming you've been missing]
 
-## [Documentation](https://github.com/tusharmath/observable-air/blob/master/API.md)
+## Links
+   - [Usage](#usage)
+   - [Example](#example)
+   - [Installation](#installation)
+   - [Why an RxJS Alternative?](#why-an-rxjs-alternative)
+   - [Benchmarks]
+   - [Documentation]
+   - [RxJS Compatibility]
+
+
+[RxJS]:                                                          https://github.com/ReactiveX/rxjs
+[Observable Proposal]:                                           https://github.com/tc39/proposal-observable
+[Ramda]:                                                         http://ramdajs.com
+[download and parsing]:                                          https://medium.com/@addyosmani/javascript-start-up-performance-69200f43b201#.upm9f4v8u
+[The introduction to Reactive Programming you've been missing]:  https://gist.github.com/staltz/868e7e9bc2a7b8c1f754
+[RxJS Compatibility]:                                            https://github.com/tusharmath/observable-air/blob/master/COMPATIBILITY.md
+[Documentation]:                                                 https://tusharmath.github.io/observable-air
+[Benchmarks]:                                                    https://github.com/tusharmath/observable-air/blob/master/BENCHMARK.md
+
+## Usage
+
+```js
+// inside CommonJS
+const O = require('observable-air').default
+```
+
+```js
+// inside es6 or typescript
+import O from 'observable-air'
+```
+
+## Example
+```js
+O
+  .interval(1000)
+  .scan((a, b) => a + b, 0)
+  .forEach(x => console.log(x)) // outputs 1, 2 ,3, 4 ...
+```
+
+## Installation
+
+```bash
+ npm install observable-air --save
+```
+
+## Why an RxJS Alternative?
+RxJS has a ton of operators that can help you write really concise code. Though most of the operators can be re-created using a set of core operators, combining them to create new ones has significant performance overhead. Because of which most of the operators are re-written using vanilla js (or typescript) and not using composition. This causes a bloat in the size of the library. Overall its neither small nor performant enough to run animations on low end devices.
+ 
+ **Air** tries to mitigate this problem by re-architecting the internals so that there is minimal performance-overhead while composing. This also reduces the size of the library considerably, since less operators need to be shipped in the same bundle be default, thus becoming a lot more suitable for low end devices.

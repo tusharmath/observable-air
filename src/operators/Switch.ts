@@ -2,10 +2,9 @@
  * Created by tushar.mathur on 16/10/16.
  */
 import {Observable} from '../lib/Observable'
-import {Subscription} from '../lib/Subscription'
+import {Subscription, CompositeSubscription} from '../lib/Subscription'
 import {Scheduler} from '../lib/Scheduler'
 import {Observer} from '../lib/Observer'
-import {CompositeSubscription} from '../lib/CompositeSubscription'
 import {LinkedListNode} from '../lib/LinkedList'
 import {Operator} from './Operator'
 import {map} from './Map'

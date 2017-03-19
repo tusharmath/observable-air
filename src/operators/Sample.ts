@@ -3,11 +3,10 @@
  */
 import {Observable} from '../lib/Observable'
 import {Observer} from '../lib/Observer'
-import {Subscription} from '../lib/Subscription'
-import {CompositeSubscription} from '../lib/CompositeSubscription'
+import {Subscription, CompositeSubscription} from '../lib/Subscription'
 import {curry} from '../lib/Utils'
 import {Scheduler} from '../lib/Scheduler'
-import {container} from '../lib/ObservableCollection'
+import {container} from '../lib/Container'
 
 
 export type TSelector<T> = {(...e: Array<any>): T}
@@ -34,32 +33,32 @@ class SampleValueObserver<T> implements Observer<T> {
 
 }
 class SampleObserver<T> implements Observer<T> {
-  private collection = container(this.total)
-  private samplerCompleted = false
+  private container = container(this.total)
+  private completed = false
 
   constructor (private total: number, private sink: Observer<T>, private func: TSelector<T>) {
   }
 
   onNext (value: T, id: number) {
-    this.collection.next(value, id)
+    this.container.next(value, id)
   }
 
   onComplete (id: number) {
-    const hasCompleted = this.collection.complete(id)
-    if (this.samplerCompleted && hasCompleted) {
+    const hasCompleted = this.container.complete(id)
+    if (this.completed && hasCompleted) {
       this.sink.complete()
     }
   }
 
-  private __complete () {
-    if (this.samplerCompleted && this.collection.isComplete()) {
+  private actuallyCompleted () {
+    if (this.completed && this.container.isDone()) {
       this.sink.complete()
     }
   }
 
   next (val: T): void {
-    if (this.collection.hasStarted()) {
-      this.sink.next(this.func.apply(null, this.collection.values))
+    if (this.container.isOn()) {
+      this.sink.next(this.func.apply(null, this.container.values))
     }
   }
 
@@ -68,8 +67,8 @@ class SampleObserver<T> implements Observer<T> {
   }
 
   complete (): void {
-    this.samplerCompleted = true
-    this.__complete()
+    this.completed = true
+    this.actuallyCompleted()
   }
 }
 

@@ -4,9 +4,9 @@
 import {Observable} from '../lib/Observable'
 import {Observer} from '../lib/Observer'
 import {Scheduler} from '../lib/Scheduler'
-import {Subscription} from '../lib/Subscription'
+import {Subscription, BaseSubscription} from '../lib/Subscription'
 import {SubscriberFunction} from '../lib/SubscriberFunction'
-import {BaseSubscription} from '../lib/BaseSubscription'
+
 
 class CreateObservable<T> implements Observable<T> {
   constructor (private f: SubscriberFunction<T>) {

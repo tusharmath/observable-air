@@ -3,9 +3,8 @@
  */
 import {Observable} from '../lib/Observable'
 import {Observer} from '../lib/Observer'
-import {Subscription} from '../lib/Subscription'
+import {Subscription, CompositeSubscription} from '../lib/Subscription'
 import {safeObserver} from '../lib/SafeObserver'
-import {CompositeSubscription} from '../lib/CompositeSubscription'
 import {LinkedListNode} from '../lib/LinkedList'
 import {curry} from '../lib/Utils'
 import {Scheduler} from '../lib/Scheduler'

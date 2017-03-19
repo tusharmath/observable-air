@@ -12,19 +12,16 @@ export function createArray<T> (size: number, value: T) {
   return arr
 }
 
-export interface ObservableContainer {
-  complete (id: number): void
-  hasStarted(): boolean
-  isComplete(): boolean
-  next (value: any, id: number): void
-  values: any[]
+export interface Container {
+  next<T> (value: T, id: number): void
+  complete(id: number): boolean
+  isDone(): boolean
+  isOn(): boolean
+  readonly values: any[]
 }
 
-/**
- * Maintains a the stream status and the most recent values.
- */
-class Container implements ObservableContainer {
-  public values = new Array(this.total)
+class ValueContainer implements Container {
+  values = new Array(this.total)
   private status = createArray(this.total, StreamStatus.IDLE)
   private started = 0
   private completed = 0
@@ -45,16 +42,16 @@ class Container implements ObservableContainer {
       this.status[id] = StreamStatus.COMPLETED
       this.completed++
     }
-    return this.isComplete()
+    return this.isDone()
   }
 
-  isComplete () {
+  isDone () {
     return this.completed === this.total
   }
 
-  hasStarted () {
+  isOn () {
     return this.started === this.total
   }
 }
 
-export const container = (count: number) => new Container(count) as ObservableContainer
+export const container = (count: number) => new ValueContainer(count) as Container

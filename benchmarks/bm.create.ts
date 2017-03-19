@@ -3,7 +3,7 @@
  */
 import {Suite} from 'benchmark'
 import {run, IDeferred} from './lib'
-import {create} from '../src/sources/CreateObservable'
+import {create} from '../src/sources/Create'
 import {Observer} from '../src/lib/Observer'
 
 function subscriber (observer: Observer<number>) {
