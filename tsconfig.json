@@ -7,6 +7,6 @@
     "strictNullChecks": true,
     "removeComments": false,
     "noUnusedLocals": true,
-    "declaration": true
+    "declaration": false
   }
 }
