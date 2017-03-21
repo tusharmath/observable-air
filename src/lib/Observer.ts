@@ -3,7 +3,7 @@ import {LinkedListNode, LinkedList} from './LinkedList'
  * Created by tushar.mathur on 27/09/16.
  */
 
-export interface Observer<T> {
+export interface IObserver<T> {
   // Receives the next value in the sequence
   next (val: T): void
 
@@ -14,18 +14,18 @@ export interface Observer<T> {
   complete  (): void
 }
 
-export class CompositeObserver<T> implements Observer<T> {
-  private observers = new LinkedList<Observer<T>>()
+export class CompositeObserver<T> implements IObserver<T> {
+  private observers = new LinkedList<IObserver<T>>()
 
   get length () {
     return this.observers.length
   }
 
-  add (observer: Observer<T>) {
+  add (observer: IObserver<T>) {
     return this.observers.add(observer)
   }
 
-  remove (node: LinkedListNode<Observer<T>>) {
+  remove (node: LinkedListNode<IObserver<T>>) {
     return this.observers.remove(node)
   }
 

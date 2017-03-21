@@ -2,25 +2,25 @@
  * Created by tushar.mathur on 27/09/16.
  */
 
-import {Observable} from '../lib/Observable'
-import {Observer} from '../lib/Observer'
-import {Subscription} from '../lib/Subscription'
-import {Scheduler} from '../lib/Scheduler'
+import {IObservable} from '../lib/Observable'
+import {IObserver} from '../lib/Observer'
+import {ISubscription} from '../lib/Subscription'
+import {IScheduler} from '../lib/Scheduler'
 import {curry} from '../lib/Utils'
 
-class SliceObserver<T> implements Observer<T> {
+class SliceObserver<T> implements IObserver<T> {
   closed: boolean
   private index: number
-  private subscription: Subscription
+  private subscription: ISubscription
 
   constructor (private from: number,
                private total: number,
-               private sink: Observer<T>) {
+               private sink: IObserver<T>) {
     this.closed = false
     this.index = 0
   }
 
-  start (subscription: Subscription) {
+  start (subscription: ISubscription) {
     this.subscription = subscription
   }
 
@@ -49,11 +49,11 @@ class SliceObserver<T> implements Observer<T> {
   }
 }
 
-class SliceObservable<T> implements Observable<T> {
-  constructor (private start: number, private total: number, private source: Observable<T>) {
+class SliceObservable<T> implements IObservable<T> {
+  constructor (private start: number, private total: number, private source: IObservable<T>) {
   }
 
-  subscribe (observer: Observer<T>, scheduler: Scheduler): Subscription {
+  subscribe (observer: IObserver<T>, scheduler: IScheduler): ISubscription {
     const sliceObserver = new SliceObserver(this.start, this.total, observer)
     const subscription = this.source.subscribe(sliceObserver, scheduler)
     sliceObserver.start(subscription)
@@ -62,10 +62,10 @@ class SliceObservable<T> implements Observable<T> {
 
 }
 
-export const slice = curry(function (start: number, count: number, source: Observable<any>) {
+export const slice = curry(function (start: number, count: number, source: IObservable<any>) {
   return new SliceObservable(start, count, source)
 }) as Function &
-  {<T>(start: number, count: number, source: Observable<T>): Observable<T>} &
-  {<T>(start: number): {(count: number, source: Observable<T>): Observable<T>}} &
-  {<T>(start: number, count: number): {(source: Observable<T>): Observable<T>}} &
-  {<T>(start: number): { (count: number): { (source: Observable<T>): Observable<T> } } }
+  {<T>(start: number, count: number, source: IObservable<T>): IObservable<T>} &
+  {<T>(start: number): {(count: number, source: IObservable<T>): IObservable<T>}} &
+  {<T>(start: number, count: number): {(source: IObservable<T>): IObservable<T>}} &
+  {<T>(start: number): { (count: number): { (source: IObservable<T>): IObservable<T> } } }

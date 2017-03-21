@@ -15,35 +15,35 @@ import {join, flatMap} from './operators/Join'
 import {map} from './operators/Map'
 import {merge} from './operators/Merge'
 import {multicast} from './operators/Multicast'
-import {Observable} from './lib/Observable'
-import {Observer} from './lib/Observer'
+import {IObservable} from './lib/Observable'
+import {IObserver} from './lib/Observer'
 import {of} from './sources/FromArray'
 import {reduce} from './operators/Reduce'
 import {sample} from './operators/Sample'
 import {scan} from './operators/Scan'
-import {Scheduler, createScheduler} from './lib/Scheduler'
+import {IScheduler, createScheduler} from './lib/Scheduler'
 import {skipRepeats} from './operators/SkipRepeats'
 import {slice} from './operators/Slice'
-import {SubscriberFunction} from './lib/SubscriberFunction'
-import {Subscription} from './lib/Subscription'
+import {ISubscriberFunction} from './lib/SubscriberFunction'
+import {ISubscription} from './lib/Subscription'
 import {switchLatest, switchMap} from './operators/Switch'
 
 
-const air = <T> (o: Observable<T>) => new Air(o)
+const air = <T> (o: IObservable<T>) => new Air(o)
 
 /**
  * Base class for fluidic API
  * @implements Observable
  * @class
  */
-export default class Air<T> implements Observable<T> {
-  constructor (private src: Observable<T>) {}
+export default class Air<T> implements IObservable<T> {
+  constructor (private src: IObservable<T>) {}
 
-  subscribe (observer: Observer<T>, scheduler: Scheduler = createScheduler()): Subscription {
+  subscribe (observer: IObserver<T>, scheduler: IScheduler = createScheduler()): ISubscription {
     return this.src.subscribe(observer, scheduler)
   }
 
-  static create <T> (f: SubscriberFunction<T>) {
+  static create <T> (f: ISubscriberFunction<T>) {
     return air(create(f))
   }
 
@@ -83,7 +83,7 @@ export default class Air<T> implements Observable<T> {
     return air(join(this.src  as any))
   }
 
-  flatMap <K> (fn: (t: T) => Observable<K>) {
+  flatMap <K> (fn: (t: T) => IObservable<K>) {
     return air(flatMap(fn, this.src))
   }
 
@@ -91,7 +91,7 @@ export default class Air<T> implements Observable<T> {
     return air(map(fn, this.src))
   }
 
-  static merge <T> (...t: Array<Observable<any>>) {
+  static merge <T> (...t: Array<IObservable<any>>) {
     return air(merge<T>(...t))
   }
 
@@ -107,7 +107,7 @@ export default class Air<T> implements Observable<T> {
     return air(reduce(fn, memory, this.src))
   }
 
-  sample (fn: (...t: any[]) => T, ob: Array<Observable<any>>) {
+  sample (fn: (...t: any[]) => T, ob: Array<IObservable<any>>) {
     return air(sample(fn, this.src, ob))
   }
 
@@ -127,7 +127,7 @@ export default class Air<T> implements Observable<T> {
     return air(switchLatest(this.src as any))
   }
 
-  switchMap <K> (fn: (t: T) => Observable<K>) {
+  switchMap <K> (fn: (t: T) => IObservable<K>) {
     return air(switchMap(fn, this.src))
   }
 }

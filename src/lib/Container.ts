@@ -12,7 +12,7 @@ export function createArray<T> (size: number, value: T) {
   return arr
 }
 
-export interface Container {
+export interface IContainer {
   next<T> (value: T, id: number): void
   complete(id: number): boolean
   isDone(): boolean
@@ -20,7 +20,7 @@ export interface Container {
   readonly values: any[]
 }
 
-class ValueContainer implements Container {
+class ValueContainer implements IContainer {
   values = new Array(this.total)
   private status = createArray(this.total, StreamStatus.IDLE)
   private started = 0
@@ -54,4 +54,4 @@ class ValueContainer implements Container {
   }
 }
 
-export const container = (count: number) => new ValueContainer(count) as Container
+export const container = (count: number) => new ValueContainer(count) as IContainer

@@ -1,6 +1,6 @@
-import {createScheduler, Scheduler} from '../src/lib/Scheduler'
-import {Observable} from '../src/lib/Observable'
-import {Observer} from '../src/lib/Observer'
+import {createScheduler, IScheduler} from '../src/lib/Scheduler'
+import {IObservable} from '../src/lib/Observable'
+import {IObserver} from '../src/lib/Observer'
 
 /**
  * Created by tushar.mathur on 05/11/16.
@@ -27,9 +27,9 @@ export function passthrough (z: any, x: any) {
   return x
 }
 
-export const scheduler = createScheduler() as Scheduler
+export const scheduler = createScheduler() as IScheduler
 
-class BmObserver<T> implements Observer<T> {
+class BmObserver<T> implements IObserver<T> {
   constructor (private d: IDeferred) {}
 
   next (val: T): void {
@@ -44,7 +44,7 @@ class BmObserver<T> implements Observer<T> {
   }
 }
 
-export function run (observable: Observable<any>, d: IDeferred) {
+export function run (observable: IObservable<any>, d: IDeferred) {
   observable.subscribe(new BmObserver(d), scheduler
   )
 }

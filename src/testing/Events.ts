@@ -1,9 +1,9 @@
 /**
  * Created by tushar.mathur on 03/10/16.
  */
-import {Subscription} from '../lib/Subscription'
+import {ISubscription} from '../lib/Subscription'
 
-export interface ObservableEvent {
+export interface IObservableEvent {
   readonly type: EventType
   readonly time: number
 }
@@ -13,7 +13,7 @@ export enum EventType {
 }
 
 
-export class EventNext<T> implements ObservableEvent {
+export class EventNext<T> implements IObservableEvent {
   type: EventType
 
   constructor (public time: number, public value: T) {
@@ -21,7 +21,7 @@ export class EventNext<T> implements ObservableEvent {
   }
 }
 
-export class EventError implements ObservableEvent {
+export class EventError implements IObservableEvent {
   type: EventType
 
   constructor (public time: number, public value: Error) {
@@ -29,7 +29,7 @@ export class EventError implements ObservableEvent {
   }
 }
 
-export class EventComplete implements ObservableEvent {
+export class EventComplete implements IObservableEvent {
   type: EventType
 
   constructor (public time: number) {
@@ -38,19 +38,19 @@ export class EventComplete implements ObservableEvent {
 }
 
 
-export class EventEnd implements ObservableEvent {
+export class EventEnd implements IObservableEvent {
   type: EventType
 
-  constructor (public time: number, public subscription: Subscription) {
+  constructor (public time: number, public subscription: ISubscription) {
     this.type = EventType.end
   }
 }
 
 
-export class EventStart implements ObservableEvent {
+export class EventStart implements IObservableEvent {
   type: EventType
 
-  constructor (public time: number, public subscription: Subscription) {
+  constructor (public time: number, public subscription: ISubscription) {
     this.type = EventType.start
   }
 }
@@ -68,11 +68,11 @@ export const EVENT = {
     return new EventComplete(time)
   },
 
-  start (time: number, subscription: Subscription): EventComplete {
+  start (time: number, subscription: ISubscription): EventComplete {
     return new EventStart(time, subscription)
   },
 
-  end (time: number, subscription: Subscription): EventComplete {
+  end (time: number, subscription: ISubscription): EventComplete {
     return new EventEnd(time, subscription)
   }
 }

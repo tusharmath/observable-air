@@ -1,18 +1,18 @@
 /**
  * Created by tushar on 28/01/17.
  */
-import {Observable} from '../lib/Observable'
-import {Observer} from '../lib/Observer'
-import {Scheduler} from '../lib/Scheduler'
-import {Subscription} from '../lib/Subscription'
+import {IObservable} from '../lib/Observable'
+import {IObserver} from '../lib/Observer'
+import {IScheduler} from '../lib/Scheduler'
+import {ISubscription} from '../lib/Subscription'
 import {safeObserver} from '../lib/SafeObserver'
 
-class RAFSubscription implements Subscription {
-  observer: Observer<number>
-  subscription: Subscription
+class RAFSubscription implements ISubscription {
+  observer: IObserver<number>
+  subscription: ISubscription
   closed = false
 
-  constructor (private sink: Observer<void>, private scheduler: Scheduler) {
+  constructor (private sink: IObserver<void>, private scheduler: IScheduler) {
     this.schedule()
   }
 
@@ -31,11 +31,11 @@ class RAFSubscription implements Subscription {
   }
 }
 
-class FrameObservable implements Observable<void> {
-  subscribe (observer: Observer<void>, scheduler: Scheduler): Subscription {
+class FrameObservable implements IObservable<void> {
+  subscribe (observer: IObserver<void>, scheduler: IScheduler): ISubscription {
     return new RAFSubscription(safeObserver(observer), scheduler)
   }
 }
-export function frames (): Observable<void> {
+export function frames (): IObservable<void> {
   return new FrameObservable()
 }

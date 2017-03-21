@@ -3,7 +3,7 @@
  */
 import {Suite} from 'benchmark'
 import {array} from './lib'
-import {tryCatch, SafeValue} from '../src/lib/Utils'
+import {tryCatch, ISafeValue} from '../src/lib/Utils'
 
 function addThis (b: number) {
   this.a = this.a + b
@@ -14,7 +14,7 @@ function addThis (b: number) {
 }
 const safelyAddThis = tryCatch(addThis)
 
-export function testFunction (arr: number[]): Array<SafeValue<any>> {
+export function testFunction (arr: number[]): Array<ISafeValue<any>> {
   const results = []
   for (var i = 0; i < arr.length; ++i) {
     results.push(safelyAddThis.call({a: 100}, i))
