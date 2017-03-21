@@ -32,7 +32,7 @@ export interface ISafeFunction<V, C> {
   call(ctx: C, ...t: any[]): ISafeValue<V>
 }
 
-class Gaurded <T> implements ISafeValue<T> {
+class Guarded <T> implements ISafeValue<T> {
   constructor (private value: Error|T) {}
 
   isError (): boolean {
@@ -53,9 +53,9 @@ class BaseSafeFunction<T extends Function, V, C> implements ISafeFunction<V, C> 
 
   call (ctx: C, ...t: any[]): ISafeValue<V> {
     try {
-      return new Gaurded(this.f.apply(ctx, t))
+      return new Guarded(this.f.apply(ctx, t))
     } catch (e) {
-      return new Gaurded(e)
+      return new Guarded(e)
     }
   }
 }
