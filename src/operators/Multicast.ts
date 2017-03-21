@@ -1,18 +1,18 @@
 /**
  * Created by tushar.mathur on 24/10/16.
  */
-import {Observable} from '../lib/Observable'
-import {Observer, CompositeObserver} from '../lib/Observer'
-import {Scheduler} from '../lib/Scheduler'
-import {Subscription} from '../lib/Subscription'
+import {IObservable} from '../lib/Observable'
+import {IObserver, CompositeObserver} from '../lib/Observer'
+import {IScheduler} from '../lib/Scheduler'
+import {ISubscription} from '../lib/Subscription'
 import {LinkedListNode} from '../lib/LinkedList'
 
-class MulticastSubscription<T> implements Subscription {
+class MulticastSubscription<T> implements ISubscription {
   closed = false
   private node = this.sharedObserver.addObserver(this.observer, this.scheduler)
 
-  constructor (private observer: Observer<T>,
-               private scheduler: Scheduler,
+  constructor (private observer: IObserver<T>,
+               private scheduler: IScheduler,
                private sharedObserver: MulticastObserver<T>) {
   }
 
@@ -23,13 +23,13 @@ class MulticastSubscription<T> implements Subscription {
 }
 
 class MulticastObserver<T> extends CompositeObserver<T> {
-  private subscription: Subscription
+  private subscription: ISubscription
 
-  constructor (private source: Observable<T>) {
+  constructor (private source: IObservable<T>) {
     super()
   }
 
-  addObserver (observer: Observer<T>, scheduler: Scheduler) {
+  addObserver (observer: IObserver<T>, scheduler: IScheduler) {
     const node = this.add(observer)
     if (this.length === 1) {
       this.subscription = this.source.subscribe(this, scheduler)
@@ -37,7 +37,7 @@ class MulticastObserver<T> extends CompositeObserver<T> {
     return node
   }
 
-  removeObserver (node: LinkedListNode<Observer<T>>) {
+  removeObserver (node: LinkedListNode<IObserver<T>>) {
     this.remove(node)
     if (this.length === 0) {
       this.subscription.unsubscribe()
@@ -45,18 +45,18 @@ class MulticastObserver<T> extends CompositeObserver<T> {
   }
 }
 
-class Multicast<T> implements Observable<T> {
+class Multicast<T> implements IObservable<T> {
   private sharedObserver = new MulticastObserver(this.source)
 
-  constructor (private source: Observable<T>) {
+  constructor (private source: IObservable<T>) {
   }
 
 
-  subscribe (observer: Observer<T>, scheduler: Scheduler): Subscription {
+  subscribe (observer: IObserver<T>, scheduler: IScheduler): ISubscription {
     return new MulticastSubscription(observer, scheduler, this.sharedObserver)
   }
 }
 
-export function multicast<T> (source: Observable<T>): Observable<T> {
+export function multicast<T> (source: IObservable<T>): IObservable<T> {
   return new Multicast(source)
 }

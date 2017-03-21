@@ -4,9 +4,9 @@
 import {Suite} from 'benchmark'
 import {run, IDeferred} from './lib'
 import {create} from '../src/sources/Create'
-import {Observer} from '../src/lib/Observer'
+import {IObserver} from '../src/lib/Observer'
 
-function subscriber (observer: Observer<number>) {
+function subscriber (observer: IObserver<number>) {
   for (var i = 0; i < 1e6; ++i) {
     observer.next(i)
   }

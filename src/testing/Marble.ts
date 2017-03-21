@@ -1,7 +1,7 @@
 /**
  * Created by tushar.mathur on 23/10/16.
  */
-import {EVENT, EventNext, ObservableEvent, EventType} from './Events'
+import {EVENT, EventNext, IObservableEvent, EventType} from './Events'
 import {DEFAULT_OPTIONS} from './TestOptions'
 
 export const SIZE = DEFAULT_OPTIONS.marbleSize
@@ -9,8 +9,8 @@ export const START = DEFAULT_OPTIONS.subscriptionStart
 
 export function marble (message: String,
                         start = START,
-                        size = SIZE): Array<ObservableEvent> {
-  const events: Array<ObservableEvent> = []
+                        size = SIZE): Array<IObservableEvent> {
+  const events: Array<IObservableEvent> = []
   let time = start
   for (let i = 0; i < message.length; ++i) {
     switch (message[i]) {
@@ -31,7 +31,7 @@ export function marble (message: String,
   return events
 }
 
-export function toMarble<T> (events: Array<ObservableEvent>,
+export function toMarble<T> (events: Array<IObservableEvent>,
                              start = START,
                              size = SIZE) {
   let time = start - size

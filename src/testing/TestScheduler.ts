@@ -1,16 +1,16 @@
 /**
  * Created by tushar.mathur on 02/10/16.
  */
-import {Scheduler} from '../lib/Scheduler'
-import {Observable} from '../lib/Observable'
-import {Subscription} from '../lib/Subscription'
+import {IScheduler} from '../lib/Scheduler'
+import {IObservable} from '../lib/Observable'
+import {ISubscription} from '../lib/Subscription'
 import {TestObserver} from './TestObserver'
 import {ColdTestObservable} from './ColdTestObservable'
 import {HotTestObservable} from './HotTestObservable'
 import {LinkedList, LinkedListNode} from '../lib/LinkedList'
 import {TestObservable} from './TestObservable'
 import {DEFAULT_OPTIONS} from './TestOptions'
-import {ObservableEvent} from './Events'
+import {IObservableEvent} from './Events'
 
 // TODO: convert to interface
 class TaskSchedule {
@@ -18,7 +18,7 @@ class TaskSchedule {
   }
 }
 
-class TaskSubscription implements Subscription {
+class TaskSubscription implements ISubscription {
   closed: boolean
 
   constructor (private queue: LinkedList<TaskSchedule>,
@@ -30,8 +30,8 @@ class TaskSubscription implements Subscription {
   }
 }
 
-export class TestScheduler implements Scheduler {
-  asap (task: () => void): Subscription {
+export class TestScheduler implements IScheduler {
+  asap (task: () => void): ISubscription {
     return this.delay(task, 1)
   }
 
@@ -62,18 +62,18 @@ export class TestScheduler implements Scheduler {
     return this.clock
   }
 
-  delay (task: () => void, time: number, now: number = this.now()): Subscription {
+  delay (task: () => void, time: number, now: number = this.now()): ISubscription {
     return new TaskSubscription(
       this.queue,
       this.queue.add(new TaskSchedule(task, time + now))
     )
   }
 
-  frame (task: () => void): Subscription {
+  frame (task: () => void): ISubscription {
     return this.delay(task, this.now() + this.rafTimeout, 0)
   }
 
-  periodic (task: () => void, interval: number): Subscription {
+  periodic (task: () => void, interval: number): ISubscription {
     var closed = false
     const repeatedTask = () => {
       if (closed) return
@@ -99,25 +99,25 @@ export class TestScheduler implements Scheduler {
     })
   }
 
-  subscribeTo <T> (f: () => Observable<T>, start: number, stop: number) {
-    let subscription: Subscription
+  subscribeTo <T> (f: () => IObservable<T>, start: number, stop: number) {
+    let subscription: ISubscription
     const observer = this.Observer()
     this.delay(() => subscription = f().subscribe(observer, this), start, 0)
     this.delay(() => !subscription.closed && subscription.unsubscribe(), stop, 0)
     return observer
   }
 
-  start<T> (f: () => Observable<T>, start = DEFAULT_OPTIONS.subscriptionStart, stop = DEFAULT_OPTIONS.subscriptionStop) {
+  start<T> (f: () => IObservable<T>, start = DEFAULT_OPTIONS.subscriptionStart, stop = DEFAULT_OPTIONS.subscriptionStop) {
     const resultsObserver = this.subscribeTo(f, start, stop)
     this.advanceBy(stop)
     return resultsObserver
   }
 
-  Cold <T> (events: Array<ObservableEvent>) {
+  Cold <T> (events: Array<IObservableEvent>) {
     return ColdTestObservable(this, events) as TestObservable<T>
   }
 
-  Hot <T> (events: Array<ObservableEvent>) {
+  Hot <T> (events: Array<IObservableEvent>) {
     return HotTestObservable(this, events) as TestObservable<T>
   }
 

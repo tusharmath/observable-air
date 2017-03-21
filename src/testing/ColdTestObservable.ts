@@ -3,12 +3,12 @@
  */
 
 import {TestObservable} from './TestObservable'
-import {EventNext, ObservableEvent, EventType} from './Events'
-import {Observer} from '../lib/Observer'
-import {Scheduler} from '../lib/Scheduler'
+import {EventNext, IObservableEvent, EventType} from './Events'
+import {IObserver} from '../lib/Observer'
+import {IScheduler} from '../lib/Scheduler'
 
-export function ColdTestObservable (scheduler: Scheduler, events: Array<ObservableEvent>) {
-  return new TestObservable((observer: Observer<any>) => {
+export function ColdTestObservable (scheduler: IScheduler, events: Array<IObservableEvent>) {
+  return new TestObservable((observer: IObserver<any>) => {
     var closed = false
     for (var i = 0; i < events.length && !closed; i++) {
       const event = events[i]

@@ -1,22 +1,22 @@
 /**
  * Created by tushar on 12/02/17.
  */
-import {Observable} from '../lib/Observable'
-import {Observer} from '../lib/Observer'
-import {Subscription, CompositeSubscription} from '../lib/Subscription'
+import {IObservable} from '../lib/Observable'
+import {IObserver} from '../lib/Observer'
+import {ISubscription, CompositeSubscription} from '../lib/Subscription'
 import {safeObserver} from '../lib/SafeObserver'
 import {LinkedListNode} from '../lib/LinkedList'
 import {curry} from '../lib/Utils'
-import {Scheduler} from '../lib/Scheduler'
-import {Operator} from './Operator'
+import {IScheduler} from '../lib/Scheduler'
+import {IOperator} from './Operator'
 
-class DebounceOperator <T> extends CompositeSubscription implements Operator<T> {
-  private node: LinkedListNode<Subscription>
+class DebounceOperator <T> extends CompositeSubscription implements IOperator<T> {
+  private node: LinkedListNode<ISubscription>
 
   constructor (private timeout: number,
-               src: Observable<T>,
-               private sink: Observer<T>,
-               private sh: Scheduler) {
+               src: IObservable<T>,
+               private sink: IObserver<T>,
+               private sh: IScheduler) {
     super()
     this.add(src.subscribe(this, sh))
   }
@@ -39,17 +39,17 @@ class DebounceOperator <T> extends CompositeSubscription implements Operator<T> 
     this.sink.complete()
   }
 }
-class Debounce<T> implements Observable<T> {
-  constructor (private timeout: number, private source: Observable<T>) {
+class Debounce<T> implements IObservable<T> {
+  constructor (private timeout: number, private source: IObservable<T>) {
   }
 
-  subscribe (observer: Observer<T>, scheduler: Scheduler): Subscription {
+  subscribe (observer: IObserver<T>, scheduler: IScheduler): ISubscription {
     return new DebounceOperator(this.timeout, this.source, safeObserver(observer), scheduler)
   }
 }
 
 export const debounce = curry(
-  <T> (timeout: number, source: Observable<T>) => new Debounce(timeout, source)
+  <T> (timeout: number, source: IObservable<T>) => new Debounce(timeout, source)
 ) as Function &
-  {<T> (timeout: number, source: Observable<T>): Observable<T>} &
-  {<T> (timeout: number): {(source: Observable<T>): Observable<T>}}
+  {<T> (timeout: number, source: IObservable<T>): IObservable<T>} &
+  {<T> (timeout: number): {(source: IObservable<T>): IObservable<T>}}

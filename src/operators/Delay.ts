@@ -1,17 +1,17 @@
 /**
  * Created by tushar on 29/01/17.
  */
-import {Observable} from '../lib/Observable'
-import {Observer} from '../lib/Observer'
-import {Subscription, CompositeSubscription} from '../lib/Subscription'
+import {IObservable} from '../lib/Observable'
+import {IObserver} from '../lib/Observer'
+import {ISubscription, CompositeSubscription} from '../lib/Subscription'
 import {safeObserver} from '../lib/SafeObserver'
 import {curry} from '../lib/Utils'
-import {Scheduler} from '../lib/Scheduler'
+import {IScheduler} from '../lib/Scheduler'
 
-class DelayObserver<T> implements Observer<T> {
+class DelayObserver<T> implements IObserver<T> {
   constructor (private timeout: number,
-               private sink: Observer<T>,
-               private scheduler: Scheduler,
+               private sink: IObserver<T>,
+               private scheduler: IScheduler,
                private cSub: CompositeSubscription) {
   }
 
@@ -31,11 +31,11 @@ class DelayObserver<T> implements Observer<T> {
   }
 }
 
-class DelayObservable<T> implements Observable<T> {
-  constructor (private timeout: number, private source: Observable<T>) {
+class DelayObservable<T> implements IObservable<T> {
+  constructor (private timeout: number, private source: IObservable<T>) {
   }
 
-  subscribe (observer: Observer<T>, scheduler: Scheduler): Subscription {
+  subscribe (observer: IObserver<T>, scheduler: IScheduler): ISubscription {
     const cSub = new CompositeSubscription()
     const delayObserver = new DelayObserver(this.timeout, safeObserver(observer), scheduler, cSub)
     cSub.add(this.source.subscribe(delayObserver, scheduler))
@@ -43,6 +43,6 @@ class DelayObservable<T> implements Observable<T> {
   }
 }
 
-export const delay = curry(<T> (timeout: number, source: Observable<T>): Observable<T> => new DelayObservable(timeout, source)) as Function &
-  {<T> (timeout: number, source: Observable<T>): Observable<T>} &
-  {<T> (timeout: number): {(source: Observable<T>): Observable<T>}}
+export const delay = curry(<T> (timeout: number, source: IObservable<T>): IObservable<T> => new DelayObservable(timeout, source)) as Function &
+  {<T> (timeout: number, source: IObservable<T>): IObservable<T>} &
+  {<T> (timeout: number): {(source: IObservable<T>): IObservable<T>}}

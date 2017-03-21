@@ -1,22 +1,22 @@
 /**
  * Created by tushar.mathur on 09/10/16.
  */
-import {Observable} from '../lib/Observable'
-import {Observer} from '../lib/Observer'
-import {Scheduler} from '../lib/Scheduler'
-import {Subscription} from '../lib/Subscription'
+import {IObservable} from '../lib/Observable'
+import {IObserver} from '../lib/Observer'
+import {IScheduler} from '../lib/Scheduler'
+import {ISubscription} from '../lib/Subscription'
 import {curry} from '../lib/Utils'
 
 export type TReducer <T, R> = (memory: R, current: T) => R
 export type TSeed <R> = R
-export type TSource <T> = Observable<T>
-export type TResult <R> = Observable<R>
+export type TSource <T> = IObservable<T>
+export type TResult <R> = IObservable<R>
 
-class ScanObserver<T, V> implements Observer<T> {
+class ScanObserver<T, V> implements IObserver<T> {
 
   constructor (private reducer: TReducer<T, V>,
                private value: V,
-               private sink: Observer<V>) {
+               private sink: IObserver<V>) {
   }
 
   next (val: T): void {
@@ -39,12 +39,12 @@ class ScanObservable<T, R> implements TResult<R> {
 
   }
 
-  subscribe (observer: Observer<R>, scheduler: Scheduler): Subscription {
+  subscribe (observer: IObserver<R>, scheduler: IScheduler): ISubscription {
     return this.source.subscribe(new ScanObserver<T, R>(this.reducer, this.seed, observer), scheduler)
   }
 }
 
-export const scan = curry(function <T, V> (reducer: TReducer<T, V>, value: V, source: Observable<T>) {
+export const scan = curry(function <T, V> (reducer: TReducer<T, V>, value: V, source: IObservable<T>) {
   return new ScanObservable(reducer, value, source)
 }) as Function &
   {<T, R>(reducer: TReducer<T, R>, seed: TSeed<R>, source: TSource<T>): TResult<R>} &

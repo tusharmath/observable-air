@@ -1,20 +1,20 @@
 /**
  * Created by tushar.mathur on 16/10/16.
  */
-import {Observable} from '../lib/Observable'
-import {Observer} from '../lib/Observer'
-import {Scheduler} from '../lib/Scheduler'
-import {Subscription, BaseSubscription} from '../lib/Subscription'
-import {SubscriberFunction} from '../lib/SubscriberFunction'
+import {IObservable} from '../lib/Observable'
+import {IObserver} from '../lib/Observer'
+import {IScheduler} from '../lib/Scheduler'
+import {ISubscription, BaseSubscription} from '../lib/Subscription'
+import {ISubscriberFunction} from '../lib/SubscriberFunction'
 
 
-class CreateObservable<T> implements Observable<T> {
-  constructor (private f: SubscriberFunction<T>) {
+class CreateObservable<T> implements IObservable<T> {
+  constructor (private f: ISubscriberFunction<T>) {
   }
 
-  subscribe (observer: Observer<T>, scheduler: Scheduler): Subscription {
+  subscribe (observer: IObserver<T>, scheduler: IScheduler): ISubscription {
     return BaseSubscription.from(this.f(observer, scheduler))
   }
 }
 
-export const create = <T> (f: SubscriberFunction<T>): Observable<T> => new CreateObservable(f)
+export const create = <T> (f: ISubscriberFunction<T>): IObservable<T> => new CreateObservable(f)

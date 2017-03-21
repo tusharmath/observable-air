@@ -1,14 +1,14 @@
 /**
  * Created by tushar.mathur on 03/10/16.
  */
-import {EVENT, ObservableEvent} from './Events'
-import {Scheduler} from '../lib/Scheduler'
-import {Observer} from '../lib/Observer'
+import {EVENT, IObservableEvent} from './Events'
+import {IScheduler} from '../lib/Scheduler'
+import {IObserver} from '../lib/Observer'
 
-export class TestObserver<T> implements Observer<T> {
-  results: Array<ObservableEvent>
+export class TestObserver<T> implements IObserver<T> {
+  results: Array<IObservableEvent>
 
-  constructor (private scheduler: Scheduler) {
+  constructor (private scheduler: IScheduler) {
     this.results = []
   }
 
