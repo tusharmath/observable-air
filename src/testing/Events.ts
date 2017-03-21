@@ -14,45 +14,35 @@ export enum EventType {
 
 
 export class EventNext<T> implements IObservableEvent {
-  type: EventType
+  type = EventType.next
 
-  constructor (public time: number, public value: T) {
-    this.type = EventType.next
-  }
+  constructor (public time: number, public value: T) {}
 }
 
 export class EventError implements IObservableEvent {
-  type: EventType
+  type = EventType.error
 
-  constructor (public time: number, public value: Error) {
-    this.type = EventType.error
-  }
+  constructor (public time: number, public value: Error) {}
 }
 
 export class EventComplete implements IObservableEvent {
-  type: EventType
+  type = EventType.complete
 
-  constructor (public time: number) {
-    this.type = EventType.complete
-  }
+  constructor (public time: number) {}
 }
 
 
 export class EventEnd implements IObservableEvent {
-  type: EventType
+  type = EventType.end
 
-  constructor (public time: number, public subscription: ISubscription) {
-    this.type = EventType.end
-  }
+  constructor (public time: number, public subscription: ISubscription) {}
 }
 
 
 export class EventStart implements IObservableEvent {
-  type: EventType
+  type = EventType.start
 
-  constructor (public time: number, public subscription: ISubscription) {
-    this.type = EventType.start
-  }
+  constructor (public time: number, public subscription: ISubscription) {}
 }
 
 export const EVENT = {
