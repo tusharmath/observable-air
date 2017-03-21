@@ -98,7 +98,7 @@ class Frames implements ISubscription {
   }
 
 }
-class DefaultScheduler implements IScheduler {
+class Scheduler implements IScheduler {
   frame (task: () => void): ISubscription {
     return new Frames(task)
   }
@@ -119,4 +119,4 @@ class DefaultScheduler implements IScheduler {
     return Date.now()
   }
 }
-export const createScheduler = (): IScheduler => new DefaultScheduler()
+export const createScheduler = (): IScheduler => new Scheduler()
