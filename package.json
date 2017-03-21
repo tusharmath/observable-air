@@ -12,7 +12,7 @@
     "prepublish": "tsc -d && npm run build && npm run build:min",
     "rfc": "node chore/rfc",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
-    "test": "tsc -d && ava",
+    "test": "tsc && ava",
     "test:watch": "ava --watch",
     "build": "npm run build:es && npm run build:cjs",
     "build:min": "npm run build:es:min && npm run build:cjs:min",
