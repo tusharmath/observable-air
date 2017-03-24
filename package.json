@@ -22,7 +22,8 @@
     "build:cjs:min": "babel .dist/main-cjs.js > .dist/main-cjs.min.js",
     "doc": "tsc --module es6 --target es6 --outDir .dist/es6 src/main.ts && esdoc",
     "gh-pages": "node ./scripts/gh-pages.js",
-    "postpublish": "npm run doc && npm run gh-pages"
+    "postpublish": "npm run doc && npm run gh-pages",
+    "lint": "tslint ./src/**/*.ts"
   },
   "author": "",
   "license": "ISC",
@@ -44,6 +45,7 @@
     "rollup": "^0.41.2",
     "rollup-plugin-commonjs": "^8.0.2",
     "semantic-release": "^6.3.2",
+    "tslint": "^4.5.1",
     "typescript": "^2.0.3",
     "uglify": "^0.1.5",
     "validate-commit-msg": "^2.8.2"
