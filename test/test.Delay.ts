@@ -2,11 +2,11 @@
  * Created by tushar on 29/01/17.
  */
 import {test} from 'ava'
-import {delay} from '../fp'
 import {TestScheduler} from '../src/testing/TestScheduler'
 import {marble, toMarble} from '../src/testing/Marble'
 import {thrower, ERROR_MESSAGE} from '../src/testing/Thrower'
 import {EVENT} from '../src/testing/Events'
+import {delay} from '../src/operators/Delay'
 
 test(t => {
   const sh = TestScheduler.of()
