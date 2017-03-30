@@ -13,6 +13,7 @@ If you are new to reactive programming then you should definitely checkout —  
    - [Example](#example)
    - [Installation](#installation)
    - [Why an RxJS Alternative?](#why-an-rxjs-alternative)
+   - [Sources and Operators](#sources-and-operators)
    - [Benchmarks]
    - [Documentation]
    - [RxJS Compatibility]
@@ -70,6 +71,11 @@ RxJS is awesome and an inspiration for this a lot of other observable libraries 
 
 3. **Performance:** Air is significantly faster than Rx, benchmarks coming up soon.
 
-4. **Scheduler:** Instead of passing schedulers as an optional argument to each operator while testing, in Air the `Scheduler` is passed once at the time of subscription and is automatically shared with operator that its dependant on.
+4. **Virtual Time:** In Rx `VirtualTimeScheduler` is passed as an argument to each operator, in Air the `TestScheduler` is passed once at the time of subscription and is internally shared up the chain of its parent operators or sources.
 
  [ramda]:   http://ramdajs.com/docs/
+
+## Sources and operators
+**Sources:** are the functions that emit values, such as — `fromDOM(document, 'click)`,  which emits a `ClickEvent` as a part of the stream. Other sources can be — `interval(1000)` which will emit a value every `1000ms`.
+
+**Operators:** These are functions that take in one or more streams as arguments and returns a another stream as a result. For Eg — `map(x => x + 1, a$)`. Here `map` takes in an *iterator* that increments each value emitted in the stream `a$` and returns a new stream containing the incremented values.
