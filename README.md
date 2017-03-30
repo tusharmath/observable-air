@@ -15,6 +15,7 @@ If you are new to reactive programming then you should definitely checkout —  
    - [Why an RxJS Alternative?](#why-an-rxjs-alternative)
    - [Benchmarks]
    - [Documentation]
+   - [RxJS Compatibility]
 
 
 [RxJS]:                                                          https://github.com/ReactiveX/rxjs
@@ -63,10 +64,12 @@ npm install observable-air --save
 ## Why an RxJS Alternative?
 RxJS is awesome and an inspiration for this a lot of other observable libraries out there. Air is focussed on some fundamental things such as —
 
-1. **Smaller Footprint:** Rx has a lot of operators which makes the library quite large in size. Air has a much smaller number of operators and is architected such that more sophisticated operators can be created using the already available ones without any overhead of composition.
+1. **Smaller Footprint:** Rx has a lot of operators which makes the library quite large in size. Air has a much smaller number of operators and is architected such that more sophisticated operators can be created using the already available ones without any performance overhead of composition.
 
 2. **Functional Over Fluidic:** Air embraces a *functional* API rather than a *fludic* one. All the functions come *curried* out of the box and work really well with [ramda].
 
-3. **Performance:** Air is significantly faster than Rx more benchmarks coming up.
+3. **Performance:** Air is significantly faster than Rx, benchmarks coming up soon.
+
+4. **Scheduler:** Instead of passing schedulers as an optional argument to each operator while testing, in Air the `Scheduler` is passed once at the time of subscription and is automatically shared with operator that its dependant on.
 
  [ramda]:   http://ramdajs.com/docs/
