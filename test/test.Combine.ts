@@ -2,10 +2,10 @@
  * Created by tushar on 26/02/17.
  */
 import {test} from 'ava'
-import {TestScheduler} from '../src/testing/TestScheduler'
 import {combine} from '../src/operators/Combine'
-import {marble} from '../src/testing/Marble'
 import {EVENT} from '../src/testing/Events'
+import {marble} from '../src/testing/Marble'
+import {TestScheduler} from '../src/testing/TestScheduler'
 
 test(t => {
   const SH = TestScheduler.of()

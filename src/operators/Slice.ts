@@ -4,8 +4,8 @@
 
 import {IObservable} from '../lib/Observable'
 import {IObserver} from '../lib/Observer'
-import {ISubscription} from '../lib/Subscription'
 import {IScheduler} from '../lib/Scheduler'
+import {ISubscription} from '../lib/Subscription'
 import {curry} from '../lib/Utils'
 
 class SliceObserver<T> implements IObserver<T> {

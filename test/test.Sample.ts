@@ -2,10 +2,10 @@
  * Created by tushar.mathur on 19/10/16.
  */
 import test from 'ava'
-import {TestScheduler} from '../src/testing/TestScheduler'
-import {EVENT} from '../src/testing/Events'
 import {sample} from '../src/operators/Sample'
+import {EVENT} from '../src/testing/Events'
 import {marble} from '../src/testing/Marble'
+import {TestScheduler} from '../src/testing/TestScheduler'
 
 function toArray (...t: Array<any>) {
   return t.join(',')

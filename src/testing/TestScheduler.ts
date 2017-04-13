@@ -1,16 +1,16 @@
 /**
  * Created by tushar.mathur on 02/10/16.
  */
-import {IScheduler} from '../lib/Scheduler'
-import {IObservable} from '../lib/Observable'
-import {ISubscription} from '../lib/Subscription'
-import {TestObserver} from './TestObserver'
-import {ColdTestObservable} from './ColdTestObservable'
-import {HotTestObservable} from './HotTestObservable'
 import {LinkedList, LinkedListNode} from '../lib/LinkedList'
-import {TestObservable} from './TestObservable'
-import {DEFAULT_OPTIONS} from './TestOptions'
+import {IObservable} from '../lib/Observable'
+import {IScheduler} from '../lib/Scheduler'
+import {ISubscription} from '../lib/Subscription'
+import {ColdTestObservable} from './ColdTestObservable'
 import {IObservableEvent} from './Events'
+import {HotTestObservable} from './HotTestObservable'
+import {TestObservable} from './TestObservable'
+import {TestObserver} from './TestObserver'
+import {DEFAULT_OPTIONS} from './TestOptions'
 
 // TODO: convert to interface
 class TaskSchedule {

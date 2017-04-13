@@ -3,9 +3,9 @@
  */
 
 import test from 'ava'
-import {TestScheduler} from '../src/testing/TestScheduler'
-import {EVENT} from '../src/testing/Events'
 import {join} from '../src/operators/Join'
+import {EVENT} from '../src/testing/Events'
+import {TestScheduler} from '../src/testing/TestScheduler'
 const {next, complete} = EVENT
 
 test('subscribe()', t => {

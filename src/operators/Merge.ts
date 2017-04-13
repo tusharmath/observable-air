@@ -3,8 +3,8 @@
  */
 import {IObservable} from '../lib/Observable'
 import {IObserver} from '../lib/Observer'
-import {ISubscription, CompositeSubscription} from '../lib/Subscription'
 import {IScheduler} from '../lib/Scheduler'
+import {CompositeSubscription, ISubscription} from '../lib/Subscription'
 
 class MergeObserver<T> implements IObserver<T> {
   private count = 0

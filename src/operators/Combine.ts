@@ -7,7 +7,7 @@ import {container} from '../lib/Container'
 import {IObservable} from '../lib/Observable'
 import {IObserver} from '../lib/Observer'
 import {IScheduler} from '../lib/Scheduler'
-import {ISubscription, CompositeSubscription} from '../lib/Subscription'
+import {CompositeSubscription, ISubscription} from '../lib/Subscription'
 import {curry} from '../lib/Utils'
 export type TSelector<T> = {(...e: Array<any>): T}
 export type TSource = Array<IObservable<any>>

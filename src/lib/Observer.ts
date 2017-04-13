@@ -1,4 +1,4 @@
-import {LinkedListNode, LinkedList} from './LinkedList'
+import {LinkedList, LinkedListNode} from './LinkedList'
 /**
  * Created by tushar.mathur on 27/09/16.
  */

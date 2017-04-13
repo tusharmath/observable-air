@@ -2,10 +2,10 @@
  * Created by tushar.mathur on 10/10/16.
  */
 
-import {TestObservable} from './TestObservable'
-import {EventNext, IObservableEvent, EventType} from './Events'
 import {IObserver} from '../lib/Observer'
 import {IScheduler} from '../lib/Scheduler'
+import {EventNext, EventType, IObservableEvent} from './Events'
+import {TestObservable} from './TestObservable'
 
 export function ColdTestObservable (scheduler: IScheduler, events: Array<IObservableEvent>) {
   return new TestObservable((observer: IObserver<any>) => {

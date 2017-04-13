@@ -1,10 +1,10 @@
 /**
  * Created by tushar.mathur on 27/09/16.
  */
-import {ISubscription} from './Subscription'
+import {IObservable} from './Observable'
 import {IObserver} from './Observer'
 import {IScheduler} from './Scheduler'
-import {IObservable} from './Observable'
+import {ISubscription} from './Subscription'
 
 export interface IObservable<T> {
   subscribe(observer: IObserver<T>, scheduler: IScheduler): ISubscription

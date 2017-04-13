@@ -2,10 +2,10 @@
  * Created by tushar on 08/12/16.
  */
 import {Suite} from 'benchmark'
-import {fromArray} from '../src/sources/FromArray'
-import {run, array, IDeferred} from './lib'
 import {combine} from '../src/operators/Combine'
 import {reduce} from '../src/operators/Reduce'
+import {fromArray} from '../src/sources/FromArray'
+import {array, IDeferred, run} from './lib'
 
 const a = array(1e2)
 const b = array(1e2)

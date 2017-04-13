@@ -3,9 +3,9 @@
  */
 
 import {Suite} from 'benchmark'
-import {fromArray} from '../src/sources/FromArray'
-import {run, array, IDeferred} from './lib'
 import {slice} from '../src/operators/Slice'
+import {fromArray} from '../src/sources/FromArray'
+import {array, IDeferred, run} from './lib'
 
 const a = array(1e6)
 export function bm_fromArray_takeN (suite: Suite) {

@@ -1,13 +1,13 @@
 /**
  * Created by tushar on 12/02/17.
  */
+import {LinkedListNode} from '../lib/LinkedList'
 import {IObservable} from '../lib/Observable'
 import {IObserver} from '../lib/Observer'
-import {ISubscription, CompositeSubscription} from '../lib/Subscription'
 import {safeObserver} from '../lib/SafeObserver'
-import {LinkedListNode} from '../lib/LinkedList'
-import {curry} from '../lib/Utils'
 import {IScheduler} from '../lib/Scheduler'
+import {CompositeSubscription, ISubscription} from '../lib/Subscription'
+import {curry} from '../lib/Utils'
 import {IOperator} from './Operator'
 
 class DebounceOperator <T> extends CompositeSubscription implements IOperator<T> {
