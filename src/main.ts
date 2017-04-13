@@ -2,8 +2,8 @@
  * Created by tushar on 17/02/17.
  */
 
+
 export {create} from './sources/Create'
-export {debounce} from './operators/Debounce'
 export {delay} from './operators/Delay'
 export {filter} from './operators/Filter'
 export {forEach} from './lib/ForEach'

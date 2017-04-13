@@ -2,7 +2,5 @@
  * Created by tushar on 10/12/16.
  */
 
-export {curry} from './src/lib/Utils'
-export {EVENT} from './src/testing/Events'
-export {TestScheduler} from './src/testing/TestScheduler'
-export {marble, toMarble} from './src/testing/Marble'
+export {combine} from './src/operators/Combine'
+export {debounce} from './src/operators/Debounce'
