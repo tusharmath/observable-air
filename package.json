@@ -58,5 +58,10 @@
     "ghooks": {
       "commit-msg": "validate-commit-msg"
     }
+  },
+  "ava": {
+    "files": [
+      "test/test.*.js"
+    ]
   }
 }
