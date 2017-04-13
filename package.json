@@ -20,7 +20,7 @@
     "build:es:min": "babel .dist/main-es.js > .dist/main-es.min.js",
     "build:cjs": "browserify src/main.js > .dist/main-cjs.js",
     "build:cjs:min": "babel .dist/main-cjs.js > .dist/main-cjs.min.js",
-    "lint": "tslint ./src/**/*.ts"
+    "lint": "git ls-files | grep '.ts$' | xargs tslint"
   },
   "author": "",
   "license": "ISC",
