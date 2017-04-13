@@ -1,9 +1,9 @@
 /**
  * Created by tushar.mathur on 03/10/16.
  */
-import {Subscription} from '../lib/Subscription'
+import {ISubscription} from '../lib/Subscription'
 
-export interface ObservableEvent {
+export interface IObservableEvent {
   readonly type: EventType
   readonly time: number
 }
@@ -13,46 +13,36 @@ export enum EventType {
 }
 
 
-export class EventNext<T> implements ObservableEvent {
-  type: EventType
+export class EventNext<T> implements IObservableEvent {
+  type = EventType.next
 
-  constructor (public time: number, public value: T) {
-    this.type = EventType.next
-  }
+  constructor (public time: number, public value: T) {}
 }
 
-export class EventError implements ObservableEvent {
-  type: EventType
+export class EventError implements IObservableEvent {
+  type = EventType.error
 
-  constructor (public time: number, public value: Error) {
-    this.type = EventType.error
-  }
+  constructor (public time: number, public value: Error) {}
 }
 
-export class EventComplete implements ObservableEvent {
-  type: EventType
+export class EventComplete implements IObservableEvent {
+  type = EventType.complete
 
-  constructor (public time: number) {
-    this.type = EventType.complete
-  }
+  constructor (public time: number) {}
 }
 
 
-export class EventEnd implements ObservableEvent {
-  type: EventType
+export class EventEnd implements IObservableEvent {
+  type = EventType.end
 
-  constructor (public time: number, public subscription: Subscription) {
-    this.type = EventType.end
-  }
+  constructor (public time: number, public subscription: ISubscription) {}
 }
 
 
-export class EventStart implements ObservableEvent {
-  type: EventType
+export class EventStart implements IObservableEvent {
+  type = EventType.start
 
-  constructor (public time: number, public subscription: Subscription) {
-    this.type = EventType.start
-  }
+  constructor (public time: number, public subscription: ISubscription) {}
 }
 
 export const EVENT = {
@@ -68,11 +58,11 @@ export const EVENT = {
     return new EventComplete(time)
   },
 
-  start (time: number, subscription: Subscription): EventComplete {
+  start (time: number, subscription: ISubscription): EventComplete {
     return new EventStart(time, subscription)
   },
 
-  end (time: number, subscription: Subscription): EventComplete {
+  end (time: number, subscription: ISubscription): EventComplete {
     return new EventEnd(time, subscription)
   }
 }

@@ -7,7 +7,6 @@
     "strictNullChecks": true,
     "removeComments": false,
     "noUnusedLocals": true,
-    "outDir": "./.dist",
-    "declaration": true
+    "declaration": false
   }
 }

@@ -2,10 +2,10 @@
  * Created by tushar on 28/01/17.
  */
 import {test} from 'ava'
-import {frames} from '../fp'
 import {TestScheduler} from '../src/testing/TestScheduler'
 import {toMarble} from '../src/testing/Marble'
 import {scan} from '../src/operators/Scan'
+import {frames} from '../src/sources/Frames'
 
 test(t => {
   const sh = TestScheduler.of(10)

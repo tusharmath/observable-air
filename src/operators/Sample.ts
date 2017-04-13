@@ -1,20 +1,20 @@
 /**
  * Created by tushar.mathur on 18/10/16.
  */
-import {Observable} from '../lib/Observable'
-import {Observer} from '../lib/Observer'
-import {Subscription, CompositeSubscription} from '../lib/Subscription'
+import {IObservable} from '../lib/Observable'
+import {IObserver} from '../lib/Observer'
+import {ISubscription, CompositeSubscription} from '../lib/Subscription'
 import {curry} from '../lib/Utils'
-import {Scheduler} from '../lib/Scheduler'
+import {IScheduler} from '../lib/Scheduler'
 import {container} from '../lib/Container'
 
 
 export type TSelector<T> = {(...e: Array<any>): T}
-export type TSampler = Observable<any>
-export type TSources = Array<Observable<any>>
-export type TResult<T> = Observable<T>
+export type TSampler = IObservable<any>
+export type TSources = Array<IObservable<any>>
+export type TResult<T> = IObservable<T>
 
-class SampleValueObserver<T> implements Observer<T> {
+class SampleValueObserver<T> implements IObserver<T> {
   constructor (private id: number,
                private sampleObserver: SampleObserver<T>) {
   }
@@ -32,11 +32,11 @@ class SampleValueObserver<T> implements Observer<T> {
   }
 
 }
-class SampleObserver<T> implements Observer<T> {
+class SampleObserver<T> implements IObserver<T> {
   private container = container(this.total)
   private completed = false
 
-  constructor (private total: number, private sink: Observer<T>, private func: TSelector<T>) {
+  constructor (private total: number, private sink: IObserver<T>, private func: TSelector<T>) {
   }
 
   onNext (value: T, id: number) {
@@ -79,7 +79,7 @@ class SampleObservable<T> implements TResult<T> {
                private sources: TSources) {
   }
 
-  subscribe (observer: Observer<T>, scheduler: Scheduler): Subscription {
+  subscribe (observer: IObserver<T>, scheduler: IScheduler): ISubscription {
     const cSub = new CompositeSubscription()
     const sampleObserver = new SampleObserver(this.sources.length, observer, this.func)
     for (var i = 0; i < this.sources.length; ++i) {

@@ -1,18 +1,18 @@
 /**
  * Created by tushar.mathur on 16/10/16.
  */
-import {Observable} from '../lib/Observable'
-import {Subscription, CompositeSubscription} from '../lib/Subscription'
-import {Scheduler} from '../lib/Scheduler'
-import {Observer} from '../lib/Observer'
+import {IObservable} from '../lib/Observable'
+import {ISubscription, CompositeSubscription} from '../lib/Subscription'
+import {IScheduler} from '../lib/Scheduler'
+import {IObserver} from '../lib/Observer'
 import {LinkedListNode} from '../lib/LinkedList'
-import {Operator} from './Operator'
+import {IOperator} from './Operator'
 import {map} from './Map'
 import {curry} from '../lib/Utils'
 
 
-class SwitchValueObserver<T> implements Observer<T> {
-  constructor (private sink: Observer<T>) {
+class SwitchValueObserver<T> implements IObserver<T> {
+  constructor (private sink: IObserver<T>) {
   }
 
   next (val: T): void {
@@ -27,18 +27,18 @@ class SwitchValueObserver<T> implements Observer<T> {
   }
 }
 
-class SwitchOperator<T> extends CompositeSubscription implements Operator <Observable<T>> {
+class SwitchOperator<T> extends CompositeSubscription implements IOperator <IObservable<T>> {
   private sink = new SwitchValueObserver(this.mainSink)
-  private srcSub: LinkedListNode<Subscription>
+  private srcSub: LinkedListNode<ISubscription>
 
-  constructor (private source: Observable<Observable<T>>,
-               private mainSink: Observer<T>,
-               private scheduler: Scheduler) {
+  constructor (private source: IObservable<IObservable<T>>,
+               private mainSink: IObserver<T>,
+               private scheduler: IScheduler) {
     super()
     this.add(this.source.subscribe(this, scheduler))
   }
 
-  next (val: Observable<T>): void {
+  next (val: IObservable<T>): void {
     this.remove(this.srcSub)
     this.srcSub = this.add(val.subscribe(this.sink, this.scheduler))
   }
@@ -53,20 +53,20 @@ class SwitchOperator<T> extends CompositeSubscription implements Operator <Obser
   }
 }
 
-class SwitchLatest<T> implements Observable<T> {
-  constructor (private source: Observable<Observable<T>>) {
+class SwitchLatest<T> implements IObservable<T> {
+  constructor (private source: IObservable<IObservable<T>>) {
   }
 
-  subscribe (observer: Observer<T>, scheduler: Scheduler): Subscription {
+  subscribe (observer: IObserver<T>, scheduler: IScheduler): ISubscription {
     return new SwitchOperator(this.source, observer, scheduler)
   }
 }
 
-export function switchLatest<T> (source: Observable<Observable<T>>): Observable<T> {
+export function switchLatest<T> (source: IObservable<IObservable<T>>): IObservable<T> {
   return new SwitchLatest(source)
 }
-export const switchMap = curry(<T, K> (fn: (t: K) => Observable<T>, source: Observable<K>) => {
+export const switchMap = curry(<T, K> (fn: (t: K) => IObservable<T>, source: IObservable<K>) => {
   return switchLatest((map(fn, source)))
 }) as Function
-  & {<T, K> (mapper: (t: K) => Observable<T>, source: Observable<K>): Observable<T>}
-  & {<T, K> (mapper: (t: K) => Observable<T>): {(source: Observable<K>): Observable<T>}}
+  & {<T, K> (mapper: (t: K) => IObservable<T>, source: IObservable<K>): IObservable<T>}
+  & {<T, K> (mapper: (t: K) => IObservable<T>): {(source: IObservable<K>): IObservable<T>}}

@@ -1,18 +1,18 @@
 /**
  * Created by tushar.mathur on 03/10/16.
  */
-import {Subscription} from './Subscription'
+import {ISubscription} from './Subscription'
 
 interface Global {
   requestIdleCallback?: Function
   process?: {nextTick: Function}
 }
 
-export interface Scheduler {
-  delay(task: () => void, relativeTime: number): Subscription
-  periodic(task: () => void, interval: number): Subscription
-  frame(task: () => void): Subscription
-  asap(task: () => void): Subscription
+export interface IScheduler {
+  delay(task: () => void, relativeTime: number): ISubscription
+  periodic(task: () => void, interval: number): ISubscription
+  frame(task: () => void): ISubscription
+  asap(task: () => void): ISubscription
   now(): number
 }
 
@@ -20,7 +20,7 @@ function getGlobal (): Global {
   return typeof window === 'object' ? window : global
 }
 
-class Periodic implements Subscription {
+class Periodic implements ISubscription {
   closed = false
   private id: number
 
@@ -39,7 +39,7 @@ class Periodic implements Subscription {
     clearInterval(this.id)
   }
 }
-class Delay implements Subscription {
+class Delay implements ISubscription {
   closed = false
 
   constructor (private task: () => void, private timeout: number) {
@@ -58,7 +58,7 @@ class Delay implements Subscription {
     }
   }
 }
-class ASAP implements Subscription {
+class ASAP implements ISubscription {
   closed = false
 
   constructor (private task: () => void) {
@@ -77,7 +77,7 @@ class ASAP implements Subscription {
   }
 
 }
-class Frames implements Subscription {
+class Frames implements ISubscription {
   closed = false
   private frame: number
 
@@ -98,20 +98,20 @@ class Frames implements Subscription {
   }
 
 }
-class DefaultScheduler implements Scheduler {
-  frame (task: () => void): Subscription {
+class Scheduler implements IScheduler {
+  frame (task: () => void): ISubscription {
     return new Frames(task)
   }
 
-  asap (task: () => void): Subscription {
+  asap (task: () => void): ISubscription {
     return new ASAP(task)
   }
 
-  periodic (task: () => void, interval: number): Subscription {
+  periodic (task: () => void, interval: number): ISubscription {
     return new Periodic(task, interval)
   }
 
-  delay (task: () => void, relativeTime: number): Subscription {
+  delay (task: () => void, relativeTime: number): ISubscription {
     return new Delay(task, relativeTime)
   }
 
@@ -119,4 +119,4 @@ class DefaultScheduler implements Scheduler {
     return Date.now()
   }
 }
-export const createScheduler = (): Scheduler => new DefaultScheduler()
+export const createScheduler = (): IScheduler => new Scheduler()

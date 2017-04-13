@@ -1,17 +1,17 @@
 /**
  * Created by tushar.mathur on 14/10/16.
  */
-import {Observable} from '../lib/Observable'
-import {Observer} from '../lib/Observer'
-import {Subscription} from '../lib/Subscription'
+import {IObservable} from '../lib/Observable'
+import {IObserver} from '../lib/Observer'
+import {ISubscription} from '../lib/Subscription'
 import {curry} from '../lib/Utils'
 
-export type TResult = Observable<Event>
+export type TResult = IObservable<Event>
 export type IListener = {
   (e: Event): void
 }
 
-class DOMSubscription implements Subscription {
+class DOMSubscription implements ISubscription {
   closed: boolean = false
 
   constructor (private element: HTMLElement, private listener: IListener, private name: string) {
@@ -26,7 +26,7 @@ class DOMObservable implements TResult {
   constructor (private name: string, private element: HTMLElement) {
   }
 
-  subscribe (observer: Observer<Event>): Subscription {
+  subscribe (observer: IObserver<Event>): ISubscription {
     const listener = observer.next.bind(observer)
     this.element.addEventListener(this.name, listener)
     return new DOMSubscription(this.element, listener, this.name)

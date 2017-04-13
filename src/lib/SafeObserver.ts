@@ -1,13 +1,13 @@
 /**
  * Created by tushar on 29/01/17.
  */
-import {Observer} from './Observer'
-import {SafeFunction, tryCatch} from './Utils'
+import {IObserver} from './Observer'
+import {ISafeFunction, tryCatch} from './Utils'
 
-class SafeObserver<T> implements Observer<T> {
-  private _next: SafeFunction<void, Observer<T>>
+class SafeObserver<T> implements IObserver<T> {
+  private _next: ISafeFunction<void, IObserver<T>>
 
-  constructor (private sink: Observer<T>) {
+  constructor (private sink: IObserver<T>) {
     this._next = tryCatch(this.sink.next)
   }
 
@@ -25,7 +25,7 @@ class SafeObserver<T> implements Observer<T> {
   }
 }
 
-export const safeObserver = <T> (observer: Observer<T>): Observer<T> =>
+export const safeObserver = <T> (observer: IObserver<T>): IObserver<T> =>
   observer instanceof SafeObserver
     ? observer
     : new SafeObserver(observer)

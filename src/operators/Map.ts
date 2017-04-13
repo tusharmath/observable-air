@@ -2,20 +2,20 @@
  * Created by tushar.mathur on 27/09/16.
  */
 
-import {Observable} from '../lib/Observable'
-import {Observer} from '../lib/Observer'
-import {Subscription} from '../lib/Subscription'
+import {IObservable} from '../lib/Observable'
+import {IObserver} from '../lib/Observer'
+import {ISubscription} from '../lib/Subscription'
 import {curry} from '../lib/Utils'
-import {Scheduler} from '../lib/Scheduler'
+import {IScheduler} from '../lib/Scheduler'
 
 
 export type TMapper<T, R> = (value: T) => R
-export type TSource<T> = Observable<T>
-export type TResult<R> = Observable<R>
+export type TSource<T> = IObservable<T>
+export type TResult<R> = IObservable<R>
 
 
-class MapObserver<T, R> implements Observer<T> {
-  constructor (private mapper: TMapper<T, R>, private sink: Observer<R>) {
+class MapObserver<T, R> implements IObserver<T> {
+  constructor (private mapper: TMapper<T, R>, private sink: IObserver<R>) {
 
   }
 
@@ -36,12 +36,12 @@ class MapObservable <T, R> implements TResult<R> {
   constructor (private mapper: TMapper<T, R>, private source: TSource<T>) {
   }
 
-  subscribe (observer: Observer<R>, scheduler: Scheduler): Subscription {
+  subscribe (observer: IObserver<R>, scheduler: IScheduler): ISubscription {
     return this.source.subscribe(new MapObserver(this.mapper, observer), scheduler)
   }
 }
 
-export const map = curry(function <T, R> (mapFunction: (a: T) => R, source: Observable<T>) {
+export const map = curry(function <T, R> (mapFunction: (a: T) => R, source: IObservable<T>) {
   return new MapObservable(mapFunction, source)
 }) as Function &
   {<T, R> (mapper: TMapper<T, R>, source: TSource<T>): TResult<R>} &

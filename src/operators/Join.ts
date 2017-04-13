@@ -1,16 +1,16 @@
 /**
  * Created by tushar.mathur on 10/10/16.
  */
-import {Observable} from '../lib/Observable'
-import {Observer} from '../lib/Observer'
-import {Subscription, CompositeSubscription} from '../lib/Subscription'
-import {Scheduler} from '../lib/Scheduler'
+import {IObservable} from '../lib/Observable'
+import {IObserver} from '../lib/Observer'
+import {ISubscription, CompositeSubscription} from '../lib/Subscription'
+import {IScheduler} from '../lib/Scheduler'
 import {curry} from '../lib/Utils'
 import {map} from './Map'
 
 
-class JoinValueObserver<T> implements Observer<T> {
-  constructor (private sink: Observer<T>, private root: JoinObserver<T>) {
+class JoinValueObserver<T> implements IObserver<T> {
+  constructor (private sink: IObserver<T>, private root: JoinObserver<T>) {
   }
 
   next (val: T): void {
@@ -27,11 +27,11 @@ class JoinValueObserver<T> implements Observer<T> {
 
 }
 
-class JoinObserver<T> implements Observer<Observable<T>> {
+class JoinObserver<T> implements IObserver<IObservable<T>> {
   private count: number
   private sourceCompleted: boolean
 
-  constructor (private sink: Observer<T>, private scheduler: Scheduler, private subscriptions: CompositeSubscription) {
+  constructor (private sink: IObserver<T>, private scheduler: IScheduler, private subscriptions: CompositeSubscription) {
     this.sourceCompleted = false
     this.count = 0
   }
@@ -48,7 +48,7 @@ class JoinObserver<T> implements Observer<Observable<T>> {
   }
 
 
-  next (val: Observable<T>): void {
+  next (val: IObservable<T>): void {
     const joinValueObserver = new JoinValueObserver(this.sink, this)
     this.count++
     this.subscriptions.add(
@@ -67,11 +67,11 @@ class JoinObserver<T> implements Observer<Observable<T>> {
 }
 
 
-class JoinObservable<T> implements Observable<T> {
-  constructor (private source: Observable<Observable<T>>) {
+class JoinObservable<T> implements IObservable<T> {
+  constructor (private source: IObservable<IObservable<T>>) {
   }
 
-  subscribe (observer: Observer<T>, scheduler: Scheduler): Subscription {
+  subscribe (observer: IObserver<T>, scheduler: IScheduler): ISubscription {
     const subscription = new CompositeSubscription()
     subscription.add(
       this.source.subscribe(new JoinObserver(observer, scheduler, subscription), scheduler)
@@ -80,11 +80,11 @@ class JoinObservable<T> implements Observable<T> {
   }
 }
 
-export function join <T> (source: Observable<Observable<T>>): Observable<T> {
+export function join <T> (source: IObservable<IObservable<T>>): IObservable<T> {
   return new JoinObservable(source)
 }
-export const flatMap = curry(<T, K> (fn: (t: K) => Observable<T>, source: Observable<K>) => {
+export const flatMap = curry(<T, K> (fn: (t: K) => IObservable<T>, source: IObservable<K>) => {
   return join((map(fn, source)))
 }) as Function
-  & {<T, K> (mapper: (t: K) => Observable<T>, source: Observable<K>): Observable<T>}
-  & {<T, K> (mapper: (t: K) => Observable<T>): {(source: Observable<K>): Observable<T>}}
+  & {<T, K> (mapper: (t: K) => IObservable<T>, source: IObservable<K>): IObservable<T>}
+  & {<T, K> (mapper: (t: K) => IObservable<T>): {(source: IObservable<K>): IObservable<T>}}
