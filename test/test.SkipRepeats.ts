@@ -6,8 +6,8 @@
 
 import test from 'ava'
 import {skipRepeats} from '../src/operators/SkipRepeats'
-import {TestScheduler} from '../src/testing/TestScheduler'
 import {EVENT} from '../src/testing/Events'
+import {TestScheduler} from '../src/testing/TestScheduler'
 
 const {next, complete} = EVENT
 

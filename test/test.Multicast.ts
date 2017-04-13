@@ -3,11 +3,11 @@
  */
 
 import test from 'ava'
-import {TestScheduler} from '../src/testing/TestScheduler'
-import {EVENT} from '../src/testing/Events'
 import {map} from '../src/operators/Map'
-import {TestObserver} from '../src/testing/TestObserver'
 import {multicast} from '../src/operators/Multicast'
+import {EVENT} from '../src/testing/Events'
+import {TestObserver} from '../src/testing/TestObserver'
+import {TestScheduler} from '../src/testing/TestScheduler'
 
 test(t => {
   let i = 0

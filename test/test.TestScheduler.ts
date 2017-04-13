@@ -1,9 +1,9 @@
 /**
  * Created by tushar on 28/01/17.
  */
-import {TestScheduler} from '../src/testing/TestScheduler'
 import {test} from 'ava'
 import {EVENT} from '../src/testing/Events'
+import {TestScheduler} from '../src/testing/TestScheduler'
 
 test(t => {
   const sh = TestScheduler.of()

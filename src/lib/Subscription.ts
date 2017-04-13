@@ -2,8 +2,8 @@
  * Created by tushar.mathur on 27/09/16.
  */
 
+import {LinkedList, LinkedListNode} from './LinkedList'
 import {ISubscription} from './Subscription'
-import {LinkedListNode, LinkedList} from './LinkedList'
 
 export interface ISubscription {
   unsubscribe(): void

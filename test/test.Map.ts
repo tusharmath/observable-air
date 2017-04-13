@@ -5,9 +5,9 @@
 'use strict'
 
 import test from 'ava'
-import {TestScheduler} from '../src/testing/TestScheduler'
-import {EVENT} from '../src/testing/Events'
 import {map} from '../src/operators/Map'
+import {EVENT} from '../src/testing/Events'
+import {TestScheduler} from '../src/testing/TestScheduler'
 
 const {next, complete} = EVENT
 

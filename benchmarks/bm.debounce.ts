@@ -1,10 +1,10 @@
 /**
  * Created by tushar on 12/02/17.
  */
-import {array, run, IDeferred} from './lib'
+import {Suite} from 'benchmark'
 import {debounce} from '../src/operators/Debounce'
 import {fromArray} from '../src/sources/FromArray'
-import {Suite} from 'benchmark'
+import {array, IDeferred, run} from './lib'
 
 const a = array(1e3)
 export function bm_debounce (suite: Suite) {

@@ -3,9 +3,9 @@
  */
 import {IObservable} from '../lib/Observable'
 import {IObserver} from '../lib/Observer'
+import {safeObserver} from '../lib/SafeObserver'
 import {IScheduler} from '../lib/Scheduler'
 import {ISubscription} from '../lib/Subscription'
-import {safeObserver} from '../lib/SafeObserver'
 
 class RAFSubscription implements ISubscription {
   observer: IObserver<number>

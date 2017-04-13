@@ -5,9 +5,9 @@
 
 import {IObservable} from '../lib/Observable'
 import {IObserver} from '../lib/Observer'
+import {IScheduler} from '../lib/Scheduler'
 import {ISubscription} from '../lib/Subscription'
 import {curry} from '../lib/Utils'
-import {IScheduler} from '../lib/Scheduler'
 
 export type TPredicate<T> = {(value: T): boolean}
 export type TSource<T> = IObservable<T>

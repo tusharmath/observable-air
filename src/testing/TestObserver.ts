@@ -1,9 +1,9 @@
 /**
  * Created by tushar.mathur on 03/10/16.
  */
-import {EVENT, IObservableEvent} from './Events'
-import {IScheduler} from '../lib/Scheduler'
 import {IObserver} from '../lib/Observer'
+import {IScheduler} from '../lib/Scheduler'
+import {EVENT, IObservableEvent} from './Events'
 
 export class TestObserver<T> implements IObserver<T> {
   results: Array<IObservableEvent>

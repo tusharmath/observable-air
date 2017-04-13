@@ -5,12 +5,12 @@
 'use strict'
 
 import test from 'ava'
-import {TestScheduler} from '../src/testing/TestScheduler'
-import {EVENT, EventError} from '../src/testing/Events'
-import {interval} from '../src/sources/Interval'
-import {toMarble} from '../src/testing/Marble'
-import {thrower, ERROR_MESSAGE} from '../src/testing/Thrower'
 import {scan} from '../src/operators/Scan'
+import {interval} from '../src/sources/Interval'
+import {EVENT, EventError} from '../src/testing/Events'
+import {toMarble} from '../src/testing/Marble'
+import {TestScheduler} from '../src/testing/TestScheduler'
+import {ERROR_MESSAGE, thrower} from '../src/testing/Thrower'
 const {error} = EVENT
 
 test('subscribe()', t => {

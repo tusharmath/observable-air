@@ -2,9 +2,9 @@
  * Created by tushar.mathur on 28/09/16.
  */
 import {IObservable} from '../lib/Observable'
-import {ISubscription} from '../lib/Subscription'
 import {IObserver} from '../lib/Observer'
 import {IScheduler} from '../lib/Scheduler'
+import {ISubscription} from '../lib/Subscription'
 import {tryCatch} from '../lib/Utils'
 
 class FromArraySubscription <T> implements ISubscription {
