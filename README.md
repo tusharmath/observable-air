@@ -13,6 +13,7 @@ If you are new to reactive programming then you should definitely checkout —  
    - [Example](#example)
    - [Installation](#installation)
    - [Why an RxJS Alternative?](#why-an-rxjs-alternative)
+   - [Sources and Operators](#sources-and-operators)
    - [Benchmarks]
    - [Documentation]
    - [RxJS Compatibility]
@@ -31,29 +32,50 @@ If you are new to reactive programming then you should definitely checkout —  
 
 ```js
 // inside CommonJS
-const O = require('observable-air').default
+const O = require('observable-air')
 ```
 
 ```js
 // inside es6 or typescript
-import O from 'observable-air'
+import * as O from 'observable-air'
 ```
 
 ## Example
 ```js
-O
-  .interval(1000)
-  .scan((a, b) => a + b, 0)
-  .forEach(x => console.log(x)) // outputs 1, 2 ,3, 4 ...
+import * as O from 'observable-air'
+import * as R from 'ramda'
+
+const timer = R.compose(
+  O.forEach(console.log),
+  O.scan(R.add, 0),
+  O.interval
+)
+
+timer(100) // outputs 1, 2 ,3, 4 ... every 100ms
+timer(1000) // outputs 1, 2 ,3, 4 ... every 1000ms
+
 ```
 
 ## Installation
 
 ```bash
- npm install observable-air --save
+npm install observable-air --save
 ```
 
 ## Why an RxJS Alternative?
-RxJS has a ton of operators that can help you write really concise code. Though most of the operators can be re-created using a set of core operators, combining them to create new ones has significant performance overhead. Because of which most of the operators are re-written using vanilla js (or typescript) and not using composition. This causes a bloat in the size of the library. Overall its neither small nor performant enough to run animations on low end devices.
- 
- **Air** tries to mitigate this problem by re-architecting the internals so that there is minimal performance-overhead while composing. This also reduces the size of the library considerably, since less operators need to be shipped in the same bundle be default, thus becoming a lot more suitable for low end devices.
+RxJS is awesome and an inspiration for this a lot of other observable libraries out there. Air is focussed on some fundamental things such as —
+
+1. **Smaller Footprint:** Rx has a lot of operators which makes the library quite large in size. Air has a much smaller number of operators and is architected such that more sophisticated operators can be created using the already available ones without any performance overhead of composition.
+
+2. **Functional Over Fluidic:** Air embraces a *functional* API rather than a *fludic* one. All the functions come *curried* out of the box and work really well with [ramda].
+
+3. **Performance:** Air is significantly faster than Rx, benchmarks coming up soon.
+
+4. **Virtual Time:** In Rx `VirtualTimeScheduler` is passed as an argument to each operator, in Air the `TestScheduler` is passed once at the time of subscription and is internally shared up the chain of its parent operators or sources.
+
+ [ramda]:   http://ramdajs.com/docs/
+
+## Sources and operators
+**Sources:** are the functions that emit values, such as — `fromDOM(document, 'click)`,  which emits a `ClickEvent` as a part of the stream. Other sources can be — `interval(1000)` which will emit a value every `1000ms`.
+
+**Operators:** These are functions that take in one or more streams as arguments and returns a another stream as a result. For Eg — `map(x => x + 1, a$)`. Here `map` takes in an *iterator* that increments each value emitted in the stream `a$` and returns a new stream containing the incremented values.
