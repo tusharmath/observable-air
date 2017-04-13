@@ -12,16 +12,6 @@ export function curry (f: Function, l: number = f.length): Function {
   }
 }
 
-export function compose (...t: Function[]) {
-  return curry(function (...arg: any[]) {
-    for (var i = t.length - 1; i >= 0; --i) {
-      arg = [t[i].apply(this, arg)]
-    }
-    return arg[0]
-  }, t[t.length - 1].length)
-}
-
-
 export interface ISafeValue<T> {
   isError(): boolean
   getValue(): T
@@ -32,8 +22,8 @@ export interface ISafeFunction<V, C> {
   call(ctx: C, ...t: any[]): ISafeValue<V>
 }
 
-class Guarded <T> implements ISafeValue<T> {
-  constructor (private value: Error|T) {}
+class Guarded<T> implements ISafeValue<T> {
+  constructor (private value: Error | T) {}
 
   isError (): boolean {
     return this.value instanceof Error
@@ -60,6 +50,6 @@ class BaseSafeFunction<T extends Function, V, C> implements ISafeFunction<V, C> 
   }
 }
 
-export function tryCatch <T extends Function, V, C> (f: T) {
+export function tryCatch<T extends Function, V, C> (f: T) {
   return new BaseSafeFunction<T, V, C>(f) as ISafeFunction<V, C>
 }

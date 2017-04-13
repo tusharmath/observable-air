@@ -2,7 +2,7 @@
  * Created by tushar.mathur on 15/10/16.
  */
 import test from 'ava'
-import {curry, compose} from '../src/lib/Utils'
+import {curry} from '../src/lib/Utils'
 const func = curry(
   (a: number, b: number, c: number) => [a, b, c]
 )
@@ -37,12 +37,4 @@ test('curry()', t => {
     f(),
     'HELLO'
   )
-})
-
-test('compose()', t => {
-  const c = (x: number, y: number) => x + y
-  const b = (x: number) => x + 1000
-  const a = (x: number) => x / 100
-  t.is(compose(a, b, c)(2, 3), 10.05)
-  t.is(compose(a, b, c)(2)(3), 10.05)
 })
