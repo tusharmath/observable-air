@@ -4,3 +4,4 @@
 
 export {combine} from './src/operators/Combine'
 export {debounce} from './src/operators/Debounce'
+export * from './src/main'
