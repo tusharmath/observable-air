@@ -3,12 +3,12 @@
  */
 
 
-import {fromArray} from '../src/sources/FromArray'
+import {Suite} from 'benchmark'
 import {filter} from '../src/operators/Filter'
 import {map} from '../src/operators/Map'
 import {reduce} from '../src/operators/Reduce'
-import {Suite} from 'benchmark'
-import {run, sum, add1, even, array, IDeferred} from './lib'
+import {fromArray} from '../src/sources/FromArray'
+import {add1, array, even, IDeferred, run, sum} from './lib'
 
 const a = array(1e6)
 export function bm_fromArray_map_reduce (suite: Suite) {

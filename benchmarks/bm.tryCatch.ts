@@ -2,8 +2,8 @@
  * Created by tushar.mathur on 06/11/16.
  */
 import {Suite} from 'benchmark'
+import {ISafeValue, tryCatch} from '../src/lib/Utils'
 import {array} from './lib'
-import {tryCatch, ISafeValue} from '../src/lib/Utils'
 
 function addThis (b: number) {
   this.a = this.a + b

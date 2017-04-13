@@ -1,14 +1,14 @@
 /**
  * Created by tushar.mathur on 16/10/16.
  */
-import {IObservable} from '../lib/Observable'
-import {ISubscription, CompositeSubscription} from '../lib/Subscription'
-import {IScheduler} from '../lib/Scheduler'
-import {IObserver} from '../lib/Observer'
 import {LinkedListNode} from '../lib/LinkedList'
-import {IOperator} from './Operator'
-import {map} from './Map'
+import {IObservable} from '../lib/Observable'
+import {IObserver} from '../lib/Observer'
+import {IScheduler} from '../lib/Scheduler'
+import {CompositeSubscription, ISubscription} from '../lib/Subscription'
 import {curry} from '../lib/Utils'
+import {map} from './Map'
+import {IOperator} from './Operator'
 
 
 class SwitchValueObserver<T> implements IObserver<T> {

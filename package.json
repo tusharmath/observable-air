@@ -19,7 +19,8 @@
     "build:es": "rollup -c",
     "build:es:min": "babel .dist/main-es.js > .dist/main-es.min.js",
     "build:cjs": "browserify src/main.js > .dist/main-cjs.js",
-    "build:cjs:min": "babel .dist/main-cjs.js > .dist/main-cjs.min.js"
+    "build:cjs:min": "babel .dist/main-cjs.js > .dist/main-cjs.min.js",
+    "lint": "git ls-files | grep '.ts$' | xargs tslint"
   },
   "author": "",
   "license": "ISC",
@@ -41,6 +42,7 @@
     "rollup": "^0.41.2",
     "rollup-plugin-commonjs": "^8.0.2",
     "semantic-release": "^6.3.2",
+    "tslint": "^4.5.1",
     "typescript": "^2.0.3",
     "uglify": "^0.1.5",
     "validate-commit-msg": "^2.8.2"

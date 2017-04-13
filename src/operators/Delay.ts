@@ -3,10 +3,10 @@
  */
 import {IObservable} from '../lib/Observable'
 import {IObserver} from '../lib/Observer'
-import {ISubscription, CompositeSubscription} from '../lib/Subscription'
 import {safeObserver} from '../lib/SafeObserver'
-import {curry} from '../lib/Utils'
 import {IScheduler} from '../lib/Scheduler'
+import {CompositeSubscription, ISubscription} from '../lib/Subscription'
+import {curry} from '../lib/Utils'
 
 class DelayObserver<T> implements IObserver<T> {
   constructor (private timeout: number,

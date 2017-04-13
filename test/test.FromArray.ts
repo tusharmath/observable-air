@@ -5,10 +5,10 @@
 'use strict'
 
 import test from 'ava'
-import {TestScheduler} from '../src/testing/TestScheduler'
-import {EVENT} from '../src/testing/Events'
 import {map} from '../src/operators/Map'
 import {fromArray} from '../src/sources/FromArray'
+import {EVENT} from '../src/testing/Events'
+import {TestScheduler} from '../src/testing/TestScheduler'
 import {ERROR_MESSAGE, throwError} from '../src/testing/Thrower'
 
 const {next, error} = EVENT

@@ -5,9 +5,9 @@
 'use strict'
 
 import test from 'ava'
-import {TestScheduler} from '../src/testing/TestScheduler'
-import {EVENT} from '../src/testing/Events'
 import {slice} from '../src/operators/Slice'
+import {EVENT} from '../src/testing/Events'
+import {TestScheduler} from '../src/testing/TestScheduler'
 
 const {next, complete} = EVENT
 test('takeN(0, 3)', t => {

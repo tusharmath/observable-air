@@ -2,8 +2,8 @@
  * Created by tushar.mathur on 17/10/16.
  */
 import test from 'ava'
-import {fromPromise} from '../src/sources/FromPromise'
 import {createScheduler} from '../src/lib/Scheduler'
+import {fromPromise} from '../src/sources/FromPromise'
 
 test.cb(t => {
   t.plan(1)

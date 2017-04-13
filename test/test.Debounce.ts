@@ -3,8 +3,8 @@
  */
 import {test} from 'ava'
 import {debounce} from '../src/operators/Debounce'
-import {TestScheduler} from '../src/testing/TestScheduler'
 import {marble, toMarble} from '../src/testing/Marble'
+import {TestScheduler} from '../src/testing/TestScheduler'
 
 test(t => {
   const sh = TestScheduler.of()

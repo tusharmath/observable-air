@@ -2,9 +2,9 @@
  * Created by tushar.mathur on 16/10/16.
  */
 import test from 'ava'
-import {TestScheduler} from '../src/testing/TestScheduler'
-import {EVENT} from '../src/testing/Events'
 import {switchLatest} from '../src/operators/Switch'
+import {EVENT} from '../src/testing/Events'
+import {TestScheduler} from '../src/testing/TestScheduler'
 
 
 test(t => {

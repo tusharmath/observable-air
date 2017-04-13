@@ -1,9 +1,9 @@
 /**
  * Created by tushar.mathur on 16/10/16.
  */
-import {create} from './Create'
-import {IObserver} from '../lib/Observer'
 import {IObservable} from '../lib/Observable'
+import {IObserver} from '../lib/Observer'
+import {create} from './Create'
 
 
 export function onResult<T> (observer: IObserver<T>, result: T) {

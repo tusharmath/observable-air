@@ -3,11 +3,11 @@
  */
 
 
-import {run, passthrough, sum, array, IDeferred} from './lib'
+import {Suite} from 'benchmark'
 import {reduce} from '../src/operators/Reduce'
 import {scan} from '../src/operators/Scan'
 import {fromArray} from '../src/sources/FromArray'
-import {Suite} from 'benchmark'
+import {array, IDeferred, passthrough, run, sum} from './lib'
 
 const a = array(1e6)
 export function bm_fromArray_scan_reduce (suite: Suite) {

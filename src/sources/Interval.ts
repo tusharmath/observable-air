@@ -2,10 +2,10 @@
  * Created by tushar.mathur on 27/09/16.
  */
 import {IObservable} from '../lib/Observable'
-import {ISubscription} from '../lib/Subscription'
 import {IObserver} from '../lib/Observer'
-import {IScheduler} from '../lib/Scheduler'
 import {safeObserver} from '../lib/SafeObserver'
+import {IScheduler} from '../lib/Scheduler'
+import {ISubscription} from '../lib/Subscription'
 
 class TimerSubscription implements ISubscription {
   closed = false

@@ -4,8 +4,8 @@
 import {IObservable} from '../lib/Observable'
 import {IObserver} from '../lib/Observer'
 import {IScheduler} from '../lib/Scheduler'
-import {ISubscription, BaseSubscription} from '../lib/Subscription'
 import {ISubscriberFunction} from '../lib/SubscriberFunction'
+import {BaseSubscription, ISubscription} from '../lib/Subscription'
 
 
 class CreateObservable<T> implements IObservable<T> {

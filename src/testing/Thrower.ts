@@ -3,9 +3,9 @@
  */
 
 import {IObservable} from '../lib/Observable'
-import {ISubscription} from '../lib/Subscription'
-import {IScheduler} from '../lib/Scheduler'
 import {IObserver} from '../lib/Observer'
+import {IScheduler} from '../lib/Scheduler'
+import {ISubscription} from '../lib/Subscription'
 
 export const ERROR_MESSAGE = 'Test Exception'
 export function throwError (message: string) {

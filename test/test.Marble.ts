@@ -2,8 +2,8 @@
  * Created by tushar.mathur on 02/11/16.
  */
 import test from 'ava'
-import {marble, toMarble} from '../src/testing/Marble'
 import {EVENT} from '../src/testing/Events'
+import {marble, toMarble} from '../src/testing/Marble'
 import {TestScheduler} from '../src/testing/TestScheduler'
 
 test(t => {

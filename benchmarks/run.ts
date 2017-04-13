@@ -1,15 +1,15 @@
 /**
  * Created by tushar.mathur on 01/10/16.
  */
-import {bm_fromArray_map_reduce} from './bm.fromArray-map-reduce'
-import {bm_fromArray_scan_reduce} from './bm.fromArray-scan-reduce'
-import {bm_fromArray_takeN} from './bm.fromArray-takeN'
-import {bm_tryCatch} from './bm.tryCatch'
-import {onCycle, onEnd} from './lib'
 import {Suite} from 'benchmark'
 import {bm_create} from './bm.create'
 import {bm_debounce} from './bm.debounce'
+import {bm_fromArray_map_reduce} from './bm.fromArray-map-reduce'
+import {bm_fromArray_scan_reduce} from './bm.fromArray-scan-reduce'
+import {bm_fromArray_takeN} from './bm.fromArray-takeN'
 import {bm_switch} from './bm.switch'
+import {bm_tryCatch} from './bm.tryCatch'
+import {onCycle, onEnd} from './lib'
 
 // Run All Benchmarks
 
