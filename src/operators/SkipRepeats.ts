@@ -48,7 +48,7 @@ class SkipRepeatsObservable <T> implements TResult <T> {
   }
 }
 
-export const skipRepeats = curry(function (hashFunction: {(t: any): any}, source: IObservable<any>) {
+export const skipRepeats = curry(function (hashFunction: TComparator<any>, source: IObservable<any>) {
   return new SkipRepeatsObservable(hashFunction, source)
 }) as Function &
   {<T> (cmp: TComparator<T>, source: TSource<T>): TResult<T>} &
