@@ -46,3 +46,19 @@ export const map = curry(function <T, R> (mapFunction: (a: T) => R, source: IObs
 }) as Function &
   {<T, R> (mapper: TMapper<T, R>, source: TSource<T>): TResult<R>} &
   {<T, R> (mapper: TMapper<T, R>): {(source: TSource<T>): TResult<R>}}
+
+export const tap = curry(function <T> (mapFunction: (a: T) => void, source: IObservable<T>) {
+  return new MapObservable((a: T) => {
+    mapFunction(a)
+    return a
+  }, source)
+}) as Function &
+  {<T> (mapper: TMapper<T, void>, source: TSource<T>): TResult<void>} &
+  {<T> (mapper: TMapper<T, void>): {(source: TSource<T>): TResult<void>}}
+
+
+export const mapTo = curry(function <T extends Function> (mapFunction: T, source: IObservable<T>) {
+  return new MapObservable(() => mapFunction, source)
+}) as Function &
+  {<T> (mapper: TMapper<T, void>, source: TSource<T>): TResult<void>} &
+  {<T> (mapper: TMapper<T, void>): {(source: TSource<T>): TResult<void>}}
