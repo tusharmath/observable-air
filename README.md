@@ -12,9 +12,7 @@ If you are new to reactive programming then you should definitely checkout —  
    - [Usage](#usage)
    - [Example](#example)
    - [Installation](#installation)
-   - [Why an RxJS Alternative?](#why-an-rxjs-alternative)
-   - [Sources and Operators](#sources-and-operators)
-   - [Scheduler](#scheduler)
+   - [Why an RxJS Alternative?](#why-an-rxjs-alternative)   
    - [API]
 
 
