@@ -11,7 +11,7 @@ export default {
   entry: './src/main.js',
   dest: './.dist/observable-air.js',
   format: 'umd',
-  moduleName: 'air',
+  moduleName: 'O',
   plugins: [
     uglify(),
     commonjs({}),
