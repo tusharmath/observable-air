@@ -12,9 +12,9 @@ If you are new to reactive programming then you should definitely checkout —  
    - [Usage](#usage)
    - [Example](#example)
    - [Installation](#installation)
-   - [Why an RxJS Alternative?](#why-an-rxjs-alternative)   
+   - [Why an RxJS Alternative?](#why-an-rxjs-alternative)
    - [API]
-
+   - [Demo]
 
 [RxJS]:                                                          https://github.com/ReactiveX/rxjs
 [Observable Proposal]:                                           https://github.com/tc39/proposal-observable
@@ -24,17 +24,31 @@ If you are new to reactive programming then you should definitely checkout —  
 [RxJS Compatibility]:                                            https://github.com/tusharmath/observable-air/blob/master/COMPATIBILITY.md
 [Benchmarks]:                                                    https://github.com/tusharmath/observable-air/blob/master/BENCHMARK.md
 [API]:                                                           https://github.com/tusharmath/observable-air/blob/master/API.md
+[Demo]:                                                          https://jsbin.com/paxudog/2/edit?js,console
+
 ## Usage
 
+**CommonJS**
 ```js
-// inside CommonJS
 const O = require('observable-air')
 ```
-
-```js
-// inside es6 or typescript
+**ES6 or Typescript**
+```ts
 import * as O from 'observable-air'
 ```
+
+**HTML**
+```html
+<script src="https://unpkg.com/observable-air/.dist/observable-air.js"></script>
+
+<script>
+  O.forEach(
+    console.log,
+    O.scan((a) => a + 1, 0, O.interval(1000))
+  )
+</script>
+```
+
 
 ## Example
 ```js
