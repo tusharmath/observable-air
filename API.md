@@ -338,7 +338,7 @@ const $ = O.flatMap(
 function join(source: Observable): Observable
 ```
 
-Join is exactly like `flatMap` but it doesn't take any mapping function. It's mapping function is essentially `Identity` function ie. `i => i`.
+Join is exactly like [flatMap](#flatMap) but it doesn't take any mapping function. It's mapping function is essentially `Identity` function ie. `i => i`.
 
 **Example:**
 ```ts
@@ -453,7 +453,7 @@ function scan(
   source: Observable
 ): Observable
 ```
-Its like reduce but it emits all intermediatory results also.
+Its like [reduce](#reduce) but it emits all intermediatory results also.
 
 **Example:**
 
@@ -518,7 +518,7 @@ function switchMap(
 ): Observable
 ```
 
-Exactly like [flatMap] except that it doesn't wait for the child streams to complete like how [switchLatest] works.
+Exactly like [flatMap](#flatMap) except that it doesn't wait for the child streams to complete like how [switchLatest](#switchLatest) works.
 
 
 ## tap
@@ -527,7 +527,7 @@ Exactly like [flatMap] except that it doesn't wait for the child streams to comp
 function tap(fn: (i) => void, source: Observable): Observable
 ```
 
-It works like [map] but doesn't ignores the return value of the mapping function.
+It works like [map](#map) but doesn't ignores the return value of the mapping function.
 
 **Example:**
 
