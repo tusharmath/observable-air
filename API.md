@@ -34,7 +34,6 @@
   - [tap](#tap)
 - [Testing](#testing)
   - [TestScheduler](#TestScheduler)
-  - [EVENT](#event)
   - [marble](#marble)
   - [toMarble](#toMarble)
 
@@ -56,10 +55,19 @@ A `Scheduler` is an object which has some useful timing utilities as defined in 
 
 ```ts
 interface Scheduler {
+  // Runs the task after the given duration
   delay(task: () => void, duration: number): Subscription
+
+  // Keeps running the task after every given amount of duration has passed
   periodic(task: () => void, duration: number): Subscription
+
+  // Runs the task on the next frame
   frame(task: () => void): Subscription
+
+  // Runs the task as soon as possible but in the next event cycle.
   asap(task: () => void): Subscription
+
+  // Displays the current time of the scheduler
   now(): number
 }
 ```
@@ -532,3 +540,118 @@ O.tap(
 )
 ```
 
+# Testing
+
+## TestScheduler
+`TestScheduler` is a custom implementation of `Scheduler` which helps in writing unit tests. Apart from the base `Scheduler` functions it has its own functions as well
+
+```ts
+interface TestScheduler extends Scheduler {
+  // Updates the system clock internally by 1ms and runs all the pending tasks in the queue
+  tick (): void
+
+  // Updates the clock by the given duration and keeps executing the tasks as they are scheduled.
+  advanceBy (duration: number): void
+
+  // Update the clock to an absolute time
+  advanceTo (duration: number): void
+
+  // Creates a test observer and subscribes to the observable returned by the function
+  start(func: () => Observable): void
+
+  // Creates a "Cold" TestObservable
+  Cold (events: Array<ObservableEvent>): Observable
+
+  // Creates a "Hot" Test Observable
+  Hot (events: Array<ObservableEvent>): Observable
+
+  // Creates a TestObserver. TestObserver keeps log of when and what type of an event was fired.
+  Observer (): Observer
+
+  // Factory function to create a new TestScheduler
+  static of (): TestScheduler
+}
+```
+
+**Example:**
+```ts
+import {compose, add} from 'ramda'
+import {TestScheduler, EVENT} from 'observable-air/test'
+import * as assert from 'assert'
+import * as O from 'observable-air'
+
+// create a stream that creates the first 5 even values.
+const even = compose(
+  O.slice(0, 5),
+  O.scan(add(2), -2),
+  O.interval
+)
+
+ // creates a stream that emits even values every 100ms
+const $ = even(100)
+
+// logs 0 then after 100ms logs 2 then 4 and so on until 8
+O.forEach(console.log, $) // takes 500ms to complete the test
+
+// Testing using Assert
+
+const tScheduler = TestScheduler
+
+ // runs async code synchronously
+const {results} = tScheduler.start(() => even(100))
+
+assert.deepEquals(results, [
+  EVENT.next(200, 0),
+  EVENT.next(300, 2),
+  EVENT.next(400, 4)
+  EVENT.next(500, 6),
+  EVENT.next(600, 8),
+  EVENT.complete(600)
+])
+```
+## marble
+```ts
+marble(events: string): Array<ObservableEvent>
+```
+
+Converts a string of marble events into an array of `ObservableEvent`s which is very useful for testing
+
+**Example:**
+```ts
+marble('-1--2--3--4|')
+/* outputs
+[
+  Event.next(220, '1'),
+  Event.next(250, '2'),
+  Event.next(280, '3'),
+  Event.next(310, '4'),
+  Event.complete(320)
+]
+
+*/
+
+```
+
+## toMarble
+```ts
+toMarble(events: Array<ObservableEvent>): string
+```
+
+Opposite of [#marble] it takes in an array of `ObservableEvent` and converts them into a marble string
+
+**Example:**
+```ts
+toMarble([
+  Event.next(220, '1'),
+  Event.next(250, '2'),
+  Event.next(280, '3'),
+  Event.next(310, '4'),
+  Event.complete(320)
+])
+/* outputs
+
+'-1--2--3--4|'
+
+*/
+
+```
