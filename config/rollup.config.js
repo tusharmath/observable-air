@@ -5,12 +5,15 @@
 'use strict'
 
 import commonjs from 'rollup-plugin-commonjs'
-
+import uglify from 'rollup-plugin-babili'
 export default {
   exports: 'named',
   entry: './src/main.js',
-  dest: './.dist/main-es.js',
+  dest: './.dist/observable-air.js',
+  format: 'umd',
+  moduleName: 'air',
   plugins: [
-    commonjs({})
+    uglify(),
+    commonjs({}),
   ]
 }
