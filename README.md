@@ -14,9 +14,8 @@ If you are new to reactive programming then you should definitely checkout —  
    - [Installation](#installation)
    - [Why an RxJS Alternative?](#why-an-rxjs-alternative)
    - [Sources and Operators](#sources-and-operators)
-   - [Benchmarks]
-   - [Documentation]
-   - [RxJS Compatibility]
+   - [Scheduler](#scheduler)
+   - [API]
 
 
 [RxJS]:                                                          https://github.com/ReactiveX/rxjs
@@ -25,9 +24,8 @@ If you are new to reactive programming then you should definitely checkout —  
 [download and parsing]:                                          https://medium.com/@addyosmani/javascript-start-up-performance-69200f43b201#.upm9f4v8u
 [The introduction to Reactive Programming you've been missing]:  https://gist.github.com/staltz/868e7e9bc2a7b8c1f754
 [RxJS Compatibility]:                                            https://github.com/tusharmath/observable-air/blob/master/COMPATIBILITY.md
-[Documentation]:                                                 https://tusharmath.github.io/observable-air
 [Benchmarks]:                                                    https://github.com/tusharmath/observable-air/blob/master/BENCHMARK.md
-
+[API]:                                                           https://github.com/tusharmath/observable-air/blob/master/API.md
 ## Usage
 
 ```js
@@ -75,7 +73,3 @@ RxJS is awesome and an inspiration for this a lot of other observable libraries 
 
  [ramda]:   http://ramdajs.com/docs/
 
-## Sources and operators
-**Sources:** are the functions that emit values, such as — `fromDOM(document, 'click)`,  which emits a `ClickEvent` as a part of the stream. Other sources can be — `interval(1000)` which will emit a value every `1000ms`.
-
-**Operators:** These are functions that take in one or more streams as arguments and returns a another stream as a result. For Eg — `map(x => x + 1, a$)`. Here `map` takes in an *iterator* that increments each value emitted in the stream `a$` and returns a new stream containing the incremented values.
