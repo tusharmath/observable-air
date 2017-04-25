@@ -24,7 +24,7 @@ If you are new to reactive programming then you should definitely checkout —  
 [RxJS Compatibility]:                                            https://github.com/tusharmath/observable-air/blob/master/COMPATIBILITY.md
 [Benchmarks]:                                                    https://github.com/tusharmath/observable-air/blob/master/BENCHMARK.md
 [API]:                                                           https://github.com/tusharmath/observable-air/blob/master/API.md
-[Demo]:                                                          https://jsbin.com/paxudog/2/edit?js,console
+[Demo]:                                                          https://jsbin.com/paxudog/edit?js,console
 
 ## Usage
 
