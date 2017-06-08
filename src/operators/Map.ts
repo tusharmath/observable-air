@@ -60,5 +60,5 @@ export const tap = curry(function <T> (mapFunction: (a: T) => void, source: IObs
 export const mapTo = curry(function <T extends Function> (mapFunction: T, source: IObservable<T>) {
   return new MapObservable(() => mapFunction, source)
 }) as Function &
-  {<T> (mapper: TMapper<T, void>, source: TSource<T>): TResult<void>} &
-  {<T> (mapper: TMapper<T, void>): {(source: TSource<T>): TResult<void>}}
+  {<T> (value: T, source: IObservable<any>): IObservable<T>} &
+  {<T> (value: T): {(source: IObservable<any>): IObservable<T>}}
