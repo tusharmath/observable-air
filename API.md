@@ -9,12 +9,15 @@
   - [forEach](#forEach)
 - [Sources](#sources)
   - [create](#create)
+  - [empty](#empty)
   - [frames](#frames)
   - [fromArray](#fromArray)
   - [fromDOM](#fromDOM)
   - [fromPromise](#fromPromise)
   - [interval](#interval)
-  - [of](#of)
+  - [just](#just)
+  - [never](#never)
+
 - [Operators](#operators)
   - [delay](#delay)
   - [filter](#filter)
@@ -186,6 +189,12 @@ const $ = O.create((observer, scheduler) =>
 O.forEach(console.log, $)
 ```
 
+## empty
+
+```ts
+function empty(): Observable
+```
+Creates an observable that completes without emitting any value.
 
 ## frames
 
@@ -268,19 +277,27 @@ Fires an event on every given `duration` amount of time.
 const $ = O.interval(1000) // fires in every 1000ms
 ```
 
-
-## of
+## just
 
 ```ts
-function of(...t: any[]): Observable
+function just(value: any): Observable
 ```
 
-Its essentially a syntactic sugar over `O.fromArray()` as it emits all the arguments that are passed to the function.
+Creates an observable that emits only one value
 
 **Example:**
 ```ts
-const $ = O.of('A', 'B', 'C') // emits 'A' then 'B' and then 'C'
+const $ = O.just('AIR')
+O.forEach(console.log, $) // logs `AIR`
 ```
+
+## never
+
+```ts
+function never(): Observable
+```
+
+Creates an observable that never completes.
 
 # Operators
 These are functions that take in one or more streams as arguments and returns a another stream as a result. For Eg — `map(x => x + 1, a$)`. Here `map` takes in an *iterator* that increments each value emitted in the stream `a$` and returns a new stream containing the incremented values.
