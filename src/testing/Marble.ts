@@ -52,6 +52,12 @@ export function toMarble<T> (events: Array<IObservableEvent>,
       case EventType.complete:
         message += '|'
         break
+      case EventType.start:
+        message += '^'
+        break
+      case EventType.end:
+        message += '!'
+        break
     }
   })
   return message
