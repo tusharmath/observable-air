@@ -3,7 +3,7 @@
  */
 
 
-export {create} from './sources/Create'
+export {create, empty, just, never} from './sources/Create'
 export {delay} from './operators/Delay'
 export {filter} from './operators/Filter'
 export {flatMap} from './operators/Join'
@@ -23,7 +23,6 @@ export {mapTo} from './operators/Map'
 export {map} from './operators/Map'
 export {merge} from './operators/Merge'
 export {multicast} from './operators/Multicast'
-export {of} from './sources/FromArray'
 export {reduce} from './operators/Reduce'
 export {sample} from './operators/Sample'
 export {scan} from './operators/Scan'

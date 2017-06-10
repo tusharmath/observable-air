@@ -11,10 +11,6 @@ export class LinkedListNode<T> {
     this.right = undefined
     this.left = undefined
   }
-
-  static of <T> (val: T) {
-    return new LinkedListNode(val)
-  }
 }
 
 // TODO: Use singly linked list
@@ -33,7 +29,7 @@ export class LinkedList<T> {
 
 
   add (val: T) {
-    const node = LinkedListNode.of(val)
+    const node = new LinkedListNode(val)
     if (this.length === 0) this.__head = node
     if (!this.__tail) {
       this.__tail = node
@@ -71,9 +67,5 @@ export class LinkedList<T> {
       this.__head = undefined
     }
     this.length > 0 ? this.length-- : void 0
-  }
-
-  static of<T> () {
-    return new LinkedList<T>()
   }
 }

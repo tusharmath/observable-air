@@ -4,9 +4,14 @@
 import {IObserver} from '../lib/Observer'
 import {IScheduler} from '../lib/Scheduler'
 import {EVENT, IObservableEvent} from './Events'
+import {toMarble} from './Marble'
 
 export class TestObserver<T> implements IObserver<T> {
   results: Array<IObservableEvent>
+
+  get marble () {
+    return toMarble(this.results)
+  }
 
   constructor (private scheduler: IScheduler) {
     this.results = []
