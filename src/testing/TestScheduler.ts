@@ -8,6 +8,7 @@ import {ISubscription} from '../lib/Subscription'
 import {ColdTestObservable} from './ColdTestObservable'
 import {IObservableEvent} from './Events'
 import {HotTestObservable} from './HotTestObservable'
+import {marble} from './Marble'
 import {TestObservable} from './TestObservable'
 import {TestObserver} from './TestObserver'
 import {DEFAULT_OPTIONS} from './TestOptions'
@@ -99,7 +100,7 @@ export class TestScheduler implements IScheduler {
     })
   }
 
-  subscribeTo <T> (f: () => IObservable<T>, start: number, stop: number) {
+  subscribeTo<T> (f: () => IObservable<T>, start: number, stop: number) {
     let subscription: ISubscription
     const observer = this.Observer()
     this.delay(() => subscription = f().subscribe(observer, this), start, 0)
@@ -113,15 +114,19 @@ export class TestScheduler implements IScheduler {
     return resultsObserver
   }
 
-  Cold <T> (events: Array<IObservableEvent>) {
-    return ColdTestObservable(this, events) as TestObservable<T>
+  Cold<T> (events: Array<IObservableEvent> | string) {
+    return typeof events === 'string'
+      ? ColdTestObservable(this, marble(events))
+      : ColdTestObservable(this, events) as TestObservable<T>
   }
 
-  Hot <T> (events: Array<IObservableEvent>) {
-    return HotTestObservable(this, events) as TestObservable<T>
+  Hot<T> (events: Array<IObservableEvent> | string) {
+    return typeof events === 'string'
+      ? HotTestObservable(this, marble(events))
+      : HotTestObservable(this, events) as TestObservable<T>
   }
 
-  Observer <T> () {
+  Observer<T> () {
     return new TestObserver<T>(this)
   }
 

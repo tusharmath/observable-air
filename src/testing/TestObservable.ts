@@ -6,12 +6,17 @@ import {IObserver} from '../lib/Observer'
 import {IScheduler} from '../lib/Scheduler'
 import {ISubscription} from '../lib/Subscription'
 import {EVENT, IObservableEvent} from './Events'
+import {toMarble} from './Marble'
 
 
 export class TestObservable<T> implements IObservable<T> {
-  subscriptions: Array<IObservableEvent> = []
+  public readonly subscriptions: Array<IObservableEvent> = []
 
   constructor (private func: (observer: IObserver<T>) => ISubscription) {
+  }
+
+  get marble () {
+    return toMarble(this.subscriptions)
   }
 
   subscribe (observer: IObserver<T>, scheduler: IScheduler): ISubscription {
