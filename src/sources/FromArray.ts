@@ -7,7 +7,7 @@ import {IScheduler} from '../lib/Scheduler'
 import {ISubscription} from '../lib/Subscription'
 import {tryCatch} from '../lib/Utils'
 
-class FromArraySubscription <T> implements ISubscription {
+class FromArraySubscription<T> implements ISubscription {
   private subscription: ISubscription
   closed = false
 
@@ -49,6 +49,3 @@ export function fromArray<T> (list: Array<T>): IObservable<T> {
   return new FromObservable(list)
 }
 
-export function of<T> (...list: Array<T>) {
-  return fromArray(list)
-}
