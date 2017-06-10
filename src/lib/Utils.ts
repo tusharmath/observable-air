@@ -2,10 +2,9 @@
  * Created by tushar.mathur on 15/10/16.
  */
 
-
-export function curry (f: Function, l: number = f.length): Function {
+export function curry(f: Function, l: number = f.length): Function {
   if (l <= 1) return f
-  return function curried (...t: any[]) {
+  return function curried(...t: any[]) {
     if (t.length === 0) return curried
     if (t.length >= l) return f.call(this, ...t)
     return curried.bind(this, ...t)
@@ -23,25 +22,25 @@ export interface ISafeFunction<V, C> {
 }
 
 class Guarded<T> implements ISafeValue<T> {
-  constructor (private value: Error | T) {}
+  constructor(private value: Error | T) {}
 
-  isError (): boolean {
+  isError(): boolean {
     return this.value instanceof Error
   }
 
-  getValue () {
+  getValue() {
     return this.value as T
   }
 
-  getError () {
+  getError() {
     return this.value as Error
   }
 }
 
 class BaseSafeFunction<T extends Function, V, C> implements ISafeFunction<V, C> {
-  constructor (private f: T) {}
+  constructor(private f: T) {}
 
-  call (ctx: C, ...t: any[]): ISafeValue<V> {
+  call(ctx: C, ...t: any[]): ISafeValue<V> {
     try {
       return new Guarded(this.f.apply(ctx, t))
     } catch (e) {
@@ -50,6 +49,6 @@ class BaseSafeFunction<T extends Function, V, C> implements ISafeFunction<V, C> 
   }
 }
 
-export function tryCatch<T extends Function, V, C> (f: T) {
+export function tryCatch<T extends Function, V, C>(f: T) {
   return new BaseSafeFunction<T, V, C>(f) as ISafeFunction<V, C>
 }

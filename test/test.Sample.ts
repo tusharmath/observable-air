@@ -7,17 +7,12 @@ import {EVENT} from '../src/testing/Events'
 import {marble} from '../src/testing/Marble'
 import {TestScheduler} from '../src/testing/TestScheduler'
 
-function toArray (...t: Array<any>) {
+function toArray(...t: Array<any>) {
   return t.join(',')
 }
 test(t => {
   const sh = TestScheduler.of()
-  const a$ = sh.Hot([
-    EVENT.next(210, 'A0'),
-    EVENT.next(230, 'A1'),
-    EVENT.next(250, 'A2'),
-    EVENT.complete(250)
-  ])
+  const a$ = sh.Hot([EVENT.next(210, 'A0'), EVENT.next(230, 'A1'), EVENT.next(250, 'A2'), EVENT.complete(250)])
   const b$ = sh.Hot([
     EVENT.next(210, 'B0'),
     EVENT.next(220, 'B1'),
@@ -46,12 +41,7 @@ test(t => {
 
 test(t => {
   const sh = TestScheduler.of()
-  const a$ = sh.Hot([
-    EVENT.next(210, 0),
-    EVENT.next(230, 1),
-    EVENT.next(250, 2),
-    EVENT.complete(250)
-  ])
+  const a$ = sh.Hot([EVENT.next(210, 0), EVENT.next(230, 1), EVENT.next(250, 2), EVENT.complete(250)])
   const b$ = sh.Hot([
     EVENT.next(210, 0),
     EVENT.next(220, 1000),
@@ -78,16 +68,10 @@ test(t => {
   ])
 })
 
-
 test(t => {
   const sh = TestScheduler.of()
   const t1$ = sh.Hot(marble('-A-B-C-D'))
   const t2$ = sh.Hot(marble('--a-b-c-d'))
   const {results} = sh.start(() => sample((a, b) => a + b, t2$, [t1$, t2$]))
-  t.deepEqual(results, [
-    EVENT.next(220, 'Aa'),
-    EVENT.next(240, 'Bb'),
-    EVENT.next(260, 'Cc'),
-    EVENT.next(280, 'Dd')
-  ])
+  t.deepEqual(results, [EVENT.next(220, 'Aa'), EVENT.next(240, 'Bb'), EVENT.next(260, 'Cc'), EVENT.next(280, 'Dd')])
 })

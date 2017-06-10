@@ -8,78 +8,69 @@ import {IScheduler} from '../lib/Scheduler'
 import {CompositeSubscription, ISubscription} from '../lib/Subscription'
 import {curry} from '../lib/Utils'
 
-
 export type TSelector<T> = {(...e: Array<any>): T}
 export type TSampler = IObservable<any>
 export type TSources = Array<IObservable<any>>
 export type TResult<T> = IObservable<T>
 
 class SampleValueObserver<T> implements IObserver<T> {
-  constructor (private id: number,
-               private sampleObserver: SampleObserver<T>) {
-  }
+  constructor(private id: number, private sampleObserver: SampleObserver<T>) {}
 
-  next (val: T): void {
+  next(val: T): void {
     this.sampleObserver.onNext(val, this.id)
   }
 
-  error (err: Error): void {
+  error(err: Error): void {
     this.sampleObserver.error(err)
   }
 
-  complete (): void {
+  complete(): void {
     this.sampleObserver.onComplete(this.id)
   }
-
 }
 class SampleObserver<T> implements IObserver<T> {
   private container = container(this.total)
   private completed = false
 
-  constructor (private total: number, private sink: IObserver<T>, private func: TSelector<T>) {
-  }
+  constructor(private total: number, private sink: IObserver<T>, private func: TSelector<T>) {}
 
-  onNext (value: T, id: number) {
+  onNext(value: T, id: number) {
     this.container.next(value, id)
   }
 
-  onComplete (id: number) {
+  onComplete(id: number) {
     const hasCompleted = this.container.complete(id)
     if (this.completed && hasCompleted) {
       this.sink.complete()
     }
   }
 
-  private actuallyCompleted () {
+  private actuallyCompleted() {
     if (this.completed && this.container.isDone()) {
       this.sink.complete()
     }
   }
 
-  next (val: T): void {
+  next(val: T): void {
     if (this.container.isOn()) {
       this.sink.next(this.func.apply(null, this.container.values))
     }
   }
 
-  error (err: Error): void {
+  error(err: Error): void {
     this.sink.error(err)
   }
 
-  complete (): void {
+  complete(): void {
     this.completed = true
     this.actuallyCompleted()
   }
 }
 
-
 class SampleObservable<T> implements TResult<T> {
-  constructor (private func: TSelector<T>,
-               private sampler: TSampler,
-               private sources: TSources) {
-  }
+  constructor(private func: TSelector<T>, private sampler: TSampler, private sources: TSources) {}
 
-  subscribe (observer: IObserver<T>, scheduler: IScheduler): ISubscription {
+  subscribe(observer: IObserver<T>, scheduler: IScheduler): ISubscription {
     const cSub = new CompositeSubscription()
     const sampleObserver = new SampleObserver(this.sources.length, observer, this.func)
     for (var i = 0; i < this.sources.length; ++i) {
@@ -91,10 +82,10 @@ class SampleObservable<T> implements TResult<T> {
   }
 }
 
-export const sample = curry(function <T> (f: TSelector<T>, sampler: TSampler, sources: TSources) {
+export const sample = curry(function<T>(f: TSelector<T>, sampler: TSampler, sources: TSources) {
   return new SampleObservable(f, sampler, sources)
-}) as Function &
-  {<T>(selector: TSelector<T>, sampler: TSampler, source: TSources): TResult<T>} &
-  {<T>(selector: TSelector<T>): {(sampler: TSampler, source: TSources): TResult<T>}} &
-  {<T>(selector: TSelector<T>, sampler: TSampler): {(source: TSources): TResult<T>}} &
-  {<T>(selector: TSelector<T>): {(sampler: TSampler): {(source: TSources): TResult<T>}}}
+}) as Function & {<T>(selector: TSelector<T>, sampler: TSampler, source: TSources): TResult<T>} & {
+    <T>(selector: TSelector<T>): {(sampler: TSampler, source: TSources): TResult<T>}
+  } & {<T>(selector: TSelector<T>, sampler: TSampler): {(source: TSources): TResult<T>}} & {
+    <T>(selector: TSelector<T>): {(sampler: TSampler): {(source: TSources): TResult<T>}}
+  }

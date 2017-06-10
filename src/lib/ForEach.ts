@@ -10,18 +10,19 @@ export type TOnNext<T> = {(value: T): void}
 export type TSource<T> = IObservable<T>
 export type TResult = ISubscription
 
-export const forEach = curry(function <T> (onNext: TOnNext<T>, observable: TSource<T>) {
-  return observable.subscribe({
-    next (value: T) {
-      onNext(value)
+export const forEach = curry(function<T>(onNext: TOnNext<T>, observable: TSource<T>) {
+  return observable.subscribe(
+    {
+      next(value: T) {
+        onNext(value)
+      },
+      complete() {},
+      error(err: Error) {
+        throw err
+      }
     },
-    complete() {
-    },
-    error (err: Error) {
-      throw err
-    }
-  }, createScheduler())
-}) as Function &
-  {<T> (onNext: TOnNext<T>, source: TSource<T>): TResult} &
-  {<T> (onNext: TOnNext<T>): {(source: TSource<T>): TResult}}
-
+    createScheduler()
+  )
+}) as Function & {<T>(onNext: TOnNext<T>, source: TSource<T>): TResult} & {
+    <T>(onNext: TOnNext<T>): {(source: TSource<T>): TResult}
+  }

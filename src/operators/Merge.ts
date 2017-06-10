@@ -9,18 +9,17 @@ import {CompositeSubscription, ISubscription} from '../lib/Subscription'
 class MergeObserver<T> implements IObserver<T> {
   private count = 0
 
-  constructor (private total: number, private sink: IObserver<T>) {
-  }
+  constructor(private total: number, private sink: IObserver<T>) {}
 
-  next (val: T): void {
+  next(val: T): void {
     this.sink.next(val)
   }
 
-  error (err: Error): void {
+  error(err: Error): void {
     this.sink.error(err)
   }
 
-  complete (): void {
+  complete(): void {
     this.count++
     if (this.count === this.total) {
       this.sink.complete()
@@ -29,10 +28,9 @@ class MergeObserver<T> implements IObserver<T> {
 }
 
 class MergeObservable<T> implements IObservable<T> {
-  constructor (private sources: Array<IObservable<T>>) {
-  }
+  constructor(private sources: Array<IObservable<T>>) {}
 
-  subscribe (observer: IObserver<T>, scheduler: IScheduler): ISubscription {
+  subscribe(observer: IObserver<T>, scheduler: IScheduler): ISubscription {
     const cSub = new CompositeSubscription()
     const mergeObserver = new MergeObserver(this.sources.length, observer)
     for (var i = 0; i < this.sources.length; ++i) {
@@ -42,6 +40,6 @@ class MergeObservable<T> implements IObservable<T> {
   }
 }
 
-export function merge <T> (...sources: Array<IObservable<T>>): IObservable<T> {
+export function merge<T>(...sources: Array<IObservable<T>>): IObservable<T> {
   return new MergeObservable(sources)
 }

@@ -14,29 +14,23 @@ export type IListener = {
 class DOMSubscription implements ISubscription {
   closed: boolean = false
 
-  constructor (private element: HTMLElement, private listener: IListener, private name: string) {
-  }
+  constructor(private element: HTMLElement, private listener: IListener, private name: string) {}
 
-  unsubscribe (): void {
+  unsubscribe(): void {
     this.element.removeEventListener(this.name, this.listener)
   }
 }
 
 class DOMObservable implements TResult {
-  constructor (private name: string, private element: HTMLElement) {
-  }
+  constructor(private name: string, private element: HTMLElement) {}
 
-  subscribe (observer: IObserver<Event>): ISubscription {
+  subscribe(observer: IObserver<Event>): ISubscription {
     const listener = observer.next.bind(observer)
     this.element.addEventListener(this.name, listener)
     return new DOMSubscription(this.element, listener, this.name)
   }
-
 }
 
-export const fromDOM = curry(function (element: HTMLElement, name: string) {
+export const fromDOM = curry(function(element: HTMLElement, name: string) {
   return new DOMObservable(name, element)
-}) as Function &
-  {(element: HTMLElement, name: string): TResult} &
-  {(element: HTMLElement): {(name: string): TResult}}
-
+}) as Function & {(element: HTMLElement, name: string): TResult} & {(element: HTMLElement): {(name: string): TResult}}

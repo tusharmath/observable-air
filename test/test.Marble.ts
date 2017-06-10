@@ -14,12 +14,7 @@ test(t => {
 })
 
 test(t => {
-  const message = toMarble([
-    EVENT.next(210, 'A'),
-    EVENT.next(220, 'B'),
-    EVENT.next(230, 'C'),
-    EVENT.complete(240)
-  ])
+  const message = toMarble([EVENT.next(210, 'A'), EVENT.next(220, 'B'), EVENT.next(230, 'C'), EVENT.complete(240)])
   t.is('-ABC|', message)
 })
 

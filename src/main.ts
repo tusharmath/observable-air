@@ -2,7 +2,6 @@
  * Created by tushar on 17/02/17.
  */
 
-
 export {create, empty, just, never} from './sources/Create'
 export {delay} from './operators/Delay'
 export {filter} from './operators/Filter'

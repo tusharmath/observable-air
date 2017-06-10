@@ -15,66 +15,59 @@ import {DEFAULT_OPTIONS} from './TestOptions'
 
 // TODO: convert to interface
 class TaskSchedule {
-  constructor (public task: () => void, public time: number) {
-  }
+  constructor(public task: () => void, public time: number) {}
 }
 
 class TaskSubscription implements ISubscription {
   closed: boolean
 
-  constructor (private queue: LinkedList<TaskSchedule>,
-               private taskNode: LinkedListNode<TaskSchedule>) {
-  }
+  constructor(private queue: LinkedList<TaskSchedule>, private taskNode: LinkedListNode<TaskSchedule>) {}
 
-  unsubscribe (): void {
+  unsubscribe(): void {
     this.queue.remove(this.taskNode)
   }
 }
 
 export class TestScheduler implements IScheduler {
-  asap (task: () => void): ISubscription {
+  asap(task: () => void): ISubscription {
     return this.delay(task, 1)
   }
 
   private clock = 0
   private queue = new LinkedList<TaskSchedule>()
 
-  constructor (private rafTimeout: number) {
-  }
+  constructor(private rafTimeout: number) {}
 
-  get length () {
+  get length() {
     return this.queue.length
   }
 
-  tick () {
+  tick() {
     this.clock++
     this.run()
   }
 
-  advanceBy (time: number): void {
+  advanceBy(time: number): void {
     while (time-- > 0) this.tick()
   }
 
-  advanceTo (time: number): void {
+  advanceTo(time: number): void {
     this.advanceBy(time - this.now())
   }
 
-  now () {
+  now() {
     return this.clock
   }
 
-  delay (task: () => void, time: number, now: number = this.now()): ISubscription {
-    return new TaskSubscription(
-      this.queue,
-      this.queue.add(new TaskSchedule(task, time + now))
-    )
+  delay(task: () => void, time: number, now: number = this.now()): ISubscription {
+    return new TaskSubscription(this.queue, this.queue.add(new TaskSchedule(task, time + now)))
   }
 
-  frame (task: () => void): ISubscription {
+  frame(task: () => void): ISubscription {
     return this.delay(task, this.now() + this.rafTimeout, 0)
   }
 
-  periodic (task: () => void, interval: number): ISubscription {
+  periodic(task: () => void, interval: number): ISubscription {
     var closed = false
     const repeatedTask = () => {
       if (closed) return
@@ -84,13 +77,13 @@ export class TestScheduler implements IScheduler {
     this.delay(repeatedTask, interval)
     return {
       closed,
-      unsubscribe () {
+      unsubscribe() {
         closed = true
       }
     }
   }
 
-  private run () {
+  private run() {
     this.queue.forEach(node => {
       const qItem = node.value
       if (qItem.time === this.clock) {
@@ -100,37 +93,41 @@ export class TestScheduler implements IScheduler {
     })
   }
 
-  subscribeTo<T> (f: () => IObservable<T>, start: number, stop: number) {
+  subscribeTo<T>(f: () => IObservable<T>, start: number, stop: number) {
     let subscription: ISubscription
     const observer = this.Observer()
-    this.delay(() => subscription = f().subscribe(observer, this), start, 0)
+    this.delay(() => (subscription = f().subscribe(observer, this)), start, 0)
     this.delay(() => !subscription.closed && subscription.unsubscribe(), stop, 0)
     return observer
   }
 
-  start<T> (f: () => IObservable<T>, start = DEFAULT_OPTIONS.subscriptionStart, stop = DEFAULT_OPTIONS.subscriptionStop) {
+  start<T>(
+    f: () => IObservable<T>,
+    start = DEFAULT_OPTIONS.subscriptionStart,
+    stop = DEFAULT_OPTIONS.subscriptionStop
+  ) {
     const resultsObserver = this.subscribeTo(f, start, stop)
     this.advanceBy(stop)
     return resultsObserver
   }
 
-  Cold<T> (events: Array<IObservableEvent> | string) {
+  Cold<T>(events: Array<IObservableEvent> | string) {
     return typeof events === 'string'
       ? ColdTestObservable(this, marble(events))
       : ColdTestObservable(this, events) as TestObservable<T>
   }
 
-  Hot<T> (events: Array<IObservableEvent> | string) {
+  Hot<T>(events: Array<IObservableEvent> | string) {
     return typeof events === 'string'
       ? HotTestObservable(this, marble(events))
       : HotTestObservable(this, events) as TestObservable<T>
   }
 
-  Observer<T> () {
+  Observer<T>() {
     return new TestObserver<T>(this)
   }
 
-  static of (rafTimeout = DEFAULT_OPTIONS.rafTimeout) {
+  static of(rafTimeout = DEFAULT_OPTIONS.rafTimeout) {
     return new TestScheduler(rafTimeout)
   }
 }

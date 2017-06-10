@@ -23,9 +23,7 @@ test('error', t => {
 test('exception', t => {
   const sh = TestScheduler.of()
   const {results} = sh.start(() => thrower(delay(20, sh.Hot(marble('0')))))
-  t.deepEqual(results, [
-    EVENT.error(220, Error(ERROR_MESSAGE))
-  ])
+  t.deepEqual(results, [EVENT.error(220, Error(ERROR_MESSAGE))])
 })
 
 test('unsubscribe', t => {

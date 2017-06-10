@@ -8,35 +8,33 @@ import {IScheduler} from '../lib/Scheduler'
 import {ISubscription} from '../lib/Subscription'
 
 export const ERROR_MESSAGE = 'Test Exception'
-export function throwError (message: string) {
+export function throwError(message: string) {
   throw Error(message)
 }
 class ThrowerObserver implements IObserver<void> {
-  constructor (private sink: IObserver<void>) {
-  }
+  constructor(private sink: IObserver<void>) {}
 
-  next (val: void): void {
+  next(val: void): void {
     throwError(ERROR_MESSAGE)
   }
 
-  error (err: Error): void {
+  error(err: Error): void {
     this.sink.error(err)
   }
 
-  complete (): void {
+  complete(): void {
     this.sink.complete()
   }
 }
 
 export class Thrower implements IObservable<void> {
-  constructor (private source: IObservable<any>) {
-  }
+  constructor(private source: IObservable<any>) {}
 
-  subscribe (observer: IObserver<void>, scheduler: IScheduler): ISubscription {
+  subscribe(observer: IObserver<void>, scheduler: IScheduler): ISubscription {
     return this.source.subscribe(new ThrowerObserver(observer), scheduler)
   }
 }
 
-export function thrower (ob: IObservable<any>) {
+export function thrower(ob: IObservable<any>) {
   return new Thrower(ob)
 }

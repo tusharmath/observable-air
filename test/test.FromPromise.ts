@@ -8,17 +8,23 @@ import {fromPromise} from '../src/sources/FromPromise'
 test.cb(t => {
   t.plan(1)
   const results: number[] = []
-  const s$ = fromPromise<number>(() => new Promise(function (resolve) {
-    resolve(100)
-  }))
-  s$.subscribe({
-    next: (x: number) => results.push(x),
-    complete: () => {
-      t.deepEqual(results, [100])
-      t.end()
+  const s$ = fromPromise<number>(
+    () =>
+      new Promise(function(resolve) {
+        resolve(100)
+      })
+  )
+  s$.subscribe(
+    {
+      next: (x: number) => results.push(x),
+      complete: () => {
+        t.deepEqual(results, [100])
+        t.end()
+      },
+      error: (err: Error) => {
+        throw err
+      }
     },
-    error: (err: Error) => {
-      throw err
-    }
-  }, createScheduler())
+    createScheduler()
+  )
 })

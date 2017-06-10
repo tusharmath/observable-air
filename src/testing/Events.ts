@@ -9,60 +9,61 @@ export interface IObservableEvent {
 }
 
 export enum EventType {
-  next, error, complete, start, end
+  next,
+  error,
+  complete,
+  start,
+  end
 }
-
 
 export class EventNext<T> implements IObservableEvent {
   type = EventType.next
 
-  constructor (public time: number, public value: T) {}
+  constructor(public time: number, public value: T) {}
 }
 
 export class EventError implements IObservableEvent {
   type = EventType.error
 
-  constructor (public time: number, public value: Error) {}
+  constructor(public time: number, public value: Error) {}
 }
 
 export class EventComplete implements IObservableEvent {
   type = EventType.complete
 
-  constructor (public time: number) {}
+  constructor(public time: number) {}
 }
-
 
 export class EventEnd implements IObservableEvent {
   type = EventType.end
 
-  constructor (public time: number, public subscription: ISubscription) {}
+  constructor(public time: number, public subscription: ISubscription) {}
 }
-
 
 export class EventStart implements IObservableEvent {
   type = EventType.start
 
-  constructor (public time: number, public subscription: ISubscription) {}
+  constructor(public time: number, public subscription: ISubscription) {}
 }
 
 export const EVENT = {
-  next <T> (time: number, value: T): EventNext<T> {
+  next<T>(time: number, value: T): EventNext<T> {
     return new EventNext(time, value)
   },
 
-  error (time: number, value: Error): EventError {
+  error(time: number, value: Error): EventError {
     return new EventError(time, value)
   },
 
-  complete (time: number): EventComplete {
+  complete(time: number): EventComplete {
     return new EventComplete(time)
   },
 
-  start (time: number, subscription: ISubscription): EventComplete {
+  start(time: number, subscription: ISubscription): EventComplete {
     return new EventStart(time, subscription)
   },
 
-  end (time: number, subscription: ISubscription): EventComplete {
+  end(time: number, subscription: ISubscription): EventComplete {
     return new EventEnd(time, subscription)
   }
 }

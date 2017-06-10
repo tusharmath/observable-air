@@ -14,13 +14,18 @@ test(t => {
   const sh = TestScheduler.of()
   const ob0 = new TestObserver(sh)
   const ob1 = new TestObserver(sh)
-  const t$ = multicast(map((x: {(): number}) => x(), sh.Hot([
-    EVENT.next(10, () => ++i),
-    EVENT.next(20, () => ++i),
-    EVENT.next(30, () => ++i),
-    EVENT.next(40, () => ++i),
-    EVENT.next(50, () => ++i)
-  ])))
+  const t$ = multicast(
+    map(
+      (x: {(): number}) => x(),
+      sh.Hot([
+        EVENT.next(10, () => ++i),
+        EVENT.next(20, () => ++i),
+        EVENT.next(30, () => ++i),
+        EVENT.next(40, () => ++i),
+        EVENT.next(50, () => ++i)
+      ])
+    )
+  )
   t$.subscribe(ob0, sh)
   t$.subscribe(ob1, sh)
   sh.advanceBy(50)

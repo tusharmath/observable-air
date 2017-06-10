@@ -26,7 +26,4 @@ bm_fromArray_scan_reduce(suite)
 bm_fromArray_takeN(suite)
 bm_switch(suite)
 bm_tryCatch(suite)
-suite
-  .on('cycle', onCycle)
-  .on('complete', onEnd)
-  .run()
+suite.on('cycle', onCycle).on('complete', onEnd).run()
