@@ -20,8 +20,8 @@
   - [filter](#filter)
   - [flatMap](#flatMap)
   - [join](#join)
-  - [mapTo](#mapTo)
   - [map](#map)
+  - [mapTo](#mapTo)
   - [merge](#merge)
   - [multicast](#multicast)
   - [reduce](#reduce)
@@ -31,6 +31,7 @@
   - [slice](#slice)
   - [switchLatest](#switchLatest)
   - [switchMap](#switchMap)
+  - [takeUntil](#takeUntil)
   - [tap](#tap)
 - [Testing](#testing)
   - [TestScheduler](#TestScheduler)
@@ -537,6 +538,26 @@ It works like [map](#map) but doesn't ignores the return value of the mapping fu
 O.tap(
   console.log, // console.log() returns undefined which is ignored
   O.of(1, 2, 3) // emits 1, 2, 3
+)
+```
+
+## takeUntil
+
+```ts
+function takeUntil(source: Observable, signal: Observable): Observable
+```
+
+Emits values from the `source` observable until a value is emitted on the `signal` observable. 
+
+**Example:**
+
+```ts
+
+// unsubscribes from the `interval` as soon as the first click is triggered.
+
+O.takeUntil(
+    O.interval(1000),
+    O.fromDOM(document.body, 'click')
 )
 ```
 
