@@ -10,10 +10,10 @@ function toArray<T> (q: LinkedList<T>) {
   return arr
 }
 test('constructor()', t => {
-  t.true(LinkedList.of() instanceof LinkedList)
+  t.true(new LinkedList() instanceof LinkedList)
 })
 test('add()', t => {
-  const q = LinkedList.of()
+  const q = new LinkedList()
   q.add('A')
   q.add('B')
   q.add('C')
@@ -25,7 +25,7 @@ test('add()', t => {
 })
 
 test('remove(): Remove First (non-empty)', t => {
-  const q = LinkedList.of()
+  const q = new LinkedList()
   const a = q.add('A')
   q.add('B')
   q.add('C')
@@ -38,7 +38,7 @@ test('remove(): Remove First (non-empty)', t => {
 })
 
 test('remove(): Remove LAST (non-empty)', t => {
-  const q = LinkedList.of()
+  const q = new LinkedList()
   q.add('A')
   q.add('B')
   const c = q.add('C')
@@ -52,7 +52,7 @@ test('remove(): Remove LAST (non-empty)', t => {
 
 
 test('remove(): Remove MIDDLE (non-empty)', t => {
-  const q = LinkedList.of()
+  const q = new LinkedList()
   q.add('A')
   const b = q.add('B')
   q.add('C')
@@ -66,7 +66,7 @@ test('remove(): Remove MIDDLE (non-empty)', t => {
 
 
 test('remove(): Remove LAST', t => {
-  const q = LinkedList.of()
+  const q = new LinkedList()
   const a = q.add('A')
   q.remove(a)
 
@@ -78,7 +78,7 @@ test('remove(): Remove LAST', t => {
 
 test('forEach()', t => {
   const results: number[] = []
-  const q = LinkedList.of<number>()
+  const q = new LinkedList<number>()
   q.add(1)
   q.add(2)
   q.add(3)
@@ -89,7 +89,7 @@ test('forEach()', t => {
 
 
 test('remove(): Remove LAST more than once', t => {
-  const q = LinkedList.of()
+  const q = new LinkedList()
   const a = q.add('A')
   q.remove(a)
   q.remove(a)
