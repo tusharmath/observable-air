@@ -65,6 +65,6 @@ export function switchLatest<T>(source: IObservable<IObservable<T>>): IObservabl
 }
 export const switchMap = curry(<T, K>(fn: (t: K) => IObservable<T>, source: IObservable<K>) => {
   return switchLatest(map(fn, source))
-}) as Function & {<T, K>(mapper: (t: K) => IObservable<T>, source: IObservable<K>): IObservable<T>} & {
-    <T, K>(mapper: (t: K) => IObservable<T>): {(source: IObservable<K>): IObservable<T>}
-  }
+}) as {<T, K>(mapper: (t: K) => IObservable<T>, source: IObservable<K>): IObservable<T>} & {
+  <T, K>(mapper: (t: K) => IObservable<T>): {(source: IObservable<K>): IObservable<T>}
+}

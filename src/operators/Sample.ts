@@ -84,8 +84,8 @@ class SampleObservable<T> implements TResult<T> {
 
 export const sample = curry(function<T>(f: TSelector<T>, sampler: TSampler, sources: TSources) {
   return new SampleObservable(f, sampler, sources)
-}) as Function & {<T>(selector: TSelector<T>, sampler: TSampler, source: TSources): TResult<T>} & {
-    <T>(selector: TSelector<T>): {(sampler: TSampler, source: TSources): TResult<T>}
-  } & {<T>(selector: TSelector<T>, sampler: TSampler): {(source: TSources): TResult<T>}} & {
+}) as {<T>(selector: TSelector<T>, sampler: TSampler, source: TSources): TResult<T>} & {
+  <T>(selector: TSelector<T>): {(sampler: TSampler, source: TSources): TResult<T>}
+} & {<T>(selector: TSelector<T>, sampler: TSampler): {(source: TSources): TResult<T>}} & {
     <T>(selector: TSelector<T>): {(sampler: TSampler): {(source: TSources): TResult<T>}}
   }

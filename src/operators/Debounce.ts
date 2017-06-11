@@ -44,8 +44,8 @@ class Debounce<T> implements IObservable<T> {
   }
 }
 
-export const debounce = curry(
-  <T>(timeout: number, source: IObservable<T>) => new Debounce(timeout, source)
-) as Function & {<T>(timeout: number, source: IObservable<T>): IObservable<T>} & {
-    <T>(timeout: number): {(source: IObservable<T>): IObservable<T>}
-  }
+export const debounce = curry(<T>(timeout: number, source: IObservable<T>) => new Debounce(timeout, source)) as {
+  <T>(timeout: number, source: IObservable<T>): IObservable<T>
+} & {
+  <T>(timeout: number): {(source: IObservable<T>): IObservable<T>}
+}

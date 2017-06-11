@@ -75,6 +75,6 @@ export function join<T>(source: IObservable<IObservable<T>>): IObservable<T> {
 }
 export const flatMap = curry(<T, K>(fn: (t: K) => IObservable<T>, source: IObservable<K>) => {
   return join(map(fn, source))
-}) as Function & {<T, K>(mapper: (t: K) => IObservable<T>, source: IObservable<K>): IObservable<T>} & {
-    <T, K>(mapper: (t: K) => IObservable<T>): {(source: IObservable<K>): IObservable<T>}
-  }
+}) as {<T, K>(mapper: (t: K) => IObservable<T>, source: IObservable<K>): IObservable<T>} & {
+  <T, K>(mapper: (t: K) => IObservable<T>): {(source: IObservable<K>): IObservable<T>}
+}

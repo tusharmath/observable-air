@@ -38,6 +38,6 @@ class FilterObservable<T> implements TResult<T> {
 
 export const filter = curry(function<T>(predicate: TPredicate<T>, source: TSource<T>) {
   return new FilterObservable(predicate, source)
-}) as Function & {<T>(predicate: TPredicate<T>, source: TSource<T>): TResult<T>} & {
-    <T>(predicate: TPredicate<T>): {(source: TSource<T>): TResult<T>}
-  }
+}) as {<T>(predicate: TPredicate<T>, source: TSource<T>): TResult<T>} & {
+  <T>(predicate: TPredicate<T>): {(source: TSource<T>): TResult<T>}
+}

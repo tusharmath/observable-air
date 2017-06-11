@@ -40,8 +40,8 @@ class ReduceObservable<T, R> implements TResult<R> {
 
 export const reduce = curry(function<T, R>(t0: TReducer<T, R>, t1: R, t2: IObservable<T>) {
   return new ReduceObservable(t0, t1, t2)
-}) as Function & {<T, R>(reducer: TReducer<T, R>, seed: TSeed<R>, source: TSource<T>): TResult<R>} & {
-    <T, R>(reducer: TReducer<T, R>): {(seed: TSeed<R>, source: TSource<T>): TResult<R>}
-  } & {<T, R>(reducer: TReducer<T, R>, seed: TSeed<R>): {(source: TSource<T>): TResult<R>}} & {
+}) as {<T, R>(reducer: TReducer<T, R>, seed: TSeed<R>, source: TSource<T>): TResult<R>} & {
+  <T, R>(reducer: TReducer<T, R>): {(seed: TSeed<R>, source: TSource<T>): TResult<R>}
+} & {<T, R>(reducer: TReducer<T, R>, seed: TSeed<R>): {(source: TSource<T>): TResult<R>}} & {
     <T, R>(reducer: TReducer<T, R>): {(seed: TSeed<R>): {(source: TSource<T>): TResult<R>}}
   }

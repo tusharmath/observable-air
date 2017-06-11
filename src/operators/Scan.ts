@@ -39,8 +39,8 @@ class ScanObservable<T, R> implements TResult<R> {
 
 export const scan = curry(function<T, V>(reducer: TReducer<T, V>, value: V, source: IObservable<T>) {
   return new ScanObservable(reducer, value, source)
-}) as Function & {<T, R>(reducer: TReducer<T, R>, seed: TSeed<R>, source: TSource<T>): TResult<R>} & {
-    <T, R>(reducer: TReducer<T, R>): {(seed: TSeed<R>, source: TSource<T>): TResult<R>}
-  } & {<T, R>(reducer: TReducer<T, R>, seed: TSeed<R>): {(source: TSource<T>): TResult<R>}} & {
+}) as {<T, R>(reducer: TReducer<T, R>, seed: TSeed<R>, source: TSource<T>): TResult<R>} & {
+  <T, R>(reducer: TReducer<T, R>): {(seed: TSeed<R>, source: TSource<T>): TResult<R>}
+} & {<T, R>(reducer: TReducer<T, R>, seed: TSeed<R>): {(source: TSource<T>): TResult<R>}} & {
     <T, R>(reducer: TReducer<T, R>): {(seed: TSeed<R>): {(source: TSource<T>): TResult<R>}}
   }

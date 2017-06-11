@@ -60,8 +60,8 @@ class SliceObservable<T> implements IObservable<T> {
 
 export const slice = curry(function(start: number, count: number, source: IObservable<any>) {
   return new SliceObservable(start, count, source)
-}) as Function & {<T>(start: number, count: number, source: IObservable<T>): IObservable<T>} & {
-    <T>(start: number): {(count: number, source: IObservable<T>): IObservable<T>}
-  } & {<T>(start: number, count: number): {(source: IObservable<T>): IObservable<T>}} & {
+}) as {<T>(start: number, count: number, source: IObservable<T>): IObservable<T>} & {
+  <T>(start: number): {(count: number, source: IObservable<T>): IObservable<T>}
+} & {<T>(start: number, count: number): {(source: IObservable<T>): IObservable<T>}} & {
     <T>(start: number): {(count: number): {(source: IObservable<T>): IObservable<T>}}
   }

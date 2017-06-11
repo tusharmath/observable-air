@@ -23,6 +23,6 @@ export const forEach = curry(function<T>(onNext: TOnNext<T>, observable: TSource
     },
     createScheduler()
   )
-}) as Function & {<T>(onNext: TOnNext<T>, source: TSource<T>): TResult} & {
-    <T>(onNext: TOnNext<T>): {(source: TSource<T>): TResult}
-  }
+}) as {<T>(onNext: TOnNext<T>, source: TSource<T>): TResult} & {
+  <T>(onNext: TOnNext<T>): {(source: TSource<T>): TResult}
+}
