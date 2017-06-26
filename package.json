@@ -28,7 +28,7 @@
     "cz-conventional-changelog": "^2.0.0",
     "gh-pages": "^1.0.0",
     "ghooks": "^2.0.0",
-    "nyc": "^10.0.0",
+    "nyc": "^11.0.3",
     "prettify": "^0.1.7",
     "request-promise": "^4.1.1",
     "rollup": "^0.41.2",
