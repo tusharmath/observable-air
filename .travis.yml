@@ -14,6 +14,7 @@ before_install:
 before_script:
   - npm prune
   - npm run benchmark | commentator
+  - npm run js-cpa | commentator
   - npm run coverage
   - npm run lint
 after_success:

@@ -15,7 +15,8 @@
     "test:watch": "ava --watch",
     "build": "rollup -c ./config/rollup.config.js",
     "lint": "git ls-files | grep '.ts$' | xargs tslint",
-    "prettify": "git ls-files | grep '.ts$' | xargs prettier --print-width 120 --write --single-quote --no-semi --no-bracket-spacing"
+    "prettify": "git ls-files | grep '.ts$' | xargs prettier --print-width 120 --write --single-quote --no-semi --no-bracket-spacing",
+    "js-cpa": "echo '```';js-cpa .dist/observable-air.js;echo '```'"
   },
   "author": "",
   "license": "ISC",
@@ -28,6 +29,7 @@
     "cz-conventional-changelog": "^2.0.0",
     "gh-pages": "^1.0.0",
     "ghooks": "^2.0.0",
+    "js-cpa": "^0.0.3",
     "nyc": "^11.0.3",
     "prettify": "^0.1.7",
     "request-promise": "^4.1.1",
