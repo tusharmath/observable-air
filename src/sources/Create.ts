@@ -15,7 +15,8 @@ class CreateObservable<T> implements IObservable<T> {
   }
 }
 
-export const create = <T>(f: ISubscriberFunction<T>): IObservable<T> => new CreateObservable(f)
+export const create = <T>(f: ISubscriberFunction<T>): IObservable<T> =>
+  new CreateObservable(f)
 
 class JustObservable<T> implements IObservable<T> {
   constructor(private val: T) {}

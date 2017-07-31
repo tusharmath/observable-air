@@ -10,10 +10,16 @@ import {CompositeSubscription, ISubscription} from '../lib/Subscription'
 import {curry} from '../lib/Utils'
 import {IOperator} from './Operator'
 
-class DebounceOperator<T> extends CompositeSubscription implements IOperator<T> {
+class DebounceOperator<T> extends CompositeSubscription
+  implements IOperator<T> {
   private node: LinkedListNode<ISubscription>
 
-  constructor(private timeout: number, src: IObservable<T>, private sink: IObserver<T>, private sh: IScheduler) {
+  constructor(
+    private timeout: number,
+    src: IObservable<T>,
+    private sink: IObserver<T>,
+    private sh: IScheduler
+  ) {
     super()
     this.add(src.subscribe(this, sh))
   }
@@ -24,7 +30,9 @@ class DebounceOperator<T> extends CompositeSubscription implements IOperator<T> 
 
   next(val: T): void {
     this.remove(this.node)
-    this.node = this.add(this.sh.delay(this.onEvent.bind(this, val), this.timeout))
+    this.node = this.add(
+      this.sh.delay(this.onEvent.bind(this, val), this.timeout)
+    )
   }
 
   error(err: Error): void {
@@ -40,11 +48,18 @@ class Debounce<T> implements IObservable<T> {
   constructor(private timeout: number, private source: IObservable<T>) {}
 
   subscribe(observer: IObserver<T>, scheduler: IScheduler): ISubscription {
-    return new DebounceOperator(this.timeout, this.source, safeObserver(observer), scheduler)
+    return new DebounceOperator(
+      this.timeout,
+      this.source,
+      safeObserver(observer),
+      scheduler
+    )
   }
 }
 
-export const debounce = curry(<T>(timeout: number, source: IObservable<T>) => new Debounce(timeout, source)) as {
+export const debounce = curry(
+  <T>(timeout: number, source: IObservable<T>) => new Debounce(timeout, source)
+) as {
   <T>(timeout: number, source: IObservable<T>): IObservable<T>
 } & {
   <T>(timeout: number): {(source: IObservable<T>): IObservable<T>}

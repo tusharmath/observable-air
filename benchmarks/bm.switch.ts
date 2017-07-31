@@ -12,7 +12,8 @@ const a = array(1e2)
 export function bm_switch(suite: Suite) {
   return suite.add(
     'array(2) -> array(i) -> switchLatest',
-    (d: IDeferred) => run(switchLatest(map(i => fromArray(array(i)), fromArray(a))), d),
+    (d: IDeferred) =>
+      run(switchLatest(map(i => fromArray(array(i)), fromArray(a))), d),
     {defer: true}
   )
 }

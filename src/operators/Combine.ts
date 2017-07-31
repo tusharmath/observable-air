@@ -31,7 +31,11 @@ class CombineValueObserver<T> implements IObserver<T> {
 class CombinedObserver<T> {
   private collection = container(this.total)
 
-  constructor(private func: TSelector<T>, private total: number, private sink: IObserver<T>) {}
+  constructor(
+    private func: TSelector<T>,
+    private total: number,
+    private sink: IObserver<T>
+  ) {}
 
   onNext(value: T, id: number) {
     this.collection.next(value, id)
@@ -53,20 +57,30 @@ class CombinedObserver<T> {
 }
 
 class CombineObservable<T> implements IObservable<T> {
-  constructor(private selector: TSelector<T>, private sources: Array<IObservable<any>>) {}
+  constructor(
+    private selector: TSelector<T>,
+    private sources: Array<IObservable<any>>
+  ) {}
 
   subscribe(observer: IObserver<T>, scheduler: IScheduler): ISubscription {
     const cSub = new CompositeSubscription()
-    const ob = new CombinedObserver(this.selector, this.sources.length, observer)
+    const ob = new CombinedObserver(
+      this.selector,
+      this.sources.length,
+      observer
+    )
     for (var i = 0; i < this.sources.length; ++i) {
-      cSub.add(this.sources[i].subscribe(new CombineValueObserver(i, ob), scheduler))
+      cSub.add(
+        this.sources[i].subscribe(new CombineValueObserver(i, ob), scheduler)
+      )
     }
     return cSub
   }
 }
 
 export const combine = curry(
-  <T>(selector: TSelector<T>, sources: IObservable<any>[]) => new CombineObservable(selector, sources)
+  <T>(selector: TSelector<T>, sources: IObservable<any>[]) =>
+    new CombineObservable(selector, sources)
 ) as {<T, R>(selector: TSelector<T>, sources: TSource): TResult<R>} & {
   <T, R>(selector: TSelector<T>): {(sources: TSource): TResult<R>}
 }

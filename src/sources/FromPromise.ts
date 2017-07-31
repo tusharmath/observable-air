@@ -15,8 +15,13 @@ export function onError<T>(observer: IObserver<T>, error: Error) {
   observer.complete()
 }
 
-export function subscriberFunction<T>(f: () => Promise<T>, observer: IObserver<T>) {
-  f().then(result => onResult(observer, result)).catch(err => onError(observer, err))
+export function subscriberFunction<T>(
+  f: () => Promise<T>,
+  observer: IObserver<T>
+) {
+  f()
+    .then(result => onResult(observer, result))
+    .catch(err => onError(observer, err))
 }
 
 export function fromPromise<T>(f: () => Promise<T>): IObservable<T> {

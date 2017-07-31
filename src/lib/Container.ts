@@ -57,4 +57,5 @@ class ValueContainer implements IContainer {
   }
 }
 
-export const container = (count: number) => new ValueContainer(count) as IContainer
+export const container = (count: number) =>
+  new ValueContainer(count) as IContainer

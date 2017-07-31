@@ -11,7 +11,11 @@ class TimerSubscription implements ISubscription {
   closed = false
   subscription: ISubscription
 
-  constructor(private sink: IObserver<void>, scheduler: IScheduler, interval: number) {
+  constructor(
+    private sink: IObserver<void>,
+    scheduler: IScheduler,
+    interval: number
+  ) {
     this.subscription = scheduler.periodic(this.onFrame.bind(this), interval)
   }
 
@@ -29,7 +33,11 @@ class IntervalObservable implements IObservable<void> {
   constructor(private interval: number) {}
 
   subscribe(observer: IObserver<void>, scheduler: IScheduler): ISubscription {
-    return new TimerSubscription(safeObserver(observer), scheduler, this.interval)
+    return new TimerSubscription(
+      safeObserver(observer),
+      scheduler,
+      this.interval
+    )
   }
 }
 

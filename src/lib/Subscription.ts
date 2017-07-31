@@ -11,7 +11,10 @@ export interface ISubscription {
 }
 
 export function isSubscription(subscription: ISubscription) {
-  return subscription instanceof BaseSubscription || (subscription && typeof subscription.unsubscribe === 'function')
+  return (
+    subscription instanceof BaseSubscription ||
+    (subscription && typeof subscription.unsubscribe === 'function')
+  )
 }
 
 export class BaseSubscription implements ISubscription {
@@ -23,9 +26,11 @@ export class BaseSubscription implements ISubscription {
   }
 
   static from(subscription: ISubscription | {(): void} | void): ISubscription {
-    if (isSubscription(subscription as ISubscription)) return subscription as ISubscription
+    if (isSubscription(subscription as ISubscription))
+      return subscription as ISubscription
 
-    if (typeof subscription === 'function') return new BaseSubscription(subscription as {(): void})
+    if (typeof subscription === 'function')
+      return new BaseSubscription(subscription as {(): void})
 
     return new BaseSubscription(() => undefined)
   }

@@ -32,7 +32,11 @@ class SampleObserver<T> implements IObserver<T> {
   private container = container(this.total)
   private completed = false
 
-  constructor(private total: number, private sink: IObserver<T>, private func: TSelector<T>) {}
+  constructor(
+    private total: number,
+    private sink: IObserver<T>,
+    private func: TSelector<T>
+  ) {}
 
   onNext(value: T, id: number) {
     this.container.next(value, id)
@@ -68,11 +72,19 @@ class SampleObserver<T> implements IObserver<T> {
 }
 
 class SampleObservable<T> implements TResult<T> {
-  constructor(private func: TSelector<T>, private sampler: TSampler, private sources: TSources) {}
+  constructor(
+    private func: TSelector<T>,
+    private sampler: TSampler,
+    private sources: TSources
+  ) {}
 
   subscribe(observer: IObserver<T>, scheduler: IScheduler): ISubscription {
     const cSub = new CompositeSubscription()
-    const sampleObserver = new SampleObserver(this.sources.length, observer, this.func)
+    const sampleObserver = new SampleObserver(
+      this.sources.length,
+      observer,
+      this.func
+    )
     for (var i = 0; i < this.sources.length; ++i) {
       const sampleValueObserver = new SampleValueObserver(i, sampleObserver)
       cSub.add(this.sources[i].subscribe(sampleValueObserver, scheduler))
@@ -82,10 +94,24 @@ class SampleObservable<T> implements TResult<T> {
   }
 }
 
-export const sample = curry(function<T>(f: TSelector<T>, sampler: TSampler, sources: TSources) {
+export const sample = curry(function<T>(
+  f: TSelector<T>,
+  sampler: TSampler,
+  sources: TSources
+) {
   return new SampleObservable(f, sampler, sources)
-}) as {<T>(selector: TSelector<T>, sampler: TSampler, source: TSources): TResult<T>} & {
-  <T>(selector: TSelector<T>): {(sampler: TSampler, source: TSources): TResult<T>}
-} & {<T>(selector: TSelector<T>, sampler: TSampler): {(source: TSources): TResult<T>}} & {
-    <T>(selector: TSelector<T>): {(sampler: TSampler): {(source: TSources): TResult<T>}}
+}) as {
+  <T>(selector: TSelector<T>, sampler: TSampler, source: TSources): TResult<T>;
+} & {
+  <T>(selector: TSelector<T>): {
+    (sampler: TSampler, source: TSources): TResult<T>;
+  }
+} & {
+    <T>(selector: TSelector<T>, sampler: TSampler): {
+      (source: TSources): TResult<T>;
+    };
+  } & {
+    <T>(selector: TSelector<T>): {
+      (sampler: TSampler): {(source: TSources): TResult<T>};
+    }
   }

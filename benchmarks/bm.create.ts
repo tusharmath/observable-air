@@ -14,5 +14,7 @@ function subscriber(observer: IObserver<number>) {
 }
 
 export function bm_create(suite: Suite) {
-  return suite.add('create', (d: IDeferred) => run(create(subscriber), d), {defer: true})
+  return suite.add('create', (d: IDeferred) => run(create(subscriber), d), {
+    defer: true
+  })
 }

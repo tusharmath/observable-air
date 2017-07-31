@@ -32,17 +32,26 @@ class MapObservable<T, R> implements TResult<R> {
   constructor(private mapper: TMapper<T, R>, private source: TSource<T>) {}
 
   subscribe(observer: IObserver<R>, scheduler: IScheduler): ISubscription {
-    return this.source.subscribe(new MapObserver(this.mapper, observer), scheduler)
+    return this.source.subscribe(
+      new MapObserver(this.mapper, observer),
+      scheduler
+    )
   }
 }
 
-export const map = curry(function<T, R>(mapFunction: (a: T) => R, source: IObservable<T>) {
+export const map = curry(function<T, R>(
+  mapFunction: (a: T) => R,
+  source: IObservable<T>
+) {
   return new MapObservable(mapFunction, source)
 }) as {<T, R>(mapper: TMapper<T, R>, source: TSource<T>): TResult<R>} & {
   <T, R>(mapper: TMapper<T, R>): {(source: TSource<T>): TResult<R>}
 }
 
-export const tap = curry(function<T>(mapFunction: (a: T) => void, source: IObservable<T>) {
+export const tap = curry(function<T>(
+  mapFunction: (a: T) => void,
+  source: IObservable<T>
+) {
   return new MapObservable((a: T) => {
     mapFunction(a)
     return a
@@ -51,7 +60,10 @@ export const tap = curry(function<T>(mapFunction: (a: T) => void, source: IObser
   <T>(mapper: TMapper<T, void>): {(source: TSource<T>): TResult<void>}
 }
 
-export const mapTo = curry(function<T extends Function>(mapFunction: T, source: IObservable<T>) {
+export const mapTo = curry(function<T extends Function>(
+  mapFunction: T,
+  source: IObservable<T>
+) {
   return new MapObservable(() => mapFunction, source)
 }) as {<T>(value: T, source: IObservable<any>): IObservable<T>} & {
   <T>(value: T): {(source: IObservable<any>): IObservable<T>}

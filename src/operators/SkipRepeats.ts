@@ -15,7 +15,10 @@ class SkipRepeatsObserver<T> implements IObserver<T> {
   private previous: T | void = undefined
   private init = true
 
-  constructor(private cmp: {(a: T, b: T): boolean}, private sink: IObserver<T>) {}
+  constructor(
+    private cmp: {(a: T, b: T): boolean},
+    private sink: IObserver<T>
+  ) {}
 
   next(val: T) {
     if (this.init) {
@@ -41,11 +44,17 @@ class SkipRepeatsObservable<T> implements TResult<T> {
   constructor(private cmp: TComparator<T>, private source: TSource<T>) {}
 
   subscribe(observer: IObserver<T>, scheduler: IScheduler): ISubscription {
-    return this.source.subscribe(new SkipRepeatsObserver(this.cmp, observer), scheduler)
+    return this.source.subscribe(
+      new SkipRepeatsObserver(this.cmp, observer),
+      scheduler
+    )
   }
 }
 
-export const skipRepeats = curry(function(hashFunction: TComparator<any>, source: IObservable<any>) {
+export const skipRepeats = curry(function(
+  hashFunction: TComparator<any>,
+  source: IObservable<any>
+) {
   return new SkipRepeatsObservable(hashFunction, source)
 }) as {<T>(cmp: TComparator<T>, source: TSource<T>): TResult<T>} & {
   <T>(cmp: TComparator<T>): {(source: TSource<T>): TResult<T>}

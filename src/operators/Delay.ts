@@ -30,7 +30,9 @@ class DelayObserver<T> implements IObserver<T> {
   }
 
   complete(): void {
-    this.cSub.add(this.scheduler.delay(this.sink.complete.bind(this.sink), this.timeout))
+    this.cSub.add(
+      this.scheduler.delay(this.sink.complete.bind(this.sink), this.timeout)
+    )
   }
 }
 
@@ -39,14 +41,20 @@ class DelayObservable<T> implements IObservable<T> {
 
   subscribe(observer: IObserver<T>, scheduler: IScheduler): ISubscription {
     const cSub = new CompositeSubscription()
-    const delayObserver = new DelayObserver(this.timeout, safeObserver(observer), scheduler, cSub)
+    const delayObserver = new DelayObserver(
+      this.timeout,
+      safeObserver(observer),
+      scheduler,
+      cSub
+    )
     cSub.add(this.source.subscribe(delayObserver, scheduler))
     return cSub
   }
 }
 
 export const delay = curry(
-  <T>(timeout: number, source: IObservable<T>): IObservable<T> => new DelayObservable(timeout, source)
+  <T>(timeout: number, source: IObservable<T>): IObservable<T> =>
+    new DelayObservable(timeout, source)
 ) as {<T>(timeout: number, source: IObservable<T>): IObservable<T>} & {
   <T>(timeout: number): {(source: IObservable<T>): IObservable<T>}
 }

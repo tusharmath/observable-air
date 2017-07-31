@@ -14,7 +14,11 @@ export type TSource<T> = IObservable<T>
 export type TResult<R> = IObservable<R>
 
 class ReduceObserver<T, R> implements IObserver<T> {
-  constructor(private reducer: TReducer<T, R>, private value: TSeed<R>, private sink: IObserver<R>) {}
+  constructor(
+    private reducer: TReducer<T, R>,
+    private value: TSeed<R>,
+    private sink: IObserver<R>
+  ) {}
 
   next(val: T): void {
     this.value = this.reducer(this.value, val)
@@ -31,17 +35,40 @@ class ReduceObserver<T, R> implements IObserver<T> {
 }
 
 class ReduceObservable<T, R> implements TResult<R> {
-  constructor(private reducer: TReducer<T, R>, private seed: TSeed<R>, private source: TSource<T>) {}
+  constructor(
+    private reducer: TReducer<T, R>,
+    private seed: TSeed<R>,
+    private source: TSource<T>
+  ) {}
 
   subscribe(obr: IObserver<R>, scheduler: IScheduler): ISubscription {
-    return this.source.subscribe(new ReduceObserver<T, R>(this.reducer, this.seed, obr), scheduler)
+    return this.source.subscribe(
+      new ReduceObserver<T, R>(this.reducer, this.seed, obr),
+      scheduler
+    )
   }
 }
 
-export const reduce = curry(function<T, R>(t0: TReducer<T, R>, t1: R, t2: IObservable<T>) {
+export const reduce = curry(function<T, R>(
+  t0: TReducer<T, R>,
+  t1: R,
+  t2: IObservable<T>
+) {
   return new ReduceObservable(t0, t1, t2)
-}) as {<T, R>(reducer: TReducer<T, R>, seed: TSeed<R>, source: TSource<T>): TResult<R>} & {
-  <T, R>(reducer: TReducer<T, R>): {(seed: TSeed<R>, source: TSource<T>): TResult<R>}
-} & {<T, R>(reducer: TReducer<T, R>, seed: TSeed<R>): {(source: TSource<T>): TResult<R>}} & {
-    <T, R>(reducer: TReducer<T, R>): {(seed: TSeed<R>): {(source: TSource<T>): TResult<R>}}
+}) as {
+  <T, R>(reducer: TReducer<T, R>, seed: TSeed<R>, source: TSource<T>): TResult<
+    R
+  >;
+} & {
+  <T, R>(reducer: TReducer<T, R>): {
+    (seed: TSeed<R>, source: TSource<T>): TResult<R>;
+  }
+} & {
+    <T, R>(reducer: TReducer<T, R>, seed: TSeed<R>): {
+      (source: TSource<T>): TResult<R>;
+    };
+  } & {
+    <T, R>(reducer: TReducer<T, R>): {
+      (seed: TSeed<R>): {(source: TSource<T>): TResult<R>};
+    }
   }

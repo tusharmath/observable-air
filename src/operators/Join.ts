@@ -28,7 +28,11 @@ class JoinObserver<T> implements IObserver<IObservable<T>> {
   private count: number
   private sourceCompleted: boolean
 
-  constructor(private sink: IObserver<T>, private scheduler: IScheduler, private subscriptions: CompositeSubscription) {
+  constructor(
+    private sink: IObserver<T>,
+    private scheduler: IScheduler,
+    private subscriptions: CompositeSubscription
+  ) {
     this.sourceCompleted = false
     this.count = 0
   }
@@ -65,7 +69,12 @@ class JoinObservable<T> implements IObservable<T> {
 
   subscribe(observer: IObserver<T>, scheduler: IScheduler): ISubscription {
     const subscription = new CompositeSubscription()
-    subscription.add(this.source.subscribe(new JoinObserver(observer, scheduler, subscription), scheduler))
+    subscription.add(
+      this.source.subscribe(
+        new JoinObserver(observer, scheduler, subscription),
+        scheduler
+      )
+    )
     return subscription
   }
 }
@@ -73,8 +82,17 @@ class JoinObservable<T> implements IObservable<T> {
 export function join<T>(source: IObservable<IObservable<T>>): IObservable<T> {
   return new JoinObservable(source)
 }
-export const flatMap = curry(<T, K>(fn: (t: K) => IObservable<T>, source: IObservable<K>) => {
+export const flatMap = curry(<
+  T,
+  K
+>(fn: (t: K) => IObservable<T>, source: IObservable<K>) => {
   return join(map(fn, source))
-}) as {<T, K>(mapper: (t: K) => IObservable<T>, source: IObservable<K>): IObservable<T>} & {
-  <T, K>(mapper: (t: K) => IObservable<T>): {(source: IObservable<K>): IObservable<T>}
+}) as {
+  <T, K>(mapper: (t: K) => IObservable<T>, source: IObservable<K>): IObservable<
+    T
+  >;
+} & {
+  <T, K>(mapper: (t: K) => IObservable<T>): {
+    (source: IObservable<K>): IObservable<T>;
+  }
 }

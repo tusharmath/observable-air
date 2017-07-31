@@ -13,7 +13,11 @@ class SliceObserver<T> implements IObserver<T> {
   private index: number
   private subscription: ISubscription
 
-  constructor(private from: number, private total: number, private sink: IObserver<T>) {
+  constructor(
+    private from: number,
+    private total: number,
+    private sink: IObserver<T>
+  ) {
     this.closed = false
     this.index = 0
   }
@@ -48,7 +52,11 @@ class SliceObserver<T> implements IObserver<T> {
 }
 
 class SliceObservable<T> implements IObservable<T> {
-  constructor(private start: number, private total: number, private source: IObservable<T>) {}
+  constructor(
+    private start: number,
+    private total: number,
+    private source: IObservable<T>
+  ) {}
 
   subscribe(observer: IObserver<T>, scheduler: IScheduler): ISubscription {
     const sliceObserver = new SliceObserver(this.start, this.total, observer)
@@ -58,10 +66,22 @@ class SliceObservable<T> implements IObservable<T> {
   }
 }
 
-export const slice = curry(function(start: number, count: number, source: IObservable<any>) {
+export const slice = curry(function(
+  start: number,
+  count: number,
+  source: IObservable<any>
+) {
   return new SliceObservable(start, count, source)
-}) as {<T>(start: number, count: number, source: IObservable<T>): IObservable<T>} & {
+}) as {
+  <T>(start: number, count: number, source: IObservable<T>): IObservable<T>;
+} & {
   <T>(start: number): {(count: number, source: IObservable<T>): IObservable<T>}
-} & {<T>(start: number, count: number): {(source: IObservable<T>): IObservable<T>}} & {
-    <T>(start: number): {(count: number): {(source: IObservable<T>): IObservable<T>}}
+} & {
+    <T>(start: number, count: number): {
+      (source: IObservable<T>): IObservable<T>;
+    };
+  } & {
+    <T>(start: number): {
+      (count: number): {(source: IObservable<T>): IObservable<T>};
+    }
   }

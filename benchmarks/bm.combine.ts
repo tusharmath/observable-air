@@ -16,7 +16,15 @@ const sum2 = (a: number, b: number) => a + b
 export function bm_fromArray_combine(suite: Suite) {
   return suite.add(
     'file -> combine(sum3, [a, b, c]) -> reduce(sum2, 0)',
-    (d: IDeferred) => run(reduce(sum2, 0, combine(sum3, [fromArray(a), fromArray(b), fromArray(c)])), d),
+    (d: IDeferred) =>
+      run(
+        reduce(
+          sum2,
+          0,
+          combine(sum3, [fromArray(a), fromArray(b), fromArray(c)])
+        ),
+        d
+      ),
     {defer: true}
   )
 }

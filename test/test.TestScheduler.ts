@@ -22,8 +22,18 @@ test(t => {
 test(t => {
   const sh = TestScheduler.of()
   const {results} = sh.start(() =>
-    sh.Hot([EVENT.next(210, '0'), EVENT.next(220, '1'), EVENT.next(230, '2'), EVENT.complete(240)])
+    sh.Hot([
+      EVENT.next(210, '0'),
+      EVENT.next(220, '1'),
+      EVENT.next(230, '2'),
+      EVENT.complete(240)
+    ])
   )
 
-  t.deepEqual(results, [EVENT.next(210, '0'), EVENT.next(220, '1'), EVENT.next(230, '2'), EVENT.complete(240)])
+  t.deepEqual(results, [
+    EVENT.next(210, '0'),
+    EVENT.next(220, '1'),
+    EVENT.next(230, '2'),
+    EVENT.complete(240)
+  ])
 })

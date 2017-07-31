@@ -37,7 +37,8 @@ class Guarded<T> implements ISafeValue<T> {
   }
 }
 
-class BaseSafeFunction<T extends Function, V, C> implements ISafeFunction<V, C> {
+class BaseSafeFunction<T extends Function, V, C>
+  implements ISafeFunction<V, C> {
   constructor(private f: T) {}
 
   call(ctx: C, ...t: any[]): ISafeValue<V> {

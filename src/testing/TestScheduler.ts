@@ -21,7 +21,10 @@ class TaskSchedule {
 class TaskSubscription implements ISubscription {
   closed: boolean
 
-  constructor(private queue: LinkedList<TaskSchedule>, private taskNode: LinkedListNode<TaskSchedule>) {}
+  constructor(
+    private queue: LinkedList<TaskSchedule>,
+    private taskNode: LinkedListNode<TaskSchedule>
+  ) {}
 
   unsubscribe(): void {
     this.queue.remove(this.taskNode)
@@ -59,8 +62,15 @@ export class TestScheduler implements IScheduler {
     return this.clock
   }
 
-  delay(task: () => void, time: number, now: number = this.now()): ISubscription {
-    return new TaskSubscription(this.queue, this.queue.add(new TaskSchedule(task, time + now)))
+  delay(
+    task: () => void,
+    time: number,
+    now: number = this.now()
+  ): ISubscription {
+    return new TaskSubscription(
+      this.queue,
+      this.queue.add(new TaskSchedule(task, time + now))
+    )
   }
 
   frame(task: () => void): ISubscription {
@@ -97,7 +107,11 @@ export class TestScheduler implements IScheduler {
     let subscription: ISubscription
     const observer = this.Observer()
     this.delay(() => (subscription = f().subscribe(observer, this)), start, 0)
-    this.delay(() => !subscription.closed && subscription.unsubscribe(), stop, 0)
+    this.delay(
+      () => !subscription.closed && subscription.unsubscribe(),
+      stop,
+      0
+    )
     return observer
   }
 

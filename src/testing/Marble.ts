@@ -7,7 +7,11 @@ import {DEFAULT_OPTIONS} from './TestOptions'
 export const SIZE = DEFAULT_OPTIONS.marbleSize
 export const START = DEFAULT_OPTIONS.subscriptionStart
 
-export function marble(message: String, start = START, size = SIZE): Array<IObservableEvent> {
+export function marble(
+  message: String,
+  start = START,
+  size = SIZE
+): Array<IObservableEvent> {
   const events: Array<IObservableEvent> = []
   let time = start
   for (let i = 0; i < message.length; ++i) {
@@ -29,11 +33,16 @@ export function marble(message: String, start = START, size = SIZE): Array<IObse
   return events
 }
 
-export function toMarble<T>(events: Array<IObservableEvent>, start = START, size = SIZE) {
+export function toMarble<T>(
+  events: Array<IObservableEvent>,
+  start = START,
+  size = SIZE
+) {
   let time = start - size
   let message = ''
   events.forEach(ev => {
-    if (ev.time % size !== 0) throw TypeError(`the time (${ev.time}) not a multiple of frame ${size}`)
+    if (ev.time % size !== 0)
+      throw TypeError(`the time (${ev.time}) not a multiple of frame ${size}`)
     let count = (ev.time - time) / size
     time = ev.time
     while (count-- > 1) message += '-'

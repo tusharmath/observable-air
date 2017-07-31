@@ -15,7 +15,7 @@
     "test:watch": "ava --watch",
     "build": "rollup -c ./config/rollup.config.js",
     "lint": "git ls-files | grep '.ts$' | xargs tslint",
-    "prettify": "git ls-files | grep '.ts$' | xargs prettier --print-width 120 --write --single-quote --no-semi --no-bracket-spacing"
+    "prettier": "git ls-files | grep '.ts$' | xargs prettier --print-width 80 --write --single-quote --no-semi --no-bracket-spacing"
   },
   "author": "",
   "license": "ISC",

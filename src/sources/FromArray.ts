@@ -11,7 +11,11 @@ class FromArraySubscription<T> implements ISubscription {
   private subscription: ISubscription
   closed = false
 
-  constructor(private array: Array<T>, private sink: IObserver<T>, scheduler: IScheduler) {
+  constructor(
+    private array: Array<T>,
+    private sink: IObserver<T>,
+    scheduler: IScheduler
+  ) {
     this.subscription = scheduler.asap(this.executeSafely.bind(this))
   }
 

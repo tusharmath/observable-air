@@ -24,7 +24,8 @@ class SwitchValueObserver<T> implements IObserver<T> {
   complete(): void {}
 }
 
-class SwitchOperator<T> extends CompositeSubscription implements IOperator<IObservable<T>> {
+class SwitchOperator<T> extends CompositeSubscription
+  implements IOperator<IObservable<T>> {
   private sink = new SwitchValueObserver(this.mainSink)
   private srcSub: LinkedListNode<ISubscription>
 
@@ -60,11 +61,22 @@ class SwitchLatest<T> implements IObservable<T> {
   }
 }
 
-export function switchLatest<T>(source: IObservable<IObservable<T>>): IObservable<T> {
+export function switchLatest<T>(
+  source: IObservable<IObservable<T>>
+): IObservable<T> {
   return new SwitchLatest(source)
 }
-export const switchMap = curry(<T, K>(fn: (t: K) => IObservable<T>, source: IObservable<K>) => {
+export const switchMap = curry(<
+  T,
+  K
+>(fn: (t: K) => IObservable<T>, source: IObservable<K>) => {
   return switchLatest(map(fn, source))
-}) as {<T, K>(mapper: (t: K) => IObservable<T>, source: IObservable<K>): IObservable<T>} & {
-  <T, K>(mapper: (t: K) => IObservable<T>): {(source: IObservable<K>): IObservable<T>}
+}) as {
+  <T, K>(mapper: (t: K) => IObservable<T>, source: IObservable<K>): IObservable<
+    T
+  >;
+} & {
+  <T, K>(mapper: (t: K) => IObservable<T>): {
+    (source: IObservable<K>): IObservable<T>;
+  }
 }

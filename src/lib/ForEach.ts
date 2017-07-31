@@ -10,7 +10,10 @@ export type TOnNext<T> = {(value: T): void}
 export type TSource<T> = IObservable<T>
 export type TResult = ISubscription
 
-export const forEach = curry(function<T>(onNext: TOnNext<T>, observable: TSource<T>) {
+export const forEach = curry(function<T>(
+  onNext: TOnNext<T>,
+  observable: TSource<T>
+) {
   return observable.subscribe(
     {
       next(value: T) {

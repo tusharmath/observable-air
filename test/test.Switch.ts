@@ -16,9 +16,17 @@ test(t => {
     EVENT.complete(250)
   ])
 
-  const b$$ = sh.Hot([EVENT.next(230, 'B0'), EVENT.next(240, 'B1'), EVENT.complete(250)])
+  const b$$ = sh.Hot([
+    EVENT.next(230, 'B0'),
+    EVENT.next(240, 'B1'),
+    EVENT.complete(250)
+  ])
 
-  const source$ = sh.Hot([EVENT.next(205, a$$), EVENT.next(225, b$$), EVENT.complete(300)])
+  const source$ = sh.Hot([
+    EVENT.next(205, a$$),
+    EVENT.next(225, b$$),
+    EVENT.complete(300)
+  ])
   const {results} = sh.start(() => switchLatest(source$))
   t.deepEqual(results, [
     EVENT.next(210, 'A0'),
