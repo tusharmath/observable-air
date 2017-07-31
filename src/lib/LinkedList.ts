@@ -2,12 +2,11 @@
  * Created by tushar.mathur on 09/10/16.
  */
 
-
 export class LinkedListNode<T> {
   public left: LinkedListNode<T> | undefined
   public right: LinkedListNode<T> | undefined
 
-  constructor (public value: T) {
+  constructor(public value: T) {
     this.right = undefined
     this.left = undefined
   }
@@ -19,16 +18,15 @@ export class LinkedList<T> {
   private __tail: LinkedListNode<T> | undefined = undefined
   private __head: LinkedListNode<T> | undefined = undefined
 
-  tail () {
+  tail() {
     return this.__tail
   }
 
-  head () {
+  head() {
     return this.__head
   }
 
-
-  add (val: T) {
+  add(val: T) {
     const node = new LinkedListNode(val)
     if (this.length === 0) this.__head = node
     if (!this.__tail) {
@@ -42,7 +40,7 @@ export class LinkedList<T> {
     return node
   }
 
-  forEach (f: ((value: LinkedListNode<T>) => void), ctx?: any) {
+  forEach(f: ((value: LinkedListNode<T>) => void), ctx?: any) {
     var node = this.__head
     while (node) {
       f.call(ctx, node)
@@ -50,16 +48,14 @@ export class LinkedList<T> {
     }
   }
 
-  remove (n: LinkedListNode<T>) {
+  remove(n: LinkedListNode<T>) {
     if (n.left && n.right) {
       n.left.right = n.right
       n.right.left = n.left
-    }
-    else if (n.left) {
+    } else if (n.left) {
       this.__tail = n.left
       n.left.right = undefined
-    }
-    else if (n.right) {
+    } else if (n.right) {
       this.__head = n.right
       n.right.left = undefined
     } else {

@@ -8,18 +8,16 @@ import {ISubscription} from '../lib/Subscription'
 import {EVENT, IObservableEvent} from './Events'
 import {toMarble} from './Marble'
 
-
 export class TestObservable<T> implements IObservable<T> {
   public readonly subscriptions: Array<IObservableEvent> = []
 
-  constructor (private func: (observer: IObserver<T>) => ISubscription) {
-  }
+  constructor(private func: (observer: IObserver<T>) => ISubscription) {}
 
-  get marble () {
+  get marble() {
     return toMarble(this.subscriptions)
   }
 
-  subscribe (observer: IObserver<T>, scheduler: IScheduler): ISubscription {
+  subscribe(observer: IObserver<T>, scheduler: IScheduler): ISubscription {
     const subscription = this.func(observer)
     const connections = this.subscriptions
     connections.push(EVENT.start(scheduler.now(), subscription))
@@ -28,7 +26,7 @@ export class TestObservable<T> implements IObservable<T> {
         subscription.unsubscribe()
         connections.push(EVENT.end(scheduler.now(), subscription))
       },
-      get closed () {
+      get closed() {
         return subscription.closed
       }
     }

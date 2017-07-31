@@ -5,31 +5,31 @@ import {LinkedList, LinkedListNode} from './LinkedList'
 
 export interface IObserver<T> {
   // Receives the next value in the sequence
-  next (val: T): void
+  next(val: T): void
 
   // Receives the sequence error
-  error  (err: Error): void
+  error(err: Error): void
 
   // Receives the sequence completion value
-  complete  (): void
+  complete(): void
 }
 
 export class CompositeObserver<T> implements IObserver<T> {
   private observers = new LinkedList<IObserver<T>>()
 
-  get length () {
+  get length() {
     return this.observers.length
   }
 
-  add (observer: IObserver<T>) {
+  add(observer: IObserver<T>) {
     return this.observers.add(observer)
   }
 
-  remove (node: LinkedListNode<IObserver<T>>) {
+  remove(node: LinkedListNode<IObserver<T>>) {
     return this.observers.remove(node)
   }
 
-  next (val: T): void {
+  next(val: T): void {
     var node = this.observers.head()
     while (node) {
       node.value.next(val)
@@ -37,7 +37,7 @@ export class CompositeObserver<T> implements IObserver<T> {
     }
   }
 
-  error (err: Error): void {
+  error(err: Error): void {
     var node = this.observers.head()
     while (node) {
       node.value.error(err)
@@ -45,7 +45,7 @@ export class CompositeObserver<T> implements IObserver<T> {
     }
   }
 
-  complete (): void {
+  complete(): void {
     var node = this.observers.head()
     while (node) {
       node.value.complete()

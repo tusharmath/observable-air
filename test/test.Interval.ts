@@ -2,7 +2,7 @@
  * Created by tushar.mathur on 27/09/16.
  */
 
-'use strict'
+;('use strict')
 
 import test from 'ava'
 import {scan} from '../src/operators/Scan'
@@ -24,8 +24,6 @@ test('ERROR!', t => {
   const observer = sh.Observer<void>()
   thrower(interval(100)).subscribe(observer, sh)
   sh.advanceBy(100)
-  t.deepEqual(observer.results, [
-    error(100, Error(ERROR_MESSAGE))
-  ])
+  t.deepEqual(observer.results, [error(100, Error(ERROR_MESSAGE))])
   t.is((observer.results[0] as EventError).value.message, ERROR_MESSAGE)
 })

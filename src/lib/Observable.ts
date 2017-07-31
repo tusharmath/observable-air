@@ -9,4 +9,3 @@ import {ISubscription} from './Subscription'
 export interface IObservable<T> {
   subscribe(observer: IObserver<T>, scheduler: IScheduler): ISubscription
 }
-

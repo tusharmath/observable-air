@@ -12,11 +12,11 @@ class RAFSubscription implements ISubscription {
   subscription: ISubscription
   closed = false
 
-  constructor (private sink: IObserver<void>, private scheduler: IScheduler) {
+  constructor(private sink: IObserver<void>, private scheduler: IScheduler) {
     this.schedule()
   }
 
-  private schedule () {
+  private schedule() {
     this.subscription = this.scheduler.frame(this.onFrame)
   }
 
@@ -26,16 +26,16 @@ class RAFSubscription implements ISubscription {
     this.schedule()
   }
 
-  unsubscribe (): void {
+  unsubscribe(): void {
     this.closed = true
   }
 }
 
 class FrameObservable implements IObservable<void> {
-  subscribe (observer: IObserver<void>, scheduler: IScheduler): ISubscription {
+  subscribe(observer: IObserver<void>, scheduler: IScheduler): ISubscription {
     return new RAFSubscription(safeObserver(observer), scheduler)
   }
 }
-export function frames (): IObservable<void> {
+export function frames(): IObservable<void> {
   return new FrameObservable()
 }

@@ -11,15 +11,12 @@ import {array, IDeferred, run} from './lib'
 
 const a = array(1e4)
 
-export function bm_takeUntil (suite: Suite) {
+export function bm_takeUntil(suite: Suite) {
   return suite.add(
     'array -> multicast -> takeUntil',
     (d: IDeferred) => {
       const src = multicast(fromArray(a))
-      return run(takeUntil(
-        src,
-        slice(5000, Infinity, src)
-      ), d)
+      return run(takeUntil(src, slice(5000, Infinity, src)), d)
     },
     {defer: true}
   )

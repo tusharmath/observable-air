@@ -11,14 +11,11 @@ test(t => {
   const SH = TestScheduler.of()
 
   const {results} = SH.start(() => {
-    return combine(
-      (a, b, c) => a + b + c,
-      [
-        SH.Hot(marble('a-b-c-d|')),
-        SH.Hot(marble('-p-q-r-s|')),
-        SH.Hot(marble('---x-y-z--|'))
-      ]
-    )
+    return combine((a, b, c) => a + b + c, [
+      SH.Hot(marble('a-b-c-d|')),
+      SH.Hot(marble('-p-q-r-s|')),
+      SH.Hot(marble('---x-y-z--|'))
+    ])
   })
   t.deepEqual(results, [
     EVENT.next(230, 'bqx'),

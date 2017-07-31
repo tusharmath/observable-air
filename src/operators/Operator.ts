@@ -4,5 +4,4 @@
 import {IObserver} from '../lib/Observer'
 import {ISubscription} from '../lib/Subscription'
 
-export interface IOperator<T> extends ISubscription, IObserver<T> {
-}
+export interface IOperator<T> extends ISubscription, IObserver<T> {}

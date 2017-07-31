@@ -11,17 +11,16 @@ class FromArraySubscription<T> implements ISubscription {
   private subscription: ISubscription
   closed = false
 
-  constructor (private array: Array<T>, private sink: IObserver<T>, scheduler: IScheduler) {
+  constructor(private array: Array<T>, private sink: IObserver<T>, scheduler: IScheduler) {
     this.subscription = scheduler.asap(this.executeSafely.bind(this))
   }
 
-
-  private executeSafely () {
+  private executeSafely() {
     const r = tryCatch(this.execute).call(this)
     if (r.isError()) this.sink.error(r.getError())
   }
 
-  execute () {
+  execute() {
     const l = this.array.length
     const sink = this.sink
     for (var i = 0; i < l && !this.closed; ++i) {
@@ -30,22 +29,20 @@ class FromArraySubscription<T> implements ISubscription {
     sink.complete()
   }
 
-  unsubscribe (): void {
+  unsubscribe(): void {
     this.subscription.unsubscribe()
     this.closed = true
   }
 }
 
 class FromObservable<T> implements IObservable<T> {
-  constructor (private array: Array<T>) {
-  }
+  constructor(private array: Array<T>) {}
 
-  subscribe (observer: IObserver<T>, scheduler: IScheduler): ISubscription {
+  subscribe(observer: IObserver<T>, scheduler: IScheduler): ISubscription {
     return new FromArraySubscription<T>(this.array, observer, scheduler)
   }
 }
 
-export function fromArray<T> (list: Array<T>): IObservable<T> {
+export function fromArray<T>(list: Array<T>): IObservable<T> {
   return new FromObservable(list)
 }
-
