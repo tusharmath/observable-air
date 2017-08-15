@@ -20,7 +20,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "ava": "^0.21.0",
+    "ava": "^0.22.0",
     "benchmark": "^2.1.2",
     "cli-table2": "^0.2.0",
     "commentator": "^1.0.5",
