@@ -58,17 +58,17 @@ export const reduce = curry(function<T, R>(
 }) as {
   <T, R>(reducer: TReducer<T, R>, seed: TSeed<R>, source: TSource<T>): TResult<
     R
-  >;
+  >
 } & {
   <T, R>(reducer: TReducer<T, R>): {
-    (seed: TSeed<R>, source: TSource<T>): TResult<R>;
+    (seed: TSeed<R>, source: TSource<T>): TResult<R>
   }
 } & {
     <T, R>(reducer: TReducer<T, R>, seed: TSeed<R>): {
-      (source: TSource<T>): TResult<R>;
-    };
+      (source: TSource<T>): TResult<R>
+    }
   } & {
     <T, R>(reducer: TReducer<T, R>): {
-      (seed: TSeed<R>): {(source: TSource<T>): TResult<R>};
+      (seed: TSeed<R>): {(source: TSource<T>): TResult<R>}
     }
   }

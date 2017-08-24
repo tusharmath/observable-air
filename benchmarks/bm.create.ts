@@ -3,7 +3,7 @@
  */
 import {Suite} from 'benchmark'
 import {IObserver} from '../src/lib/Observer'
-import {create} from '../src/sources/Create'
+import {Observable} from '../src/sources/Create'
 import {IDeferred, run} from './lib'
 
 function subscriber(observer: IObserver<number>) {
@@ -14,7 +14,11 @@ function subscriber(observer: IObserver<number>) {
 }
 
 export function bm_create(suite: Suite) {
-  return suite.add('create', (d: IDeferred) => run(create(subscriber), d), {
-    defer: true
-  })
+  return suite.add(
+    'create',
+    (d: IDeferred) => run(new Observable(subscriber), d),
+    {
+      defer: true
+    }
+  )
 }

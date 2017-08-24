@@ -3,7 +3,7 @@
  */
 import {IObservable} from '../lib/Observable'
 import {IObserver} from '../lib/Observer'
-import {create} from './Create'
+import {Observable} from './Create'
 
 export function onResult<T>(observer: IObserver<T>, result: T) {
   observer.next(result)
@@ -25,5 +25,5 @@ export function subscriberFunction<T>(
 }
 
 export function fromPromise<T>(f: () => Promise<T>): IObservable<T> {
-  return create(observer => subscriberFunction(f, observer))
+  return new Observable(observer => subscriberFunction(f, observer))
 }
