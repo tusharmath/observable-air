@@ -7,8 +7,7 @@
   - [Observable](#Observable)
 - [Sinks](#sinks)
   - [forEach](#forEach)
-- [Sources](#sources)
-  - [create](#create)
+- [Sources](#sources)  
   - [empty](#empty)
   - [frames](#frames)
   - [fromArray](#fromArray)
@@ -120,6 +119,25 @@ interface Observable<T> {
   subscribe(observer: Observer<T>, scheduler: Scheduler): Subscription
 }
 ```
+`Observable` is also exported as class and can be used to create new instances. 
+
+```ts
+function listen (element, eventName) {
+  return new Observable(observer => {
+    // Create an event handler which sends data to the sink
+    let handler = event => observer.next(event)
+
+    // Attach the event handler
+    element.addEventListener(eventName, handler, true)
+
+    // Return a cleanup function which will cancel the event stream
+    return () => {
+      // Detach the event handler from the element
+      element.removeEventListener(eventName, handler, true)
+    }
+  })
+}
+```
 
 # Sinks
 Sinks are essentially consumers of the observable/streams. By default streams can be consumed by subscribing to them. To create a subscription an observer is needed.
@@ -166,13 +184,6 @@ O.forEach(console.log, $)
 # Sources
 Sources are the functions that emit values, such as — `fromDOM(document, 'click)`,  which emits a `ClickEvent` as a part of the stream. Other sources can be — `interval(1000)` which will emit a value every `1000ms`.
 
-## create
-
-```ts
-function create(fn: SubscriptionFunction): Observable
-```
-
-Factory function to create an observable. The function takes in a subscription function that inturn takes in two params — `observer` and a `scheduler` and returns a subscription of its own.
 
 **Example:**
 ```ts

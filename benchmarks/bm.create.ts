@@ -3,8 +3,8 @@
  */
 import {Suite} from 'benchmark'
 import {IObserver} from '../src/lib/Observer'
-import {IDeferred, run} from './lib'
 import {Observable} from '../src/sources/Create'
+import {IDeferred, run} from './lib'
 
 function subscriber(observer: IObserver<number>) {
   for (var i = 0; i < 1e6; ++i) {
