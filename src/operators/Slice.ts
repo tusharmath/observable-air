@@ -73,15 +73,15 @@ export const slice = curry(function(
 ) {
   return new SliceObservable(start, count, source)
 }) as {
-  <T>(start: number, count: number, source: IObservable<T>): IObservable<T>;
+  <T>(start: number, count: number, source: IObservable<T>): IObservable<T>
 } & {
   <T>(start: number): {(count: number, source: IObservable<T>): IObservable<T>}
 } & {
     <T>(start: number, count: number): {
-      (source: IObservable<T>): IObservable<T>;
-    };
+      (source: IObservable<T>): IObservable<T>
+    }
   } & {
     <T>(start: number): {
-      (count: number): {(source: IObservable<T>): IObservable<T>};
+      (count: number): {(source: IObservable<T>): IObservable<T>}
     }
   }

@@ -38,5 +38,5 @@ class DOMObservable implements TResult {
 export const fromDOM = curry(function(element: HTMLElement, name: string) {
   return new DOMObservable(name, element)
 }) as {(element: HTMLElement, name: string): TResult} & {
-  (element: HTMLElement): {(name: string): TResult};
+  (element: HTMLElement): {(name: string): TResult}
 }

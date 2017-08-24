@@ -90,9 +90,9 @@ export const flatMap = curry(<
 }) as {
   <T, K>(mapper: (t: K) => IObservable<T>, source: IObservable<K>): IObservable<
     T
-  >;
+  >
 } & {
   <T, K>(mapper: (t: K) => IObservable<T>): {
-    (source: IObservable<K>): IObservable<T>;
+    (source: IObservable<K>): IObservable<T>
   }
 }
