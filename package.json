@@ -11,7 +11,7 @@
     "prepublish": "tsc -d && npm run build",
     "rfc": "node chore/rfc",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
-    "test": "tsc && ava",
+    "test": "yarn tsc; mocha --reporter min $(find . -name '*.test.js' ! -ipath '*node_modules*')",
     "test:watch": "ava --watch",
     "build": "rollup -c ./config/rollup.config.js",
     "lint": "git ls-files | grep '.ts$' | xargs tslint",
@@ -20,14 +20,18 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/chai": "^4.0.4",
+    "@types/mocha": "^2.2.42",
     "ava": "^0.22.0",
     "benchmark": "^2.1.2",
+    "chai": "^4.1.1",
     "cli-table2": "^0.2.0",
     "commentator": "^1.0.5",
     "coveralls": "^2.11.14",
     "cz-conventional-changelog": "^2.0.0",
     "gh-pages": "^1.0.0",
     "ghooks": "^2.0.0",
+    "mocha": "^3.5.0",
     "nyc": "^11.0.3",
     "prettify": "^0.1.7",
     "request-promise": "^4.1.1",
@@ -36,6 +40,7 @@
     "rollup-plugin-commonjs": "^8.0.2",
     "rollup-plugin-uglify": "^2.0.1",
     "semantic-release": "^7.0.1",
+    "ts-node": "^3.3.0",
     "tslint": "^5.3.2",
     "typescript": "^2.0.3",
     "uglify": "^0.1.5",
@@ -52,10 +57,5 @@
     "ghooks": {
       "commit-msg": "validate-commit-msg"
     }
-  },
-  "ava": {
-    "files": [
-      "test/test.*.js"
-    ]
   }
 }
