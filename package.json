@@ -26,7 +26,6 @@
     "commentator": "^1.0.5",
     "coveralls": "^2.11.14",
     "cz-conventional-changelog": "^2.0.0",
-    "gh-pages": "^1.0.0",
     "ghooks": "^2.0.0",
     "nyc": "^11.0.3",
     "prettify": "^0.1.7",
