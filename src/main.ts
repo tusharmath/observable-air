@@ -2,8 +2,8 @@
  * Created by tushar on 17/02/17.
  */
 
-export {Observable, empty, just, never} from './sources/Create'
 export {delay} from './operators/Delay'
+export {empty, just, never} from './sources/Create'
 export {filter} from './operators/Filter'
 export {flatMap} from './operators/Join'
 export {forEach} from './lib/ForEach'
@@ -22,6 +22,7 @@ export {mapTo} from './operators/Map'
 export {map} from './operators/Map'
 export {merge} from './operators/Merge'
 export {multicast} from './operators/Multicast'
+export {Observable} from './lib/Observable'
 export {reduce} from './operators/Reduce'
 export {sample} from './operators/Sample'
 export {scan} from './operators/Scan'

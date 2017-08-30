@@ -1,9 +1,8 @@
 /**
  * Created by tushar.mathur on 16/10/16.
  */
-import {IObservable} from '../lib/Observable'
+import {IObservable, Observable} from '../lib/Observable'
 import {IObserver} from '../lib/Observer'
-import {Observable} from './Create'
 
 export function onResult<T>(observer: IObserver<T>, result: T) {
   observer.next(result)

@@ -4,7 +4,7 @@
   "main": "./src/main",
   "typings": "./src/main.d.ts",
   "scripts": {
-    "benchmark": "tsc && node ./benchmarks/run",
+    "benchmark": "tsc; node ./benchmarks/run",
     "cleanup": "find ./src -type f -name '*.js' -delete && find ./src -type f -name '*.map' -delete",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "hydra": "node --trace-hydrogen --trace-phase=Z --trace-deopt --code-comments --hydrogen-track-positions --redirect-code-traces --redirect-code-traces-to=code.asm ./benchmarks/run",
