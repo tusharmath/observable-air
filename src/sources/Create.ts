@@ -4,16 +4,7 @@
 import {IObservable} from '../lib/Observable'
 import {IObserver} from '../lib/Observer'
 import {IScheduler} from '../lib/Scheduler'
-import {ISubscriberFunction} from '../lib/SubscriberFunction'
-import {BaseSubscription, ISubscription} from '../lib/Subscription'
-
-export class Observable<T> implements IObservable<T> {
-  constructor(private f: ISubscriberFunction<T>) {}
-
-  subscribe(observer: IObserver<T>, scheduler: IScheduler): ISubscription {
-    return BaseSubscription.from(this.f(observer, scheduler))
-  }
-}
+import {ISubscription} from '../lib/Subscription'
 
 class JustObservable<T> implements IObservable<T> {
   constructor(private val: T) {}

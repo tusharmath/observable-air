@@ -3,6 +3,7 @@
  */
 
 import {LinkedList, LinkedListNode} from './LinkedList'
+import {SubscriberFunctionReturnType} from './SubscriberFunction'
 import {ISubscription} from './Subscription'
 
 export interface ISubscription {
@@ -10,29 +11,17 @@ export interface ISubscription {
   readonly closed: boolean
 }
 
-export function isSubscription(subscription: ISubscription) {
-  return (
-    subscription instanceof BaseSubscription ||
-    (subscription && typeof subscription.unsubscribe === 'function')
-  )
-}
+export class Subscription implements ISubscription {
+  closed: boolean = false
 
-export class BaseSubscription implements ISubscription {
-  constructor(private f: (() => void), public closed = false) {}
+  constructor(private dispose: SubscriberFunctionReturnType) {}
 
   unsubscribe(): void {
-    this.f()
+    if (this.dispose) {
+      if (typeof this.dispose === 'function') this.dispose()
+      else if ('unsubscribe' in this.dispose) this.dispose.unsubscribe()
+    }
     this.closed = true
-  }
-
-  static from(subscription: ISubscription | {(): void} | void): ISubscription {
-    if (isSubscription(subscription as ISubscription))
-      return subscription as ISubscription
-
-    if (typeof subscription === 'function')
-      return new BaseSubscription(subscription as {(): void})
-
-    return new BaseSubscription(() => undefined)
   }
 }
 
