@@ -11,7 +11,7 @@
     "prepublish": "tsc -d && npm run build",
     "rfc": "node chore/rfc",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
-    "test": "yarn tsc; mocha --reporter min $(find . -name '*.test.js' ! -ipath '*node_modules*')",
+    "test": "mocha --reporter min $(find . -name '*.test.js' ! -ipath '*node_modules*')",
     "test:watch": "ava --watch",
     "build": "rollup -c ./config/rollup.config.js",
     "lint": "git ls-files | grep '.ts$' | xargs tslint",
