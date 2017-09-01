@@ -2,7 +2,7 @@
  * Created by tushar.mathur on 15/10/16.
  */
 
-export function curry(f: Function, l: number = f.length): Function {
+export function curry(f: Function, l: number = f.length): any {
   if (l <= 1) return f
   return function curried(...t: any[]) {
     if (t.length === 0) return curried
