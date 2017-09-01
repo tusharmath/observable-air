@@ -1,16 +1,19 @@
-import {LinkedListNode} from '../lib/LinkedList'
 /**
  * Created by tushar on 31/08/17.
  */
+
+import {LinkedList, LinkedListNode} from '../lib/LinkedList'
 import {IObservable} from '../lib/Observable'
 import {IObserver} from '../lib/Observer'
 import {IScheduler} from '../lib/Scheduler'
 import {CompositeSubscription, ISubscription} from '../lib/Subscription'
+import {curry} from '../lib/Utils'
 
 type Project<T, S> = (t: T) => IObservable<S>
 
 class MergeMapInnerObserver<T, S> implements IObserver<S> {
   node: LinkedListNode<ISubscription>
+
   constructor(private parent: MergeMapOuterObserver<T, S>) {}
 
   next(val: S): void {
@@ -33,6 +36,7 @@ class MergeMapInnerObserver<T, S> implements IObserver<S> {
 
 class MergeMapOuterObserver<T, S> implements IObserver<T> {
   private __completed: boolean = false
+  private __buffer = new LinkedList<T>()
 
   constructor(
     readonly conc: number,
@@ -49,6 +53,8 @@ class MergeMapOuterObserver<T, S> implements IObserver<T> {
         this.proj(val).subscribe(innerObserver, this.sh)
       )
       innerObserver.setup(node)
+    } else {
+      this.__buffer.add(val)
     }
   }
 
@@ -63,6 +69,13 @@ class MergeMapOuterObserver<T, S> implements IObserver<T> {
 
   checkComplete() {
     if (this.cSub.length() === 1 && this.__completed) this.sink.complete()
+    else if (this.__buffer.length > 0) {
+      const head = this.__buffer.head()
+      if (head) {
+        this.__buffer.remove(head)
+        this.next(head.value)
+      }
+    }
   }
 }
 
@@ -72,6 +85,7 @@ class MergeMap<T, S> implements IObservable<S> {
     private proj: Project<T, S>,
     private src: IObservable<T>
   ) {}
+
   subscribe(observer: IObserver<S>, scheduler: IScheduler): ISubscription {
     const cSub = new CompositeSubscription()
     const outerObserver = new MergeMapOuterObserver<T, S>(
@@ -86,8 +100,24 @@ class MergeMap<T, S> implements IObservable<S> {
   }
 }
 
-export const mergeMap = <T, S>(
-  conc: number,
-  project: Project<T, S>,
-  source: IObservable<T>
-): IObservable<S> => new MergeMap(conc, project, source)
+type mergeMapFunction = {
+  <T, S>(concurrency: number, project: Project<T, S>, source: IObservable<
+    T
+  >): IObservable<S>
+
+  <T, S>(concurrency: number): {
+    (project: Project<T, S>, source: IObservable<T>): IObservable<S>;
+  }
+
+  <T, S>(concurrency: number): {
+    (project: Project<T, S>): {(source: IObservable<T>): IObservable<S>};
+  }
+}
+
+export const mergeMap: mergeMapFunction = curry(
+  <T, S>(
+    concurrency: number,
+    project: Project<T, S>,
+    source: IObservable<T>
+  ): IObservable<S> => new MergeMap(concurrency, project, source)
+)
