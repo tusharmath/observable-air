@@ -3,11 +3,6 @@
  */
 import {ISubscription} from './Subscription'
 
-interface Global {
-  requestIdleCallback?: Function
-  process?: {nextTick: Function}
-}
-
 export interface IScheduler {
   delay(task: () => void, relativeTime: number): ISubscription
   periodic(task: () => void, interval: number): ISubscription
@@ -16,7 +11,7 @@ export interface IScheduler {
   now(): number
 }
 
-function getGlobal(): Global {
+function getGlobal(): any {
   return typeof window === 'object' ? window : global
 }
 
