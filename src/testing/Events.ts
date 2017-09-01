@@ -9,11 +9,11 @@ export interface IObservableEvent {
 }
 
 export enum EventType {
-  next,
-  error,
-  complete,
-  start,
-  end
+  next = 'NEXT',
+  error = 'ERROR',
+  complete = 'COMPLETE',
+  start = 'START',
+  end = 'END'
 }
 
 export class EventNext<T> implements IObservableEvent {
