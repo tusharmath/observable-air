@@ -100,21 +100,21 @@ class MergeMap<T, S> implements IObservable<S> {
   }
 }
 
-type mergeMapFunction = {
-  <T, S>(concurrency: number, project: Project<T, S>, source: IObservable<
-    T
-  >): IObservable<S>
-
-  <T, S>(concurrency: number): {
-    (project: Project<T, S>, source: IObservable<T>): IObservable<S>
-  }
-
-  <T, S>(concurrency: number): {
-    (project: Project<T, S>): {(source: IObservable<T>): IObservable<S>}
-  }
+// prettier-ignore
+type mergeMapFunctionWithConcc = {
+  <T, S>(concurrency: number, project: Project<T, S>, source: IObservable<T>): IObservable<S>
+  <T, S>(concurrency: number): {(project: Project<T, S>, source: IObservable<T>): IObservable<S>}
+  <T, S>(concurrency: number): {(project: Project<T, S>): {(source: IObservable<T>): IObservable<S>}}
 }
 
-export const mergeMap: mergeMapFunction = curry(
+// prettier-ignore
+type mergeMapFunction = {
+  <T, S>(project: Project<T, S>, source: IObservable<T>): IObservable<S>
+  <T, S>(project: Project<T, S>, source: IObservable<T>): IObservable<S>
+  <T, S>(project: Project<T, S>): {(source: IObservable<T>): IObservable<S>}
+}
+
+export const mergeMap: mergeMapFunctionWithConcc = curry(
   <T, S>(
     concurrency: number,
     project: Project<T, S>,
@@ -122,7 +122,5 @@ export const mergeMap: mergeMapFunction = curry(
   ): IObservable<S> => new MergeMap(concurrency, project, source)
 )
 
-export const flatMap: mergeMapFunction = curry(
-  <T, S>(project: Project<T, S>, source: IObservable<T>): IObservable<S> =>
-    new MergeMap(Number.POSITIVE_INFINITY, project, source)
-)
+export const flatMap = mergeMap(Number.POSITIVE_INFINITY) as mergeMapFunction
+export const concatMap: mergeMapFunction = mergeMap(1) as mergeMapFunction
