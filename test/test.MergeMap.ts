@@ -1,12 +1,12 @@
 /**
  * Created by tushar on 31/08/17.
  */
-import { test } from 'ava'
-import { mergeMap } from '../src/operators/MergeMap'
-import { EVENT } from '../src/testing/Events'
-import { TestScheduler } from '../src/testing/TestScheduler'
+import {test} from 'ava'
+import {mergeMap} from '../src/operators/MergeMap'
+import {EVENT} from '../src/testing/Events'
+import {TestScheduler} from '../src/testing/TestScheduler'
 
-const { next, complete } = EVENT
+const {next, complete} = EVENT
 test('should work like flatMap() when concurrency is Infinity', t => {
   const sh = TestScheduler.of()
   const sa$$ = sh.Cold([
@@ -24,7 +24,7 @@ test('should work like flatMap() when concurrency is Infinity', t => {
   ])
 
   const s$$ = sh.Cold(next(10, sa$$), next(20, sb$$), complete(100))
-  const { results } = sh.start(() => mergeMap(Infinity, (i: any) => i, s$$))
+  const {results} = sh.start(() => mergeMap(Infinity, (i: any) => i, s$$))
 
   t.deepEqual(results, [
     next(220, 'A0'),
@@ -46,7 +46,7 @@ test('should work like concatMap() when concurrency is 1', t => {
     complete(600)
   )
 
-  const { results } = sh.start(() => mergeMap(1, (i: any) => i, s$$))
+  const {results} = sh.start(() => mergeMap(1, (i: any) => i, s$$))
 
   t.deepEqual(results, [
     next(211, 'A0'),
