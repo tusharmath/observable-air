@@ -47,7 +47,7 @@ class MergeMapOuterObserver<T, S> implements IObserver<T> {
   ) {}
 
   next(val: T): void {
-    if (this.conc + 1 - this.cSub.length()) {
+    if (this.cSub.length() < this.conc + 1) {
       const innerObserver = new MergeMapInnerObserver(this)
       const node = this.cSub.add(
         this.proj(val).subscribe(innerObserver, this.sh)
@@ -68,7 +68,7 @@ class MergeMapOuterObserver<T, S> implements IObserver<T> {
   }
 
   checkComplete() {
-    if (this.cSub.length() === 1 && this.__completed) this.sink.complete()
+    if (this.__completed && this.cSub.length() === 1) this.sink.complete()
     else if (this.__buffer.length > 0) {
       const head = this.__buffer.head()
       if (head) {
