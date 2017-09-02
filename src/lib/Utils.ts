@@ -6,7 +6,7 @@ export function curry(f: Function, l: number = f.length): any {
   if (l <= 1) return f
   return function curried(...t: any[]) {
     if (t.length === 0) return curried
-    if (t.length >= l) return f.call(this, ...t)
+    if (t.length >= l) return f.apply(this, arguments)
     return curried.bind(this, ...t)
   }
 }
