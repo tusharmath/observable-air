@@ -9,7 +9,7 @@ import {IScheduler} from '../lib/Scheduler'
 import {CompositeSubscription, ISubscription} from '../lib/Subscription'
 import {curry} from '../lib/Utils'
 
-type Project<T, S> = (t: T) => IObservable<S>
+export type Project<T, S> = (t: T) => IObservable<S>
 
 class MergeMapInnerObserver<T, S> implements IObserver<S> {
   node: LinkedListNode<ISubscription>
@@ -101,20 +101,20 @@ class MergeMap<T, S> implements IObservable<S> {
 }
 
 // prettier-ignore
-type mergeMapFunctionWithConcc = {
+export type mergeMapFunctionWithConcurrency = {
   <T, S>(concurrency: number, project: Project<T, S>, source: IObservable<T>): IObservable<S>
   <T, S>(concurrency: number): {(project: Project<T, S>, source: IObservable<T>): IObservable<S>}
   <T, S>(concurrency: number): {(project: Project<T, S>): {(source: IObservable<T>): IObservable<S>}}
 }
 
 // prettier-ignore
-type mergeMapFunction = {
+export type mergeMapFunction = {
   <T, S>(project: Project<T, S>, source: IObservable<T>): IObservable<S>
   <T, S>(project: Project<T, S>, source: IObservable<T>): IObservable<S>
   <T, S>(project: Project<T, S>): {(source: IObservable<T>): IObservable<S>}
 }
 
-export const mergeMap: mergeMapFunctionWithConcc = curry(
+export const mergeMap: mergeMapFunctionWithConcurrency = curry(
   <T, S>(
     concurrency: number,
     project: Project<T, S>,
