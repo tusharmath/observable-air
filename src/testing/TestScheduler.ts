@@ -31,7 +31,7 @@ class TaskSubscription implements ISubscription {
   }
 }
 
-type EventSource = Array<IObservableEvent>
+export type EventSource = Array<IObservableEvent>
 
 function normalizeEvents(...ev: EventSource): EventSource
 function normalizeEvents(ev: EventSource): EventSource
