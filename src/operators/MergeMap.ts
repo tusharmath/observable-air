@@ -2,7 +2,7 @@
  * Created by tushar on 31/08/17.
  */
 
-import {LinkedList, LinkedListNode} from '../lib/LinkedList'
+import {LinkedListNode} from '../lib/LinkedList'
 import {IObservable} from '../lib/Observable'
 import {IObserver} from '../lib/Observer'
 import {IScheduler} from '../lib/Scheduler'
@@ -36,7 +36,7 @@ class MergeMapInnerObserver<T, S> implements IObserver<S> {
 
 class MergeMapOuterObserver<T, S> implements IObserver<T> {
   private __completed: boolean = false
-  private __buffer = new LinkedList<T>()
+  private __buffer: T[] = []
 
   constructor(
     readonly conc: number,
@@ -54,7 +54,7 @@ class MergeMapOuterObserver<T, S> implements IObserver<T> {
       )
       innerObserver.setup(node)
     } else {
-      this.__buffer.add(val)
+      this.__buffer.push(val)
     }
   }
 
@@ -70,10 +70,8 @@ class MergeMapOuterObserver<T, S> implements IObserver<T> {
   checkComplete() {
     if (this.__completed && this.cSub.length() === 1) this.sink.complete()
     else if (this.__buffer.length > 0) {
-      const head = this.__buffer.head()
-      if (head) {
-        this.__buffer.remove(head)
-        this.next(head.value)
+      if (this.__buffer.length > 0) {
+        this.next(this.__buffer.shift() as T)
       }
     }
   }
