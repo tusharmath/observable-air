@@ -8,6 +8,7 @@ import {bm_debounce} from './bm.debounce'
 import {bm_fromArray_map_reduce} from './bm.fromArray-map-reduce'
 import {bm_fromArray_scan_reduce} from './bm.fromArray-scan-reduce'
 import {bm_fromArray_takeN} from './bm.fromArray-takeN'
+import {bm_mergeMap} from './bm.mergeMap'
 import {bm_switch} from './bm.switch'
 import {bm_tryCatch} from './bm.tryCatch'
 import {onCycle, onEnd} from './lib'
@@ -26,4 +27,5 @@ bm_fromArray_scan_reduce(suite)
 bm_fromArray_takeN(suite)
 bm_switch(suite)
 bm_tryCatch(suite)
+bm_mergeMap(suite)
 suite.on('cycle', onCycle).on('complete', onEnd).run()

@@ -18,13 +18,14 @@
   - [never](#never)
 
 - [Operators](#operators)
+  - [concatMap](#concatMap)
   - [delay](#delay)
   - [filter](#filter)
   - [flatMap](#flatMap)
-  - [join](#join)
-  - [mapTo](#mapTo)
   - [map](#map)
+  - [mapTo](#mapTo)
   - [merge](#merge)
+  - [mergeMap](#mergeMap)
   - [multicast](#multicast)
   - [reduce](#reduce)
   - [sample](#sample)
@@ -359,24 +360,31 @@ const $ = O.flatMap(
 )
 ```
 
+It is a special case of [mergeMap](#mergeMap) with concurrency set to `NUMBER.POSITIVE_INFINITY`.
 
-## join
+
+## mergeMap
 
 ```ts
-function join(source: Observable): Observable
+function mergeMap(concurrency: number,project: (s) => Observable,source: Observable): Observable
 ```
-
-Join is exactly like [flatMap](#flatMap) but it doesn't take any mapping function. It's mapping function is essentially `Identity` function ie. `i => i`.
+`mergeMap()` converts a higher order stream into a flattened stream. The `concurrency` helps in keeping a check on the maximum number of subscriptions the operator can have.
 
 **Example:**
 ```ts
-const $ = O.join(
-  O.map(
-    () => O.of('Hello'),
-    O.interval(1000)
-  )
+const $ = O.mergeMap(
+  1, 
+  (ev) => O.slice(0, 3, O.interval(100)),
+  O.fromEvent(document, 'click')
 )
 ```
+## concatMap
+
+```ts
+function concatMap(fn : (i: any) => Observable, source: Observable): Observable
+```
+Its a special case for [mergeMap](#mergeMap) where the `concurrency` is set to `one`. This ensures unless the previous subscriptions end new ones are not created.
+
 
 ## mapTo
 

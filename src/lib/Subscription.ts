@@ -43,6 +43,9 @@ export class CompositeSubscription implements ISubscription {
     return this.subscriptions.remove(d)
   }
 
+  length() {
+    return this.subscriptions.length
+  }
   unsubscribe(): void {
     if (this.closed) return
     this.closed = true

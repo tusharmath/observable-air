@@ -31,6 +31,17 @@ class TaskSubscription implements ISubscription {
   }
 }
 
+export type EventSource = Array<IObservableEvent>
+
+function normalizeEvents(...ev: EventSource): EventSource
+function normalizeEvents(ev: EventSource): EventSource
+function normalizeEvents(events: string): EventSource
+function normalizeEvents(events: any) {
+  if (typeof events === 'string') return marble(events)
+  if (arguments.length > 1) return Array.from(arguments)
+  return events
+}
+
 export class TestScheduler implements IScheduler {
   asap(task: () => void): ISubscription {
     return this.delay(task, 1)
@@ -125,16 +136,18 @@ export class TestScheduler implements IScheduler {
     return resultsObserver
   }
 
-  Cold<T>(events: Array<IObservableEvent> | string) {
-    return typeof events === 'string'
-      ? ColdTestObservable(this, marble(events))
-      : ColdTestObservable(this, events) as TestObservable<T>
+  Cold<T>(events: string): TestObservable<T>
+  Cold<T>(events: EventSource): TestObservable<T>
+  Cold<T>(...events: EventSource): TestObservable<T>
+  Cold<T>(...t: any[]) {
+    return ColdTestObservable(this, normalizeEvents(...t)) as TestObservable<T>
   }
 
-  Hot<T>(events: Array<IObservableEvent> | string) {
-    return typeof events === 'string'
-      ? HotTestObservable(this, marble(events))
-      : HotTestObservable(this, events) as TestObservable<T>
+  Hot<T>(events: string): TestObservable<T>
+  Hot<T>(...events: EventSource): TestObservable<T>
+  Hot<T>(events: EventSource): TestObservable<T>
+  Hot<T>(...t: any[]) {
+    return HotTestObservable(this, normalizeEvents(...t)) as TestObservable<T>
   }
 
   Observer<T>() {
