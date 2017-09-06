@@ -14,7 +14,8 @@
     "test": "tsc && ava",
     "test:watch": "ava --watch",
     "build": "rollup -c ./config/rollup.config.js",
-    "lint": "git ls-files | grep '.ts$' | xargs tslint"
+    "lint": "git ls-files | grep '.ts$' | xargs tslint",
+    "lint:fix": "git ls-files | grep '.ts$' | xargs tslint --fix"
   },
   "author": "",
   "license": "ISC",
