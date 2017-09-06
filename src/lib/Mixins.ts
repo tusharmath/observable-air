@@ -5,13 +5,14 @@
 import {IObserver} from './Observer'
 
 export type Constructor<T = {}> = new (...t: any[]) => T
+export class Virgin {}
 
 /**
  * Adds the error() handler
  */
 export const ErrorMixin = <TBase extends Constructor>(Base: TBase) =>
   class ErrorMixin extends Base {
-    protected sink: IObserver<any>
+    readonly sink: IObserver<any>
 
     error(error: Error) {
       this.sink.error(error)
@@ -23,7 +24,7 @@ export const ErrorMixin = <TBase extends Constructor>(Base: TBase) =>
  */
 export const CompleteMixin = <TBase extends Constructor>(Base: TBase) =>
   class CompleteMixin extends Base {
-    protected sink: IObserver<any>
+    readonly sink: IObserver<any>
 
     complete() {
       this.sink.complete()
@@ -41,7 +42,7 @@ export const ErrorCompleteMixin = <TBase extends Constructor>(Base: TBase) =>
  */
 export const NextMixin = <TBase extends Constructor>(Base: TBase) =>
   class NextMixin extends Base {
-    protected sink: IObserver<any>
+    readonly sink: IObserver<any>
 
     next(value: any) {
       this.sink.next(value)
@@ -54,4 +55,3 @@ export const NextMixin = <TBase extends Constructor>(Base: TBase) =>
 export const ErrorNextMixin = <TBase extends Constructor>(Base: TBase) =>
   NextMixin(ErrorMixin(Base))
 
-export class Noop {}

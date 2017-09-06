@@ -2,6 +2,7 @@
  * Created by tushar.mathur on 27/09/16.
  */
 
+import {ErrorMixin, Virgin} from '../lib/Mixins'
 import {IObservable} from '../lib/Observable'
 import {IObserver} from '../lib/Observer'
 import {IScheduler} from '../lib/Scheduler'
@@ -13,19 +14,17 @@ export type TSeed<R> = R
 export type TSource<T> = IObservable<T>
 export type TResult<R> = IObservable<R>
 
-class ReduceObserver<T, R> implements IObserver<T> {
+class ReduceObserver<T, R> extends ErrorMixin(Virgin) implements IObserver<T> {
   constructor(
     private reducer: TReducer<T, R>,
     private value: TSeed<R>,
-    private sink: IObserver<R>
-  ) {}
+    public sink: IObserver<R>
+  ) {
+    super()
+  }
 
   next(val: T): void {
     this.value = this.reducer(this.value, val)
-  }
-
-  error(err: Error): void {
-    this.sink.error(err)
   }
 
   complete(): void {

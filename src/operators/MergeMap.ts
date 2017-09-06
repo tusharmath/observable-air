@@ -3,6 +3,7 @@
  */
 
 import {LinkedListNode} from '../lib/LinkedList'
+import {ErrorMixin, Virgin} from '../lib/Mixins'
 import {IObservable} from '../lib/Observable'
 import {IObserver} from '../lib/Observer'
 import {IScheduler} from '../lib/Scheduler'
@@ -34,7 +35,8 @@ class MergeMapInnerObserver<T, S> implements IObserver<S> {
   }
 }
 
-class MergeMapOuterObserver<T, S> implements IObserver<T> {
+class MergeMapOuterObserver<T, S> extends ErrorMixin(Virgin)
+  implements IObserver<T> {
   private __completed: boolean = false
   private __buffer: T[] = []
 
@@ -44,7 +46,9 @@ class MergeMapOuterObserver<T, S> implements IObserver<T> {
     readonly sink: IObserver<S>,
     readonly cSub: CompositeSubscription,
     readonly sh: IScheduler
-  ) {}
+  ) {
+    super()
+  }
 
   next(val: T): void {
     if (this.cSub.length() < this.conc + 1) {
@@ -56,10 +60,6 @@ class MergeMapOuterObserver<T, S> implements IObserver<T> {
     } else {
       this.__buffer.push(val)
     }
-  }
-
-  error(err: Error): void {
-    this.sink.error(err)
   }
 
   complete(): void {

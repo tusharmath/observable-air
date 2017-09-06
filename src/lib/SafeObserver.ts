@@ -1,13 +1,15 @@
 /**
  * Created by tushar on 29/01/17.
  */
+import {ErrorCompleteMixin} from './Mixins'
 import {IObserver} from './Observer'
 import {ISafeFunction, tryCatch} from './Utils'
 
-class SafeObserver<T> implements IObserver<T> {
+class SafeObserver<T> extends ErrorCompleteMixin(class {}) implements IObserver<T> {
   private _next: ISafeFunction<void, IObserver<T>>
 
-  constructor(private sink: IObserver<T>) {
+  constructor(public sink: IObserver<T>) {
+    super()
     this._next = tryCatch(this.sink.next)
   }
 

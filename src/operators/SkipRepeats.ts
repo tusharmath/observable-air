@@ -1,3 +1,4 @@
+import {ErrorCompleteMixin, Virgin} from '../lib/Mixins'
 /**
  * Created by niranjan on 12/10/16.
  */
@@ -11,14 +12,17 @@ export type TComparator<T> = (a: T, b: T) => boolean
 export type TSource<T> = IObservable<T>
 export type TResult<T> = IObservable<T>
 
-class SkipRepeatsObserver<T> implements IObserver<T> {
+class SkipRepeatsObserver<T> extends ErrorCompleteMixin(Virgin)
+  implements IObserver<T> {
   private previous: T | void = undefined
   private init = true
 
   constructor(
     private cmp: {(a: T, b: T): boolean},
-    private sink: IObserver<T>
-  ) {}
+    public sink: IObserver<T>
+  ) {
+    super()
+  }
 
   next(val: T) {
     if (this.init) {
@@ -29,14 +33,6 @@ class SkipRepeatsObserver<T> implements IObserver<T> {
       this.sink.next(val)
       this.previous = val
     }
-  }
-
-  error(err: Error) {
-    this.sink.error(err)
-  }
-
-  complete(): void {
-    this.sink.complete()
   }
 }
 

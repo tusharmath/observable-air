@@ -6,30 +6,26 @@ import {IObserver} from '../lib/Observer'
 import {IScheduler} from '../lib/Scheduler'
 import {ISubscription} from '../lib/Subscription'
 import {curry} from '../lib/Utils'
+import {ErrorCompleteMixin} from '../lib/Mixins'
 
 export type TReducer<T, R> = (memory: R, current: T) => R
 export type TSeed<R> = R
 export type TSource<T> = IObservable<T>
 export type TResult<R> = IObservable<R>
 
-class ScanObserver<T, V> implements IObserver<T> {
+class ScanObserver<T, V> extends ErrorCompleteMixin(class {})
+  implements IObserver<T> {
   constructor(
     private reducer: TReducer<T, V>,
     private value: V,
-    private sink: IObserver<V>
-  ) {}
+    public sink: IObserver<V>
+  ) {
+    super()
+  }
 
   next(val: T): void {
     this.value = this.reducer(this.value, val)
     this.sink.next(this.value)
-  }
-
-  error(err: Error): void {
-    this.sink.error(err)
-  }
-
-  complete(): void {
-    this.sink.complete()
   }
 }
 
