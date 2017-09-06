@@ -2,11 +2,11 @@
  * Created by tushar.mathur on 06/11/16.
  */
 
+import {ErrorCompleteMixin} from '../lib/Mixins'
 import {IObservable} from '../lib/Observable'
 import {IObserver} from '../lib/Observer'
 import {IScheduler} from '../lib/Scheduler'
 import {ISubscription} from '../lib/Subscription'
-import {ErrorCompleteMixin} from '../lib/Mixins'
 
 export const ERROR_MESSAGE = 'Test Exception'
 export function throwError(message: string) {

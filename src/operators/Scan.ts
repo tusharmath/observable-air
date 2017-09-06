@@ -1,12 +1,12 @@
 /**
  * Created by tushar.mathur on 09/10/16.
  */
+import {ErrorCompleteMixin} from '../lib/Mixins'
 import {IObservable} from '../lib/Observable'
 import {IObserver} from '../lib/Observer'
 import {IScheduler} from '../lib/Scheduler'
 import {ISubscription} from '../lib/Subscription'
 import {curry} from '../lib/Utils'
-import {ErrorCompleteMixin} from '../lib/Mixins'
 
 export type TReducer<T, R> = (memory: R, current: T) => R
 export type TSeed<R> = R
