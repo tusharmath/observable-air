@@ -2,7 +2,7 @@
  * Created by niranjan on 12/10/16.
  */
 
-;('use strict')
+('use strict')
 
 import test from 'ava'
 import {skipRepeats} from '../src/operators/SkipRepeats'

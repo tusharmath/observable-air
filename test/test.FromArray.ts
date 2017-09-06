@@ -2,7 +2,7 @@
  * Created by tushar.mathur on 04/10/16.
  */
 
-;('use strict')
+('use strict')
 
 import test from 'ava'
 import {map} from '../src/operators/Map'

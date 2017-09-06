@@ -2,7 +2,7 @@
  * Created by tushar.mathur on 27/09/16.
  */
 
-;('use strict')
+('use strict')
 
 import test from 'ava'
 import {scan} from '../src/operators/Scan'
