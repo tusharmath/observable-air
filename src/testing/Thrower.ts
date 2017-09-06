@@ -2,6 +2,7 @@
  * Created by tushar.mathur on 06/11/16.
  */
 
+import {ErrorCompleteMixin} from '../lib/Mixins'
 import {IObservable} from '../lib/Observable'
 import {IObserver} from '../lib/Observer'
 import {IScheduler} from '../lib/Scheduler'
@@ -11,19 +12,15 @@ export const ERROR_MESSAGE = 'Test Exception'
 export function throwError(message: string) {
   throw Error(message)
 }
-class ThrowerObserver implements IObserver<void> {
-  constructor(private sink: IObserver<void>) {}
+
+class ThrowerObserver extends ErrorCompleteMixin(class {})
+  implements IObserver<void> {
+  constructor(public sink: IObserver<void>) {
+    super()
+  }
 
   next(val: void): void {
     throwError(ERROR_MESSAGE)
-  }
-
-  error(err: Error): void {
-    this.sink.error(err)
-  }
-
-  complete(): void {
-    this.sink.complete()
   }
 }
 

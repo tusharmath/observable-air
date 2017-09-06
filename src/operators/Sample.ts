@@ -2,6 +2,7 @@
  * Created by tushar.mathur on 18/10/16.
  */
 import {container} from '../lib/Container'
+import {ErrorMixin, Virgin} from '../lib/Mixins'
 import {IObservable} from '../lib/Observable'
 import {IObserver} from '../lib/Observer'
 import {IScheduler} from '../lib/Scheduler'
@@ -28,15 +29,17 @@ class SampleValueObserver<T> implements IObserver<T> {
     this.sampleObserver.onComplete(this.id)
   }
 }
-class SampleObserver<T> implements IObserver<T> {
+class SampleObserver<T> extends ErrorMixin(Virgin) implements IObserver<T> {
   private container = container(this.total)
   private completed = false
 
   constructor(
     private total: number,
-    private sink: IObserver<T>,
+    public sink: IObserver<T>,
     private func: TSelector<T>
-  ) {}
+  ) {
+    super()
+  }
 
   onNext(value: T, id: number) {
     this.container.next(value, id)
@@ -59,10 +62,6 @@ class SampleObserver<T> implements IObserver<T> {
     if (this.container.isOn()) {
       this.sink.next(this.func.apply(null, this.container.values))
     }
-  }
-
-  error(err: Error): void {
-    this.sink.error(err)
   }
 
   complete(): void {

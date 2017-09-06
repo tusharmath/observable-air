@@ -1,3 +1,4 @@
+import {ErrorMixin, Virgin} from '../lib/Mixins'
 /**
  * Created by tushar on 29/01/17.
  */
@@ -8,13 +9,15 @@ import {IScheduler} from '../lib/Scheduler'
 import {CompositeSubscription, ISubscription} from '../lib/Subscription'
 import {curry} from '../lib/Utils'
 
-class DelayObserver<T> implements IObserver<T> {
+class DelayObserver<T> extends ErrorMixin(Virgin) implements IObserver<T> {
   constructor(
     private timeout: number,
-    private sink: IObserver<T>,
+    public sink: IObserver<T>,
     private scheduler: IScheduler,
     private cSub: CompositeSubscription
-  ) {}
+  ) {
+    super()
+  }
 
   next(val: T): void {
     const node = this.cSub.add(
@@ -23,10 +26,6 @@ class DelayObserver<T> implements IObserver<T> {
         this.cSub.remove(node)
       }, this.timeout)
     )
-  }
-
-  error(err: Error): void {
-    this.sink.error(err)
   }
 
   complete(): void {

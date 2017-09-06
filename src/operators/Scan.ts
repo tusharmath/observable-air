@@ -1,6 +1,7 @@
 /**
  * Created by tushar.mathur on 09/10/16.
  */
+import {ErrorCompleteMixin} from '../lib/Mixins'
 import {IObservable} from '../lib/Observable'
 import {IObserver} from '../lib/Observer'
 import {IScheduler} from '../lib/Scheduler'
@@ -12,24 +13,19 @@ export type TSeed<R> = R
 export type TSource<T> = IObservable<T>
 export type TResult<R> = IObservable<R>
 
-class ScanObserver<T, V> implements IObserver<T> {
+class ScanObserver<T, V> extends ErrorCompleteMixin(class {})
+  implements IObserver<T> {
   constructor(
     private reducer: TReducer<T, V>,
     private value: V,
-    private sink: IObserver<V>
-  ) {}
+    public sink: IObserver<V>
+  ) {
+    super()
+  }
 
   next(val: T): void {
     this.value = this.reducer(this.value, val)
     this.sink.next(this.value)
-  }
-
-  error(err: Error): void {
-    this.sink.error(err)
-  }
-
-  complete(): void {
-    this.sink.complete()
   }
 }
 

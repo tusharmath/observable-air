@@ -2,6 +2,7 @@
  * Created by tushar.mathur on 27/09/16.
  */
 
+import {ErrorCompleteMixin} from '../lib/Mixins'
 import {IObservable} from '../lib/Observable'
 import {IObserver} from '../lib/Observer'
 import {IScheduler} from '../lib/Scheduler'
@@ -12,19 +13,14 @@ export type TMapper<T, R> = (value: T) => R
 export type TSource<T> = IObservable<T>
 export type TResult<R> = IObservable<R>
 
-class MapObserver<T, R> implements IObserver<T> {
-  constructor(private mapper: TMapper<T, R>, private sink: IObserver<R>) {}
+class MapObserver<T, R> extends ErrorCompleteMixin(class {})
+  implements IObserver<T> {
+  constructor(private mapper: TMapper<T, R>, public sink: IObserver<R>) {
+    super()
+  }
 
   next(val: T): void {
     this.sink.next(this.mapper(val))
-  }
-
-  error(err: Error): void {
-    this.sink.error(err)
-  }
-
-  complete(): void {
-    this.sink.complete()
   }
 }
 
