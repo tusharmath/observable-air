@@ -2,6 +2,7 @@
  * Created by tushar on 12/02/17.
  */
 import {LinkedListNode} from '../lib/LinkedList'
+import {ErrorMixin} from '../lib/Mixins'
 import {IObservable} from '../lib/Observable'
 import {IObserver} from '../lib/Observer'
 import {safeObserver} from '../lib/SafeObserver'
@@ -10,14 +11,14 @@ import {CompositeSubscription, ISubscription} from '../lib/Subscription'
 import {curry} from '../lib/Utils'
 import {IOperator} from './Operator'
 
-class DebounceOperator<T> extends CompositeSubscription
+class DebounceOperator<T> extends ErrorMixin(CompositeSubscription)
   implements IOperator<T> {
   private node: LinkedListNode<ISubscription>
 
   constructor(
     private timeout: number,
     src: IObservable<T>,
-    private sink: IObserver<T>,
+    public sink: IObserver<T>,
     private sh: IScheduler
   ) {
     super()
@@ -33,10 +34,6 @@ class DebounceOperator<T> extends CompositeSubscription
     this.node = this.add(
       this.sh.delay(this.onEvent.bind(this, val), this.timeout)
     )
-  }
-
-  error(err: Error): void {
-    this.sink.error(err)
   }
 
   complete(): void {

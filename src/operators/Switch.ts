@@ -2,6 +2,7 @@
  * Created by tushar.mathur on 16/10/16.
  */
 import {LinkedListNode} from '../lib/LinkedList'
+import {ErrorMixin, ErrorNextMixin, Virgin} from '../lib/Mixins'
 import {IObservable} from '../lib/Observable'
 import {IObserver} from '../lib/Observer'
 import {IScheduler} from '../lib/Scheduler'
@@ -10,23 +11,18 @@ import {curry} from '../lib/Utils'
 import {map} from './Map'
 import {IOperator} from './Operator'
 
-class SwitchValueObserver<T> implements IObserver<T> {
-  constructor(private sink: IObserver<T>) {}
-
-  next(val: T): void {
-    this.sink.next(val)
-  }
-
-  error(err: Error): void {
-    this.sink.error(err)
+class SwitchValueObserver<T> extends ErrorNextMixin(Virgin)
+  implements IObserver<T> {
+  constructor(public sink: IObserver<T>) {
+    super()
   }
 
   complete(): void {}
 }
 
-class SwitchOperator<T> extends CompositeSubscription
+class SwitchOperator<T> extends ErrorMixin(CompositeSubscription)
   implements IOperator<IObservable<T>> {
-  private sink = new SwitchValueObserver(this.mainSink)
+  public sink = new SwitchValueObserver(this.mainSink)
   private srcSub: LinkedListNode<ISubscription>
 
   constructor(
@@ -41,10 +37,6 @@ class SwitchOperator<T> extends CompositeSubscription
   next(val: IObservable<T>): void {
     this.remove(this.srcSub)
     this.srcSub = this.add(val.subscribe(this.sink, this.scheduler))
-  }
-
-  error(err: Error): void {
-    this.sink.error(err)
   }
 
   complete(): void {
