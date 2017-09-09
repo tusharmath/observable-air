@@ -7,7 +7,7 @@ import {DEFAULT_OPTIONS} from './TestOptions'
 export const SIZE = DEFAULT_OPTIONS.marbleSize
 export const START = DEFAULT_OPTIONS.subscriptionStart
 
-export function marble(
+export function fromMarble(
   message: String,
   start = START,
   size = SIZE

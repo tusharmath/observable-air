@@ -8,7 +8,7 @@ import {ISubscription} from '../lib/Subscription'
 import {ColdTestObservable} from './ColdTestObservable'
 import {IObservableEvent} from './Events'
 import {HotTestObservable} from './HotTestObservable'
-import {marble} from './Marble'
+import {fromMarble} from './Marble'
 import {TestObservable} from './TestObservable'
 import {TestObserver} from './TestObserver'
 import {DEFAULT_OPTIONS} from './TestOptions'
@@ -37,7 +37,7 @@ function normalizeEvents(...ev: EventSource): EventSource
 function normalizeEvents(ev: EventSource): EventSource
 function normalizeEvents(events: string): EventSource
 function normalizeEvents(events: any) {
-  if (typeof events === 'string') return marble(events)
+  if (typeof events === 'string') return fromMarble(events)
   if (arguments.length > 1) return Array.from(arguments)
   return events
 }
