@@ -3,6 +3,7 @@
  */
 import {Suite} from 'benchmark'
 import {bm_fromArray_combine} from './bm.combine'
+import {bm_concat} from './bm.concat'
 import {bm_create} from './bm.create'
 import {bm_debounce} from './bm.debounce'
 import {bm_fromArray_map_reduce} from './bm.fromArray-map-reduce'
@@ -28,4 +29,5 @@ bm_fromArray_takeN(suite)
 bm_switch(suite)
 bm_tryCatch(suite)
 bm_mergeMap(suite)
+bm_concat(suite)
 suite.on('cycle', onCycle).on('complete', onEnd).run()
