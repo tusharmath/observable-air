@@ -5,25 +5,27 @@ import * as t from 'assert'
 import {createScheduler} from '../src/lib/Scheduler'
 import {fromPromise} from '../src/sources/FromPromise'
 
-test('fromPromise()', cb => {
-  const results: number[] = []
-  const s$ = fromPromise<number>(
-    () =>
-      new Promise(function(resolve) {
-        resolve(100)
-      })
-  )
-  s$.subscribe(
-    {
-      next: (x: number) => results.push(x),
-      complete: () => {
-        t.deepEqual(results, [100])
-        cb()
+describe('fromPromise()', () => {
+  it('should emit the value of the promise', (cb) => {
+    const results: number[] = []
+    const s$ = fromPromise<number>(
+      () =>
+        new Promise(function(resolve) {
+          resolve(100)
+        })
+    )
+    s$.subscribe(
+      {
+        next: (x: number) => results.push(x),
+        complete: () => {
+          t.deepEqual(results, [100])
+          cb()
+        },
+        error: (err: Error) => {
+          throw err
+        }
       },
-      error: (err: Error) => {
-        throw err
-      }
-    },
-    createScheduler()
-  )
+      createScheduler()
+    )
+  })
 })

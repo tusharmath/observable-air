@@ -4,4 +4,4 @@
 
 export {EVENT} from './src/testing/Events'
 export {TestScheduler} from './src/testing/TestScheduler'
-export {marble, toMarble} from './src/testing/Marble'
+export {fromMarble, toMarble} from './src/testing/Marble'
