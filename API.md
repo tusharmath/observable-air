@@ -19,6 +19,7 @@
 
 - [Operators](#operators)
   - [concatMap](#concatMap)
+  - [concat](#concat)
   - [delay](#delay)
   - [filter](#filter)
   - [flatMap](#flatMap)
@@ -384,6 +385,12 @@ const $ = O.mergeMap(
 function concatMap(fn : (i: any) => Observable, source: Observable): Observable
 ```
 Its a special case for [mergeMap](#mergeMap) where the `concurrency` is set to `one`. This ensures unless the previous subscriptions end new ones are not created.
+
+## concat
+```ts
+function concat(a: Observable, b: Observable): Observable
+```
+Initially subscribes to the first Observable and once that is completed, the second observable is subscribed to.
 
 
 ## mapTo

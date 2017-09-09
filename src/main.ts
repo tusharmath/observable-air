@@ -3,6 +3,7 @@
  */
 
 export {concatMap} from './operators/MergeMap'
+export {concat} from './operators/Concat'
 export {delay} from './operators/Delay'
 export {empty} from './sources/Create'
 export {filter} from './operators/Filter'
