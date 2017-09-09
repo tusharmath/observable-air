@@ -1,12 +1,12 @@
 /**
  * Created by tushar.mathur on 16/10/16.
  */
-import test from 'ava'
+import * as t from  'assert'
 import {switchLatest} from '../src/operators/Switch'
 import {EVENT} from '../src/testing/Events'
 import {TestScheduler} from '../src/testing/TestScheduler'
 
-test(t => {
+test('switch()', () => {
   const sh = TestScheduler.of()
   const a$$ = sh.Hot([
     EVENT.next(210, 'A0'),

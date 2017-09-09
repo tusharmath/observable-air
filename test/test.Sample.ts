@@ -1,7 +1,7 @@
 /**
  * Created by tushar.mathur on 19/10/16.
  */
-import test from 'ava'
+import * as t from  'assert'
 import {sample} from '../src/operators/Sample'
 import {EVENT} from '../src/testing/Events'
 import {marble} from '../src/testing/Marble'
@@ -10,7 +10,7 @@ import {TestScheduler} from '../src/testing/TestScheduler'
 function toArray(...t: Array<any>) {
   return t.join(',')
 }
-test(t => {
+test('sample()', () => {
   const sh = TestScheduler.of()
   const a$ = sh.Hot([
     EVENT.next(210, 'A0'),
@@ -44,7 +44,7 @@ test(t => {
   ])
 })
 
-test(t => {
+test('sample()', () => {
   const sh = TestScheduler.of()
   const a$ = sh.Hot([
     EVENT.next(210, 0),
@@ -78,7 +78,7 @@ test(t => {
   ])
 })
 
-test(t => {
+test('sample()', () => {
   const sh = TestScheduler.of()
   const t1$ = sh.Hot(marble('-A-B-C-D'))
   const t2$ = sh.Hot(marble('--a-b-c-d'))

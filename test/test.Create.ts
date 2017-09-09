@@ -1,19 +1,19 @@
 /**
  * Created by tushar on 08/12/16.
  */
-import test from 'ava'
+import * as t from  'assert'
 import {Observable} from '../src/lib/Observable'
 import {slice} from '../src/main'
 import {EVENT} from '../src/testing/Events'
 import {TestScheduler} from '../src/testing/TestScheduler'
 
-test(t => {
+test('create' , () => {
   const sh = TestScheduler.of()
   const {results} = sh.start(() => new Observable(ob => ob.next('A')))
   t.deepEqual(results, [EVENT.next(201, 'A')])
 })
 
-test(t => {
+test('create', () => {
   const sh = TestScheduler.of()
   const {results} = sh.start(
     () =>
@@ -24,7 +24,7 @@ test(t => {
   t.deepEqual(results, [EVENT.next(216, 'A')])
 })
 
-test('should unsubscribe', t => {
+test('should unsubscribe', () => {
   const sh = TestScheduler.of()
   const actual = sh.start(() =>
     slice(

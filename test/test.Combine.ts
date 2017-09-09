@@ -1,13 +1,14 @@
 /**
  * Created by tushar on 26/02/17.
  */
-import {test} from 'ava'
+
+import * as assert from 'assert'
 import {combine} from '../src/operators/Combine'
 import {EVENT} from '../src/testing/Events'
 import {marble} from '../src/testing/Marble'
 import {TestScheduler} from '../src/testing/TestScheduler'
 
-test(t => {
+test('combine', () => {
   const SH = TestScheduler.of()
 
   const {results} = SH.start(() => {
@@ -17,7 +18,7 @@ test(t => {
       SH.Hot(marble('---x-y-z--|'))
     ])
   })
-  t.deepEqual(results, [
+  assert.deepEqual(results, [
     EVENT.next(230, 'bqx'),
     EVENT.next(240, 'cqx'),
     EVENT.next(250, 'crx'),

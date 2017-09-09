@@ -1,29 +1,29 @@
 /**
  * Created by tushar.mathur on 02/11/16.
  */
-import test from 'ava'
+import * as t from  'assert'
 import {EVENT} from '../src/testing/Events'
 import {marble, toMarble} from '../src/testing/Marble'
 import {TestScheduler} from '../src/testing/TestScheduler'
 
-test(t => {
+test('marble()', () => {
   const message = 'ABC|'
   const events = marble(message)
   const message0 = toMarble(events)
-  t.is(message, message0)
+  t.strictEqual(message, message0)
 })
 
-test(t => {
+test('marble()', () => {
   const message = toMarble([
     EVENT.next(210, 'A'),
     EVENT.next(220, 'B'),
     EVENT.next(230, 'C'),
     EVENT.complete(240)
   ])
-  t.is('-ABC|', message)
+  t.strictEqual('-ABC|', message)
 })
 
-test(t => {
+test('marble()', () => {
   const message = toMarble([
     EVENT.next(200, 'A'),
     EVENT.next(210, 'B'),
@@ -31,10 +31,10 @@ test(t => {
     EVENT.next(230, 'D'),
     EVENT.complete(230)
   ])
-  t.is('ABCD|', message)
+  t.strictEqual('ABCD|', message)
 })
 
-test(t => {
+test('marble()', () => {
   const message = toMarble([
     EVENT.next(220, 'A'),
     EVENT.next(240, 'B'),
@@ -42,12 +42,12 @@ test(t => {
     EVENT.next(280, 'D'),
     EVENT.complete(280)
   ])
-  t.is('--A-B-C-D|', message)
+  t.strictEqual('--A-B-C-D|', message)
 })
 
-test('delay data', t => {
+test('delay data', () => {
   const sh = TestScheduler.of()
   const source = marble('012|')
   const {results} = sh.start(() => sh.Hot(source))
-  t.is('012|', toMarble(results))
+  t.strictEqual('012|', toMarble(results))
 })

@@ -2,14 +2,14 @@
  * Created by tushar.mathur on 27/09/16.
  */
 
-import test from 'ava'
+import * as t from  'assert'
 import {map} from '../src/operators/Map'
 import {EVENT} from '../src/testing/Events'
 import {TestScheduler} from '../src/testing/TestScheduler'
 
 const {next, complete} = EVENT
 
-test('MapObservable.subscribe()', t => {
+test('MapObservable.subscribe()', () => {
   const sh = TestScheduler.of()
   const $ = sh.Cold<number>([
     next(210, 0),
@@ -26,7 +26,7 @@ test('MapObservable.subscribe()', t => {
   ])
 })
 
-test('MapObservable.subscribe():HOT', t => {
+test('MapObservable.subscribe():HOT', () => {
   const sh = TestScheduler.of()
   const $ = sh.Hot<number>([
     next(100, -10),

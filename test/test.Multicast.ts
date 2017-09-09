@@ -2,14 +2,14 @@
  * Created by tushar.mathur on 24/10/16.
  */
 
-import test from 'ava'
+import * as t from  'assert'
 import {map} from '../src/operators/Map'
 import {multicast} from '../src/operators/Multicast'
 import {EVENT} from '../src/testing/Events'
 import {TestObserver} from '../src/testing/TestObserver'
 import {TestScheduler} from '../src/testing/TestScheduler'
 
-test(t => {
+test('multicast()', () => {
   let i = 0
   const sh = TestScheduler.of()
   const ob0 = new TestObserver(sh)

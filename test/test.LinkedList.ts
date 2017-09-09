@@ -1,7 +1,7 @@
 /**
  * Created by tushar.mathur on 09/10/16.
  */
-import test from 'ava'
+import * as t from  'assert'
 import {LinkedList, LinkedListNode} from '../src/lib/LinkedList'
 
 function toArray<T>(q: LinkedList<T>) {
@@ -9,72 +9,72 @@ function toArray<T>(q: LinkedList<T>) {
   q.forEach(x => arr.push(x.value))
   return arr
 }
-test('constructor()', t => {
-  t.true(new LinkedList() instanceof LinkedList)
+test('constructor()', () => {
+  t.ok(new LinkedList() instanceof LinkedList)
 })
-test('add()', t => {
+test('add()', () => {
   const q = new LinkedList()
   q.add('A')
   q.add('B')
   q.add('C')
   q.add('D')
-  t.is((<LinkedListNode<string>>q.head()).value, 'A')
-  t.is((<LinkedListNode<string>>q.tail()).value, 'D')
+  t.strictEqual((<LinkedListNode<string>>q.head()).value, 'A')
+  t.strictEqual((<LinkedListNode<string>>q.tail()).value, 'D')
   t.deepEqual(toArray(q), ['A', 'B', 'C', 'D'])
-  t.is(q.length, 4)
+  t.strictEqual(q.length, 4)
 })
 
-test('remove(): Remove First (non-empty)', t => {
+test('remove(): Remove First (non-empty)', () => {
   const q = new LinkedList()
   const a = q.add('A')
   q.add('B')
   q.add('C')
   q.remove(a)
 
-  t.is((<LinkedListNode<string>>q.head()).value, 'B')
-  t.is((<LinkedListNode<string>>q.tail()).value, 'C')
+  t.strictEqual((<LinkedListNode<string>>q.head()).value, 'B')
+  t.strictEqual((<LinkedListNode<string>>q.tail()).value, 'C')
   t.deepEqual(toArray(q), ['B', 'C'])
-  t.is(q.length, 2)
+  t.strictEqual(q.length, 2)
 })
 
-test('remove(): Remove LAST (non-empty)', t => {
+test('remove(): Remove LAST (non-empty)', () => {
   const q = new LinkedList()
   q.add('A')
   q.add('B')
   const c = q.add('C')
   q.remove(c)
 
-  t.is((<LinkedListNode<string>>q.head()).value, 'A')
-  t.is((<LinkedListNode<string>>q.tail()).value, 'B')
+  t.strictEqual((<LinkedListNode<string>>q.head()).value, 'A')
+  t.strictEqual((<LinkedListNode<string>>q.tail()).value, 'B')
   t.deepEqual(toArray(q), ['A', 'B'])
-  t.is(q.length, 2)
+  t.strictEqual(q.length, 2)
 })
 
-test('remove(): Remove MIDDLE (non-empty)', t => {
+test('remove(): Remove MIDDLE (non-empty)', () => {
   const q = new LinkedList()
   q.add('A')
   const b = q.add('B')
   q.add('C')
 
   q.remove(b)
-  t.is((<LinkedListNode<string>>q.head()).value, 'A')
-  t.is((<LinkedListNode<string>>q.tail()).value, 'C')
+  t.strictEqual((<LinkedListNode<string>>q.head()).value, 'A')
+  t.strictEqual((<LinkedListNode<string>>q.tail()).value, 'C')
   t.deepEqual(toArray(q), ['A', 'C'])
-  t.is(q.length, 2)
+  t.strictEqual(q.length, 2)
 })
 
-test('remove(): Remove LAST', t => {
+test('remove(): Remove LAST', () => {
   const q = new LinkedList()
   const a = q.add('A')
   q.remove(a)
 
-  t.is(q.head(), undefined)
-  t.is(q.tail(), undefined)
+  t.strictEqual(q.head(), undefined)
+  t.strictEqual(q.tail(), undefined)
   t.deepEqual(toArray(q), [])
-  t.is(q.length, 0)
+  t.strictEqual(q.length, 0)
 })
 
-test('forEach()', t => {
+test('forEach()', () => {
   const results: number[] = []
   const q = new LinkedList<number>()
   q.add(1)
@@ -85,10 +85,10 @@ test('forEach()', t => {
   t.deepEqual(results, [100, 200, 300, 400])
 })
 
-test('remove(): Remove LAST more than once', t => {
+test('remove(): Remove LAST more than once', () => {
   const q = new LinkedList()
   const a = q.add('A')
   q.remove(a)
   q.remove(a)
-  t.is(q.length, 0)
+  t.strictEqual(q.length, 0)
 })

@@ -2,12 +2,12 @@
  * Created by tushar.mathur on 17/10/16.
  */
 
-import test from 'ava'
+import * as t from  'assert'
 import {merge} from '../src/operators/Merge'
 import {EVENT} from '../src/testing/Events'
 import {TestScheduler} from '../src/testing/TestScheduler'
 
-test(t => {
+test('merge()', () => {
   const sh = TestScheduler.of()
   const a$ = sh.Hot([
     EVENT.next(210, 'A0'),

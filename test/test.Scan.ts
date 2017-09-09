@@ -2,14 +2,14 @@
  * Created by tushar.mathur on 09/10/16.
  */
 
-import test from 'ava'
+import * as t from  'assert'
 import {scan} from '../src/operators/Scan'
 import {EVENT} from '../src/testing/Events'
 import {TestScheduler} from '../src/testing/TestScheduler'
 
 const {next, complete} = EVENT
 
-test('ScanObservable.subscribe()', t => {
+test('ScanObservable.subscribe()', () => {
   const sh = TestScheduler.of()
   const $ = sh.Cold<number>([
     next(210, 0),

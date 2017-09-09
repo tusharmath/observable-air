@@ -2,13 +2,13 @@
  * Created by tushar.mathur on 27/09/16.
  */
 
-import test from 'ava'
+import * as t from  'assert'
 import {slice} from '../src/operators/Slice'
 import {EVENT} from '../src/testing/Events'
 import {TestScheduler} from '../src/testing/TestScheduler'
 
 const {next, complete} = EVENT
-test('takeN(0, 3)', t => {
+test('takeN(0, 3)', () => {
   const sh = TestScheduler.of()
   const ob$ = sh.Cold([
     next(0, 1),
@@ -27,7 +27,7 @@ test('takeN(0, 3)', t => {
   ])
 })
 
-test('takeN(0, Infinity)', t => {
+test('takeN(0, Infinity)', () => {
   const sh = TestScheduler.of()
   const ob$ = sh.Cold([
     next(0, 1),
@@ -48,7 +48,7 @@ test('takeN(0, Infinity)', t => {
   ])
 })
 
-test('takeN(1, 3)', t => {
+test('takeN(1, 3)', () => {
   const sh = TestScheduler.of()
   const ob$ = sh.Cold([
     next(0, 1),
@@ -67,7 +67,7 @@ test('takeN(1, 3)', t => {
   ])
 })
 
-test('takeN(1, 3):unsubscribe', t => {
+test('takeN(1, 3):unsubscribe', () => {
   const sh = TestScheduler.of()
   const ob$ = sh.Hot([
     next(201, 1),

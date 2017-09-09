@@ -2,7 +2,7 @@
  * Created by tushar.mathur on 04/10/16.
  */
 
-import test from 'ava'
+import * as t from  'assert'
 import {map} from '../src/operators/Map'
 import {fromArray} from '../src/sources/FromArray'
 import {EVENT} from '../src/testing/Events'
@@ -10,7 +10,7 @@ import {TestScheduler} from '../src/testing/TestScheduler'
 import {ERROR_MESSAGE, throwError} from '../src/testing/Thrower'
 
 const {next, error} = EVENT
-test(t => {
+test('fromArray()', () => {
   const sh = TestScheduler.of()
   const testFunction = (x: any) =>
     x === 2 ? throwError(ERROR_MESSAGE) : x * 100

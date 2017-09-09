@@ -1,25 +1,25 @@
 /**
  * Created by tushar on 28/01/17.
  */
-import {test} from 'ava'
+import * as t from 'assert'
 import {EVENT} from '../src/testing/Events'
 import {TestScheduler} from '../src/testing/TestScheduler'
 
-test(t => {
+test('scheduler()', () => {
   const sh = TestScheduler.of()
-  t.is(sh.now(), 0)
+  t.strictEqual(sh.now(), 0)
 
   sh.advanceBy(10)
-  t.is(sh.now(), 10)
+  t.strictEqual(sh.now(), 10)
 
   sh.advanceBy(2)
-  t.is(sh.now(), 12)
+  t.strictEqual(sh.now(), 12)
 
   sh.advanceTo(20)
-  t.is(sh.now(), 20)
+  t.strictEqual(sh.now(), 20)
 })
 
-test(t => {
+test('scheduler()', () => {
   const sh = TestScheduler.of()
   const {results} = sh.start(() =>
     sh.Hot([

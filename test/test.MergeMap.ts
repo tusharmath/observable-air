@@ -1,13 +1,13 @@
 /**
  * Created by tushar on 31/08/17.
  */
-import {test} from 'ava'
+import * as t from 'assert'
 import {mergeMap} from '../src/operators/MergeMap'
 import {EVENT} from '../src/testing/Events'
 import {TestScheduler} from '../src/testing/TestScheduler'
 
 const {next, complete} = EVENT
-test('should work like flatMap() when concurrency is Infinity', t => {
+test('should work like flatMap() when concurrency is Infinity', () => {
   const sh = TestScheduler.of()
   const sa$$ = sh.Cold([
     next(10, 'A0'),
@@ -37,7 +37,7 @@ test('should work like flatMap() when concurrency is Infinity', t => {
   ])
 })
 
-test('should work like concatMap() when concurrency is 1', t => {
+test('should work like concatMap() when concurrency is 1', () => {
   const sh = TestScheduler.of()
   const s$$ = sh.Cold(
     next(10, sh.Cold(next(1, 'A0'), complete(50))),

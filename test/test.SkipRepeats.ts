@@ -2,14 +2,14 @@
  * Created by niranjan on 12/10/16.
  */
 
-import test from 'ava'
+import * as t from  'assert'
 import {skipRepeats} from '../src/operators/SkipRepeats'
 import {EVENT} from '../src/testing/Events'
 import {TestScheduler} from '../src/testing/TestScheduler'
 
 const {next, complete} = EVENT
 
-test('SkipRepeatsObservable.subscribe()', t => {
+test('SkipRepeatsObservable.subscribe()', () => {
   const sh = TestScheduler.of()
   const $ = sh.Cold<number>([
     next(210, 0),
