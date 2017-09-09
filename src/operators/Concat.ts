@@ -1,3 +1,4 @@
+import {ErrorNextMixin, Virgin} from '../lib/Mixins'
 /**
  * Created by tushar on 05/09/17.
  */
@@ -7,20 +8,14 @@ import {IScheduler} from '../lib/Scheduler'
 import {CompositeSubscription, ISubscription} from '../lib/Subscription'
 import {curry} from '../lib/Utils'
 
-class ConcatObserver<T> implements IObserver<T> {
+class ConcatObserver<T> extends ErrorNextMixin(Virgin) implements IObserver<T> {
   constructor(
     private src: IObservable<T>,
-    private sink: IObserver<T>,
+    readonly sink: IObserver<T>,
     private sh: IScheduler,
     private cSub: CompositeSubscription
-  ) {}
-
-  next(val: T): void {
-    this.sink.next(val)
-  }
-
-  error(err: Error): void {
-    this.sink.error(err)
+  ) {
+    super()
   }
 
   complete(): void {
