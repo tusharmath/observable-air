@@ -20,7 +20,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/benchmark": "^1.0.30",
     "@types/mocha": "^2.2.42",
+    "@types/node": "^8.0.28",
     "benchmark": "^2.1.2",
     "cli-table2": "^0.2.0",
     "commentator": "^1.0.5",

@@ -1,6 +1,0 @@
-{
-  "globalDependencies": {
-    "benchmark": "registry:dt/benchmark#1.0.0+20160317120654",
-    "node": "registry:dt/node#6.0.0+20161019125345"
-  }
-}
