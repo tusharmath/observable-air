@@ -112,6 +112,8 @@ export type mergeMapFunction = {
   <T, S>(project: Project<T, S>): {(source: IObservable<T>): IObservable<S>}
 }
 
+export type joinFunction = <T>(source: IObservable<IObservable<T>>) => IObservable<T>
+
 export const mergeMap: mergeMapFunctionWithConcurrency = curry(
   <T, S>(
     concurrency: number,
@@ -119,6 +121,6 @@ export const mergeMap: mergeMapFunctionWithConcurrency = curry(
     source: IObservable<T>
   ): IObservable<S> => new MergeMap(concurrency, project, source)
 )
-
 export const flatMap = mergeMap(Number.POSITIVE_INFINITY) as mergeMapFunction
 export const concatMap: mergeMapFunction = mergeMap(1) as mergeMapFunction
+export const join = flatMap(i => i) as joinFunction
