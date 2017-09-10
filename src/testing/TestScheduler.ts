@@ -136,6 +136,17 @@ export class TestScheduler implements IScheduler {
     return resultsObserver
   }
 
+  startSubscription (
+    f: () => ISubscription,
+    start = DEFAULT_OPTIONS.subscriptionStart,
+    stop = DEFAULT_OPTIONS.subscriptionStop
+  )  {
+    let subscription: ISubscription
+    this.delay(() => (subscription = f()), start)
+    this.delay(() => subscription.unsubscribe(), stop)
+    this.advanceBy(stop)
+  }
+
   Cold<T>(events: string): TestObservable<T>
   Cold<T>(events: EventSource): TestObservable<T>
   Cold<T>(...events: EventSource): TestObservable<T>

@@ -23,6 +23,7 @@ export class TestObservable<T> implements IObservable<T> {
     connections.push(EVENT.start(scheduler.now(), subscription))
     return {
       unsubscribe() {
+        if (subscription.closed) return
         subscription.unsubscribe()
         connections.push(EVENT.end(scheduler.now(), subscription))
       },

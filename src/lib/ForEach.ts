@@ -3,7 +3,7 @@
  */
 import {IObservable} from './Observable'
 import {IObserver} from './Observer'
-import {createScheduler} from './Scheduler'
+import {createScheduler, IScheduler} from './Scheduler'
 import {ISubscription} from './Subscription'
 import {curry} from './Utils'
 
@@ -11,26 +11,32 @@ export type TOnNext<T> = {(value: T): void} | IObserver<T>
 export type TSource<T> = IObservable<T>
 export type TResult = ISubscription
 
-const error = (err: Error) => {
-  throw err
-}
-const complete = () => void 0
+const noop = () => void 0
 
 export type ForEachType = {
-  <T>(onNext: TOnNext<T>, source: TSource<T>): TResult
-  <T>(onNext: TOnNext<T>): {(source: TSource<T>): TResult}
+  <T>(onNext: TOnNext<T>, source: TSource<T>, scheduler?: IScheduler): TResult
+  <T>(onNext: TOnNext<T>): {
+    (source: TSource<T>, scheduler?: IScheduler): TResult
+  }
 }
+
 
 export const forEach = curry(function<T>(
   next: TOnNext<T>,
-  observable: TSource<T>
+  observable: TSource<T>,
+  scheduler: IScheduler = createScheduler()
 ) {
-  const observer = typeof next === 'function'
+  const observer: IObserver<T> = typeof next === 'function'
     ? {
-        next: next,
-        complete: complete,
-        error: error
+        next,
+        error: err => {
+          iSubscription.unsubscribe()
+          throw err
+        },
+        complete: noop
       }
     : next
-  return observable.subscribe(observer, createScheduler())
+
+  const iSubscription = observable.subscribe(observer, scheduler)
+  return iSubscription
 }) as ForEachType
