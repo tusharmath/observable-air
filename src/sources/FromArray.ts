@@ -50,3 +50,5 @@ class FromObservable<T> implements IObservable<T> {
 export function fromArray<T>(list: Array<T>): IObservable<T> {
   return new FromObservable(list)
 }
+
+export const of = <T>(...t: Array<T>): IObservable<T> => new FromObservable(t)
