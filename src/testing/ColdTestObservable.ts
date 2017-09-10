@@ -4,7 +4,7 @@
 
 import {IObserver} from '../lib/Observer'
 import {IScheduler} from '../lib/Scheduler'
-import {EventNext, EventType, IObservableEvent} from './Events'
+import {EventError, EventNext, EventType, IObservableEvent} from './Events'
 import {TestObservable} from './TestObservable'
 
 export function ColdTestObservable(
@@ -12,8 +12,8 @@ export function ColdTestObservable(
   events: Array<IObservableEvent>
 ) {
   return new TestObservable((observer: IObserver<any>) => {
-    var closed = false
-    for (var i = 0; i < events.length && !closed; i++) {
+    let closed = false
+    for (let i = 0; i < events.length && !closed; i++) {
       const event = events[i]
       if (event.type === EventType.next) {
         scheduler.delay(
@@ -22,6 +22,11 @@ export function ColdTestObservable(
         )
       } else if (event.type === EventType.complete) {
         scheduler.delay(() => observer.complete(), event.time)
+      } else if (event.type === EventType.error) {
+        scheduler.delay(
+          () => observer.error((<EventError>event).value),
+          event.time
+        )
       }
     }
     return {
