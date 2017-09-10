@@ -22,4 +22,10 @@ describe('marble()', () => {
     const actual = toMarble(fromMarble(expected))
     t.strictEqual(actual, expected)
   })
+
+  it('should work for -ABC#', () => {
+    const expected = '-ABC#'
+    const actual = toMarble(fromMarble(expected))
+    t.strictEqual(actual, expected)
+  })
 })
