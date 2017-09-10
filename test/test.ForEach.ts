@@ -4,31 +4,61 @@
 
 import * as assert from 'assert'
 import {forEach} from '../src/lib/ForEach'
-import {fromMarble} from '../src/testing/Marble'
 import {TestScheduler} from '../src/testing/TestScheduler'
 
 describe('forEach()', () => {
-  it('should take a function as the default next', () => {
-    const sh = TestScheduler.of()
-    const $ = sh.Cold('-1234')
-    const actual: number[] = []
-    forEach((i: number) => actual.push(i), $)
-    const expected = ['1', '2', '3', '4']
-    sh.advanceBy(300)
-    assert.deepEqual(actual, expected)
+  context('when a function is passed', () => {
+    it('should forward values', () => {
+      const sh = TestScheduler.of()
+      const $ = sh.Cold('-1234')
+
+      const expected = ['1', '2', '3', '4']
+      const actual: number[] = []
+
+      sh.startSubscription(() => forEach((i: number) => actual.push(i), $))
+      assert.deepEqual(actual, expected)
+    })
+    it('should unsubscribe from the source on error', () => {
+      const sh = TestScheduler.of()
+      const expected = '^---!'
+      const testObservable = sh.Hot('-123#')
+      assert.throws(
+        () =>
+          sh.startSubscription(() => forEach(() => void 0, testObservable, sh)),
+        '#'
+      )
+
+      const actual = testObservable.marble
+      assert.strictEqual(actual, expected)
+    })
   })
 
-  it('should take an observer', () => {
-    const sh = TestScheduler.of()
-    const $ = sh.Cold('-1234|')
-    const testObserver = sh.Observer()
+  context('when an observer is passed', () => {
+    it('should forward values', () => {
+      const sh = TestScheduler.of()
+      const $ = sh.Hot('-1234|')
 
-    forEach(testObserver, $)
-    sh.advanceBy(300)
+      const testObserver = sh.Observer()
 
-    const actual = testObserver.results
-    const expected = fromMarble('-1234|')
+      sh.startSubscription(() => forEach(testObserver, $))
 
-    assert.deepEqual(actual, expected)
+      const actual = testObserver.marble
+      const expected = '-1234|'
+
+      assert.strictEqual(actual, expected)
+    })
+    it('should forward errors', () => {
+      const sh = TestScheduler.of()
+      const expected = '-123#'
+
+      const testObservable = sh.Hot(expected)
+      const testObserver = sh.Observer()
+
+      sh.startSubscription(() => forEach(testObserver, testObservable, sh))
+
+      const actual = testObserver.marble
+
+      assert.strictEqual(actual, expected)
+    })
   })
 })
