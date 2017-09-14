@@ -38,5 +38,5 @@ export const uniqueWith = curry(
   (set: Set<any>, source: IObservable<any>) => new UniqueObservable(set, source)
 ) as UniqueWithType
 
-export const unique = <T>(source: IObservable<T>) =>
+export const unique = <T>(source: IObservable<T>): IObservable<T> =>
   new UniqueObservable(new Set(), source)
