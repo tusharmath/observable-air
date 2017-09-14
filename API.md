@@ -18,11 +18,12 @@
   - [never](#never)
 
 - [Operators](#operators)
-  - [concatMap](#concatMap)
   - [concat](#concat)
+  - [concatMap](#concatMap)
   - [delay](#delay)
   - [filter](#filter)
   - [flatMap](#flatMap)
+  - [join](#join)
   - [map](#map)
   - [mapTo](#mapTo)
   - [merge](#merge)
@@ -360,6 +361,21 @@ Flattens higher order observables, ie those observables that emit values that th
 const $ = O.flatMap(
   () => O.of('Hello'),
   O.interval(1000)
+)
+```
+
+## join
+
+```ts
+function join(source: Observable): Observable
+```
+
+It is a special case of `flatMap` where the project function is identity
+
+**Example:**
+```ts
+const $ = O.join(
+  O.just(O.interval(1000))
 )
 ```
 
