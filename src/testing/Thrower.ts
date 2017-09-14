@@ -2,7 +2,7 @@
  * Created by tushar.mathur on 06/11/16.
  */
 
-import {ErrorCompleteMixin} from '../lib/Mixins'
+import {CompleteMixin, ErrorMixin, Virgin} from '../lib/Mixins'
 import {IObservable} from '../lib/Observable'
 import {IObserver} from '../lib/Observer'
 import {IScheduler} from '../lib/Scheduler'
@@ -13,7 +13,7 @@ export function throwError(message: string) {
   throw Error(message)
 }
 
-class ThrowerObserver extends ErrorCompleteMixin(class {})
+class ThrowerObserver extends ErrorMixin(CompleteMixin(Virgin))
   implements IObserver<void> {
   constructor(public sink: IObserver<void>) {
     super()

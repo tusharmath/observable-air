@@ -112,7 +112,9 @@ export type mergeMapFunction = {
   <T, S>(project: Project<T, S>): {(source: IObservable<T>): IObservable<S>}
 }
 
-export type joinFunction = <T>(source: IObservable<IObservable<T>>) => IObservable<T>
+export type joinFunction = <T>(
+  source: IObservable<IObservable<T>>
+) => IObservable<T>
 
 export const mergeMap: mergeMapFunctionWithConcurrency = curry(
   <T, S>(

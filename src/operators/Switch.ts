@@ -2,7 +2,7 @@
  * Created by tushar.mathur on 16/10/16.
  */
 import {LinkedListNode} from '../lib/LinkedList'
-import {ErrorMixin, ErrorNextMixin, Virgin} from '../lib/Mixins'
+import {ErrorMixin, NextMixin, Virgin} from '../lib/Mixins'
 import {IObservable} from '../lib/Observable'
 import {IObserver} from '../lib/Observer'
 import {IScheduler} from '../lib/Scheduler'
@@ -11,7 +11,7 @@ import {curry} from '../lib/Utils'
 import {map} from './Map'
 import {IOperator} from './Operator'
 
-class SwitchValueObserver<T> extends ErrorNextMixin(Virgin)
+class SwitchValueObserver<T> extends ErrorMixin(NextMixin(Virgin))
   implements IObserver<T> {
   constructor(public sink: IObserver<T>) {
     super()

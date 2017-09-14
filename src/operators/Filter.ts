@@ -2,7 +2,7 @@
  * Created by tushar.mathur on 27/09/16.
  */
 
-import {ErrorCompleteMixin, Virgin} from '../lib/Mixins'
+import {CompleteMixin, ErrorMixin, Virgin} from '../lib/Mixins'
 import {IObservable} from '../lib/Observable'
 import {IObserver} from '../lib/Observer'
 import {IScheduler} from '../lib/Scheduler'
@@ -13,12 +13,9 @@ export type TPredicate<T> = {(value: T): boolean}
 export type TSource<T> = IObservable<T>
 export type TResult<T> = IObservable<T>
 
-class FilterObserver<T> extends ErrorCompleteMixin(Virgin)
+class FilterObserver<T> extends ErrorMixin(CompleteMixin(Virgin))
   implements IObserver<T> {
-  constructor(
-    private predicate: {(t: T): boolean},
-    public sink: IObserver<T>
-  ) {
+  constructor(private predicate: {(t: T): boolean}, public sink: IObserver<T>) {
     super()
   }
 

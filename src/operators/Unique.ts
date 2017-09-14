@@ -2,14 +2,14 @@
  * Created by tushar on 14/09/17.
  */
 
-import {ErrorCompleteMixin, Virgin} from '../lib/Mixins'
+import {CompleteMixin, ErrorMixin, Virgin} from '../lib/Mixins'
 import {IObservable} from '../lib/Observable'
 import {IObserver} from '../lib/Observer'
 import {IScheduler} from '../lib/Scheduler'
 import {ISubscription} from '../lib/Subscription'
 import {curry} from '../lib/Utils'
 
-class UniqueObserver<T> extends ErrorCompleteMixin(Virgin)
+class UniqueObserver<T> extends ErrorMixin(CompleteMixin(Virgin))
   implements IObserver<T> {
   constructor(private set: Set<T>, readonly sink: IObserver<T>) {
     super()

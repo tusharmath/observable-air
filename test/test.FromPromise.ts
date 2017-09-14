@@ -6,7 +6,7 @@ import {createScheduler} from '../src/lib/Scheduler'
 import {fromPromise} from '../src/sources/FromPromise'
 
 describe('fromPromise()', () => {
-  it('should emit the value of the promise', (cb) => {
+  it('should emit the value of the promise', cb => {
     const results: number[] = []
     const s$ = fromPromise<number>(
       () =>

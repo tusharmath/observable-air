@@ -1,7 +1,7 @@
 /**
  * Created by tushar.mathur on 09/10/16.
  */
-import {ErrorCompleteMixin} from '../lib/Mixins'
+import {CompleteMixin, ErrorMixin, Virgin} from '../lib/Mixins'
 import {IObservable} from '../lib/Observable'
 import {IObserver} from '../lib/Observer'
 import {IScheduler} from '../lib/Scheduler'
@@ -13,7 +13,7 @@ export type TSeed<R> = R
 export type TSource<T> = IObservable<T>
 export type TResult<R> = IObservable<R>
 
-class ScanObserver<T, V> extends ErrorCompleteMixin(class {})
+class ScanObserver<T, V> extends ErrorMixin(CompleteMixin(Virgin))
   implements IObserver<T> {
   constructor(
     private reducer: TReducer<T, V>,

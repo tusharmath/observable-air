@@ -136,11 +136,11 @@ export class TestScheduler implements IScheduler {
     return resultsObserver
   }
 
-  startSubscription (
+  startSubscription(
     f: () => ISubscription,
     start = DEFAULT_OPTIONS.subscriptionStart,
     stop = DEFAULT_OPTIONS.subscriptionStop
-  )  {
+  ) {
     let subscription: ISubscription
     this.delay(() => (subscription = f()), start)
     this.delay(() => subscription.unsubscribe(), stop)

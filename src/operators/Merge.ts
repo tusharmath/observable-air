@@ -1,13 +1,14 @@
-import {ErrorNextMixin, Virgin} from '../lib/Mixins'
 /**
  * Created by tushar.mathur on 17/10/16.
  */
+import {ErrorMixin, NextMixin, Virgin} from '../lib/Mixins'
 import {IObservable} from '../lib/Observable'
 import {IObserver} from '../lib/Observer'
 import {IScheduler} from '../lib/Scheduler'
 import {CompositeSubscription, ISubscription} from '../lib/Subscription'
 
-class MergeObserver<T> extends ErrorNextMixin(Virgin) implements IObserver<T> {
+class MergeObserver<T> extends ErrorMixin(NextMixin(Virgin))
+  implements IObserver<T> {
   private count = 0
 
   constructor(private total: number, public sink: IObserver<T>) {

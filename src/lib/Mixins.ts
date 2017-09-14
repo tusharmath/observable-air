@@ -31,11 +31,6 @@ export const CompleteMixin = <TBase extends Constructor>(Base: TBase) =>
     }
   }
 
-/**
- * Adds both the error() & complete() handlers
- */
-export const ErrorCompleteMixin = <TBase extends Constructor>(Base: TBase) =>
-  CompleteMixin(ErrorMixin(Base))
 
 /**
  * Adds the complete() handler
@@ -48,10 +43,3 @@ export const NextMixin = <TBase extends Constructor>(Base: TBase) =>
       this.sink.next(value)
     }
   }
-
-/**
- * Adds the error() & next() handler
- */
-export const ErrorNextMixin = <TBase extends Constructor>(Base: TBase) =>
-  NextMixin(ErrorMixin(Base))
-

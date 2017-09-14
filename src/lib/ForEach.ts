@@ -20,7 +20,6 @@ export type ForEachType = {
   }
 }
 
-
 export const forEach = curry(function<T>(
   next: TOnNext<T>,
   observable: TSource<T>,

@@ -1,7 +1,7 @@
-import {ErrorCompleteMixin, Virgin} from '../lib/Mixins'
 /**
  * Created by niranjan on 12/10/16.
  */
+import {CompleteMixin, ErrorMixin, Virgin} from '../lib/Mixins'
 import {IObservable} from '../lib/Observable'
 import {IObserver} from '../lib/Observer'
 import {IScheduler} from '../lib/Scheduler'
@@ -12,15 +12,12 @@ export type TComparator<T> = (a: T, b: T) => boolean
 export type TSource<T> = IObservable<T>
 export type TResult<T> = IObservable<T>
 
-class SkipRepeatsObserver<T> extends ErrorCompleteMixin(Virgin)
+class SkipRepeatsObserver<T> extends ErrorMixin(CompleteMixin(Virgin))
   implements IObserver<T> {
   private previous: T | void = undefined
   private init = true
 
-  constructor(
-    private cmp: {(a: T, b: T): boolean},
-    public sink: IObserver<T>
-  ) {
+  constructor(private cmp: {(a: T, b: T): boolean}, public sink: IObserver<T>) {
     super()
   }
 
