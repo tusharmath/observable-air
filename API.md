@@ -36,6 +36,8 @@
   - [switchLatest](#switchLatest)
   - [switchMap](#switchMap)
   - [tap](#tap)
+  - [unique](#unique)
+  - [uniqueWith](#uniqueWith)
 - [Testing](#testing)
   - [TestScheduler](#TestScheduler)
   - [marble](#marble)
@@ -580,6 +582,38 @@ It works like [map](#map) but doesn't ignores the return value of the mapping fu
 O.tap(
   console.log, // console.log() returns undefined which is ignored
   O.of(1, 2, 3) // emits 1, 2, 3
+)
+```
+
+## unique
+
+```ts
+function unique(source: Observable): Observable
+```
+
+Emits unique values from a stream.
+
+**Example:**
+
+```ts
+O.unique(
+  O.of(1, 1, 2, 3, 1, 3) // emits 1, 2, 3
+)
+```
+
+## uniqueWith
+
+```ts
+function uniqueWith(set: Set, source: Observable): Observable
+```
+
+Exactly like `unique` but it allows us to pass a custom `Set` to maintain a duplicity record. 
+
+**Example:**
+
+```ts
+O.uniqueWith(
+  O.of(1, 1, 2, 3, 1, 3) // emits 1, 2, 3
 )
 ```
 
