@@ -45,5 +45,5 @@ class ToNodeStream extends Transform {
   }
 }
 
-export const toNodeStream = (source: IObservable<any>): Readable =>
+export const toNodeStream = (source: IObservable<any>): Transform =>
   new ToNodeStream(source)

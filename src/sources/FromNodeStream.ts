@@ -17,4 +17,5 @@ class FromNodeStream<T> implements IObservable<T> {
     return new Subscription(this.src.destroy.bind(this.src))
   }
 }
-export const fromNodeStream = (source: Readable) => new FromNodeStream(source)
+export const fromNodeStream = (source: Readable): IObservable<any> =>
+  new FromNodeStream(source)
