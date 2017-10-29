@@ -58,12 +58,11 @@ export function switchLatest<T>(
 ): IObservable<T> {
   return new SwitchLatest(source)
 }
-export const switchMap = curry(<
-  T,
-  K
->(fn: (t: K) => IObservable<T>, source: IObservable<K>) => {
-  return switchLatest(map(fn, source))
-}) as {
+export const switchMap = curry(
+  <T, K>(fn: (t: K) => IObservable<T>, source: IObservable<K>) => {
+    return switchLatest(map(fn, source))
+  }
+) as {
   <T, K>(mapper: (t: K) => IObservable<T>, source: IObservable<K>): IObservable<
     T
   >

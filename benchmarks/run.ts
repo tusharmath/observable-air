@@ -30,4 +30,7 @@ bm_switch(suite)
 bm_tryCatch(suite)
 bm_mergeMap(suite)
 bm_concat(suite)
-suite.on('cycle', onCycle).on('complete', onEnd).run()
+suite
+  .on('cycle', onCycle)
+  .on('complete', onEnd)
+  .run()
