@@ -3,7 +3,7 @@
  */
 
 import * as assert from 'assert'
-import {forEach} from '../src/lib/ForEach'
+import {forEach} from '../src/sinks/ForEach'
 import {TestScheduler} from '../src/testing/TestScheduler'
 
 describe('forEach()', () => {

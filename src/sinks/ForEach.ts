@@ -1,11 +1,11 @@
 /**
  * Created by tushar.mathur on 01/11/16.
  */
-import {IObservable} from './Observable'
-import {IObserver} from './Observer'
-import {createScheduler, IScheduler} from './Scheduler'
-import {ISubscription} from './Subscription'
-import {curry} from './Utils'
+import {IObservable} from '../lib/Observable'
+import {IObserver} from '../lib/Observer'
+import {createScheduler, IScheduler} from '../lib/Scheduler'
+import {ISubscription} from '../lib/Subscription'
+import {curry} from '../lib/Utils'
 
 export type TOnNext<T> = {(value: T): void} | IObserver<T>
 export type TSource<T> = IObservable<T>
