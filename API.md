@@ -7,6 +7,8 @@
   - [Observable](#Observable)
 - [Sinks](#sinks)
   - [forEach](#forEach)
+  - [toPromise](#toPromise)
+  - [toNodeStream](#toNodeStream)
 - [Sources](#sources)  
   - [empty](#empty)
   - [frames](#frames)
@@ -16,6 +18,7 @@
   - [interval](#interval)
   - [just](#just)
   - [never](#never)
+  - [fromNodeStream](#fromNodeStream)
 
 - [Operators](#operators)
   - [concat](#concat)
@@ -185,6 +188,22 @@ const $ = O.interval(1000)
 O.forEach(console.log, $)
 ```
 
+## toPromise()
+``ts
+function toPromise(observable: Observable): Promise
+``
+
+Simply converts an observable stream into a promise. The promise is resolved with the last value that is emitted in the observable.
+
+
+## toNodeStream()
+```ts
+function toNodeStream(source: Observable): NodeStream
+```
+
+Transforms an observable into [NodeStream].
+
+[NodeStream]: https://nodejs.org/api/stream.html
 
 # Sources
 Sources are the functions that emit values, such as — `fromDOM(document, 'click)`,  which emits a `ClickEvent` as a part of the stream. Other sources can be — `interval(1000)` which will emit a value every `1000ms`.
@@ -313,7 +332,14 @@ O.forEach(console.log, $) // logs `AIR`
 function never(): Observable
 ```
 
-Creates an observable that never completes.
+## fromNodeStream
+
+```ts
+function fromNodeStream(stream: Stream): Observable
+```
+
+Converts a [NodeStream] into an observable.
+
 
 # Operators
 These are functions that take in one or more streams as arguments and returns a another stream as a result. For Eg — `map(x => x + 1, a$)`. Here `map` takes in an *iterator* that increments each value emitted in the stream `a$` and returns a new stream containing the incremented values.
