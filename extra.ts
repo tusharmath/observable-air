@@ -84,6 +84,9 @@ export class Air<T> implements IObservable<T> {
   toNodeStream() {
     return toNodeStream(this)
   }
+  toPromise() {
+    return O.toPromise(this)
+  }
   static combine<T>(selector: (...t: any[]) => T, sources: IObservable<any>[]) {
     return new Air(combine(selector, sources))
   }
