@@ -26,7 +26,7 @@
     "benchmark": "^2.1.2",
     "cli-table2": "^0.2.0",
     "commentator": "^1.0.5",
-    "coveralls": "^2.11.14",
+    "coveralls": "^3.0.0",
     "cz-conventional-changelog": "^2.0.0",
     "ghooks": "^2.0.0",
     "mocha": "^3.5.0",
