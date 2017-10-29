@@ -1,7 +1,7 @@
 /**
  * Created by tushar on 29/10/17.
  */
-import {Readable, Transform, Writable} from 'stream'
+import {Transform, Writable} from 'stream'
 import {IObservable} from '../lib/Observable'
 import {IObserver} from '../lib/Observer'
 import {createScheduler} from '../lib/Scheduler'
