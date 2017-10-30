@@ -1,11 +1,12 @@
 /**
  * Created by tushar on 29/10/17.
  */
-import {Readable} from 'stream'
-import {IObservable} from '../lib/Observable'
-import {IObserver} from '../lib/Observer'
-import {IScheduler} from '../lib/Scheduler'
-import {ISubscription, Subscription} from '../lib/Subscription'
+
+import { IObservable } from '../lib/Observable'
+import { IObserver } from '../lib/Observer'
+import { Readable } from '../lib/Readable'
+import { IScheduler } from '../lib/Scheduler'
+import { ISubscription, Subscription } from '../lib/Subscription'
 
 class FromNodeStream<T> implements IObservable<T> {
   constructor(private src: Readable) {}
