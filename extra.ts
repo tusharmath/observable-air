@@ -11,7 +11,7 @@ import {combine} from './src/operators/Combine'
 import {debounce} from './src/operators/Debounce'
 import {toNodeStream} from './src/sinks/ToNodeStream'
 import {fromNodeStream} from './src/sources/FromNodeStream'
-import { Readable } from './src/lib/Readable';
+import {Readable} from './src/lib/Readable'
 export {Observable} from './src/lib/Observable'
 
 export class Air<T> implements IObservable<T> {
