@@ -2,6 +2,7 @@
  * Created by tushar on 10/12/16.
  */
 
+import {Readable, Stream} from 'stream'
 import {IObservable} from './src/lib/Observable'
 import {IObserver} from './src/lib/Observer'
 import {IScheduler} from './src/lib/Scheduler'
@@ -11,7 +12,7 @@ import {combine} from './src/operators/Combine'
 import {debounce} from './src/operators/Debounce'
 import {toNodeStream} from './src/sinks/ToNodeStream'
 import {fromNodeStream} from './src/sources/FromNodeStream'
-import {Readable} from './src/lib/Readable'
+
 export {Observable} from './src/lib/Observable'
 
 export class Air<T> implements IObservable<T> {
@@ -82,7 +83,7 @@ export class Air<T> implements IObservable<T> {
   debounce(t: number) {
     return new Air(debounce(t, this))
   }
-  toNodeStream() {
+  toNodeStream(): Stream {
     return toNodeStream(this)
   }
   toPromise() {
