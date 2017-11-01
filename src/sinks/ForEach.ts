@@ -25,16 +25,17 @@ export const forEach = curry(function<T>(
   observable: TSource<T>,
   scheduler: IScheduler = createScheduler()
 ) {
-  const observer: IObserver<T> = typeof next === 'function'
-    ? {
-        next,
-        error: err => {
-          iSubscription.unsubscribe()
-          throw err
-        },
-        complete: noop
-      }
-    : next
+  const observer: IObserver<T> =
+    typeof next === 'function'
+      ? {
+          next,
+          error: err => {
+            iSubscription.unsubscribe()
+            throw err
+          },
+          complete: noop
+        }
+      : next
 
   const iSubscription = observable.subscribe(observer, scheduler)
   return iSubscription

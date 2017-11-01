@@ -31,7 +31,6 @@ export const CompleteMixin = <TBase extends Constructor>(Base: TBase) =>
     }
   }
 
-
 /**
  * Adds the complete() handler
  */
