@@ -28,4 +28,12 @@ describe('marble()', () => {
     const actual = toMarble(fromMarble(expected))
     t.strictEqual(actual, expected)
   })
+
+  it('should ignore whitespaces', () => {
+    const message = '   -A B -- C |   '
+
+    const actual = toMarble(fromMarble(message))
+    const expected = '-AB--C|'
+    t.strictEqual(actual, expected)
+  })
 })

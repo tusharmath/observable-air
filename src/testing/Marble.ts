@@ -16,19 +16,24 @@ export function fromMarble(
   let time = start
   for (let i = 0; i < message.length; ++i) {
     switch (message[i]) {
+      case ' ':
+        break
       case '-':
+        time += size
         break
       case '|':
         events.push(EVENT.complete(time))
+        time += size
         break
       case '#':
         events.push(EVENT.error(time, new Error('#')))
+        time += size
         break
       default:
         events.push(EVENT.next(time, message[i]))
+        time += size
         break
     }
-    time += size
   }
   return events
 }
