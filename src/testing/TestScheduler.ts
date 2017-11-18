@@ -164,8 +164,8 @@ export class TestScheduler implements IScheduler {
   Observer<T>() {
     return new TestObserver<T>(this)
   }
-
-  static of(rafTimeout = DEFAULT_OPTIONS.rafTimeout) {
-    return new TestScheduler(rafTimeout)
-  }
 }
+
+export const createTestScheduler = (
+  rafTimeout: number = DEFAULT_OPTIONS.rafTimeout
+) => new TestScheduler(rafTimeout)

@@ -6,11 +6,11 @@ import * as assert from 'assert'
 import {combine} from '../src/operators/Combine'
 import {EVENT} from '../src/testing/Events'
 import {fromMarble} from '../src/testing/Marble'
-import {TestScheduler} from '../src/testing/TestScheduler'
+import {createTestScheduler} from '../src/testing/TestScheduler'
 
 describe('combine()', () => {
   it('should combine events from multiple sources', () => {
-    const SH = TestScheduler.of()
+    const SH = createTestScheduler()
     const {results} = SH.start(() => {
       return combine((a, b, c) => a + b + c, [
         SH.Hot(fromMarble('a-b-c-d|')),

@@ -5,12 +5,12 @@
 import * as t from 'assert'
 import {slice} from '../src/operators/Slice'
 import {EVENT} from '../src/testing/Events'
-import {TestScheduler} from '../src/testing/TestScheduler'
+import {createTestScheduler} from '../src/testing/TestScheduler'
 
 const {next, complete} = EVENT
 describe('slice()', () => {
   it('should take 0 to 3', () => {
-    const sh = TestScheduler.of()
+    const sh = createTestScheduler()
     const ob$ = sh.Cold([
       next(0, 1),
       next(10, 2),
@@ -29,7 +29,7 @@ describe('slice()', () => {
   })
 
   it('should take 0 to Infinity', () => {
-    const sh = TestScheduler.of()
+    const sh = createTestScheduler()
     const ob$ = sh.Cold([
       next(0, 1),
       next(10, 2),
@@ -50,7 +50,7 @@ describe('slice()', () => {
   })
 
   it('should take 1 to 3', () => {
-    const sh = TestScheduler.of()
+    const sh = createTestScheduler()
     const ob$ = sh.Cold([
       next(0, 1),
       next(10, 2),
@@ -69,7 +69,7 @@ describe('slice()', () => {
   })
 
   it('should take 1 to 3 ', () => {
-    const sh = TestScheduler.of()
+    const sh = createTestScheduler()
     const ob$ = sh.Hot([
       next(201, 1),
       next(210, 2),

@@ -5,13 +5,13 @@
 import * as t from 'assert'
 import {scan} from '../src/operators/Scan'
 import {EVENT} from '../src/testing/Events'
-import {TestScheduler} from '../src/testing/TestScheduler'
+import {createTestScheduler} from '../src/testing/TestScheduler'
 
 const {next, complete} = EVENT
 
 describe('scan()', () => {
   it('should work like R.scan', () => {
-    const sh = TestScheduler.of()
+    const sh = createTestScheduler()
     const $ = sh.Cold<number>([
       next(210, 0),
       next(220, 1),

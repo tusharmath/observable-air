@@ -3,11 +3,11 @@
  */
 import * as t from 'assert'
 import {EVENT} from '../src/testing/Events'
-import {TestScheduler} from '../src/testing/TestScheduler'
+import {createTestScheduler} from '../src/testing/TestScheduler'
 
 describe('new TestScheduler()', () => {
   it('should just ... ', () => {
-    const sh = TestScheduler.of()
+    const sh = createTestScheduler()
     t.strictEqual(sh.now(), 0)
 
     sh.advanceBy(10)
@@ -21,7 +21,7 @@ describe('new TestScheduler()', () => {
   })
 
   it('should just ... ', () => {
-    const sh = TestScheduler.of()
+    const sh = createTestScheduler()
     const {results} = sh.start(() =>
       sh.Hot([
         EVENT.next(210, '0'),

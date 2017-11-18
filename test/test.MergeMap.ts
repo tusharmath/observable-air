@@ -4,13 +4,13 @@
 import * as t from 'assert'
 import {mergeMap} from '../src/operators/MergeMap'
 import {EVENT} from '../src/testing/Events'
-import {TestScheduler} from '../src/testing/TestScheduler'
+import {createTestScheduler} from '../src/testing/TestScheduler'
 
 const {next, complete} = EVENT
 describe('mergeMap()', () => {
   context('when concurrency is Infinity', () => {
     it('should work like flatMap()', () => {
-      const sh = TestScheduler.of()
+      const sh = createTestScheduler()
       const sa$$ = sh.Cold([
         next(10, 'A0'),
         next(20, 'A1'),
@@ -41,7 +41,7 @@ describe('mergeMap()', () => {
   })
   context('when concurrency is 1', () => {
     it('should work like concatMap()', () => {
-      const sh = TestScheduler.of()
+      const sh = createTestScheduler()
       const s$$ = sh.Cold(
         next(10, sh.Cold(next(1, 'A0'), complete(50))),
         next(20, sh.Cold(next(1, 'B0'), complete(50))),

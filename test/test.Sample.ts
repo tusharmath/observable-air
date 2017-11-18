@@ -5,7 +5,7 @@ import * as t from 'assert'
 import {sample} from '../src/operators/Sample'
 import {EVENT} from '../src/testing/Events'
 import {fromMarble} from '../src/testing/Marble'
-import {TestScheduler} from '../src/testing/TestScheduler'
+import {createTestScheduler} from '../src/testing/TestScheduler'
 
 function toArray(...t: Array<any>) {
   return t.join(',')
@@ -13,7 +13,7 @@ function toArray(...t: Array<any>) {
 
 describe('sample()', () => {
   it('should sample multiple sources', () => {
-    const sh = TestScheduler.of()
+    const sh = createTestScheduler()
     const a$ = sh.Hot([
       EVENT.next(210, 'A0'),
       EVENT.next(230, 'A1'),
@@ -47,7 +47,7 @@ describe('sample()', () => {
   })
 
   it('should sample()', () => {
-    const sh = TestScheduler.of()
+    const sh = createTestScheduler()
     const a$ = sh.Hot([
       EVENT.next(210, 0),
       EVENT.next(230, 1),
@@ -81,7 +81,7 @@ describe('sample()', () => {
   })
 
   it('should sample()', () => {
-    const sh = TestScheduler.of()
+    const sh = createTestScheduler()
     const t1$ = sh.Hot(fromMarble('-A-B-C-D'))
     const t2$ = sh.Hot(fromMarble('--a-b-c-d'))
     const {results} = sh.start(() => sample((a, b) => a + b, t2$, [t1$, t2$]))

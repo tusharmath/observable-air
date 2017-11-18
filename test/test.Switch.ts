@@ -4,11 +4,11 @@
 import * as t from 'assert'
 import {switchLatest} from '../src/operators/Switch'
 import {EVENT} from '../src/testing/Events'
-import {TestScheduler} from '../src/testing/TestScheduler'
+import {createTestScheduler} from '../src/testing/TestScheduler'
 
 describe('switch()', () => {
   it('should auto cancel', () => {
-    const sh = TestScheduler.of()
+    const sh = createTestScheduler()
     const a$$ = sh.Hot([
       EVENT.next(210, 'A0'),
       EVENT.next(220, 'A1'),

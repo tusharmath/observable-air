@@ -4,12 +4,12 @@
 
 import * as assert from 'assert'
 import {forEach} from '../src/sinks/ForEach'
-import {TestScheduler} from '../src/testing/TestScheduler'
+import {createTestScheduler} from '../src/testing/TestScheduler'
 
 describe('forEach()', () => {
   context('when a function is passed', () => {
     it('should forward values', () => {
-      const sh = TestScheduler.of()
+      const sh = createTestScheduler()
       const $ = sh.Cold('-1234')
 
       const expected = ['1', '2', '3', '4']
@@ -19,7 +19,7 @@ describe('forEach()', () => {
       assert.deepEqual(actual, expected)
     })
     it('should unsubscribe from the source on error', () => {
-      const sh = TestScheduler.of()
+      const sh = createTestScheduler()
       const expected = '^---!'
       const testObservable = sh.Hot('-123#')
       assert.throws(
@@ -35,7 +35,7 @@ describe('forEach()', () => {
 
   context('when an observer is passed', () => {
     it('should forward values', () => {
-      const sh = TestScheduler.of()
+      const sh = createTestScheduler()
       const $ = sh.Hot('-1234|')
 
       const testObserver = sh.Observer()
@@ -48,7 +48,7 @@ describe('forEach()', () => {
       assert.strictEqual(actual, expected)
     })
     it('should forward errors', () => {
-      const sh = TestScheduler.of()
+      const sh = createTestScheduler()
       const expected = '-123#'
 
       const testObservable = sh.Hot(expected)

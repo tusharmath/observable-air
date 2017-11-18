@@ -93,11 +93,11 @@ It is passed on at the time of subscription and is automatically shared with all
 
 ```ts
 import * as O from 'observable-air'
-import {TestScheduler} from 'observable-air/test'
+import {createTestScheduler} from 'observable-air/test'
 
 // source stream
 const source = O.interval(1000)
-const scheduler = new TestScheduler()
+const scheduler = createTestScheduler()
 const observer = {
   next () { console.log('hi')}
 }
@@ -686,16 +686,13 @@ interface TestScheduler extends Scheduler {
 
   // Creates a TestObserver. TestObserver keeps log of when and what type of an event was fired.
   Observer (): Observer
-
-  // Factory function to create a new TestScheduler
-  static of (): TestScheduler
 }
 ```
 
 **Example:**
 ```ts
 import {compose, add} from 'ramda'
-import {TestScheduler, EVENT} from 'observable-air/test'
+import {createTestScheduler, EVENT} from 'observable-air/test'
 import * as assert from 'assert'
 import * as O from 'observable-air'
 
@@ -714,7 +711,7 @@ O.forEach(console.log, $) // takes 500ms to complete the test
 
 // Testing using Assert
 
-const tScheduler = TestScheduler
+const tScheduler = createTestScheduler()
 
  // runs async code synchronously
 const {results} = tScheduler.start(() => even(100))
