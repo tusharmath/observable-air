@@ -30,7 +30,9 @@ export function fromMarble(
         time += size
         break
       default:
-        events.push(EVENT.next(time, message[i]))
+        const m = parseInt(message[i], 10)
+        if (isNaN(m)) events.push(EVENT.next(time, message[i]))
+        else events.push(EVENT.next(time, m))
         time += size
         break
     }
