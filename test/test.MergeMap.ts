@@ -1,8 +1,9 @@
 /**
  * Created by tushar on 31/08/17.
  */
-import * as t from 'assert'
+import * as assert from 'assert'
 import {mergeMap} from '../src/operators/MergeMap'
+import {just} from '../src/sources/Create'
 import {EVENT} from '../src/testing/Events'
 import {createTestScheduler} from '../src/testing/TestScheduler'
 
@@ -26,9 +27,11 @@ describe('mergeMap()', () => {
       ])
 
       const s$$ = sh.Cold(next(10, sa$$), next(20, sb$$), complete(100))
-      const {results} = sh.start(() => mergeMap(Infinity, (i: any) => i, s$$))
+      const {results} = sh.start(() =>
+        mergeMap(just(Infinity), (i: any) => i, s$$)
+      )
 
-      t.deepEqual(results, [
+      assert.deepEqual(results, [
         next(220, 'A0'),
         next(230, 'A1'),
         next(230, 'B0'),
@@ -48,13 +51,67 @@ describe('mergeMap()', () => {
         next(30, sh.Cold(next(1, 'C0'), complete(50))),
         complete(600)
       )
-      const {results} = sh.start(() => mergeMap(1, (i: any) => i, s$$))
-      t.deepEqual(results, [
+      const {results} = sh.start(() => mergeMap(just(1), (i: any) => i, s$$))
+      assert.deepEqual(results, [
         next(211, 'A0'),
         next(261, 'B0'),
         next(311, 'C0'),
         complete(800)
       ])
+    })
+  })
+
+  context('when concurrency increases', () => {
+    it('should automatically subscribe from buffer', () => {
+      const sh = createTestScheduler()
+      const conc = '    -1-----------3----------|'
+      const a = '       --A---A---A---A---A---A-|'
+      const b = '       ---B---B---B---B---B---B|'
+      const c = '       ----C---C---C---C---C---|'
+      const expected = '--A---A---A---ABC-ABC-AB|'
+
+      const {marble} = sh.start(() => {
+        const concurr$ = sh.Hot(conc)
+        const a$ = sh.Hot(a)
+        const b$ = sh.Hot(b)
+        const c$ = sh.Hot(c)
+        const source$$ = sh.Hot(
+          next(200, a$),
+          next(215, b$),
+          next(220, c$),
+          complete(300)
+        )
+        return mergeMap(concurr$, (i: any) => i, source$$)
+      })
+
+      assert.strictEqual(marble, expected)
+    })
+  })
+
+  context('when concurrency decreases', () => {
+    it('should automatically unsubscribe the oldest', () => {
+      const sh = createTestScheduler()
+      const conc = '    -3-----------1----------|'
+      const a = '       --A---A---A---A---A---A-|'
+      const b = '       ---B---B---B---B---B---B|'
+      const c = '       ----C---C---C---C---C---|'
+      const expected = '--ABC-ABC-ABC---C---C---|'
+
+      const {marble} = sh.start(() => {
+        const concurr$ = sh.Hot(conc)
+        const a$ = sh.Hot(a)
+        const b$ = sh.Hot(b)
+        const c$ = sh.Hot(c)
+        const source$$ = sh.Hot(
+          next(200, a$),
+          next(215, b$),
+          next(220, c$),
+          complete(300)
+        )
+        return mergeMap(concurr$, (i: any) => i, source$$)
+      })
+
+      assert.strictEqual(marble, expected)
     })
   })
 })

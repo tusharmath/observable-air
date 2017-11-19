@@ -33,6 +33,14 @@ export class CompositeSubscription implements ISubscription {
     this.subscriptions = new LinkedList<ISubscription>()
   }
 
+  head() {
+    return this.subscriptions.head()
+  }
+
+  tail() {
+    return this.subscriptions.tail()
+  }
+
   add(d: ISubscription) {
     return this.subscriptions.add(d)
   }
