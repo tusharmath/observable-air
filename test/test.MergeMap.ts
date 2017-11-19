@@ -70,7 +70,7 @@ describe('mergeMap()', () => {
       const c = '       ----C---C---C---C---C---|'
       const expected = '--A---A---A---ABC-ABC-AB|'
 
-      const {marble} = sh.start(() => {
+      const observer = sh.start(() => {
         const concurr$ = sh.Hot(conc)
         const a$ = sh.Hot(a)
         const b$ = sh.Hot(b)
@@ -84,7 +84,7 @@ describe('mergeMap()', () => {
         return mergeMap(concurr$, (i: any) => i, source$$)
       })
 
-      assert.strictEqual(marble, expected)
+      assert.strictEqual(observer.toString(), expected)
     })
   })
 
@@ -97,7 +97,7 @@ describe('mergeMap()', () => {
       const c = '       ----C---C---C---C---C---|'
       const expected = '--ABC-ABC-ABC---C---C---|'
 
-      const {marble} = sh.start(() => {
+      const observer = sh.start(() => {
         const concurr$ = sh.Hot(conc)
         const a$ = sh.Hot(a)
         const b$ = sh.Hot(b)
@@ -111,7 +111,7 @@ describe('mergeMap()', () => {
         return mergeMap(concurr$, (i: any) => i, source$$)
       })
 
-      assert.strictEqual(marble, expected)
+      assert.strictEqual(observer.toString(), expected)
     })
   })
 })
