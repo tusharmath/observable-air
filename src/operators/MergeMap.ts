@@ -117,7 +117,12 @@ class MergeMapOuterObserver<T, S> extends ErrorMixin(Virgin)
   }
 
   checkComplete() {
-    if (this.__completed && this.cSub.length() === 0) this.sink.complete()
+    if (
+      this.__completed &&
+      this.cSub.length() === 0 &&
+      this.__buffer.length === 0
+    )
+      this.sink.complete()
     else this.subscribeNew()
   }
 

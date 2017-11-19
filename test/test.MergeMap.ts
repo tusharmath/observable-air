@@ -45,19 +45,27 @@ describe('mergeMap()', () => {
   context('when concurrency is 1', () => {
     it('should work like concatMap()', () => {
       const sh = createTestScheduler()
-      const s$$ = sh.Cold(
-        next(10, sh.Cold(next(1, 'A0'), complete(50))),
-        next(20, sh.Cold(next(1, 'B0'), complete(50))),
-        next(30, sh.Cold(next(1, 'C0'), complete(50))),
-        complete(600)
-      )
-      const {results} = sh.start(() => mergeMap(just(1), (i: any) => i, s$$))
-      assert.deepEqual(results, [
-        next(211, 'A0'),
-        next(261, 'B0'),
-        next(311, 'C0'),
-        complete(800)
-      ])
+
+      const conc = '    -1|                      '
+      const a = '       --A---A|                 '
+      const b = '       ---B---B---B---B|        '
+      const c = '       ----C---C---C---C---C---|'
+      const expected = '--A---AB---B---BC---C---|'
+
+      const observer = sh.start(() => {
+        const conc$ = sh.Hot(conc)
+        const a$ = sh.Hot(a)
+        const b$ = sh.Hot(b)
+        const c$ = sh.Hot(c)
+        const source$$ = sh.Hot(
+          next(200, a$),
+          next(215, b$),
+          next(220, c$),
+          complete(300)
+        )
+        return mergeMap(conc$, (i: any) => i, source$$)
+      })
+      assert.deepEqual(observer.toString(), expected)
     })
   })
 
