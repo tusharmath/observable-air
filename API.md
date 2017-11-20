@@ -418,7 +418,7 @@ function mergeMap(concurrency: number,project: (s) => Observable,source: Observa
 **Example:**
 ```ts
 const $ = O.mergeMap(
-  1, 
+  O.just(1),
   (ev) => O.slice(0, 3, O.interval(100)),
   O.fromEvent(document, 'click')
 )

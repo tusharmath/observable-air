@@ -9,7 +9,7 @@ describe('unique', () => {
   it('should return emit unique value', () => {
     const sh = createTestScheduler()
     const source = sh.Hot('-a-b-c-a--b-|')
-    const {marble} = sh.start(() => unique(source))
-    assert.strictEqual(marble, '-a-b-c------|')
+    const observer = sh.start(() => unique(source))
+    assert.strictEqual(observer.toString(), '-a-b-c------|')
   })
 })

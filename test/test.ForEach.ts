@@ -28,7 +28,7 @@ describe('forEach()', () => {
         '#'
       )
 
-      const actual = testObservable.marble
+      const actual = testObservable.toString()
       assert.strictEqual(actual, expected)
     })
   })
@@ -42,7 +42,7 @@ describe('forEach()', () => {
 
       sh.startSubscription(() => forEach(testObserver, $))
 
-      const actual = testObserver.marble
+      const actual = testObserver.toString()
       const expected = '-1234|'
 
       assert.strictEqual(actual, expected)
@@ -56,7 +56,7 @@ describe('forEach()', () => {
 
       sh.startSubscription(() => forEach(testObserver, testObservable, sh))
 
-      const actual = testObserver.marble
+      const actual = testObserver.toString()
 
       assert.strictEqual(actual, expected)
     })
