@@ -411,9 +411,9 @@ It is a special case of [mergeMap](#mergeMap) with concurrency set to `NUMBER.PO
 ## mergeMap
 
 ```ts
-function mergeMap(concurrency: number,project: (s) => Observable,source: Observable): Observable
+function mergeMap(concurrency: Observable,project: (s) => Observable,source: Observable): Observable
 ```
-`mergeMap()` converts a higher order stream into a flattened stream. The `concurrency` helps in keeping a check on the maximum number of subscriptions the operator can have.
+`mergeMap()` is a very generic and yet a very powerful operator. It converts a higher order stream into a flattened stream. The `concurrency` helps in keeping a check on the maximum number of subscriptions the operator can have. Unlike `RxJS` the concurrency can be dynamically controlled using the concurrency Observable. 
 
 **Example:**
 ```ts
