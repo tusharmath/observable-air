@@ -77,11 +77,11 @@ export const slice = curry(function(
 } & {
   <T>(start: number): {(count: number, source: IObservable<T>): IObservable<T>}
 } & {
-    <T>(start: number, count: number): {
-      (source: IObservable<T>): IObservable<T>
-    }
-  } & {
-    <T>(start: number): {
-      (count: number): {(source: IObservable<T>): IObservable<T>}
-    }
+  <T>(start: number, count: number): {
+    (source: IObservable<T>): IObservable<T>
   }
+} & {
+  <T>(start: number): {
+    (count: number): {(source: IObservable<T>): IObservable<T>}
+  }
+}
