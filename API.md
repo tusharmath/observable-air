@@ -21,6 +21,7 @@
   - [fromNodeStream](#fromNodeStream)
 
 - [Operators](#operators)
+  - [combine](#combine)
   - [concat](#concat)
   - [concatMap](#concatMap)
   - [delay](#delay)
@@ -429,6 +430,13 @@ const $ = O.mergeMap(
 function concatMap(fn : (i: any) => Observable, source: Observable): Observable
 ```
 Its a special case for [mergeMap](#mergeMap) where the `concurrency` is set to `one`. This ensures unless the previous subscriptions end new ones are not created.
+
+## combine
+```ts
+function combine(a: Selector, s: Observable[]): Observable
+```
+Combines multiple streams into one using a selector.
+
 
 ## concat
 ```ts
