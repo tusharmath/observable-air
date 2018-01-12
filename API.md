@@ -14,11 +14,12 @@
   - [frames](#frames)
   - [fromArray](#fromArray)
   - [fromDOM](#fromDOM)
+  - [fromNodeStream](#fromNodeStream)
   - [fromPromise](#fromPromise)
   - [interval](#interval)
   - [just](#just)
   - [never](#never)
-  - [fromNodeStream](#fromNodeStream)
+  - [subject](#subject)
 
 - [Operators](#operators)
   - [concat](#concat)
@@ -330,6 +331,23 @@ O.forEach(console.log, $) // logs `AIR`
 
 ```ts
 function never(): Observable
+```
+
+## subject
+
+```ts
+function subject(): Observable & Observer
+```
+`Subject` is a special type that is both and `Observer` and also an `Observable`.
+
+**Example:**
+```ts
+const $ = O.subject()
+
+O.forEach(console.log, $) // logs A
+
+$.next('A')
+
 ```
 
 ## fromNodeStream
