@@ -2,6 +2,7 @@
  * Created by tushar on 17/02/17.
  */
 
+export {combine} from './operators/Combine'
 export {concatMap} from './operators/MergeMap'
 export {concat} from './operators/Concat'
 export {delay} from './operators/Delay'
