@@ -164,6 +164,10 @@ export class TestScheduler implements IScheduler {
   Observer<T>() {
     return new TestObserver<T>(this)
   }
+
+  timeline(tasks: Array<[number, () => void]>) {
+    tasks.forEach(([time, task]) => this.delay(task, time))
+  }
 }
 
 export const createTestScheduler = (
