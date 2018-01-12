@@ -3835,7 +3835,7 @@ traverse@~0.6.6:
   version "0.6.6"
   resolved "https://registry.yarnpkg.com/traverse/-/traverse-0.6.6.tgz#cbdf560fd7b9af632502fed40f918c157ea97137"
 
-travis-deploy-once@^4.0.0:
+travis-deploy-once@^4.0.0, travis-deploy-once@^4.3.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/travis-deploy-once/-/travis-deploy-once-4.3.0.tgz#f6615839b077b1c29867e2b96f1046963baa10c8"
   dependencies:
