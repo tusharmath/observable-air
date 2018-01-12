@@ -38,4 +38,4 @@ class Empty implements IObservable<void> {
 
 export const empty = (): IObservable<void> => new Empty()
 export const just = <T>(value: T): IObservable<T> => new JustObservable(value)
-export const never = (): IObservable<void> => new Never()
+export const never = (): IObservable<any> => new Never()
