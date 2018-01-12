@@ -712,6 +712,9 @@ interface TestScheduler extends Scheduler {
 
   // Creates a TestObserver. TestObserver keeps log of when and what type of an event was fired.
   Observer (): Observer
+
+  // Schedules multiple jobs using an array of tasks
+  timeline (tasks: [[Number, () => void]]): void
 }
 ```
 
