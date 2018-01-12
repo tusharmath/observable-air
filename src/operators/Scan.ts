@@ -59,11 +59,11 @@ export const scan = curry(function<T, V>(
     (seed: TSeed<R>, source: TSource<T>): TResult<R>
   }
 } & {
-    <T, R>(reducer: TReducer<T, R>, seed: TSeed<R>): {
-      (source: TSource<T>): TResult<R>
-    }
-  } & {
-    <T, R>(reducer: TReducer<T, R>): {
-      (seed: TSeed<R>): {(source: TSource<T>): TResult<R>}
-    }
+  <T, R>(reducer: TReducer<T, R>, seed: TSeed<R>): {
+    (source: TSource<T>): TResult<R>
   }
+} & {
+  <T, R>(reducer: TReducer<T, R>): {
+    (seed: TSeed<R>): {(source: TSource<T>): TResult<R>}
+  }
+}
