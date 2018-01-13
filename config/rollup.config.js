@@ -6,7 +6,9 @@
 
 import commonjs from 'rollup-plugin-commonjs'
 import uglify from 'rollup-plugin-babili'
-export default {
+import resolve from 'rollup-plugin-node-resolve'
+
+export default [{
   input: './src/main.js',
   output: {
     exports: 'named',
@@ -18,4 +20,17 @@ export default {
     uglify(),
     commonjs({}),
   ]
-}
+},
+
+  {
+    input: './benchmarks/benchmark.js',
+    output: {
+      format: 'es',
+      file: './.dist/benchmark.js',
+    },
+    plugins: [
+      commonjs({}),
+      resolve()
+    ]
+  }
+]
