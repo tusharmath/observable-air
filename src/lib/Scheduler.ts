@@ -57,8 +57,7 @@ class ASAP implements ISubscription {
 
   constructor(private task: () => void) {
     const global = getGlobal()
-    if (global.requestIdleCallback) global.requestIdleCallback(this.onEvent)
-    else if (global.process) global.process.nextTick(this.onEvent)
+    if (global.process) global.process.nextTick(this.onEvent)
     else Promise.resolve().then(this.onEvent)
   }
 
