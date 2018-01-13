@@ -95,6 +95,10 @@
   version "9.3.0"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-9.3.0.tgz#3a129cda7c4e5df2409702626892cb4b96546dd5"
 
+"@types/ramda@^0.25.15":
+  version "0.25.15"
+  resolved "https://registry.yarnpkg.com/@types/ramda/-/ramda-0.25.15.tgz#a28311e9617ce467567fe6a0b1065013aa1dd8d7"
+
 "@types/strip-bom@^3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@types/strip-bom/-/strip-bom-3.0.0.tgz#14a8ec3956c2e81edb7520790aecf21c290aebd2"

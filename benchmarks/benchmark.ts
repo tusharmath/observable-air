@@ -11,7 +11,7 @@ const patch = snabbdom.init([
   require('snabbdom/modules/style').default
 ])
 
-const root = document.body.querySelector('.container')
+const root = document.body.querySelector('.container') as HTMLElement
 let state = app.init()
 
 const emitter = hoe.create<Action<any>>(action => {
