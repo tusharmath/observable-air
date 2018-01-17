@@ -35,7 +35,7 @@
     "nyc": "^11.0.3",
     "prettify": "^0.1.7",
     "request-promise": "^4.1.1",
-    "rollup": "^0.53.0",
+    "rollup": "^0.54.1",
     "rollup-plugin-babili": "^3.0.0",
     "rollup-plugin-commonjs": "^8.0.2",
     "rollup-plugin-uglify": "^2.0.1",
