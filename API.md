@@ -549,8 +549,8 @@ Takes in multiple sources and a sample source and returns a new observable which
 
 ```ts
 O.sample(
-  O.interval(1000),
   (a, b) => [a, b],
+  O.interval(1000),
   [
     O.mapTo('A', O.interval(100)),
     O.mapTo('B', O.interval(200))
