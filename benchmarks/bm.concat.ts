@@ -13,6 +13,8 @@ export function bm_concat(suite: Suite) {
   return suite.add(
     '(file, file) -> concat',
     (d: IDeferred) => run(concat(fromArray(a), fromArray(b)), d),
-    {defer: true}
+    {
+      defer: true
+    }
   )
 }

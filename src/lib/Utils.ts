@@ -12,7 +12,7 @@ export function curry(f: Function, l: number = f.length): any {
 }
 
 export interface ISafeValue<T> {
-  isError(): boolean
+  isError: boolean
   getValue(): T
   getError(): Error
 }
@@ -22,11 +22,7 @@ export interface ISafeFunction<V, C> {
 }
 
 class Guarded<T> implements ISafeValue<T> {
-  constructor(private value: Error | T) {}
-
-  isError(): boolean {
-    return this.value instanceof Error
-  }
+  constructor(private value: Error | T, readonly isError: boolean) {}
 
   getValue() {
     return this.value as T
@@ -43,9 +39,9 @@ class BaseSafeFunction<T extends Function, V, C>
 
   call(ctx: C, ...t: any[]): ISafeValue<V> {
     try {
-      return new Guarded(this.f.apply(ctx, t))
+      return new Guarded(this.f.apply(ctx, t), false)
     } catch (e) {
-      return new Guarded(e)
+      return new Guarded(e, true)
     }
   }
 }

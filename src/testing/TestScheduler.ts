@@ -88,6 +88,10 @@ export class TestScheduler implements IScheduler {
     return this.delay(task, this.now() + this.rafTimeout, 0)
   }
 
+  frames(task: () => void): ISubscription {
+    return this.periodic(task, this.rafTimeout)
+  }
+
   periodic(task: () => void, interval: number): ISubscription {
     var closed = false
     const repeatedTask = () => {
@@ -97,7 +101,9 @@ export class TestScheduler implements IScheduler {
     }
     this.delay(repeatedTask, interval)
     return {
-      closed,
+      get closed() {
+        return closed
+      },
       unsubscribe() {
         closed = true
       }
