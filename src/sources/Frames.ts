@@ -10,24 +10,25 @@ import {ISubscription} from '../lib/Subscription'
 class RAFSubscription implements ISubscription {
   observer: IObserver<number>
   subscription: ISubscription
-  closed = false
 
   constructor(private sink: IObserver<void>, private scheduler: IScheduler) {
     this.schedule()
   }
 
   private schedule() {
-    this.subscription = this.scheduler.frame(this.onFrame)
+    this.subscription = this.scheduler.frames(this.onFrame.bind(this))
   }
 
-  onFrame = () => {
-    if (this.closed) return
+  onFrame() {
     this.sink.next(undefined)
-    this.schedule()
   }
 
   unsubscribe(): void {
-    this.closed = true
+    this.subscription.unsubscribe()
+  }
+
+  get closed() {
+    return this.subscription.closed
   }
 }
 
@@ -36,6 +37,7 @@ class FrameObservable implements IObservable<void> {
     return new RAFSubscription(safeObserver(observer), scheduler)
   }
 }
+
 export function frames(): IObservable<void> {
   return new FrameObservable()
 }
