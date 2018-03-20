@@ -8,7 +8,7 @@ import {interval} from '../src/sources/Interval'
 import {EVENT, EventError} from '../src/testing/Events'
 import {toMarble} from '../src/testing/Marble'
 import {createTestScheduler} from '../src/testing/TestScheduler'
-import {ERROR_MESSAGE, thrower} from '../src/testing/Thrower'
+import {ERROR_MESSAGE, thrower, throwError} from '../src/testing/Thrower'
 const {error} = EVENT
 
 describe('interval()', () => {
@@ -31,5 +31,14 @@ describe('interval()', () => {
       (observer.results[0] as EventError).value.message,
       ERROR_MESSAGE
     )
+  })
+
+  it('should stop after error', () => {
+    const sh = createTestScheduler()
+    const {results} = sh.start(() =>
+      scan(i => (i === 5 ? throwError('Yay!') : i + 1), 0, interval(20))
+    )
+    const expected = '--1-2-3-4-5-#'
+    t.strictEqual(toMarble(results), expected)
   })
 })

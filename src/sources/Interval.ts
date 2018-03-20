@@ -3,28 +3,31 @@
  */
 import {IObservable} from '../lib/Observable'
 import {IObserver} from '../lib/Observer'
-import {safeObserver} from '../lib/SafeObserver'
+import {ISafeObserver, safeObserver} from '../lib/SafeObserver'
 import {IScheduler} from '../lib/Scheduler'
 import {ISubscription} from '../lib/Subscription'
 
 class TimerSubscription implements ISubscription {
-  closed = false
   subscription: ISubscription
 
   constructor(
-    private sink: IObserver<void>,
+    private sink: ISafeObserver<void>,
     scheduler: IScheduler,
     interval: number
   ) {
-    this.subscription = scheduler.periodic(this.onFrame.bind(this), interval)
+    this.subscription = scheduler.periodic(this.onEvent.bind(this), interval)
   }
 
-  onFrame() {
+  onEvent() {
     this.sink.next(undefined)
+    if (this.sink.erred) this.unsubscribe()
+  }
+
+  get closed() {
+    return this.subscription.closed
   }
 
   unsubscribe(): void {
-    this.closed = true
     this.subscription.unsubscribe()
   }
 }
