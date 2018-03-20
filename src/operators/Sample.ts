@@ -106,11 +106,11 @@ export const sample = curry(function<T>(
     (sampler: TSampler, source: TSources): TResult<T>
   }
 } & {
-    <T>(selector: TSelector<T>, sampler: TSampler): {
-      (source: TSources): TResult<T>
-    }
-  } & {
-    <T>(selector: TSelector<T>): {
-      (sampler: TSampler): {(source: TSources): TResult<T>}
-    }
+  <T>(selector: TSelector<T>, sampler: TSampler): {
+    (source: TSources): TResult<T>
   }
+} & {
+  <T>(selector: TSelector<T>): {
+    (sampler: TSampler): {(source: TSources): TResult<T>}
+  }
+}

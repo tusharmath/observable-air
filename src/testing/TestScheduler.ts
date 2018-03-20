@@ -165,7 +165,11 @@ export class TestScheduler implements IScheduler {
     return new TestObserver<T>(this)
   }
 
-  static of(rafTimeout = DEFAULT_OPTIONS.rafTimeout) {
-    return new TestScheduler(rafTimeout)
+  timeline(tasks: Array<[number, () => void]>) {
+    tasks.forEach(([time, task]) => this.delay(task, time))
   }
 }
+
+export const createTestScheduler = (
+  rafTimeout: number = DEFAULT_OPTIONS.rafTimeout
+) => new TestScheduler(rafTimeout)

@@ -6,14 +6,14 @@ import * as t from 'assert'
 import {map} from '../src/operators/Map'
 import {fromArray} from '../src/sources/FromArray'
 import {EVENT} from '../src/testing/Events'
-import {TestScheduler} from '../src/testing/TestScheduler'
+import {createTestScheduler} from '../src/testing/TestScheduler'
 import {ERROR_MESSAGE, throwError} from '../src/testing/Thrower'
 
 const {next, error} = EVENT
 
 describe('fromArray()', () => {
   it('should emit array values as events', () => {
-    const sh = TestScheduler.of()
+    const sh = createTestScheduler()
     const testFunction = (x: any) =>
       x === 2 ? throwError(ERROR_MESSAGE) : x * 100
     const {results} = sh.start(() => map(testFunction, fromArray([1, 2, 3])))

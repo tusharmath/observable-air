@@ -5,17 +5,17 @@ import * as t from 'assert'
 import {Observable} from '../src/lib/Observable'
 import {slice} from '../src/main'
 import {EVENT} from '../src/testing/Events'
-import {TestScheduler} from '../src/testing/TestScheduler'
+import {createTestScheduler} from '../src/testing/TestScheduler'
 
 describe('new Observable()', () => {
   it('should emit values via next()', () => {
-    const sh = TestScheduler.of()
+    const sh = createTestScheduler()
     const {results} = sh.start(() => new Observable(ob => ob.next('A')))
     t.deepEqual(results, [EVENT.next(201, 'A')])
   })
 
   it('should be subscribe-able', () => {
-    const sh = TestScheduler.of()
+    const sh = createTestScheduler()
     const {results} = sh.start(
       () =>
         new Observable((ob, sh) => {
@@ -26,7 +26,7 @@ describe('new Observable()', () => {
   })
 
   it('should unsubscribe', () => {
-    const sh = TestScheduler.of()
+    const sh = createTestScheduler()
     const actual = sh.start(() =>
       slice(
         0,

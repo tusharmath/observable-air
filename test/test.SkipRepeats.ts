@@ -5,13 +5,13 @@
 import * as t from 'assert'
 import {skipRepeats} from '../src/operators/SkipRepeats'
 import {EVENT} from '../src/testing/Events'
-import {TestScheduler} from '../src/testing/TestScheduler'
+import {createTestScheduler} from '../src/testing/TestScheduler'
 
 const {next, complete} = EVENT
 
 describe('skipRepeats()', () => {
   it('should skip duplicates', () => {
-    const sh = TestScheduler.of()
+    const sh = createTestScheduler()
     const $ = sh.Cold<number>([
       next(210, 0),
       next(215, 0),

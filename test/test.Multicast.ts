@@ -7,12 +7,12 @@ import {map} from '../src/operators/Map'
 import {multicast} from '../src/operators/Multicast'
 import {EVENT} from '../src/testing/Events'
 import {TestObserver} from '../src/testing/TestObserver'
-import {TestScheduler} from '../src/testing/TestScheduler'
+import {createTestScheduler} from '../src/testing/TestScheduler'
 
 describe('multicast()', () => {
   it('should subscribe only once', () => {
     let i = 0
-    const sh = TestScheduler.of()
+    const sh = createTestScheduler()
     const ob0 = new TestObserver(sh)
     const ob1 = new TestObserver(sh)
     const t$ = multicast(

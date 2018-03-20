@@ -9,7 +9,7 @@ import {toMarble} from './Marble'
 export class TestObserver<T> implements IObserver<T> {
   results: Array<IObservableEvent>
 
-  get marble() {
+  toString() {
     return toMarble(this.results)
   }
 

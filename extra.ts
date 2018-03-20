@@ -5,7 +5,7 @@
 import {Readable, Stream} from 'stream'
 import {IObservable} from './src/lib/Observable'
 import {IObserver} from './src/lib/Observer'
-import {createScheduler} from './src/lib/Scheduler'
+import {createScheduler, IScheduler} from './src/lib/Scheduler'
 import {ISubscription} from './src/lib/Subscription'
 import * as O from './src/main'
 import {combine} from './src/operators/Combine'
@@ -17,9 +17,11 @@ export {Observable} from './src/lib/Observable'
 
 export class Air<T> implements IObservable<T> {
   constructor(private src: IObservable<T>) {}
-
-  subscribe(observer: IObserver<T>): ISubscription {
-    return this.src.subscribe(observer, createScheduler())
+  subscribe(
+    observer: IObserver<T>,
+    scheduler: IScheduler = createScheduler()
+  ): ISubscription {
+    return this.src.subscribe(observer, scheduler)
   }
 
   concatMap<S>(fn: (t: T) => IObservable<S>) {

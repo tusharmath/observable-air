@@ -4,11 +4,11 @@
 import * as t from 'assert'
 import {concat} from '../src/operators/Concat'
 import {toMarble} from '../src/testing/Marble'
-import {TestScheduler} from '../src/testing/TestScheduler'
+import {createTestScheduler} from '../src/testing/TestScheduler'
 
 describe('concat()', () => {
   it('should concat two stream', () => {
-    const sh = TestScheduler.of()
+    const sh = createTestScheduler()
     const s0 = sh.Hot('--A--B--C--|')
     const s1 = sh.Hot('---1---2---3---4---|')
     const actual = toMarble(sh.start(() => concat(s0, s1)).results)

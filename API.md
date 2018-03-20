@@ -14,13 +14,15 @@
   - [frames](#frames)
   - [fromArray](#fromArray)
   - [fromDOM](#fromDOM)
+  - [fromNodeStream](#fromNodeStream)
   - [fromPromise](#fromPromise)
   - [interval](#interval)
   - [just](#just)
   - [never](#never)
-  - [fromNodeStream](#fromNodeStream)
+  - [subject](#subject)
 
 - [Operators](#operators)
+  - [combine](#combine)
   - [concat](#concat)
   - [concatMap](#concatMap)
   - [delay](#delay)
@@ -93,11 +95,11 @@ It is passed on at the time of subscription and is automatically shared with all
 
 ```ts
 import * as O from 'observable-air'
-import {TestScheduler} from 'observable-air/test'
+import {createTestScheduler} from 'observable-air/test'
 
 // source stream
 const source = O.interval(1000)
-const scheduler = new TestScheduler()
+const scheduler = createTestScheduler()
 const observer = {
   next () { console.log('hi')}
 }
@@ -332,6 +334,23 @@ O.forEach(console.log, $) // logs `AIR`
 function never(): Observable
 ```
 
+## subject
+
+```ts
+function subject(): Observable & Observer
+```
+`Subject` is a special type that is both and `Observer` and also an `Observable`.
+
+**Example:**
+```ts
+const $ = O.subject()
+
+O.forEach(console.log, $) // logs A
+
+$.next('A')
+
+```
+
 ## fromNodeStream
 
 ```ts
@@ -411,14 +430,14 @@ It is a special case of [mergeMap](#mergeMap) with concurrency set to `NUMBER.PO
 ## mergeMap
 
 ```ts
-function mergeMap(concurrency: number,project: (s) => Observable,source: Observable): Observable
+function mergeMap(concurrency: Observable,project: (s) => Observable,source: Observable): Observable
 ```
-`mergeMap()` converts a higher order stream into a flattened stream. The `concurrency` helps in keeping a check on the maximum number of subscriptions the operator can have.
+`mergeMap()` is a very generic and yet a very powerful operator. It converts a higher order stream into a flattened stream. The `concurrency` helps in keeping a check on the maximum number of subscriptions the operator can have. Unlike `RxJS` the concurrency can be dynamically controlled using the concurrency Observable. 
 
 **Example:**
 ```ts
 const $ = O.mergeMap(
-  1, 
+  O.just(1),
   (ev) => O.slice(0, 3, O.interval(100)),
   O.fromEvent(document, 'click')
 )
@@ -429,6 +448,13 @@ const $ = O.mergeMap(
 function concatMap(fn : (i: any) => Observable, source: Observable): Observable
 ```
 Its a special case for [mergeMap](#mergeMap) where the `concurrency` is set to `one`. This ensures unless the previous subscriptions end new ones are not created.
+
+## combine
+```ts
+function combine(a: Selector, s: Observable[]): Observable
+```
+Combines multiple streams into one using a selector.
+
 
 ## concat
 ```ts
@@ -687,15 +713,15 @@ interface TestScheduler extends Scheduler {
   // Creates a TestObserver. TestObserver keeps log of when and what type of an event was fired.
   Observer (): Observer
 
-  // Factory function to create a new TestScheduler
-  static of (): TestScheduler
+  // Schedules multiple jobs using an array of tasks
+  timeline (tasks: [[Number, () => void]]): void
 }
 ```
 
 **Example:**
 ```ts
 import {compose, add} from 'ramda'
-import {TestScheduler, EVENT} from 'observable-air/test'
+import {createTestScheduler, EVENT} from 'observable-air/test'
 import * as assert from 'assert'
 import * as O from 'observable-air'
 
@@ -714,7 +740,7 @@ O.forEach(console.log, $) // takes 500ms to complete the test
 
 // Testing using Assert
 
-const tScheduler = TestScheduler
+const tScheduler = createTestScheduler()
 
  // runs async code synchronously
 const {results} = tScheduler.start(() => even(100))

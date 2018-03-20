@@ -13,7 +13,7 @@ export class TestObservable<T> implements IObservable<T> {
 
   constructor(private func: (observer: IObserver<T>) => ISubscription) {}
 
-  get marble() {
+  toString() {
     return toMarble(this.subscriptions)
   }
 

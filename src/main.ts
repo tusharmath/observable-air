@@ -2,6 +2,7 @@
  * Created by tushar on 17/02/17.
  */
 
+export {combine} from './operators/Combine'
 export {concatMap} from './operators/MergeMap'
 export {concat} from './operators/Concat'
 export {delay} from './operators/Delay'
@@ -34,6 +35,7 @@ export {sample} from './operators/Sample'
 export {scan} from './operators/Scan'
 export {skipRepeats} from './operators/SkipRepeats'
 export {slice} from './operators/Slice'
+export {subject} from './sources/Subject'
 export {switchLatest} from './operators/Switch'
 export {switchMap} from './operators/Switch'
 export {tap} from './operators/Map'
