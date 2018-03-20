@@ -15,7 +15,7 @@
     "build": "rollup -c ./config/rollup.config.js",
     "lint": "git ls-files | grep '.ts$' | xargs tslint",
     "lint:fix": "git ls-files | grep '.ts$' | xargs tslint --fix",
-    "prettier": "git ls-files | grep '.ts$' | xargs prettier --print-width 80 --write --single-quote --no-semi --no-bracket-spacing",
+    "prettier": "git ls-files | grep '.ts$' | xargs prettier --write --config=.prettierrc",
     "travis-deploy-once": "travis-deploy-once",
     "semantic-release": "semantic-release"
   },
