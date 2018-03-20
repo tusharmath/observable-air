@@ -19,6 +19,7 @@ class FromArraySubscription<T> implements ISubscription {
     this.subscription = scheduler.asap(this.executeSafely.bind(this))
   }
 
+  // TODO: use mixins
   private executeSafely() {
     const r = tryCatch(this.execute).call(this)
     if (r.isError()) this.sink.error(r.getError())
