@@ -60,7 +60,7 @@ export class Air<T> implements IObservable<T> {
     return new Air(O.map(fn, this))
   }
 
-  mergeMap<S>(n: number, project: (t: T) => IObservable<S>) {
+  mergeMap<S>(n: IObservable<number>, project: (t: T) => IObservable<S>) {
     return new Air(O.mergeMap(n, project, this))
   }
 
