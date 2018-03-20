@@ -14,6 +14,8 @@ export function bm_mergeMap(suite: Suite) {
   return suite.add(
     'file -> mergeMap',
     (d: IDeferred) => run(mergeMap(just(1e2), fromArray, fromArray(a)), d),
-    {defer: true}
+    {
+      defer: true
+    }
   )
 }
