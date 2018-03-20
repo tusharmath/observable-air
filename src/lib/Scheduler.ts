@@ -5,9 +5,15 @@ import {ISubscription} from './Subscription'
 
 export interface IScheduler {
   delay(task: () => void, relativeTime: number): ISubscription
+
   periodic(task: () => void, interval: number): ISubscription
+
   frame(task: () => void): ISubscription
+
+  frames(task: () => void): ISubscription
+
   asap(task: () => void): ISubscription
+
   now(): number
 }
 
@@ -33,6 +39,7 @@ class Periodic implements ISubscription {
     clearInterval(this.id)
   }
 }
+
 class Delay implements ISubscription {
   closed = false
 
@@ -52,6 +59,7 @@ class Delay implements ISubscription {
     }
   }
 }
+
 class ASAP implements ISubscription {
   closed = false
 
@@ -69,7 +77,8 @@ class ASAP implements ISubscription {
     if (this.closed === false) this.closed = true
   }
 }
-class Frames implements ISubscription {
+
+class Frame implements ISubscription {
   closed = false
   private frame: number
 
@@ -89,8 +98,34 @@ class Frames implements ISubscription {
     cancelAnimationFrame(this.frame)
   }
 }
+
+class Frames implements ISubscription {
+  closed = false
+  private frame: number
+
+  constructor(private task: () => void) {
+    this.onEvent = this.onEvent.bind(this)
+    this.frame = requestAnimationFrame(this.onEvent)
+  }
+
+  onEvent() {
+    this.task()
+    this.frame = requestAnimationFrame(this.onEvent)
+  }
+
+  unsubscribe(): void {
+    if (this.closed) return
+    this.closed = true
+    cancelAnimationFrame(this.frame)
+  }
+}
+
 class Scheduler implements IScheduler {
   frame(task: () => void): ISubscription {
+    return new Frame(task)
+  }
+
+  frames(task: () => void): ISubscription {
     return new Frames(task)
   }
 
@@ -110,4 +145,5 @@ class Scheduler implements IScheduler {
     return Date.now()
   }
 }
+
 export const createScheduler = (): IScheduler => new Scheduler()
