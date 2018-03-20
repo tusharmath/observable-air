@@ -41,7 +41,7 @@ import * as O from 'observable-air'
 
 **HTML**
 ```html
-<script src="https://unpkg.com/observable-air/.dist/observable-air.js"></script>
+<script src="https://unpkg.com/observable-air/.dist/observable-air.umd.min.js"></script>
 
 <script>
   O.forEach(
