@@ -6,16 +6,43 @@
 
 import commonjs from 'rollup-plugin-commonjs'
 import uglify from 'rollup-plugin-babili'
-export default {
-  input: './src/main.js',
-  output: {
-    exports: 'named',
-    name: 'O',
-    format: 'umd',
-    file: './.dist/observable-air.js',
+
+const input = './src/main.js'
+export default [
+  {
+    input,
+    output: {
+      exports: 'named',
+      name: 'O',
+      format: 'umd',
+      file: './.dist/observable-air.umd.min.js'
+    },
+    plugins: [uglify(), commonjs({})]
   },
-  plugins: [
-    uglify(),
-    commonjs({}),
-  ]
-}
+  {
+    input,
+    output: {
+      exports: 'named',
+      name: 'O',
+      format: 'umd',
+      file: './.dist/observable-air.umd.dev.js'
+    },
+    plugins: [commonjs({})]
+  },
+  {
+    input,
+    output: {
+      format: 'es',
+      file: './.dist/observable-air.es.dev.js'
+    },
+    plugins: [commonjs({})]
+  },
+  {
+    input,
+    output: {
+      format: 'es',
+      file: './.dist/observable-air.es.min.js'
+    },
+    plugins: [uglify(), commonjs({})]
+  }
+]
