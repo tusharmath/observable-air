@@ -20,7 +20,7 @@ class SafeObserver<T> extends ErrorMixin(CompleteMixin(Virgin))
 
   next(val: T): void {
     const r = this._next.call(this.sink, val)
-    if (r.isError()) this.error(r.getError())
+    if (r.isError) this.error(r.getError())
   }
 
   error(err: Error): void {
