@@ -22,10 +22,11 @@ export interface ISafeFunction<V, C> {
 }
 
 class Guarded<T> implements ISafeValue<T> {
-  constructor(private value: Error | T) {}
+  constructor(private value: Error | T, readonly _isError: boolean) {}
 
+  // TODO: use _isError directly
   isError(): boolean {
-    return this.value instanceof Error
+    return this._isError
   }
 
   getValue() {
@@ -43,9 +44,9 @@ class BaseSafeFunction<T extends Function, V, C>
 
   call(ctx: C, ...t: any[]): ISafeValue<V> {
     try {
-      return new Guarded(this.f.apply(ctx, t))
+      return new Guarded(this.f.apply(ctx, t), false)
     } catch (e) {
-      return new Guarded(e)
+      return new Guarded(e, true)
     }
   }
 }
