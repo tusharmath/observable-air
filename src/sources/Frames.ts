@@ -3,31 +3,15 @@
  */
 import {IObservable} from '../lib/Observable'
 import {IObserver} from '../lib/Observer'
+import {Periodic} from '../lib/Periodic'
 import {ISafeObserver, safeObserver} from '../lib/SafeObserver'
 import {IScheduler} from '../lib/Scheduler'
 import {ISubscription} from '../lib/Subscription'
 
-class RAFSubscription implements ISubscription {
-  subscription: ISubscription
-
-  constructor(
-    private sink: ISafeObserver<void>,
-    private scheduler: IScheduler
-  ) {
-    this.subscription = this.scheduler.frames(this.onFrame.bind(this))
-  }
-
-  onFrame() {
-    this.sink.next(undefined)
-    if (this.sink.erred) this.unsubscribe()
-  }
-
-  unsubscribe(): void {
-    this.subscription.unsubscribe()
-  }
-
-  get closed() {
-    return this.subscription.closed
+class RAFSubscription extends Periodic {
+  constructor(readonly sink: ISafeObserver<void>, scheduler: IScheduler) {
+    super()
+    this.sub = scheduler.frames(this.onEvent.bind(this))
   }
 }
 
