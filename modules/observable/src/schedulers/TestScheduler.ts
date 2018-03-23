@@ -4,7 +4,7 @@
 import {ColdTestObservable} from '../internal/ColdTestObservable'
 import {IObservableEvent} from '../internal/Events'
 import {HotTestObservable} from '../internal/HotTestObservable'
-import {LinkedList, LinkedListNode} from '../internal/LinkedList'
+import {LinkedList, LinkedListNode} from 'linked-list'
 import {fromMarble} from '../internal/Marble'
 import {IObservable} from '../internal/Observable'
 import {ISubscription} from '../internal/Subscription'

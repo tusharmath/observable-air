@@ -2,7 +2,7 @@
  * Created by tushar.mathur on 27/09/16.
  */
 
-import {LinkedList, LinkedListNode} from './LinkedList'
+import {LinkedList, LinkedListNode} from 'linked-list'
 import {SubscriberFunctionReturnType} from './SubscriberFunction'
 import {ISubscription} from './Subscription'
 

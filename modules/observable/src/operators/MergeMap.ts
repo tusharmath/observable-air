@@ -2,7 +2,7 @@
  * Created by tushar on 31/08/17.
  */
 
-import {LinkedListNode} from '../internal/LinkedList'
+import {LinkedListNode} from 'linked-list'
 import {ErrorMixin, Virgin} from '../internal/Mixins'
 import {IObservable} from '../internal/Observable'
 import {IObserver} from '../internal/Observer'

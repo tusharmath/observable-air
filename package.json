@@ -11,7 +11,7 @@
     "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "hydra": "node --trace-hydrogen --trace-phase=Z --trace-deopt --code-comments --hydrogen-track-positions --redirect-code-traces --redirect-code-traces-to=code.asm ./benchmarks/run",
     "prepublish": "tsc -d && npm run build",
-    "test": "tsc && mocha",
+    "test": "git ls-files | grep 'test/.*\\.ts' | xargs mocha --require=ts-node/register",
     "test:watch": "mocha --watch",
     "build": "rollup -c ./rollup.config.js",
     "lint": "git ls-files | grep '.ts$' | xargs tslint",

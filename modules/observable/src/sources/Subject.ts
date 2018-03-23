@@ -1,7 +1,7 @@
 /**
  * Created by tushar on 11/01/18.
  */
-import {LinkedListNode} from '../internal/LinkedList'
+import {LinkedListNode} from 'linked-list'
 import {IObservable} from '../internal/Observable'
 import {CompositeObserver, IObserver} from '../internal/Observer'
 import {ISubscription} from '../internal/Subscription'
