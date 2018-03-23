@@ -2,11 +2,11 @@
  * Created by tushar on 29/01/17.
  */
 import * as t from 'assert'
+import {EVENT} from '../src/internal/Events'
+import {fromMarble, toMarble} from '../src/internal/Marble'
+import {ERROR_MESSAGE, thrower} from '../src/internal/Thrower'
 import {delay} from '../src/operators/Delay'
-import {EVENT} from '../src/testing/Events'
-import {fromMarble, toMarble} from '../src/testing/Marble'
-import {createTestScheduler} from '../src/testing/TestScheduler'
-import {ERROR_MESSAGE, thrower} from '../src/testing/Thrower'
+import {createTestScheduler} from '../src/schedulers/TestScheduler'
 
 describe('delay()', () => {
   it('should delay the source events', () => {

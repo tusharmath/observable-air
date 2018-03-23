@@ -1,10 +1,10 @@
 /**
  * Created by tushar.mathur on 16/10/16.
  */
-import {IObservable} from '../lib/Observable'
-import {IObserver} from '../lib/Observer'
-import {IScheduler} from '../lib/Scheduler'
-import {ISubscription} from '../lib/Subscription'
+import {IObservable} from '../internal/Observable'
+import {IObserver} from '../internal/Observer'
+import {ISubscription} from '../internal/Subscription'
+import {IScheduler} from '../schedulers/Scheduler'
 
 class JustObservable<T> implements IObservable<T> {
   constructor(private val: T) {}

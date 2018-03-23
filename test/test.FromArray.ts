@@ -3,11 +3,11 @@
  */
 
 import * as t from 'assert'
+import {EVENT} from '../src/internal/Events'
+import {ERROR_MESSAGE, throwError} from '../src/internal/Thrower'
 import {map} from '../src/operators/Map'
+import {createTestScheduler} from '../src/schedulers/TestScheduler'
 import {fromArray} from '../src/sources/FromArray'
-import {EVENT} from '../src/testing/Events'
-import {createTestScheduler} from '../src/testing/TestScheduler'
-import {ERROR_MESSAGE, throwError} from '../src/testing/Thrower'
 
 const {next, error} = EVENT
 

@@ -1,12 +1,12 @@
 /**
  * Created by tushar.mathur on 27/09/16.
  */
-import {IObservable} from '../lib/Observable'
-import {IObserver} from '../lib/Observer'
-import {Periodic} from '../lib/Periodic'
-import {ISafeObserver, safeObserver} from '../lib/SafeObserver'
-import {IScheduler} from '../lib/Scheduler'
-import {ISubscription} from '../lib/Subscription'
+import {IObservable} from '../internal/Observable'
+import {IObserver} from '../internal/Observer'
+import {Periodic} from '../internal/Periodic'
+import {ISafeObserver, safeObserver} from '../internal/SafeObserver'
+import {ISubscription} from '../internal/Subscription'
+import {IScheduler} from '../schedulers/Scheduler'
 
 class TimerSubscription extends Periodic {
   constructor(

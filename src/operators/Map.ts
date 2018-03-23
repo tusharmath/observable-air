@@ -2,12 +2,12 @@
  * Created by tushar.mathur on 27/09/16.
  */
 
-import {CompleteMixin, ErrorMixin, Virgin} from '../lib/Mixins'
-import {IObservable} from '../lib/Observable'
-import {IObserver} from '../lib/Observer'
-import {IScheduler} from '../lib/Scheduler'
-import {ISubscription} from '../lib/Subscription'
-import {curry} from '../lib/Utils'
+import {CompleteMixin, ErrorMixin, Virgin} from '../internal/Mixins'
+import {IObservable} from '../internal/Observable'
+import {IObserver} from '../internal/Observer'
+import {ISubscription} from '../internal/Subscription'
+import {curry} from '../internal/Utils'
+import {IScheduler} from '../schedulers/Scheduler'
 
 export type TMapper<T, R> = (value: T) => R
 export type TSource<T> = IObservable<T>

@@ -2,10 +2,10 @@
  * Created by tushar on 11/01/18.
  */
 import * as assert from 'assert'
-import {ISubscription} from '../src/lib/Subscription'
+import {EVENT} from '../src/internal/Events'
+import {ISubscription} from '../src/internal/Subscription'
+import {createTestScheduler} from '../src/schedulers/TestScheduler'
 import {subject} from '../src/sources/Subject'
-import {EVENT} from '../src/testing/Events'
-import {createTestScheduler} from '../src/testing/TestScheduler'
 
 describe('subject()', () => {
   it('should be an observable+observer', () => {

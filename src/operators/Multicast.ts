@@ -1,11 +1,11 @@
 /**
  * Created by tushar.mathur on 24/10/16.
  */
-import {LinkedListNode} from '../lib/LinkedList'
-import {IObservable} from '../lib/Observable'
-import {CompositeObserver, IObserver} from '../lib/Observer'
-import {IScheduler} from '../lib/Scheduler'
-import {ISubscription} from '../lib/Subscription'
+import {LinkedListNode} from '../internal/LinkedList'
+import {IObservable} from '../internal/Observable'
+import {CompositeObserver, IObserver} from '../internal/Observer'
+import {ISubscription} from '../internal/Subscription'
+import {IScheduler} from '../schedulers/Scheduler'
 
 class MulticastSubscription<T> implements ISubscription {
   closed = false

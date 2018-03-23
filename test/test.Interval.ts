@@ -3,12 +3,12 @@
  */
 
 import * as t from 'assert'
+import {EVENT, EventError} from '../src/internal/Events'
+import {toMarble} from '../src/internal/Marble'
+import {ERROR_MESSAGE, thrower, throwError} from '../src/internal/Thrower'
 import {scan} from '../src/operators/Scan'
+import {createTestScheduler} from '../src/schedulers/TestScheduler'
 import {interval} from '../src/sources/Interval'
-import {EVENT, EventError} from '../src/testing/Events'
-import {toMarble} from '../src/testing/Marble'
-import {createTestScheduler} from '../src/testing/TestScheduler'
-import {ERROR_MESSAGE, thrower, throwError} from '../src/testing/Thrower'
 const {error} = EVENT
 
 describe('interval()', () => {

@@ -3,11 +3,11 @@
  */
 
 import * as t from 'assert'
+import {EVENT} from '../src/internal/Events'
+import {TestObserver} from '../src/internal/TestObserver'
 import {map} from '../src/operators/Map'
 import {multicast} from '../src/operators/Multicast'
-import {EVENT} from '../src/testing/Events'
-import {TestObserver} from '../src/testing/TestObserver'
-import {createTestScheduler} from '../src/testing/TestScheduler'
+import {createTestScheduler} from '../src/schedulers/TestScheduler'
 
 describe('multicast()', () => {
   it('should subscribe only once', () => {

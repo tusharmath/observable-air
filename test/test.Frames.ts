@@ -2,11 +2,11 @@
  * Created by tushar on 28/01/17.
  */
 import * as t from 'assert'
+import {toMarble} from '../src/internal/Marble'
+import {throwError} from '../src/internal/Thrower'
 import {scan} from '../src/operators/Scan'
+import {createTestScheduler} from '../src/schedulers/TestScheduler'
 import {frames} from '../src/sources/Frames'
-import {toMarble} from '../src/testing/Marble'
-import {createTestScheduler} from '../src/testing/TestScheduler'
-import {throwError} from '../src/testing/Thrower'
 
 describe('frames()', () => {
   it('should emit requestAnimationFrame events', () => {

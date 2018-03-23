@@ -2,9 +2,9 @@
  * Created by tushar on 31/08/17.
  */
 import * as assert from 'assert'
+import {EVENT} from '../src/internal/Events'
 import {mergeMap} from '../src/operators/MergeMap'
-import {EVENT} from '../src/testing/Events'
-import {createTestScheduler} from '../src/testing/TestScheduler'
+import {createTestScheduler} from '../src/schedulers/TestScheduler'
 
 const {next, complete} = EVENT
 describe('mergeMap()', () => {

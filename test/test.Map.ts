@@ -3,9 +3,9 @@
  */
 
 import * as t from 'assert'
+import {EVENT} from '../src/internal/Events'
 import {map} from '../src/operators/Map'
-import {EVENT} from '../src/testing/Events'
-import {createTestScheduler} from '../src/testing/TestScheduler'
+import {createTestScheduler} from '../src/schedulers/TestScheduler'
 
 const {next, complete} = EVENT
 

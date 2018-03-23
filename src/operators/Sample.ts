@@ -1,13 +1,13 @@
 /**
  * Created by tushar.mathur on 18/10/16.
  */
-import {container} from '../lib/Container'
-import {ErrorMixin, Virgin} from '../lib/Mixins'
-import {IObservable} from '../lib/Observable'
-import {IObserver} from '../lib/Observer'
-import {IScheduler} from '../lib/Scheduler'
-import {CompositeSubscription, ISubscription} from '../lib/Subscription'
-import {curry} from '../lib/Utils'
+import {container} from '../internal/Container'
+import {ErrorMixin, Virgin} from '../internal/Mixins'
+import {IObservable} from '../internal/Observable'
+import {IObserver} from '../internal/Observer'
+import {CompositeSubscription, ISubscription} from '../internal/Subscription'
+import {curry} from '../internal/Utils'
+import {IScheduler} from '../schedulers/Scheduler'
 
 export type TSelector<T> = {(...e: Array<any>): T}
 export type TSampler = IObservable<any>

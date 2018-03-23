@@ -1,12 +1,12 @@
 /**
  * Created by tushar on 05/09/17.
  */
-import {ErrorMixin, NextMixin, Virgin} from '../lib/Mixins'
-import {IObservable} from '../lib/Observable'
-import {IObserver} from '../lib/Observer'
-import {IScheduler} from '../lib/Scheduler'
-import {CompositeSubscription, ISubscription} from '../lib/Subscription'
-import {curry} from '../lib/Utils'
+import {ErrorMixin, NextMixin, Virgin} from '../internal/Mixins'
+import {IObservable} from '../internal/Observable'
+import {IObserver} from '../internal/Observer'
+import {CompositeSubscription, ISubscription} from '../internal/Subscription'
+import {curry} from '../internal/Utils'
+import {IScheduler} from '../schedulers/Scheduler'
 
 class ConcatObserver<T> extends ErrorMixin(NextMixin(Virgin))
   implements IObserver<T> {

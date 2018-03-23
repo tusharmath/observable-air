@@ -2,12 +2,12 @@
  * Created by tushar on 08/12/16.
  */
 
-import {container} from '../lib/Container'
-import {IObservable} from '../lib/Observable'
-import {IObserver} from '../lib/Observer'
-import {IScheduler} from '../lib/Scheduler'
-import {CompositeSubscription, ISubscription} from '../lib/Subscription'
-import {curry} from '../lib/Utils'
+import {container} from '../internal/Container'
+import {IObservable} from '../internal/Observable'
+import {IObserver} from '../internal/Observer'
+import {CompositeSubscription, ISubscription} from '../internal/Subscription'
+import {curry} from '../internal/Utils'
+import {IScheduler} from '../schedulers/Scheduler'
 export type TSelector<T> = {(...e: Array<any>): T}
 export type TSource = Array<IObservable<any>>
 export type TResult<T> = IObservable<T>

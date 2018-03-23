@@ -2,9 +2,9 @@
  * Created by tushar on 05/09/17.
  */
 import * as t from 'assert'
+import {toMarble} from '../src/internal/Marble'
 import {concat} from '../src/operators/Concat'
-import {toMarble} from '../src/testing/Marble'
-import {createTestScheduler} from '../src/testing/TestScheduler'
+import {createTestScheduler} from '../src/schedulers/TestScheduler'
 
 describe('concat()', () => {
   it('should concat two stream', () => {

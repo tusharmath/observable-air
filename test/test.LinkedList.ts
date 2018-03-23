@@ -2,7 +2,7 @@
  * Created by tushar.mathur on 09/10/16.
  */
 import * as t from 'assert'
-import {LinkedList, LinkedListNode} from '../src/lib/LinkedList'
+import {LinkedList, LinkedListNode} from '../src/internal/LinkedList'
 
 function toArray<T>(q: LinkedList<T>) {
   const arr: Array<T> = []

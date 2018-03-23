@@ -3,7 +3,7 @@
  */
 import * as assert from 'assert'
 import {unique} from '../src/operators/Unique'
-import {createTestScheduler} from '../src/testing/TestScheduler'
+import {createTestScheduler} from '../src/schedulers/TestScheduler'
 
 describe('unique', () => {
   it('should return emit unique value', () => {

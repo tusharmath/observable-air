@@ -2,7 +2,7 @@
  * Created by tushar.mathur on 17/10/16.
  */
 import * as t from 'assert'
-import {createScheduler} from '../src/lib/Scheduler'
+import {createScheduler} from '../src/schedulers/Scheduler'
 import {fromPromise} from '../src/sources/FromPromise'
 
 describe('fromPromise()', () => {

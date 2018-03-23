@@ -1,13 +1,13 @@
 /**
  * Created by tushar.mathur on 16/10/16.
  */
-import {LinkedListNode} from '../lib/LinkedList'
-import {ErrorMixin, NextMixin, Virgin} from '../lib/Mixins'
-import {IObservable} from '../lib/Observable'
-import {IObserver} from '../lib/Observer'
-import {IScheduler} from '../lib/Scheduler'
-import {CompositeSubscription, ISubscription} from '../lib/Subscription'
-import {curry} from '../lib/Utils'
+import {LinkedListNode} from '../internal/LinkedList'
+import {ErrorMixin, NextMixin, Virgin} from '../internal/Mixins'
+import {IObservable} from '../internal/Observable'
+import {IObserver} from '../internal/Observer'
+import {CompositeSubscription, ISubscription} from '../internal/Subscription'
+import {curry} from '../internal/Utils'
+import {IScheduler} from '../schedulers/Scheduler'
 import {map} from './Map'
 import {IOperator} from './Operator'
 

@@ -3,8 +3,8 @@
  */
 
 import * as assert from 'assert'
+import {createTestScheduler} from '../src/schedulers/TestScheduler'
 import {forEach} from '../src/sinks/ForEach'
-import {createTestScheduler} from '../src/testing/TestScheduler'
 
 describe('forEach()', () => {
   context('when a function is passed', () => {

@@ -2,10 +2,10 @@
  * Created by tushar.mathur on 19/10/16.
  */
 import * as t from 'assert'
+import {EVENT} from '../src/internal/Events'
+import {fromMarble} from '../src/internal/Marble'
 import {sample} from '../src/operators/Sample'
-import {EVENT} from '../src/testing/Events'
-import {fromMarble} from '../src/testing/Marble'
-import {createTestScheduler} from '../src/testing/TestScheduler'
+import {createTestScheduler} from '../src/schedulers/TestScheduler'
 
 function toArray(...t: Array<any>) {
   return t.join(',')

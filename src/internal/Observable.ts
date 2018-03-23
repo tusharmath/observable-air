@@ -1,9 +1,9 @@
 /**
  * Created by tushar.mathur on 27/09/16.
  */
+import {IScheduler} from '../schedulers/Scheduler'
 import {IObservable} from './Observable'
 import {IObserver} from './Observer'
-import {IScheduler} from './Scheduler'
 import {ISubscriberFunction} from './SubscriberFunction'
 import {
   CompositeSubscription,
