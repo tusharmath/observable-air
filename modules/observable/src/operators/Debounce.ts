@@ -1,7 +1,7 @@
 /**
  * Created by tushar on 12/02/17.
  */
-import {LinkedListNode} from '../internal/LinkedList'
+import {LinkedListNode} from 'linked-list'
 import {ErrorMixin} from '../internal/Mixins'
 import {IObservable} from '../internal/Observable'
 import {IObserver} from '../internal/Observer'

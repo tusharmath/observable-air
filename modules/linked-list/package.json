@@ -1,0 +1,8 @@
+{
+  "name": "linked-list",
+  "version": "1.0.0",
+  "description": "a simple doubly linked list implementation",
+  "main": "index.js",
+  "author": "Tushar Mathur <tusharmath@gmail.com>",
+  "license": "ISC"
+}
