@@ -3,10 +3,10 @@
  */
 
 import * as assert from 'assert'
+import {EVENT} from '../src/internal/Events'
+import {fromMarble} from '../src/internal/Marble'
 import {combine} from '../src/operators/Combine'
-import {EVENT} from '../src/testing/Events'
-import {fromMarble} from '../src/testing/Marble'
-import {createTestScheduler} from '../src/testing/TestScheduler'
+import {createTestScheduler} from '../src/schedulers/TestScheduler'
 
 describe('combine()', () => {
   it('should combine events from multiple sources', () => {

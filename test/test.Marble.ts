@@ -2,8 +2,8 @@
  * Created by tushar.mathur on 02/11/16.
  */
 import * as assert from 'assert'
-import {EVENT} from '../src/testing/Events'
-import {fromMarble, toMarble} from '../src/testing/Marble'
+import {EVENT} from '../src/internal/Events'
+import {fromMarble, toMarble} from '../src/internal/Marble'
 
 describe('marble()', () => {
   it('should work for ABC|', () => {

@@ -2,8 +2,8 @@
  * Created by tushar on 28/01/17.
  */
 import * as t from 'assert'
-import {EVENT} from '../src/testing/Events'
-import {createTestScheduler} from '../src/testing/TestScheduler'
+import {EVENT} from '../src/internal/Events'
+import {createTestScheduler} from '../src/schedulers/TestScheduler'
 
 describe('new TestScheduler()', () => {
   it('should just ... ', () => {

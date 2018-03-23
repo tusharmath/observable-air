@@ -1,7 +1,7 @@
 /**
  * Created by tushar.mathur on 03/10/16.
  */
-import {ISubscription} from '../lib/Subscription'
+import {ISubscription} from './Subscription'
 
 export interface IObservableEvent {
   readonly type: EventType

@@ -1,7 +1,7 @@
 /**
  * Created by tushar.mathur on 03/10/16.
  */
-import {ISubscription} from './Subscription'
+import {ISubscription} from '../internal/Subscription'
 
 export interface IScheduler {
   delay(task: () => void, relativeTime: number): ISubscription

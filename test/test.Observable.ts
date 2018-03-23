@@ -2,10 +2,10 @@
  * Created by tushar on 08/12/16.
  */
 import * as t from 'assert'
-import {Observable} from '../src/lib/Observable'
+import {EVENT} from '../src/internal/Events'
+import {Observable} from '../src/internal/Observable'
 import {slice} from '../src/main'
-import {EVENT} from '../src/testing/Events'
-import {createTestScheduler} from '../src/testing/TestScheduler'
+import {createTestScheduler} from '../src/schedulers/TestScheduler'
 
 describe('new Observable()', () => {
   it('should emit values via next()', () => {

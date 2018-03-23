@@ -1,12 +1,12 @@
 /**
  * Created by tushar.mathur on 06/10/16.
  */
-import {IObservable} from '../lib/Observable'
-import {IObserver} from '../lib/Observer'
-import {IScheduler} from '../lib/Scheduler'
-import {ISubscription} from '../lib/Subscription'
+import {IScheduler} from '../schedulers/Scheduler'
 import {EVENT, IObservableEvent} from './Events'
 import {toMarble} from './Marble'
+import {IObservable} from './Observable'
+import {IObserver} from './Observer'
+import {ISubscription} from './Subscription'
 
 export class TestObservable<T> implements IObservable<T> {
   public readonly subscriptions: Array<IObservableEvent> = []

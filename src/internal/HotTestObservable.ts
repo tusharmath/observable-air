@@ -2,10 +2,10 @@
  * Created by tushar.mathur on 10/10/16.
  */
 
-import {IObserver} from '../lib/Observer'
+import {TestScheduler} from '../schedulers/TestScheduler'
 import {EventError, EventNext, EventType, IObservableEvent} from './Events'
+import {IObserver} from './Observer'
 import {TestObservable} from './TestObservable'
-import {TestScheduler} from './TestScheduler'
 
 export function dispatchEvents<T>(
   event: IObservableEvent,

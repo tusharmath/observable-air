@@ -2,7 +2,7 @@
  * Created by tushar.mathur on 15/10/16.
  */
 import * as t from 'assert'
-import {curry} from '../src/lib/Utils'
+import {curry} from '../src/internal/Utils'
 
 const func = curry((a: number, b: number, c: number) => [a, b, c])
 

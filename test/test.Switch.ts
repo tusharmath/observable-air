@@ -2,9 +2,9 @@
  * Created by tushar.mathur on 16/10/16.
  */
 import * as t from 'assert'
+import {EVENT} from '../src/internal/Events'
 import {switchLatest} from '../src/operators/Switch'
-import {EVENT} from '../src/testing/Events'
-import {createTestScheduler} from '../src/testing/TestScheduler'
+import {createTestScheduler} from '../src/schedulers/TestScheduler'
 
 describe('switch()', () => {
   it('should auto cancel', () => {

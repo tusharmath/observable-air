@@ -2,10 +2,10 @@
  * Created by tushar on 29/10/17.
  */
 import {Transform, Writable} from 'stream'
-import {IObservable} from '../lib/Observable'
-import {IObserver} from '../lib/Observer'
-import {createScheduler} from '../lib/Scheduler'
-import {ISubscription} from '../lib/Subscription'
+import {IObservable} from '../internal/Observable'
+import {IObserver} from '../internal/Observer'
+import {ISubscription} from '../internal/Subscription'
+import {createScheduler} from '../schedulers/Scheduler'
 
 class Writer implements IObserver<any> {
   constructor(private dup: Writable) {}
