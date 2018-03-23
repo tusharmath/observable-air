@@ -51,4 +51,4 @@ typings/
 .vscode/
 *.js
 *.d.ts
-!config/rollup.config.js
+!*.config.js

@@ -7,7 +7,7 @@
 import commonjs from 'rollup-plugin-commonjs'
 import uglify from 'rollup-plugin-babili'
 
-const input = './src/main.js'
+const input = './modules/observable/src/main.js'
 export default [
   {
     input,

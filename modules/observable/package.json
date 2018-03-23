@@ -1,0 +1,11 @@
+{
+  "name": "observable-air",
+  "description": "Observables for the calorie conscious",
+  "main": "./src/main",
+  "typings": "./src/main.d.ts",
+  "directories": {
+    "test": "test"
+  },
+  "author": "Tushar Mathur <tusharmath@gmail.com>",
+  "license": "ISC"
+}
