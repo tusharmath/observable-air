@@ -3,3 +3,5 @@
 !src/**/*.js
 !.dist/*.js
 !test
+*.ts
+!*.d.ts
