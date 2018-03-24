@@ -51,19 +51,19 @@ export const EVENT = {
     return new EventNext(time, value)
   },
 
-  error(time: number, value: Error): EventError {
+  error(time: number, value: Error) {
     return new EventError(time, value)
   },
 
-  complete(time: number): EventComplete {
+  complete(time: number) {
     return new EventComplete(time)
   },
 
-  start(time: number, subscription: ISubscription): EventComplete {
+  start(time: number, subscription: ISubscription) {
     return new EventStart(time, subscription)
   },
 
-  end(time: number, subscription: ISubscription): EventComplete {
+  end(time: number, subscription: ISubscription) {
     return new EventEnd(time, subscription)
   }
 }
