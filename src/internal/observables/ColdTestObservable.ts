@@ -2,9 +2,7 @@
  * Created by tushar.mathur on 10/10/16.
  */
 
-import {IScheduler} from '../schedulers/Scheduler'
-import {EventError, EventNext, EventType, IObservableEvent} from './Events'
-import {IObserver} from './Observer'
+import {EventError, EventNext, EventType} from '../Events'
 import {TestObservable} from './TestObservable'
 
 export function ColdTestObservable(

@@ -2,14 +2,7 @@
  * Created by tushar.mathur on 27/09/16.
  */
 
-import {LinkedList, LinkedListNode} from './LinkedList'
-import {SubscriberFunctionReturnType} from './SubscriberFunction'
-import {ISubscription} from './Subscription'
-
-export interface ISubscription {
-  unsubscribe(): void
-  readonly closed: boolean
-}
+import {LinkedList, LinkedListNode} from '../internal/LinkedList'
 
 export class Subscription implements ISubscription {
   closed: boolean = false

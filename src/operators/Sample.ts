@@ -3,11 +3,8 @@
  */
 import {container} from '../internal/Container'
 import {ErrorMixin, Virgin} from '../internal/Mixins'
-import {IObservable} from '../internal/Observable'
-import {IObserver} from '../internal/Observer'
-import {CompositeSubscription, ISubscription} from '../internal/Subscription'
 import {curry} from '../internal/Utils'
-import {IScheduler} from '../schedulers/Scheduler'
+import {CompositeSubscription} from '../subscriptions/Subscription'
 
 export type TSelector<T> = {(...e: Array<any>): T}
 export type TSampler = IObservable<any>

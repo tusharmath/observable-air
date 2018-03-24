@@ -2,8 +2,6 @@
  * Created by tushar on 06/09/17.
  */
 
-import {IObserver} from './Observer'
-
 export type Constructor<T = {}> = new (...t: any[]) => T
 export class Virgin {}
 

@@ -2,9 +2,8 @@
  * Created by tushar.mathur on 10/10/16.
  */
 
-import {TestScheduler} from '../schedulers/TestScheduler'
-import {EventError, EventNext, EventType, IObservableEvent} from './Events'
-import {IObserver} from './Observer'
+import {TestScheduler} from '../../schedulers/TestScheduler'
+import {EventError, EventNext, EventType} from '../Events'
 import {TestObservable} from './TestObservable'
 
 export function dispatchEvents<T>(

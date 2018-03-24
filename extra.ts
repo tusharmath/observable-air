@@ -3,17 +3,14 @@
  */
 
 import {Readable, Stream} from 'stream'
-import {IObservable} from './src/internal/Observable'
-import {IObserver} from './src/internal/Observer'
-import {ISubscription} from './src/internal/Subscription'
 import * as O from './src/main'
 import {combine} from './src/operators/Combine'
 import {debounce} from './src/operators/Debounce'
-import {createScheduler, IScheduler} from './src/schedulers/Scheduler'
+import {createScheduler} from './src/schedulers/Scheduler'
 import {toNodeStream} from './src/sinks/ToNodeStream'
 import {fromNodeStream} from './src/sources/FromNodeStream'
 
-export {Observable} from './src/internal/Observable'
+export {Observable} from './src/internal/observables/Observable'
 
 export class Air<T> implements IObservable<T> {
   constructor(private src: IObservable<T>) {}

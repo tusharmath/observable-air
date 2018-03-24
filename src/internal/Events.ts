@@ -1,12 +1,6 @@
 /**
  * Created by tushar.mathur on 03/10/16.
  */
-import {ISubscription} from './Subscription'
-
-export interface IObservableEvent {
-  readonly type: EventType
-  readonly time: number
-}
 
 export enum EventType {
   next = 'NEXT',

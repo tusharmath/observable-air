@@ -4,12 +4,9 @@
 
 import {LinkedListNode} from '../internal/LinkedList'
 import {ErrorMixin, Virgin} from '../internal/Mixins'
-import {IObservable} from '../internal/Observable'
-import {IObserver} from '../internal/Observer'
-import {CompositeSubscription, ISubscription} from '../internal/Subscription'
 import {curry} from '../internal/Utils'
-import {IScheduler} from '../schedulers/Scheduler'
 import {just} from '../sources/Create'
+import {CompositeSubscription} from '../subscriptions/Subscription'
 
 export type Project<T, S> = (t: T) => IObservable<S>
 

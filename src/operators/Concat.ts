@@ -2,11 +2,8 @@
  * Created by tushar on 05/09/17.
  */
 import {ErrorMixin, NextMixin, Virgin} from '../internal/Mixins'
-import {IObservable} from '../internal/Observable'
-import {IObserver} from '../internal/Observer'
-import {CompositeSubscription, ISubscription} from '../internal/Subscription'
 import {curry} from '../internal/Utils'
-import {IScheduler} from '../schedulers/Scheduler'
+import {CompositeSubscription} from '../subscriptions/Subscription'
 
 class ConcatObserver<T> extends ErrorMixin(NextMixin(Virgin))
   implements IObserver<T> {

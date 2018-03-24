@@ -3,11 +3,8 @@
  */
 
 import {container} from '../internal/Container'
-import {IObservable} from '../internal/Observable'
-import {IObserver} from '../internal/Observer'
-import {CompositeSubscription, ISubscription} from '../internal/Subscription'
 import {curry} from '../internal/Utils'
-import {IScheduler} from '../schedulers/Scheduler'
+import {CompositeSubscription} from '../subscriptions/Subscription'
 export type TSelector<T> = {(...e: Array<any>): T}
 export type TSource = Array<IObservable<any>>
 export type TResult<T> = IObservable<T>

@@ -3,13 +3,9 @@
  */
 import {LinkedListNode} from '../internal/LinkedList'
 import {ErrorMixin} from '../internal/Mixins'
-import {IObservable} from '../internal/Observable'
-import {IObserver} from '../internal/Observer'
-import {safeObserver} from '../internal/SafeObserver'
-import {CompositeSubscription, ISubscription} from '../internal/Subscription'
+import {safeObserver} from '../internal/observers/SafeObserver'
 import {curry} from '../internal/Utils'
-import {IScheduler} from '../schedulers/Scheduler'
-import {IOperator} from './Operator'
+import {CompositeSubscription} from '../subscriptions/Subscription'
 
 class DebounceOperator<T> extends ErrorMixin(CompositeSubscription)
   implements IOperator<T> {

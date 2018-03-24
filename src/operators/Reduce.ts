@@ -3,11 +3,7 @@
  */
 
 import {ErrorMixin, Virgin} from '../internal/Mixins'
-import {IObservable} from '../internal/Observable'
-import {IObserver} from '../internal/Observer'
-import {ISubscription} from '../internal/Subscription'
 import {curry} from '../internal/Utils'
-import {IScheduler} from '../schedulers/Scheduler'
 
 export type TReducer<T, R> = {(memory: R, current: T): R}
 export type TSeed<R> = R

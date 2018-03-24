@@ -3,13 +3,9 @@
  */
 import {LinkedListNode} from '../internal/LinkedList'
 import {ErrorMixin, NextMixin, Virgin} from '../internal/Mixins'
-import {IObservable} from '../internal/Observable'
-import {IObserver} from '../internal/Observer'
-import {CompositeSubscription, ISubscription} from '../internal/Subscription'
 import {curry} from '../internal/Utils'
-import {IScheduler} from '../schedulers/Scheduler'
+import {CompositeSubscription} from '../subscriptions/Subscription'
 import {map} from './Map'
-import {IOperator} from './Operator'
 
 class SwitchValueObserver<T> extends ErrorMixin(NextMixin(Virgin))
   implements IObserver<T> {
