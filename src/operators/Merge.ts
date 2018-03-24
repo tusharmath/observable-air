@@ -2,10 +2,7 @@
  * Created by tushar.mathur on 17/10/16.
  */
 import {ErrorMixin, NextMixin, Virgin} from '../internal/Mixins'
-import {IObservable} from '../internal/Observable'
-import {IObserver} from '../internal/Observer'
-import {CompositeSubscription, ISubscription} from '../internal/Subscription'
-import {IScheduler} from '../schedulers/Scheduler'
+import {CompositeSubscription} from '../subscriptions/Subscription'
 
 class MergeObserver<T> extends ErrorMixin(NextMixin(Virgin))
   implements IObserver<T> {

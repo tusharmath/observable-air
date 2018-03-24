@@ -16,14 +16,6 @@ export function createArray<T>(size: number, value: T) {
   return arr
 }
 
-export interface IContainer {
-  next<T>(value: T, id: number): void
-  complete(id: number): boolean
-  isDone(): boolean
-  isOn(): boolean
-  readonly values: any[]
-}
-
 class ValueContainer implements IContainer {
   values = new Array(this.total)
   private status = createArray(this.total, StreamStatus.IDLE)

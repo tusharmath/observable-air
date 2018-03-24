@@ -1,10 +1,8 @@
 /**
  * Created by tushar.mathur on 03/10/16.
  */
-import {IScheduler} from '../schedulers/Scheduler'
-import {EVENT, IObservableEvent} from './Events'
-import {toMarble} from './Marble'
-import {IObserver} from './Observer'
+import {EVENT} from '../Events'
+import {toMarble} from '../Marble'
 
 export class TestObserver<T> implements IObserver<T> {
   results: Array<IObservableEvent>

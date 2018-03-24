@@ -4,7 +4,7 @@
 
 import * as t from 'assert'
 import {EVENT} from '../src/internal/Events'
-import {TestObserver} from '../src/internal/TestObserver'
+import {TestObserver} from '../src/internal/observers/TestObserver'
 import {map} from '../src/operators/Map'
 import {multicast} from '../src/operators/Multicast'
 import {createTestScheduler} from '../src/schedulers/TestScheduler'

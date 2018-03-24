@@ -2,11 +2,7 @@
  * Created by tushar.mathur on 06/11/16.
  */
 
-import {IScheduler} from '../schedulers/Scheduler'
 import {CompleteMixin, ErrorMixin, Virgin} from './Mixins'
-import {IObservable} from './Observable'
-import {IObserver} from './Observer'
-import {ISubscription} from './Subscription'
 
 export const ERROR_MESSAGE = 'Test Exception'
 export function throwError(message: string) {

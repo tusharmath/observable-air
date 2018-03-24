@@ -1,9 +1,6 @@
 /**
  * Created by tushar.mathur on 14/10/16.
  */
-import {IObservable} from '../internal/Observable'
-import {IObserver} from '../internal/Observer'
-import {ISubscription} from '../internal/Subscription'
 import {curry} from '../internal/Utils'
 
 export type TResult = IObservable<Event>

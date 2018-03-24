@@ -1,21 +1,6 @@
 /**
  * Created by tushar.mathur on 03/10/16.
  */
-import {ISubscription} from '../internal/Subscription'
-
-export interface IScheduler {
-  delay(task: () => void, relativeTime: number): ISubscription
-
-  periodic(task: () => void, interval: number): ISubscription
-
-  frame(task: () => void): ISubscription
-
-  frames(task: () => void): ISubscription
-
-  asap(task: () => void): ISubscription
-
-  now(): number
-}
 
 function getGlobal(): any {
   return typeof window === 'object' ? window : global

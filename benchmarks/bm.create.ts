@@ -2,8 +2,7 @@
  * Created by tushar on 09/12/16.
  */
 import {Suite} from 'benchmark'
-import {Observable} from '../src/internal/Observable'
-import {IObserver} from '../src/internal/Observer'
+import {Observable} from '../src/internal/observables/Observable'
 import {IDeferred, run} from './lib'
 
 function subscriber(observer: IObserver<number>) {

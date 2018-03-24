@@ -1,7 +1,7 @@
 /**
  * Created by tushar.mathur on 23/10/16.
  */
-import {EVENT, EventNext, EventType, IObservableEvent} from './Events'
+import {EVENT, EventNext, EventType} from './Events'
 import {DEFAULT_OPTIONS} from './TestOptions'
 
 export const SIZE = DEFAULT_OPTIONS.marbleSize

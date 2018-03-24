@@ -1,12 +1,8 @@
 /**
  * Created by tushar on 28/01/17.
  */
-import {IObservable} from '../internal/Observable'
-import {IObserver} from '../internal/Observer'
+import {safeObserver} from '../internal/observers/SafeObserver'
 import {Periodic} from '../internal/Periodic'
-import {ISafeObserver, safeObserver} from '../internal/SafeObserver'
-import {ISubscription} from '../internal/Subscription'
-import {IScheduler} from '../schedulers/Scheduler'
 
 class RAFSubscription extends Periodic {
   constructor(readonly sink: ISafeObserver<void>, scheduler: IScheduler) {

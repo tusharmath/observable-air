@@ -1,6 +1,3 @@
-import {ISafeObserver} from './SafeObserver'
-import {ISubscription} from './Subscription'
-
 export class Periodic implements ISubscription {
   protected sub: ISubscription
   protected sink: ISafeObserver<void>

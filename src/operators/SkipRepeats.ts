@@ -2,11 +2,7 @@
  * Created by niranjan on 12/10/16.
  */
 import {CompleteMixin, ErrorMixin, Virgin} from '../internal/Mixins'
-import {IObservable} from '../internal/Observable'
-import {IObserver} from '../internal/Observer'
-import {ISubscription} from '../internal/Subscription'
 import {curry} from '../internal/Utils'
-import {IScheduler} from '../schedulers/Scheduler'
 
 export type TComparator<T> = (a: T, b: T) => boolean
 export type TSource<T> = IObservable<T>

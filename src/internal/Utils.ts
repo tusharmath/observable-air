@@ -11,16 +11,6 @@ export function curry(f: Function, l: number = f.length): any {
   }
 }
 
-export interface ISafeValue<T> {
-  isError: boolean
-  getValue(): T
-  getError(): Error
-}
-
-export interface ISafeFunction<V, C> {
-  call(ctx: C, ...t: any[]): ISafeValue<V>
-}
-
 class Guarded<T> implements ISafeValue<T> {
   constructor(private value: Error | T, readonly isError: boolean) {}
 

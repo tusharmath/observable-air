@@ -3,11 +3,7 @@
  */
 
 import {CompleteMixin, ErrorMixin, Virgin} from '../internal/Mixins'
-import {IObservable} from '../internal/Observable'
-import {IObserver} from '../internal/Observer'
-import {ISubscription} from '../internal/Subscription'
 import {curry} from '../internal/Utils'
-import {IScheduler} from '../schedulers/Scheduler'
 
 class UniqueObserver<T> extends ErrorMixin(CompleteMixin(Virgin))
   implements IObserver<T> {

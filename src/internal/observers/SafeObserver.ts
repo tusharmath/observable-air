@@ -1,13 +1,9 @@
 /**
  * Created by tushar on 29/01/17.
  */
-import {CompleteMixin, ErrorMixin, Virgin} from './Mixins'
-import {IObserver} from './Observer'
-import {ISafeFunction, tryCatch} from './Utils'
+import {CompleteMixin, ErrorMixin, Virgin} from '../Mixins'
+import {tryCatch} from '../Utils'
 
-export interface ISafeObserver<T> extends IObserver<T> {
-  erred: boolean
-}
 class SafeObserver<T> extends ErrorMixin(CompleteMixin(Virgin))
   implements IObserver<T> {
   private _next: ISafeFunction<void, IObserver<T>>

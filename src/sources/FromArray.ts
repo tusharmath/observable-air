@@ -1,11 +1,7 @@
 /**
  * Created by tushar.mathur on 28/09/16.
  */
-import {IObservable} from '../internal/Observable'
-import {IObserver} from '../internal/Observer'
-import {ISubscription} from '../internal/Subscription'
 import {tryCatch} from '../internal/Utils'
-import {IScheduler} from '../schedulers/Scheduler'
 
 class FromArraySubscription<T> implements ISubscription {
   private subscription: ISubscription

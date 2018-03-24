@@ -3,7 +3,7 @@
  */
 import * as t from 'assert'
 import {EVENT} from '../src/internal/Events'
-import {Observable} from '../src/internal/Observable'
+import {Observable} from '../src/internal/observables/Observable'
 import {slice} from '../src/main'
 import {createTestScheduler} from '../src/schedulers/TestScheduler'
 

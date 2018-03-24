@@ -3,7 +3,6 @@
  */
 import * as assert from 'assert'
 import {EVENT} from '../src/internal/Events'
-import {ISubscription} from '../src/internal/Subscription'
 import {createTestScheduler} from '../src/schedulers/TestScheduler'
 import {subject} from '../src/sources/Subject'
 

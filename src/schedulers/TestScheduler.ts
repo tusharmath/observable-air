@@ -1,17 +1,13 @@
 /**
  * Created by tushar.mathur on 02/10/16.
  */
-import {ColdTestObservable} from '../internal/ColdTestObservable'
-import {IObservableEvent} from '../internal/Events'
-import {HotTestObservable} from '../internal/HotTestObservable'
 import {LinkedList, LinkedListNode} from '../internal/LinkedList'
 import {fromMarble} from '../internal/Marble'
-import {IObservable} from '../internal/Observable'
-import {ISubscription} from '../internal/Subscription'
-import {TestObservable} from '../internal/TestObservable'
-import {TestObserver} from '../internal/TestObserver'
+import {ColdTestObservable} from '../internal/observables/ColdTestObservable'
+import {HotTestObservable} from '../internal/observables/HotTestObservable'
+import {TestObservable} from '../internal/observables/TestObservable'
+import {TestObserver} from '../internal/observers/TestObserver'
 import {DEFAULT_OPTIONS} from '../internal/TestOptions'
-import {IScheduler} from './Scheduler'
 
 // TODO: convert to interface
 class TaskSchedule {

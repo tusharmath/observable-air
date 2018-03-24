@@ -3,10 +3,7 @@
  */
 
 import {Readable} from 'stream'
-import {IObservable} from '../internal/Observable'
-import {IObserver} from '../internal/Observer'
-import {ISubscription, Subscription} from '../internal/Subscription'
-import {IScheduler} from '../schedulers/Scheduler'
+import {Subscription} from '../subscriptions/Subscription'
 
 class FromNodeStream<T> implements IObservable<T> {
   constructor(private src: Readable) {}
