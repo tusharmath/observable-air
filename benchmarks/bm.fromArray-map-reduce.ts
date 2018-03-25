@@ -3,10 +3,10 @@
  */
 
 import {Suite} from 'benchmark'
-import {filter} from '../src/operators/Filter'
-import {map} from '../src/operators/Map'
-import {reduce} from '../src/operators/Reduce'
-import {fromArray} from '../src/sources/FromArray'
+import {filter} from '../src/core/operators/Filter'
+import {map} from '../src/core/operators/Map'
+import {reduce} from '../src/core/operators/Reduce'
+import {fromArray} from '../src/core/sources/FromArray'
 import {add1, array, even, IDeferred, run, sum} from './lib'
 
 const a = array(1e6)

@@ -2,8 +2,8 @@
  * Created by tushar on 12/02/17.
  */
 import {Suite} from 'benchmark'
-import {debounce} from '../src/operators/Debounce'
-import {fromArray} from '../src/sources/FromArray'
+import {debounce} from '../src/core/operators/Debounce'
+import {fromArray} from '../src/core/sources/FromArray'
 import {array, IDeferred, run} from './lib'
 
 const a = array(1e3)

@@ -6,20 +6,20 @@
   "scripts": {
     "benchmark": "tsc; node ./benchmarks/run",
     "benchmark:write": "yarn benchmark > benchmarks.md",
+    "build": "rollup -c ./config/rollup.config.js",
     "cleanup": "find ./src -type f -name '*.js' -delete && find ./src -type f -name '*.map' -delete",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "hydra": "node --trace-hydrogen --trace-phase=Z --trace-deopt --code-comments --hydrogen-track-positions --redirect-code-traces --redirect-code-traces-to=code.asm ./benchmarks/run",
-    "prepublish": "tsc -d && npm run build",
-    "test": "tsc && mocha",
-    "test:watch": "mocha --watch",
-    "build": "rollup -c ./config/rollup.config.js",
     "lint": "git ls-files | grep '.ts$' | xargs tslint",
     "lint:fix": "git ls-files | grep '.ts$' | xargs tslint --fix",
+    "prepublish": "tsc -d && npm run build",
     "prettier": "git ls-files | grep '.ts$' | xargs prettier --write --config=.prettierrc",
-    "travis-deploy-once": "travis-deploy-once",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "test": "tsc && karma start karma.config.js --single-run",
+    "test:watch": "karma start karma.config.js",
+    "travis-deploy-once": "travis-deploy-once"
   },
-  "author": "",
+  "author": "Tushar Mathur <tusharmath@gmail.com>",
   "license": "ISC",
   "devDependencies": {
     "@types/benchmark": "^1.0.30",

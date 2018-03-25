@@ -1,6 +1,6 @@
 import {Suite} from 'benchmark'
-import {concat} from '../src/operators/Concat'
-import {fromArray} from '../src/sources/FromArray'
+import {concat} from '../src/core/operators/Concat'
+import {fromArray} from '../src/core/sources/FromArray'
 /**
  * Created by tushar on 05/09/17.
  */

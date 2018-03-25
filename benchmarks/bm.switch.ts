@@ -2,9 +2,9 @@
  * Created by tushar on 16/02/17.
  */
 import {Suite} from 'benchmark'
-import {map} from '../src/operators/Map'
-import {switchLatest} from '../src/operators/Switch'
-import {fromArray} from '../src/sources/FromArray'
+import {map} from '../src/core/operators/Map'
+import {switchLatest} from '../src/core/operators/Switch'
+import {fromArray} from '../src/core/sources/FromArray'
 import {array, IDeferred, run} from './lib'
 
 const a = array(1e2)

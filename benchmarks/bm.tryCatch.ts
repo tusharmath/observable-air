@@ -2,7 +2,7 @@
  * Created by tushar.mathur on 06/11/16.
  */
 import {Suite} from 'benchmark'
-import {ISafeValue, tryCatch} from '../src/internal/Utils'
+import {ISafeValue, tryCatch} from '../src/core/internal/Utils'
 import {array} from './lib'
 
 function addThis(b: number) {

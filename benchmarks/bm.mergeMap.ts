@@ -3,9 +3,9 @@
  */
 
 import {Suite} from 'benchmark'
-import {mergeMap} from '../src/operators/MergeMap'
-import {just} from '../src/sources/Create'
-import {fromArray} from '../src/sources/FromArray'
+import {mergeMap} from '../src/core/operators/MergeMap'
+import {just} from '../src/core/sources/Create'
+import {fromArray} from '../src/core/sources/FromArray'
 import {array, IDeferred, run} from './lib'
 
 const a = array(1e3).map(i => array(1e3))

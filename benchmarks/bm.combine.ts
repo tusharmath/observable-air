@@ -2,9 +2,9 @@
  * Created by tushar on 08/12/16.
  */
 import {Suite} from 'benchmark'
-import {combine} from '../src/operators/Combine'
-import {reduce} from '../src/operators/Reduce'
-import {fromArray} from '../src/sources/FromArray'
+import {combine} from '../src/core/operators/Combine'
+import {reduce} from '../src/core/operators/Reduce'
+import {fromArray} from '../src/core/sources/FromArray'
 import {array, IDeferred, run} from './lib'
 
 const a = array(1e2)

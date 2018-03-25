@@ -3,9 +3,9 @@
  */
 
 import {Suite} from 'benchmark'
-import {reduce} from '../src/operators/Reduce'
-import {scan} from '../src/operators/Scan'
-import {fromArray} from '../src/sources/FromArray'
+import {reduce} from '../src/core/operators/Reduce'
+import {scan} from '../src/core/operators/Scan'
+import {fromArray} from '../src/core/sources/FromArray'
 import {array, IDeferred, passthrough, run, sum} from './lib'
 
 const a = array(1e6)

@@ -1,6 +1,6 @@
-import {IObservable} from '../src/internal/Observable'
-import {IObserver} from '../src/internal/Observer'
-import {createScheduler, IScheduler} from '../src/schedulers/Scheduler'
+import {IObservable} from '../src/core/internal/Observable'
+import {IObserver} from '../src/core/internal/Observer'
+import {createScheduler, IScheduler} from '../src/core/schedulers/Scheduler'
 
 /**
  * Created by tushar.mathur on 05/11/16.
