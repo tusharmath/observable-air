@@ -39,6 +39,7 @@ function normalizeEvents(events: string): EventSource
 function normalizeEvents(events: any) {
   if (typeof events === 'string') return fromMarble(events)
   if (arguments.length > 1) return Array.from(arguments)
+  if (arguments.length === 1) return Array.isArray(events) ? events : [events]
   return events
 }
 
