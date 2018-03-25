@@ -18,6 +18,14 @@ export function fromMarble(
     switch (message[i]) {
       case ' ':
         break
+      case '(':
+        let value = ''
+        while (message[++i] !== ')') {
+          value += message[i]
+        }
+        events.push(EVENT.next(time, value))
+        time += size
+        break
       case '-':
         time += size
         break
@@ -55,7 +63,8 @@ export function toMarble<T>(
     while (count-- > 1) message += '-'
     switch (ev.type) {
       case EventType.next:
-        message += (ev as EventNext<T>).value.toString()
+        const s = (ev as EventNext<T>).value.toString()
+        message += s.length > 1 ? `(${s})` : s
         break
       case EventType.error:
         message += '#'

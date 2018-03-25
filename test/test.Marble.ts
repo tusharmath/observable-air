@@ -32,9 +32,36 @@ describe('marble()', () => {
 
   it('should ignore whitespaces', () => {
     const message = '   -A B -- C |   '
-
     const actual = toMarble(fromMarble(message))
     const expected = '-AB--C|'
+    assert.strictEqual(actual, expected)
+  })
+
+  it('should parse multi-letter messages', () => {
+    const message = '   -(ABC)-(PQR)-|'
+    const actual = fromMarble(message)
+    const expected = [
+      EVENT.next(210, 'ABC'),
+      EVENT.next(230, 'PQR'),
+      EVENT.complete(250)
+    ]
+    assert.deepEqual(actual, expected)
+  })
+
+  it('should create multi-letter messages', () => {
+    const actual = toMarble([
+      EVENT.next(210, 'ABC'),
+      EVENT.next(230, 'PQR'),
+      EVENT.complete(250)
+    ])
+    const expected = '-(ABC)-(PQR)-|'
+    assert.deepEqual(actual, expected)
+  })
+
+  it('should interop with multi-letter messages', () => {
+    const test = '--a--(bc)--p(qr)--|'
+    const actual = toMarble(fromMarble(test))
+    const expected = test
     assert.strictEqual(actual, expected)
   })
 
