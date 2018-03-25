@@ -1,7 +1,7 @@
 import * as O from 'observable-air'
 import {IObservable, Observable} from 'observable-air'
-import {createElement} from './createElement'
 import {CompositeSubscription} from 'observable-air/src/core/internal/Subscription'
+import {createElement} from './createElement'
 
 export type Optional<T> = {[P in keyof T]?: T[P]}
 export interface NodeProps {

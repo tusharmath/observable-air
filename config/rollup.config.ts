@@ -4,18 +4,20 @@
 
 'use strict'
 
-import commonjs from 'rollup-plugin-commonjs'
-import uglify from 'rollup-plugin-babili'
+const commonjs = require('rollup-plugin-commonjs')
+const uglify = require('rollup-plugin-babili')
 
-const input = './src/main.js'
-export default [
+const input = './src/core/main.js'
+const name = 'observable-air'
+
+export = [
   {
     input,
     output: {
       exports: 'named',
       name: 'O',
       format: 'umd',
-      file: './.dist/observable-air.umd.min.js'
+      file: `./.dist/${name}.umd.min.js`
     },
     plugins: [uglify(), commonjs({})]
   },
@@ -25,7 +27,7 @@ export default [
       exports: 'named',
       name: 'O',
       format: 'umd',
-      file: './.dist/observable-air.umd.dev.js'
+      file: `./.dist/${name}.umd.dev.js`
     },
     plugins: [commonjs({})]
   },
@@ -33,7 +35,7 @@ export default [
     input,
     output: {
       format: 'es',
-      file: './.dist/observable-air.es.dev.js'
+      file: `./.dist/${name}.es.dev.js`
     },
     plugins: [commonjs({})]
   },
@@ -41,7 +43,7 @@ export default [
     input,
     output: {
       format: 'es',
-      file: './.dist/observable-air.es.min.js'
+      file: `./.dist/${name}.es.min.js`
     },
     plugins: [uglify(), commonjs({})]
   }

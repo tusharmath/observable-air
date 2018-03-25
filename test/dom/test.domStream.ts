@@ -1,9 +1,9 @@
-import * as O from 'observable-air'
-import {createTestScheduler, EVENT} from 'observable-air/test'
-import {domStream} from '../src/domStream'
 import {assert} from 'chai'
-import {html} from '../src/html'
+import * as O from 'observable-air'
 import {EventStart} from 'observable-air/src/core/internal/Events'
+import {createTestScheduler, EVENT} from 'observable-air/test'
+import {domStream} from '../../src/dom/domStream'
+import {html} from '../../src/dom/html'
 
 const node = (results: any[]) => (results[0] ? results[0].value : null)
 describe('domStream', () => {

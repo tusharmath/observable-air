@@ -5,7 +5,11 @@
 import * as t from 'assert'
 import {EVENT, EventError} from '../../src/core/internal/Events'
 import {toMarble} from '../../src/core/internal/Marble'
-import {ERROR_MESSAGE, thrower, throwError} from '../../src/core/internal/Thrower'
+import {
+  ERROR_MESSAGE,
+  thrower,
+  throwError
+} from '../../src/core/internal/Thrower'
 import {scan} from '../../src/core/operators/Scan'
 import {createTestScheduler} from '../../src/core/schedulers/TestScheduler'
 import {interval} from '../../src/core/sources/Interval'

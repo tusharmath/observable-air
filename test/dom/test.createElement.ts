@@ -1,5 +1,5 @@
 import {assert} from 'chai'
-import {createElement} from '../src/createElement'
+import {createElement} from '../../src/dom/createElement'
 
 describe('createElement', () => {
   it('should create a new dom element', () => {

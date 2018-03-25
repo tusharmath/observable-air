@@ -1,2 +1,2 @@
-const testsContext = (<any>require).context('.', true, /\.test\.js$/)
+const testsContext = (<any>require).context('.', true, /.*\.js$/)
 testsContext.keys().forEach(testsContext)
