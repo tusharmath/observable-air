@@ -3,7 +3,7 @@
 
 export = function(config: any) {
   config.set({
-    basePath: '.',
+    basePath: '..',
     frameworks: ['mocha'],
     files: ['./test/test.js'],
     exclude: [],

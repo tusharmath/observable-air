@@ -15,8 +15,8 @@
     "prepublish": "tsc -d && npm run build",
     "prettier": "git ls-files | grep '.ts$' | xargs prettier --write --config=.prettierrc",
     "semantic-release": "semantic-release",
-    "test": "tsc && karma start karma.config.js --single-run",
-    "test:watch": "karma start karma.config.js",
+    "test": "tsc && karma start config/karma.config.js --single-run",
+    "test:watch": "karma start config/karma.config.js",
     "travis-deploy-once": "travis-deploy-once"
   },
   "author": "Tushar Mathur <tusharmath@gmail.com>",
