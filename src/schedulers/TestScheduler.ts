@@ -120,7 +120,11 @@ export class TestScheduler implements IScheduler {
     })
   }
 
-  subscribeTo<T>(f: () => IObservable<T>, start: number, stop: number) {
+  subscribeTo<T>(
+    f: () => IObservable<T>,
+    start: number = DEFAULT_OPTIONS.subscriptionStart,
+    stop: number = DEFAULT_OPTIONS.subscriptionStop
+  ) {
     let subscription: ISubscription
     const observer = this.Observer()
     this.delay(() => (subscription = f().subscribe(observer, this)), start, 0)
