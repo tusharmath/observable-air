@@ -24,9 +24,9 @@ describe('mergeMap()', () => {
         const c$ = sh.Hot(c)
         const source$$ = sh.Hot(
           next(200, a$),
-          next(215, b$),
-          next(220, c$),
-          complete(300)
+          next(201, b$),
+          next(202, c$),
+          complete(203)
         )
         return mergeMap(conc$, (i: any) => i, source$$)
       })
@@ -50,9 +50,9 @@ describe('mergeMap()', () => {
         const c$ = sh.Hot(c)
         const source$$ = sh.Hot(
           next(200, a$),
-          next(215, b$),
-          next(220, c$),
-          complete(300)
+          next(201, b$),
+          next(202, c$),
+          complete(203)
         )
         return mergeMap(conc$, (i: any) => i, source$$)
       })
@@ -76,9 +76,9 @@ describe('mergeMap()', () => {
         const c$ = sh.Hot(c)
         const source$$ = sh.Hot(
           next(200, a$),
-          next(215, b$),
-          next(220, c$),
-          complete(300)
+          next(201, b$),
+          next(202, c$),
+          complete(203)
         )
         return mergeMap(concurr$, (i: any) => i, source$$)
       })
@@ -103,9 +103,9 @@ describe('mergeMap()', () => {
         const c$ = sh.Hot(c)
         const source$$ = sh.Hot(
           next(200, a$),
-          next(215, b$),
-          next(220, c$),
-          complete(300)
+          next(201, b$),
+          next(202, c$),
+          complete(203)
         )
         return mergeMap(concurr$, (i: any) => i, source$$)
       })

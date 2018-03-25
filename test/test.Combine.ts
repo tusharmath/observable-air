@@ -19,14 +19,14 @@ describe('combine()', () => {
       ])
     })
     assert.deepEqual(results, [
-      EVENT.next(230, 'bqx'),
-      EVENT.next(240, 'cqx'),
-      EVENT.next(250, 'crx'),
-      EVENT.next(250, 'cry'),
-      EVENT.next(260, 'dry'),
-      EVENT.next(270, 'dsy'),
-      EVENT.next(270, 'dsz'),
-      EVENT.complete(300)
+      EVENT.next(203, 'bqx'),
+      EVENT.next(204, 'cqx'),
+      EVENT.next(205, 'crx'),
+      EVENT.next(205, 'cry'),
+      EVENT.next(206, 'dry'),
+      EVENT.next(207, 'dsy'),
+      EVENT.next(207, 'dsz'),
+      EVENT.complete(210)
     ])
   })
 })

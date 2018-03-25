@@ -15,9 +15,9 @@ describe('interval()', () => {
   it('should emit values every t ms', () => {
     const sh = createTestScheduler()
     const {results} = sh.start(
-      () => scan(i => i + 1, -1, interval(10)),
+      () => scan(i => i + 1, -1, interval(1)),
       200,
-      250
+      205
     )
     t.strictEqual(toMarble(results), '-0123')
   })
@@ -36,7 +36,7 @@ describe('interval()', () => {
   it('should stop after error', () => {
     const sh = createTestScheduler()
     const {results} = sh.start(() =>
-      scan(i => (i === 5 ? throwError('Yay!') : i + 1), 0, interval(20))
+      scan(i => (i === 5 ? throwError('Yay!') : i + 1), 0, interval(2))
     )
     const expected = '--1-2-3-4-5-#'
     t.strictEqual(toMarble(results), expected)

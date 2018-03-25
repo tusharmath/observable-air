@@ -11,13 +11,13 @@ import {createTestScheduler} from '../src/schedulers/TestScheduler'
 describe('delay()', () => {
   it('should delay the source events', () => {
     const sh = createTestScheduler()
-    const {results} = sh.start(() => delay(20, sh.Hot(fromMarble('12345|'))))
+    const {results} = sh.start(() => delay(2, sh.Hot(fromMarble('12345|'))))
     t.strictEqual(toMarble(results), '--12345|')
   })
 
   it('should forward error', () => {
     const sh = createTestScheduler()
-    const {results} = sh.start(() => delay(20, sh.Hot(fromMarble('--#|'))))
+    const {results} = sh.start(() => delay(2, sh.Hot(fromMarble('--#|'))))
     t.strictEqual(toMarble(results), '--#--|')
   })
 

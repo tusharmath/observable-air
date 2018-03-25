@@ -10,7 +10,7 @@ describe('debounce()', () => {
   it('should not fire until the source pauses for atleast the give unit of time', () => {
     const sh = createTestScheduler()
     const {results} = sh.start(() =>
-      debounce(10, sh.Hot(fromMarble('012-345-678|')))
+      debounce(1, sh.Hot(fromMarble('012-345-678|')))
     )
     t.strictEqual(toMarble(results), '---2---5---|')
   })

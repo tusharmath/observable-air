@@ -41,18 +41,18 @@ describe('marble()', () => {
     const message = '   -(ABC)-(PQR)-|'
     const actual = fromMarble(message)
     const expected = [
-      EVENT.next(210, 'ABC'),
-      EVENT.next(230, 'PQR'),
-      EVENT.complete(250)
+      EVENT.next(201, 'ABC'),
+      EVENT.next(203, 'PQR'),
+      EVENT.complete(205)
     ]
     assert.deepEqual(actual, expected)
   })
 
   it('should create multi-letter messages', () => {
     const actual = toMarble([
-      EVENT.next(210, 'ABC'),
-      EVENT.next(230, 'PQR'),
-      EVENT.complete(250)
+      EVENT.next(201, 'ABC'),
+      EVENT.next(203, 'PQR'),
+      EVENT.complete(205)
     ])
     const expected = '-(ABC)-(PQR)-|'
     assert.deepEqual(actual, expected)
@@ -69,10 +69,10 @@ describe('marble()', () => {
     const message = '--1-2-3-4'
     const actual = fromMarble(message)
     const expected = [
-      EVENT.next(220, 1),
-      EVENT.next(240, 2),
-      EVENT.next(260, 3),
-      EVENT.next(280, 4)
+      EVENT.next(202, 1),
+      EVENT.next(204, 2),
+      EVENT.next(206, 3),
+      EVENT.next(208, 4)
     ]
 
     assert.deepEqual(actual, expected)
