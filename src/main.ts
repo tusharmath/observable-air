@@ -3,6 +3,7 @@
  */
 
 export {combine} from './operators/Combine'
+export {CompositeSubscription} from './internal/Subscription'
 export {concatMap} from './operators/MergeMap'
 export {concat} from './operators/Concat'
 export {delay} from './operators/Delay'
