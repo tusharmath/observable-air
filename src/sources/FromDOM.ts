@@ -15,7 +15,7 @@ class DOMSubscription implements ISubscription {
   closed: boolean = false
 
   constructor(
-    private element: HTMLElement,
+    private element: EventTarget,
     private listener: IListener,
     private name: string
   ) {}
@@ -26,7 +26,7 @@ class DOMSubscription implements ISubscription {
 }
 
 class DOMObservable implements TResult {
-  constructor(private name: string, private element: HTMLElement) {}
+  constructor(private name: string, private element: EventTarget) {}
 
   subscribe(observer: IObserver<Event>): ISubscription {
     const listener = observer.next.bind(observer)
@@ -35,8 +35,8 @@ class DOMObservable implements TResult {
   }
 }
 
-export const fromDOM = curry(function(element: HTMLElement, name: string) {
+export const fromDOM = curry(function(element: EventTarget, name: string) {
   return new DOMObservable(name, element)
-}) as {(element: HTMLElement, name: string): TResult} & {
-  (element: HTMLElement): {(name: string): TResult}
+}) as {(element: EventTarget, name: string): TResult} & {
+  (element: EventTarget): {(name: string): TResult}
 }
