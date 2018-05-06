@@ -1,7 +1,7 @@
 /**
  * Created by tushar on 29/10/17.
  */
-import {Transform, Writable} from 'stream'
+import {Transform, TransformCallback, Writable} from 'stream'
 import {IObservable} from '../internal/Observable'
 import {IObserver} from '../internal/Observer'
 import {ISubscription} from '../internal/Subscription'
@@ -36,12 +36,8 @@ class ToNodeStream extends Transform {
     this.sub.unsubscribe()
   }
 
-  _transform(
-    chunk: any,
-    encoding: any,
-    callback: (err: Error | null, value: any) => void
-  ) {
-    callback(null, chunk)
+  _transform(chunk: any, encoding: string, callback: TransformCallback) {
+    callback(undefined, chunk)
   }
 }
 
