@@ -20,16 +20,16 @@ describe('forEach()', () => {
     })
     it('should unsubscribe from the source on error', () => {
       const sh = createTestScheduler()
-      const expected = '^---!'
       const testObservable = sh.Hot('-123#')
+      const expected = '             ^---!'
       assert.throws(
         () =>
           sh.startSubscription(() => forEach(() => void 0, testObservable, sh)),
-        '#'
+        (_: Error) => _.message === '#'
       )
 
       const actual = testObservable.toString()
-      assert.strictEqual(actual, expected)
+      assert.strictEqual(actual, expected.trim())
     })
   })
 
