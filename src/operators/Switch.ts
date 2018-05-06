@@ -66,7 +66,7 @@ export const switchMap = curry(
   <T, K>(mapper: (t: K) => IObservable<T>, source: IObservable<K>): IObservable<
     T
   >
-} & {
+
   <T, K>(mapper: (t: K) => IObservable<T>): {
     (source: IObservable<K>): IObservable<T>
   }

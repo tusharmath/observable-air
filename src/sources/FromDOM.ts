@@ -37,6 +37,7 @@ class DOMObservable implements TResult {
 
 export const fromDOM = curry(function(element: EventTarget, name: string) {
   return new DOMObservable(name, element)
-}) as {(element: EventTarget, name: string): TResult} & {
+}) as {
+  (element: EventTarget, name: string): TResult
   (element: EventTarget): {(name: string): TResult}
 }

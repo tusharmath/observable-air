@@ -43,6 +43,7 @@ export const filter = curry(function<T>(
   source: TSource<T>
 ) {
   return new FilterObservable(predicate, source)
-}) as {<T>(predicate: TPredicate<T>, source: TSource<T>): TResult<T>} & {
+}) as {
+  <T>(predicate: TPredicate<T>, source: TSource<T>): TResult<T>
   <T>(predicate: TPredicate<T>): {(source: TSource<T>): TResult<T>}
 }

@@ -54,6 +54,7 @@ class DelayObservable<T> implements IObservable<T> {
 export const delay = curry(
   <T>(timeout: number, source: IObservable<T>): IObservable<T> =>
     new DelayObservable(timeout, source)
-) as {<T>(timeout: number, source: IObservable<T>): IObservable<T>} & {
+) as {
+  <T>(timeout: number, source: IObservable<T>): IObservable<T>
   <T>(timeout: number): {(source: IObservable<T>): IObservable<T>}
 }

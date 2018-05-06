@@ -11,6 +11,8 @@ export function bm_debounce(suite: Suite) {
   return suite.add(
     'file -> debounce',
     (d: IDeferred) => run(debounce(100, fromArray(a)), d),
-    {defer: true}
+    {
+      defer: true
+    }
   )
 }

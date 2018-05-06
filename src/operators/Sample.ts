@@ -101,15 +101,15 @@ export const sample = curry(function<T>(
   return new SampleObservable(f, sampler, sources)
 }) as {
   <T>(selector: TSelector<T>, sampler: TSampler, source: TSources): TResult<T>
-} & {
+
   <T>(selector: TSelector<T>): {
     (sampler: TSampler, source: TSources): TResult<T>
   }
-} & {
+
   <T>(selector: TSelector<T>, sampler: TSampler): {
     (source: TSources): TResult<T>
   }
-} & {
+
   <T>(selector: TSelector<T>): {
     (sampler: TSampler): {(source: TSources): TResult<T>}
   }

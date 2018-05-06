@@ -13,21 +13,29 @@ import {just} from '../sources/Create'
 
 export type Project<T, S> = (t: T) => IObservable<S>
 
-// prettier-ignore
 export type mergeMapFunctionWithConcurrency = {
-  <T, S>(concurrency: IObservable<number>, project: Project<T, S>, source: IObservable<T>): IObservable<S>
-  <T, S>(concurrency: IObservable<number>): {(project: Project<T, S>, source: IObservable<T>): IObservable<S>}
-  <T, S>(concurrency: IObservable<number>): {(project: Project<T, S>): {(source: IObservable<T>): IObservable<S>}}
+  <T, S>(
+    concurrency: IObservable<number>,
+    project: Project<T, S>,
+    source: IObservable<T>
+  ): IObservable<S>
+  <T, S>(concurrency: IObservable<number>): {
+    (project: Project<T, S>, source: IObservable<T>): IObservable<S>
+  }
+  <T, S>(concurrency: IObservable<number>): {
+    (project: Project<T, S>): {(source: IObservable<T>): IObservable<S>}
+  }
 }
 
-// prettier-ignore
 export type mergeMapFunction = {
   <T, S>(project: Project<T, S>, source: IObservable<T>): IObservable<S>
   <T, S>(project: Project<T, S>, source: IObservable<T>): IObservable<S>
   <T, S>(project: Project<T, S>): {(source: IObservable<T>): IObservable<S>}
 }
-// prettier-ignore
-export type joinFunction = <T>(source: IObservable<IObservable<T>>) => IObservable<T>
+
+export type joinFunction = <T>(
+  source: IObservable<IObservable<T>>
+) => IObservable<T>
 
 class ConcurrencyObserver extends ErrorMixin(Virgin)
   implements IObserver<number> {

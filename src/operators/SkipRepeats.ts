@@ -49,6 +49,7 @@ export const skipRepeats = curry(function(
   source: IObservable<any>
 ) {
   return new SkipRepeatsObservable(hashFunction, source)
-}) as {<T>(cmp: TComparator<T>, source: TSource<T>): TResult<T>} & {
+}) as {
+  <T>(cmp: TComparator<T>, source: TSource<T>): TResult<T>
   <T>(cmp: TComparator<T>): {(source: TSource<T>): TResult<T>}
 }

@@ -81,6 +81,7 @@ class CombineObservable<T> implements IObservable<T> {
 export const combine = curry(
   <T>(selector: TSelector<T>, sources: IObservable<any>[]) =>
     new CombineObservable(selector, sources)
-) as {<T, R>(selector: TSelector<T>, sources: TSource): TResult<R>} & {
+) as {
+  <T, R>(selector: TSelector<T>, sources: TSource): TResult<R>
   <T, R>(selector: TSelector<T>): {(sources: TSource): TResult<R>}
 }
