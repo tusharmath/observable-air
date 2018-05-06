@@ -40,7 +40,8 @@ export const map = curry(function<T, R>(
   source: IObservable<T>
 ) {
   return new MapObservable(mapFunction, source)
-}) as {<T, R>(mapper: TMapper<T, R>, source: TSource<T>): TResult<R>} & {
+}) as {
+  <T, R>(mapper: TMapper<T, R>, source: TSource<T>): TResult<R>
   <T, R>(mapper: TMapper<T, R>): {(source: TSource<T>): TResult<R>}
 }
 
@@ -52,8 +53,9 @@ export const tap = curry(function<T>(
     mapFunction(a)
     return a
   }, source)
-}) as {<T>(mapper: TMapper<T, void>, source: TSource<T>): TResult<void>} & {
-  <T>(mapper: TMapper<T, void>): {(source: TSource<T>): TResult<void>}
+}) as {
+  <T>(mapper: TMapper<T, any>, source: TSource<T>): TResult<T>
+  <T>(mapper: TMapper<T, any>): {(source: TSource<T>): TResult<T>}
 }
 
 export const mapTo = curry(function<T extends Function>(
@@ -61,6 +63,9 @@ export const mapTo = curry(function<T extends Function>(
   source: IObservable<T>
 ) {
   return new MapObservable(() => mapFunction, source)
-}) as {<T>(value: T, source: IObservable<any>): IObservable<T>} & {
-  <T>(value: T): {(source: IObservable<any>): IObservable<T>}
+}) as {
+  <T>(value: T, source: IObservable<any>): IObservable<T>
+  <T>(value: T): {
+    (source: IObservable<any>): IObservable<T>
+  }
 }
