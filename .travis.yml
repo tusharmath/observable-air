@@ -1,5 +1,6 @@
 language: node_js
 cache:
+  yarn: true
   directories:
     - ~/.npm
     - node_modules
@@ -8,8 +9,8 @@ notifications:
 node_js:
   - stable
 before_script:
-   - npm run coverage
-   - npm run lint
+   - yarn coverage
+   - yarn lint
 after_success:
   - npm run travis-deploy-once "npm run semantic-release"
 branches:
