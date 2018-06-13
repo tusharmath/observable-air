@@ -8,11 +8,16 @@ notifications:
   email: false
 node_js:
   - stable
+before_install:
+  - yarn global add greenkeeper-lockfile@1
 before_script:
-   - yarn coverage
-   - yarn lint
+  - greenkeeper-lockfile-update
+  - yarn coverage
+  - yarn lint
 after_success:
   - npm run travis-deploy-once "npm run semantic-release"
+after_script:
+  - greenkeeper-lockfile-upload
 branches:
   except:
     - /^v\d+\.\d+\.\d+$/
