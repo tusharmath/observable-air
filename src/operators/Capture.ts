@@ -12,7 +12,8 @@ import {IScheduler} from '../schedulers/Scheduler'
 export type TSource<T> = IObservable<T>
 export type TResult<R> = IObservable<R>
 
-class CaptureObserver<T, R> extends CompleteMixin(Virgin) implements IObserver<T> {
+class CaptureObserver<T, R> extends CompleteMixin(Virgin)
+  implements IObserver<T> {
   constructor(public sink: IObserver<Error>) {
     super()
   }
@@ -25,21 +26,14 @@ class CaptureObserver<T, R> extends CompleteMixin(Virgin) implements IObserver<T
 }
 
 class CaptureObservable<T> implements TResult<Error> {
-  constructor(
-    private source: IObservable<T>
-  ) {}
+  constructor(private source: IObservable<T>) {}
 
   subscribe(observer: IObserver<Error>, scheduler: IScheduler): ISubscription {
-    return this.source.subscribe(
-      new CaptureObserver(observer),
-      scheduler
-    )
+    return this.source.subscribe(new CaptureObserver(observer), scheduler)
   }
 }
 
-export const capture = curry(function<T>(
-  source: TSource<T>
-) {
+export const capture = curry(function<T>(source: TSource<T>) {
   return new CaptureObservable(source)
 }) as {
   <T>(source: TSource<T>): TResult<T>
