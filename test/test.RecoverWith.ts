@@ -1,11 +1,11 @@
 import * as t from 'assert'
 import {EVENT} from '../src/internal/Events'
-import {capture} from '../src/operators/Capture'
+import {recoverWith} from '../src/operators/RecoverWith'
 import {createTestScheduler} from '../src/schedulers/TestScheduler'
 
 const {next, complete, error} = EVENT
 
-describe('capture()', () => {
+describe('recoverWith()', () => {
   it('should only emit errors as data', () => {
     const sh = createTestScheduler()
     const $ = sh.Cold<number>([
@@ -14,10 +14,11 @@ describe('capture()', () => {
       error(202, new Error('err2')),
       complete(205)
     ])
-    const {results} = sh.start(() => capture($))
+    const {results} = sh.start(() => recoverWith((err: Error) => -1, $))
     t.deepEqual(results, [
-      next(401, new Error('err1')),
-      next(402, new Error('err2')),
+      next(400, 10),
+      next(401, -1),
+      next(402, -1),
       complete(405)
     ])
   })

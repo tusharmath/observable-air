@@ -26,6 +26,7 @@
   - [concat](#concat)
   - [concatMap](#concatMap)
   - [delay](#delay)
+  - [recoverWith](#capture)
   - [filter](#filter)
   - [flatMap](#flatMap)
   - [join](#join)
@@ -374,6 +375,18 @@ Takes in two params viz `duration` and the `source` stream and delays each value
 **Example:**
 ```ts
 const $ = O.delay(100, O.of('hi')) // emits 'hi' after 100ms
+```
+
+## recoverWith
+```ts
+function recoverWith(fn: (err: any) => any, source: Observable): Observable
+```
+Transforms errors of an input stream into values.
+
+**Example:**
+
+```ts
+const $ = O.recoverWith(err => 1, O.of(err, 100)) // emits '1' and '100'
 ```
 
 
