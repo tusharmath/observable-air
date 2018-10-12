@@ -26,7 +26,7 @@
   - [concat](#concat)
   - [concatMap](#concatMap)
   - [delay](#delay)
-  - [recoverWith](#capture)
+  - [recoverWith](#recoverWith)
   - [filter](#filter)
   - [flatMap](#flatMap)
   - [join](#join)
@@ -386,7 +386,7 @@ Transforms errors of an input stream into values.
 **Example:**
 
 ```ts
-const $ = O.recoverWith(err => 1, O.of(err, 100)) // emits '1' and '100'
+const $ = O.recoverWith(err => 1, O.of(new Error('err1'), 100)) // emits '1' and '100'
 ```
 
 
