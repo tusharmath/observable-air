@@ -14,8 +14,8 @@ export type TResult<R> = IObservable<R>
 export type TMapper<S> = (err: Error) => S
 
 class RecoverWithObserver<T, R> extends NextMixin(CompleteMixin(Virgin))
-  implements IObserver<T|R> {
-  constructor(private mapper: TMapper<R>, public sink: IObserver<T|R>) {
+  implements IObserver<T | R> {
+  constructor(private mapper: TMapper<R>, public sink: IObserver<T | R>) {
     super()
   }
 
@@ -24,7 +24,7 @@ class RecoverWithObserver<T, R> extends NextMixin(CompleteMixin(Virgin))
   }
 }
 
-class RecoverWithObservable<T, R> implements TResult<T|R> {
+class RecoverWithObservable<T, R> implements TResult<T | R> {
   constructor(private mapper: TMapper<R>, private source: IObservable<T>) {}
 
   subscribe(observer: IObserver<T>, scheduler: IScheduler): ISubscription {
@@ -41,6 +41,6 @@ export const recoverWith = curry(function<T, R>(
 ) {
   return new RecoverWithObservable(mapFunction, source)
 }) as {
-  <T, R>(mapper: TMapper<T>, source: TSource<T>): TResult<T|R>
-  <T, R>(): {mapper: TMapper<T>; (source: TSource<T>): TResult<T|R>}
+  <T, R>(mapper: TMapper<T>, source: TSource<T>): TResult<T | R>
+  <T, R>(): {mapper: TMapper<T>; (source: TSource<T>): TResult<T | R>}
 }

@@ -46,7 +46,7 @@
   - [unique](#unique)
   - [uniqueWith](#uniquewith)
 - [Testing](#testing)
-  - [TestScheduler](#Testscheduler)
+  - [TestScheduler](#testscheduler)
   - [marble](#marble)
   - [toMarble](#tomarble)
 
@@ -386,7 +386,7 @@ Transforms errors of an input stream into values.
 **Example:**
 
 ```ts
-const $ = O.recoverWith(err => 1, O.of(new Error('err1'), 100)) // emits '1' and '100'
+const $ = O.recoverWith(err => err.message, O.of(new Error('err1'), 100)) // emits 'err1' and '100'
 ```
 
 
