@@ -11,11 +11,11 @@ import {IScheduler} from '../schedulers/Scheduler'
 
 export type TSource<T> = IObservable<T>
 export type TResult<R> = IObservable<R>
-export type TMapper<T> = (err: Error) => T
+export type TMapper<S> = (err: Error) => S
 
-class RecoverWithObserver<T> extends NextMixin(CompleteMixin(Virgin))
-  implements IObserver<T> {
-  constructor(private mapper: TMapper<T>, public sink: IObserver<T>) {
+class RecoverWithObserver<T, R> extends NextMixin(CompleteMixin(Virgin))
+  implements IObserver<T|R> {
+  constructor(private mapper: TMapper<R>, public sink: IObserver<T|R>) {
     super()
   }
 
@@ -24,8 +24,8 @@ class RecoverWithObserver<T> extends NextMixin(CompleteMixin(Virgin))
   }
 }
 
-class RecoverWithObservable<T> implements TResult<T> {
-  constructor(private mapper: TMapper<T>, private source: IObservable<T>) {}
+class RecoverWithObservable<T, R> implements TResult<T|R> {
+  constructor(private mapper: TMapper<R>, private source: IObservable<T>) {}
 
   subscribe(observer: IObserver<T>, scheduler: IScheduler): ISubscription {
     return this.source.subscribe(
@@ -35,12 +35,12 @@ class RecoverWithObservable<T> implements TResult<T> {
   }
 }
 
-export const recoverWith = curry(function<T>(
-  mapFunction: (a: Error) => T,
+export const recoverWith = curry(function<T, R>(
+  mapFunction: (a: Error) => R,
   source: TSource<T>
 ) {
   return new RecoverWithObservable(mapFunction, source)
 }) as {
-  <T>(mapper: TMapper<T>, source: TSource<T>): TResult<T>
-  <T>(): {mapper: TMapper<T>; (source: TSource<T>): TResult<T>}
+  <T, R>(mapper: TMapper<T>, source: TSource<T>): TResult<T|R>
+  <T, R>(): {mapper: TMapper<T>; (source: TSource<T>): TResult<T|R>}
 }
