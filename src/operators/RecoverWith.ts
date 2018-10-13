@@ -10,8 +10,8 @@ import {curry} from '../internal/Utils'
 import {IScheduler} from '../schedulers/Scheduler'
 
 export type TSource<T> = IObservable<T>
-export type TResult<R> = IObservable<R>
-export type TMapper<S> = (err: Error) => S
+export type TMapper<R> = (err: Error) => R
+export type TResult<S> = IObservable<S>
 
 class RecoverWithObserver<T, R> extends NextMixin(CompleteMixin(Virgin))
   implements IObserver<T | R> {
@@ -41,6 +41,6 @@ export const recoverWith = curry(function<T, R>(
 ) {
   return new RecoverWithObservable(mapFunction, source)
 }) as {
-  <T, R>(mapper: TMapper<T>, source: TSource<T>): TResult<T | R>
-  <T, R>(): {mapper: TMapper<T>; (source: TSource<T>): TResult<T | R>}
+  <T, R>(mapper: TMapper<R>, source: TSource<T>): TResult<T | R>
+  <T, R>(): {mapper: TMapper<R>; (source: TSource<T>): TResult<T | R>}
 }
