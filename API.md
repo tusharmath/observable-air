@@ -46,7 +46,7 @@
   - [unique](#unique)
   - [uniqueWith](#uniquewith)
 - [Testing](#testing)
-  - [TestScheduler](#Testscheduler)
+  - [TestScheduler](#testscheduler)
   - [marble](#marble)
   - [toMarble](#tomarble)
 
@@ -379,14 +379,14 @@ const $ = O.delay(100, O.of('hi')) // emits 'hi' after 100ms
 
 ## recoverWith
 ```ts
-function recoverWith(fn: (err: any) => any, source: Observable): Observable
+function recoverWith(fn: (err: any) => Observable, source: Observable): Observable
 ```
 Transforms errors of an input stream into values.
 
 **Example:**
 
 ```ts
-const $ = O.recoverWith(err => 1, O.of(new Error('err1'), 100)) // emits '1' and '100'
+const $ = O.recoverWith(err => O.of(1), O.of(new Error('err1'), 100)) // emits '1' and '100'
 ```
 
 
