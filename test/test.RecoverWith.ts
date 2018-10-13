@@ -29,9 +29,9 @@ describe('recoverWith()', () => {
   it('(marble): should emit errors as data', () => {
     const SH = createTestScheduler()
     const source$ = SH.Cold(fromMarble('a-b-#-c-#-d|'))
-    const out$ = SH.Cold(fromMarble('z-x-y-w-|'))
+    const o$ = SH.Cold(fromMarble('z-x-y-w-|'))
     const {results} = SH.start(() => {
-      return recoverWith((err: Error) => out$, source$)
+      return recoverWith((err: Error) => o$, source$)
     })
     t.deepEqual(results, [
       EVENT.next(401, 'a'),
