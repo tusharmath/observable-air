@@ -1564,6 +1564,11 @@ dateformat@^3.0.0:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/dateformat/-/dateformat-3.0.3.tgz#a6e37499a4d9a9cf85ef5872044d62901c9889ae"
 
+dbl-linked-list-ds@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/dbl-linked-list-ds/-/dbl-linked-list-ds-1.0.2.tgz#a5bede48edd7062cd6b5fd8a5f57508845bebc2a"
+  integrity sha512-jst+TPgsGT0TjhXhWUC+qqLooeDIRUu50JYp0zLB+iMKU3zswP8OWb46r9rjSg9AA8aHCbr9nM1+1PpSpDEtXw==
+
 debug-log@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/debug-log/-/debug-log-1.0.1.tgz#2307632d4c04382b8df8a32f70b895046d52745f"

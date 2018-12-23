@@ -59,5 +59,8 @@
       "commit-msg": "validate-commit-msg"
     }
   },
-  "version": "0.0.0-development"
+  "version": "0.0.0-development",
+  "dependencies": {
+    "dbl-linked-list-ds": "^1.0.2"
+  }
 }

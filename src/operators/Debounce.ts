@@ -1,7 +1,4 @@
-/**
- * Created by tushar on 12/02/17.
- */
-import {LinkedListNode} from '../internal/LinkedList'
+import {LinkedListNode} from 'dbl-linked-list-ds'
 import {ErrorMixin} from '../internal/Mixins'
 import {IObservable} from '../internal/Observable'
 import {IObserver} from '../internal/Observer'
@@ -58,6 +55,7 @@ export const debounce = curry(
   <T>(timeout: number, source: IObservable<T>) => new Debounce(timeout, source)
 ) as {
   <T>(timeout: number, source: IObservable<T>): IObservable<T>
-
-  <T>(timeout: number): {(source: IObservable<T>): IObservable<T>}
+  <T>(timeout: number): {
+    (source: IObservable<T>): IObservable<T>
+  }
 }

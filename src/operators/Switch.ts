@@ -1,7 +1,4 @@
-/**
- * Created by tushar.mathur on 16/10/16.
- */
-import {LinkedListNode} from '../internal/LinkedList'
+import {LinkedListNode} from 'dbl-linked-list-ds'
 import {ErrorMixin, NextMixin, Virgin} from '../internal/Mixins'
 import {IObservable} from '../internal/Observable'
 import {IObserver} from '../internal/Observer'

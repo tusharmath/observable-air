@@ -1,8 +1,7 @@
 /**
  * Created by tushar on 31/08/17.
  */
-
-import {LinkedListNode} from '../internal/LinkedList'
+import {LinkedListNode} from 'dbl-linked-list-ds'
 import {ErrorMixin, Virgin} from '../internal/Mixins'
 import {IObservable} from '../internal/Observable'
 import {IObserver} from '../internal/Observer'
@@ -23,16 +22,18 @@ export type mergeMapFunctionWithConcurrency = {
     (project: Project<T, S>, source: IObservable<T>): IObservable<S>
   }
   <T, S>(concurrency: IObservable<number>): {
-    (project: Project<T, S>): {(source: IObservable<T>): IObservable<S>}
+    (project: Project<T, S>): {
+      (source: IObservable<T>): IObservable<S>
+    }
   }
 }
-
 export type mergeMapFunction = {
   <T, S>(project: Project<T, S>, source: IObservable<T>): IObservable<S>
   <T, S>(project: Project<T, S>, source: IObservable<T>): IObservable<S>
-  <T, S>(project: Project<T, S>): {(source: IObservable<T>): IObservable<S>}
+  <T, S>(project: Project<T, S>): {
+    (source: IObservable<T>): IObservable<S>
+  }
 }
-
 export type joinFunction = <T>(
   source: IObservable<IObservable<T>>
 ) => IObservable<T>

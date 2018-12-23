@@ -1,4 +1,4 @@
-import {LinkedList, LinkedListNode} from './LinkedList'
+import {LinkedList, LinkedListNode} from 'dbl-linked-list-ds'
 /**
  * Created by tushar.mathur on 27/09/16.
  */

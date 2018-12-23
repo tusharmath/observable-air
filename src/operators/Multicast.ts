@@ -1,7 +1,4 @@
-/**
- * Created by tushar.mathur on 24/10/16.
- */
-import {LinkedListNode} from '../internal/LinkedList'
+import {LinkedListNode} from 'dbl-linked-list-ds'
 import {IObservable} from '../internal/Observable'
 import {CompositeObserver, IObserver} from '../internal/Observer'
 import {ISubscription} from '../internal/Subscription'
