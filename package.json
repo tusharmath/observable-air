@@ -28,7 +28,7 @@
     "benchmark": "^2.1.2",
     "cli-table2": "^0.2.0",
     "coveralls": "^3.0.1",
-    "cz-conventional-changelog": "^2.0.0",
+    "cz-conventional-changelog": "^3.0.0",
     "ghooks": "^2.0.4",
     "mocha": "^5.1.1",
     "nyc": "^13.1.0",
