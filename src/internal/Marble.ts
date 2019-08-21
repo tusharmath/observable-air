@@ -63,7 +63,7 @@ export function toMarble<T>(
     while (count-- > 1) message += '-'
     switch (ev.type) {
       case EventType.next:
-        const s = (ev as EventNext<T>).value.toString()
+        const s = String((ev as EventNext<T>).value)
         message += s.length > 1 ? `(${s})` : s
         break
       case EventType.error:

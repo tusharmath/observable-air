@@ -12,13 +12,15 @@ export function dispatchEvents<T>(
   observers: Array<IObserver<T>>,
   closed: Array<boolean>
 ) {
-  observers.filter((x, i) => !closed[i]).forEach(ob => {
-    if (event.type === EventType.next)
-      return ob.next((event as EventNext<T>).value)
-    if (event.type === EventType.complete) return ob.complete()
-    if (event.type === EventType.error)
-      return ob.error((event as EventError).value)
-  })
+  observers
+    .filter((x, i) => !closed[i])
+    .forEach(ob => {
+      if (event.type === EventType.next)
+        return ob.next((event as EventNext<T>).value)
+      if (event.type === EventType.complete) return ob.complete()
+      if (event.type === EventType.error)
+        return ob.error((event as EventError).value)
+    })
 }
 
 export function HotTestObservable<T>(
