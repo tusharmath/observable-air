@@ -1,21 +1,21 @@
 # API
 
 - [Types](#types)
-  - [Subscription](#Subscription)
-  - [Scheduler](#Scheduler)
-  - [Observer](#Observer)
-  - [Observable](#Observable)
+  - [Subscription](#subscription)
+  - [Scheduler](#scheduler)
+  - [Observer](#observer)
+  - [Observable](#observable)
 - [Sinks](#sinks)
-  - [forEach](#forEach)
-  - [toPromise](#toPromise)
-  - [toNodeStream](#toNodeStream)
+  - [forEach](#foreach)
+  - [toPromise](#topromise)
+  - [toNodeStream](#tonodestream)
 - [Sources](#sources)  
   - [empty](#empty)
   - [frames](#frames)
-  - [fromArray](#fromArray)
-  - [fromDOM](#fromDOM)
-  - [fromNodeStream](#fromNodeStream)
-  - [fromPromise](#fromPromise)
+  - [fromArray](#fromarray)
+  - [fromDOM](#fromdom)
+  - [fromNodeStream](#fromnodestream)
+  - [fromPromise](#frompromise)
   - [interval](#interval)
   - [just](#just)
   - [never](#never)
@@ -24,30 +24,31 @@
 - [Operators](#operators)
   - [combine](#combine)
   - [concat](#concat)
-  - [concatMap](#concatMap)
+  - [concatMap](#concatmap)
   - [delay](#delay)
+  - [recoverWith](#recoverwith)
   - [filter](#filter)
-  - [flatMap](#flatMap)
+  - [flatMap](#flatmap)
   - [join](#join)
   - [map](#map)
-  - [mapTo](#mapTo)
+  - [mapTo](#mapto)
   - [merge](#merge)
-  - [mergeMap](#mergeMap)
+  - [mergeMap](#mergemap)
   - [multicast](#multicast)
   - [reduce](#reduce)
   - [sample](#sample)
   - [scan](#scan)
-  - [skipRepeats](#skipRepeats)
+  - [skipRepeats](#skiprepeats)
   - [slice](#slice)
-  - [switchLatest](#switchLatest)
-  - [switchMap](#switchMap)
+  - [switchLatest](#switchlatest)
+  - [switchMap](#switchmap)
   - [tap](#tap)
   - [unique](#unique)
-  - [uniqueWith](#uniqueWith)
+  - [uniqueWith](#uniquewith)
 - [Testing](#testing)
-  - [TestScheduler](#TestScheduler)
+  - [TestScheduler](#testscheduler)
   - [marble](#marble)
-  - [toMarble](#toMarble)
+  - [toMarble](#tomarble)
 
 >All this stuff in just 4kb!
 
@@ -374,6 +375,18 @@ Takes in two params viz `duration` and the `source` stream and delays each value
 **Example:**
 ```ts
 const $ = O.delay(100, O.of('hi')) // emits 'hi' after 100ms
+```
+
+## recoverWith
+```ts
+function recoverWith(fn: (err: any) => Observable, source: Observable): Observable
+```
+Transforms errors of an input stream into values.
+
+**Example:**
+
+```ts
+const $ = O.recoverWith(err => O.of(1), O.of(new Error('err1'), 100)) // emits '1' and '100'
 ```
 
 
