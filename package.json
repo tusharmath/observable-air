@@ -24,7 +24,7 @@
   "devDependencies": {
     "@types/benchmark": "^1.0.30",
     "@types/mocha": "^5.2.7",
-    "@types/node": "^12.7.2",
+    "@types/node": "^13.5.1",
     "benchmark": "^2.1.2",
     "cli-table2": "^0.2.0",
     "coveralls": "^3.0.6",
