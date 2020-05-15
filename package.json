@@ -22,7 +22,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/benchmark": "^1.0.30",
+    "@types/benchmark": "^1.0.33",
     "@types/mocha": "^5.2.7",
     "@types/node": "^12.7.2",
     "benchmark": "^2.1.2",
